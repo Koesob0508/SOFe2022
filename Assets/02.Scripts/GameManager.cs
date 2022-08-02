@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
     private static StageManager stage = null;
-    private BattleManager bManager = null;
+    private BattleSceneManager bSceneManager = null;
 
     private void Awake()
     {
@@ -45,7 +45,9 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "BattleSelectScene")
         {
-            bManager = new BattleManager();
+            bSceneManager = new BattleSceneManager();
         }
     }
+
+
 }
