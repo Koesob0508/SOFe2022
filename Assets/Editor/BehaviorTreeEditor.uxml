@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <uie:Toolbar>
+        <uie:ToolbarMenu text="Assets" focusable="false" />
+    </uie:Toolbar>
+    <SplitView fixed-pane-initial-size="100" fixed-pane-index="0" style="align-items: auto;">
+        <ui:VisualElement name="Left_Panel" style="width: 176px;">
+            <ui:Label text="Inspector" style="background-color: rgb(40, 40, 40);" />
+            <InspectorView style="width: auto;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right_Panel">
+            <ui:Label text="Tree View" style="background-color: rgb(40, 40, 40);" />
+            <BehaviorTreeView focusable="true" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </SplitView>
+</ui:UXML>

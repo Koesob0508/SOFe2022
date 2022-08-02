@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8233085894503828793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: AttackRange
+  Type: 2
+--- !u!114 &-2513623323309123474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: CanAttack
+  Type: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6be38f0dd76d494d9e26fd9d04b7515, type: 3}
+  m_Name: BB
+  m_EditorClassIdentifier: 
+  bb_keys:
+  - {fileID: 7752703049029063414}
+  - {fileID: -2513623323309123474}
+  - {fileID: 2186395849951284326}
+  - {fileID: -8233085894503828793}
+  - {fileID: 3546849276695337490}
+--- !u!114 &2186395849951284326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: IsDead
+  Type: 0
+--- !u!114 &3546849276695337490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Damage
+  Type: 2
+--- !u!114 &7752703049029063414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: targetObj
+  Type: 4

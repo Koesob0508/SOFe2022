@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="node-state">
+        <Style src="NodeView.uss" />
+        <Style src="BlackboardEditor.uss" />
+    </ui:VisualElement>
+    <ui:VisualElement name="node-border" style="min-width: 150px;">
+        <Style src="NodeView.uss" />
+        <Style src="BlackboardEditor.uss" />
+        <ui:VisualElement name="contents">
+            <ui:VisualElement name="top">
+                <ui:VisualElement name="input" style="align-items: center;" />
+                <ui:VisualElement name="divider" class="vertical" />
+                <ui:VisualElement name="title" style="align-items: center;">
+                    <ui:Label name="title-label" text="DebugLogNode" class="unity-text-element unity-label" />
+                    <ui:VisualElement name="title-button-container">
+                        <ui:VisualElement name="collapse-button">
+                            <ui:VisualElement name="icon" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label text="This is a Description" name="description" />
+                <ui:VisualElement name="divider" class="horizontal" />
+                <ui:VisualElement name="output" style="align-items: center;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="selection-border" picking-mode="Ignore">
+        <Style src="NodeView.uss" />
+        <Style src="BlackboardEditor.uss" />
+    </ui:VisualElement>
+</ui:UXML>

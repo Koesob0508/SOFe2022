@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
     private static StageManager stage = null;
+    private BattleManager bManager = null;
 
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
             if (instance == null)
             {
                 instance = this;
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
     public static GameManager Instance
     {
         // ½Ì±ÛÅæ ±¸ÇöºÎ
@@ -38,5 +41,11 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "BattleSelectScene")
+        {
+            bManager = new BattleManager();
+        }
+    }
 }

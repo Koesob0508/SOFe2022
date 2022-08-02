@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <BlackboardView style="width: 100%; height: 100%;">
+        <ui:VisualElement>
+            <uie:EnumField label="KeyType" type="BT_Key.KeyType, Assembly-CSharp" />
+            <ui:TextField picking-mode="Ignore" label="KeyName" value="filler text" text="filler text" />
+            <ui:Button text="Create" />
+        </ui:VisualElement>
+        <ui:VisualElement name="KeyContainer" style="align-items: flex-start; justify-content: flex-start; height: 100%; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+    </BlackboardView>
+</ui:UXML>
