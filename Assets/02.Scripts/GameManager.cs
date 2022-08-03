@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null;
-    private static StageManager stage = null;
+    private static GameManager instance;
+    public  static GameManager Instance { get { Init(); return instance; } }
 
-    private void Awake()
-    {
-        // 싱글톤 구현부
-        {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
-            }
-        }
-    }
-    public static GameManager Instance
-    {
-        // 싱글톤 구현부
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
+    // 다음과 같이 만드시면 됩니다.
+    #region Core
+    [SerializeField] private StageManager _stage = new StageManager();
 
-            return instance;
-        }
+    public static StageManager Stage { get { return Instance._stage; } }
+
+    #endregion
+
+    private void Start()
+    {
+        Init();
     }
 
+    private static void Init()
+    {
+        if(instance == null)
+        {
+            GameObject obj = GameObject.Find("Game Manager");
+
+            if(obj == null)
+            {
+                obj = new GameObject { name = "Game Manager" };
+                obj.AddComponent<GameManager>();
+            }
+
+            DontDestroyOnLoad(obj);
+            instance = obj.GetComponent<GameManager>();
+
+            // 여기서부터 각자의 Manager를 Init하면 됩니다.
+            Stage.Init();
+        }
+    }
 }

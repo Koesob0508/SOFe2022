@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageManager : MonoBehaviour
+public class StageManager
 {
-    public void Initilize()
+    public void Init()
     {
-
+        Debug.Log("Stage Manager Init");
     }
 
 }
