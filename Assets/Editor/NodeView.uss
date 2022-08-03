@@ -1,0 +1,108 @@
+#node-border {
+    background-color: rgb(84, 82, 82);
+}
+
+#selection-border {
+    border-left-color: rgb(248, 166, 92);
+    border-right-color: rgb(248, 166, 92);
+    border-top-color: rgb(248, 166, 92);
+    border-bottom-color: rgb(248, 166, 92);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+:hover > #selection-border {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+:selected > #selection-border {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+:hover:selected > #selection-border {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+#title {
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+
+#description {
+    font-size: 10px;
+    -unity-text-align: upper-center;
+}
+
+#divider {
+    min-height: 1px;
+    background-color: rgb(65, 61, 61);
+}
+
+.task #input {
+    background-color: rgb(107, 92, 165);
+}
+
+.composite #input {
+    background-color: rgb(242, 220, 93);
+}
+
+.decorator #input {
+    background-color: rgb(65, 51, 122);
+}
+
+.service #input {
+    background-color: rgb(122, 158, 159);
+}
+
+.root #input {
+    background-color: rgb(243, 218, 216);
+    min-height: 20px;
+}
+
+#node-state {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.inprogress #node-state {
+    background-color: rgba(233, 160, 25, 255);
+}
+
+.succeeded #node-state {
+    background-color: rgba(80, 231, 103, 255);
+}
+
+.failed #node-state {
+    background-color: rgba(245, 91, 91, 255);
+}
+
+.aborted #node-state {
+    background-color: rgba(245, 82, 205, 255);
+}

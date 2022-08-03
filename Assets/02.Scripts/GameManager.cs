@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
+    private BattleSceneManager bSceneManager = null;
 
-    // ´ÙÀ½°ú °°ÀÌ ¸¸µå½Ã¸é µË´Ï´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ë´Ï´ï¿½.
     #region Core
     [SerializeField] private StageManager _stage = new StageManager();
 
@@ -35,8 +36,17 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(obj);
             instance = obj.GetComponent<GameManager>();
 
-            // ¿©±â¼­ºÎÅÍ °¢ÀÚÀÇ Manager¸¦ InitÇÏ¸é µË´Ï´Ù.
+            // ï¿½ï¿½ï¿½â¼­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Managerï¿½ï¿½ Initï¿½Ï¸ï¿½ ï¿½Ë´Ï´ï¿½.
             Stage.Init();
         }
     }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "BattleSelectScene")
+        {
+            bSceneManager = new BattleSceneManager();
+        }
+    }
+
+
 }
