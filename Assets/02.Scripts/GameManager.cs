@@ -16,7 +16,13 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public List<Character> characters = new List<Character>();
 
+
+    private void Awake()
+    {
+        ImportCharData();
+    }
 
     private void Start()
     {
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour
 
             // ���⼭���� ������ Manager�� Init�ϸ� �˴ϴ�.
             Stage.Init();
+
         }
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -50,5 +57,56 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ImportCharData()
+    {
+        List<Character> chars_tmp = new List<Character>();
+        CSVImporter csvImp = new CSVImporter();
+        csvImp.OpenFile("Data/Heros_values");
+        csvImp.ReadHeader();
+        string line = csvImp.Readline();
 
+        while (line != null)
+        {
+            string[] elems = line.Split(',');
+
+            Hero hero = new Hero();
+            hero.GUID = uint.Parse(elems[0]);
+            hero.Name = elems[1];
+            hero.MaxHP = float.Parse(elems[2]);
+            hero.AttackDamage = float.Parse(elems[3]);
+            hero.AttackSpeed = float.Parse(elems[4]);
+            hero.DefensePoint = float.Parse(elems[5]);
+            hero.MaxMana = float.Parse(elems[6]);
+            hero.MoveSpeed = float.Parse(elems[7]);
+            hero.AttackRange = float.Parse(elems[8]);
+            line = csvImp.Readline();
+
+            chars_tmp.Add(hero);
+        }
+
+        CSVImporter csvImp1 = new CSVImporter();
+        csvImp1.OpenFile("Data/Monsters_values");
+        csvImp1.ReadHeader();
+        string line1 = csvImp1.Readline();
+
+        while (line1 != null)
+        {
+            string[] elems = line1.Split(',');
+
+            Enemy enemy = new Enemy();
+            enemy.GUID = uint.Parse(elems[0]);
+            enemy.Name = elems[1];
+            enemy.MaxHP = float.Parse(elems[2]);
+            enemy.AttackDamage = float.Parse(elems[3]);
+            enemy.AttackSpeed = float.Parse(elems[4]);
+            enemy.DefensePoint = float.Parse(elems[5]);
+            enemy.MaxMana = float.Parse(elems[6]);
+            enemy.MoveSpeed = float.Parse(elems[7]);
+            enemy.AttackRange = float.Parse(elems[8]);
+            line1 = csvImp1.Readline();
+
+            chars_tmp.Add(enemy);
+        }
+        characters = chars_tmp;
+    }
 }
