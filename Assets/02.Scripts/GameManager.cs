@@ -6,15 +6,17 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
-    private BattleSceneManager bSceneManager = null;
 
     // ������ ���� ����ø� �˴ϴ�.
     #region Core
     [SerializeField] private StageManager _stage = new StageManager();
 
     public static StageManager Stage { get { return Instance._stage; } }
+    public BattleSceneManager Battle = null;
 
     #endregion
+
+
 
     private void Start()
     {
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "BattleSelectScene")
         {
-            bSceneManager = new BattleSceneManager();
+            Battle = new BattleSceneManager();
         }
     }
 
