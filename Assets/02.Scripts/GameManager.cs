@@ -4,41 +4,40 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null;
-    private static StageManager stage = null;
+    private static GameManager instance;
+    public  static GameManager Instance { get { Init(); return instance; } }
     private BattleSceneManager bSceneManager = null;
 
-    private void Awake()
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ë´Ï´ï¿½.
+    #region Core
+    [SerializeField] private StageManager _stage = new StageManager();
+
+    public static StageManager Stage { get { return Instance._stage; } }
+
+    #endregion
+
+    private void Start()
     {
-        // ½Ì±ÛÅæ ±¸ÇöºÎ
-        {
-            if (instance == null)
-            {
-                instance = this;
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
-            }
-        }
+        Init();
     }
 
-    public static GameManager Instance
+    private static void Init()
     {
-        // ½Ì±ÛÅæ ±¸ÇöºÎ
-        get
+        if(instance == null)
         {
-            if (null == instance)
+            GameObject obj = GameObject.Find("Game Manager");
+
+            if(obj == null)
             {
-                return null;
+                obj = new GameObject { name = "Game Manager" };
+                obj.AddComponent<GameManager>();
             }
 
-            return instance;
+            DontDestroyOnLoad(obj);
+            instance = obj.GetComponent<GameManager>();
+
+            // ï¿½ï¿½ï¿½â¼­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Managerï¿½ï¿½ Initï¿½Ï¸ï¿½ ï¿½Ë´Ï´ï¿½.
+            Stage.Init();
         }
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
