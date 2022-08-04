@@ -17,11 +17,9 @@ public class HeroManager : MonoBehaviour
             GameObject Prefab = Resources.Load("Prefabs/Monsters/" + guid) as GameObject;
             GameObject HeroObj = Instantiate(Prefab);
             Hero LoadHero = HeroObj.GetComponent<Hero>();
-
             // Load된 게임 Data에서 해당 Hero의 속성 가져옴
             // LoadObject?
-            Hero HeroData = GameManager.Instance.LoadObject(guid);
-
+            Hero HeroData = GameManager.Instance.LoadObject(guid,GameManager.ObjectType.Hero) as Hero;
             // Hero의 속성 적용
             LoadHero.IsActive = false;
             LoadHero.MaxHP = HeroData.MaxHP;

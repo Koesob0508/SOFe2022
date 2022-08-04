@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+    public enum ObjectType
+    {
+        Hero,
+        Enemy,
+        Item
+    }
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
 
@@ -14,14 +20,12 @@ public class GameManager : MonoBehaviour
     public static StageManager Stage { get { return Instance._stage; } }
     public BattleSceneManager Battle = null;
 
-    [SerializeField] private HeroManager _hero = new HeroManager();
+    [SerializeField] private HeroManager _hero;
     public static HeroManager Hero { get { return Instance._hero; } }
 
     #endregion
 
-    public List<Character> characters = new List<Character>();
-
-
+    private List<Character> characters = new List<Character>();
     private void Awake()
     {
         ImportCharData();
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour
 
             // ���⼭���� ������ Manager�� Init�ϸ� �˴ϴ�.
             Stage.Init();
+            Hero.Init();
 
         }
     }
@@ -111,5 +116,13 @@ public class GameManager : MonoBehaviour
             chars_tmp.Add(enemy);
         }
         characters = chars_tmp;
+    }
+
+    public Character LoadObject(uint guid,ObjectType type)
+    {
+        if (type == ObjectType.Hero || type == ObjectType.Enemy)
+            return characters.Find((elem) => { return elem.GUID == guid; });
+        else
+            return null;
     }
 }

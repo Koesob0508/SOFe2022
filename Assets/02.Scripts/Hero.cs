@@ -6,6 +6,4 @@ public class Hero : Character
 {
     public bool IsActive;
 
-    // ¿©±â¿¡ HeroBase?
-    // Icon, PickUp, OnDrop
 }
