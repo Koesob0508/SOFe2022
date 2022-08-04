@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public static StageManager Stage { get { return Instance._stage; } }
     public BattleSceneManager Battle = null;
 
+    [SerializeField] private HeroManager _hero = new HeroManager();
+    public static HeroManager Hero { get { return Instance._hero; } }
+
     #endregion
 
     public List<Character> characters = new List<Character>();

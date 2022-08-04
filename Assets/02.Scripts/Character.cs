@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character
 {
@@ -17,4 +18,10 @@ public class Character
     public float AttackRange;
     public float AttackSpeed;
     public float DefensePoint;
+
+    public GameObject UnitUIObject;
+    public Image healthBar;
+    // 여기에서 각 UI Update?
+
+
 }
