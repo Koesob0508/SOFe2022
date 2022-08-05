@@ -4,12 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    public enum ObjectType
-    {
-        Hero,
-        Enemy,
-        Item
-    }
+
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
 
@@ -27,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    private List<Character> characters = new List<Character>();
+    private List<GlobalObject> ObjectCodex = new List<GlobalObject>();
     private void Awake()
     {
         ImportCharData();
@@ -72,7 +67,6 @@ public class GameManager : MonoBehaviour
 
     void ImportCharData()
     {
-        List<Character> chars_tmp = new List<Character>();
         CSVImporter csvImp = new CSVImporter();
         csvImp.OpenFile("Data/Heros_values");
         csvImp.ReadHeader();
@@ -92,9 +86,10 @@ public class GameManager : MonoBehaviour
             hero.MaxMana = float.Parse(elems[6]);
             hero.MoveSpeed = float.Parse(elems[7]);
             hero.AttackRange = float.Parse(elems[8]);
+            hero.Type = ObjectType.Hero;
             line = csvImp.Readline();
 
-            chars_tmp.Add(hero);
+            ObjectCodex.Add(hero);
         }
 
         CSVImporter csvImp1 = new CSVImporter();
@@ -116,19 +111,20 @@ public class GameManager : MonoBehaviour
             enemy.MaxMana = float.Parse(elems[6]);
             enemy.MoveSpeed = float.Parse(elems[7]);
             enemy.AttackRange = float.Parse(elems[8]);
+            enemy.Type = ObjectType.Enemy;
             line1 = csvImp1.Readline();
 
-            chars_tmp.Add(enemy);
+            ObjectCodex.Add(enemy);
         }
-        characters = chars_tmp;
     }
 
-    public Character LoadObject(uint guid,ObjectType type)
+    public GlobalObject LoadObject(uint guid,ObjectType type)
     {
-        if (type == ObjectType.Hero || type == ObjectType.Enemy)
-            return characters.Find((elem) => { return elem.GUID == guid; });
-        else
-            return null;
+        GlobalObject obj = ObjectCodex.Find((elem) => { return elem.GUID == guid; });
+        if (obj.Type != type)
+            throw new System.Exception("GUID and Type Didn't matched!");
+        else 
+            return obj;
     }
 
     public void TestFunc()
