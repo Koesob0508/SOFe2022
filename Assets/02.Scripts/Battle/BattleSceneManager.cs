@@ -11,6 +11,10 @@ public class BattleSceneManager : MonoBehaviour
     /// </summary>
     /// <param name="Heros"> Heros List that player owns</param>
     /// <param name="Enemies">Enemy List of this stage</param>
+    public void Init()
+    {
+        Debug.Log("BattleManager Initalized");
+    }
     public void Init(List<Hero> Heros, List<Enemy> Enemies)
     {
         Debug.Log("BattleManager Initalized");

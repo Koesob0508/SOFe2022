@@ -16,12 +16,14 @@ public class GameManager : MonoBehaviour
     // ������ ���� ����ø� �˴ϴ�.
     #region Core
     [SerializeField] private StageManager _stage = new StageManager();
+    [SerializeField] private BattleSceneManager _battle;
+    [SerializeField] private HeroManager _hero;
 
     public static StageManager Stage { get { return Instance._stage; } }
-    public BattleSceneManager Battle = null;
-
-    [SerializeField] private HeroManager _hero;
+    public static BattleSceneManager Battle { get { return Instance._battle; } }
     public static HeroManager Hero { get { return Instance._hero; } }
+
+
 
     #endregion
 
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         ImportCharData();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -61,7 +64,9 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "BattleSelectScene")
         {
-            Battle = new BattleSceneManager();
+            GameObject obj = new GameObject("BattleManager");
+            _battle = obj.AddComponent<BattleSceneManager>();
+            Battle.Init();
         }
     }
 
@@ -124,5 +129,10 @@ public class GameManager : MonoBehaviour
             return characters.Find((elem) => { return elem.GUID == guid; });
         else
             return null;
+    }
+
+    public void TestFunc()
+    {
+        SceneManager.LoadScene("BattleSelectScene");
     }
 }
