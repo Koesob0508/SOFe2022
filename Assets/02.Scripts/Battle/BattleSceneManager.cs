@@ -11,11 +11,31 @@ public class BattleSceneManager : MonoBehaviour
     /// </summary>
     /// <param name="Heros"> Heros List that player owns</param>
     /// <param name="Enemies">Enemy List of this stage</param>
-    public void Init()
+    public void Init(GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
+        switch (mapType)
+        {
+            case GameManager.MapType.Boss:
+                {
+
+                    break;
+                }
+            case GameManager.MapType.Dessert:
+                {
+
+                    break;
+                }
+            case GameManager.MapType.Jungle:
+                {
+
+                    break;
+                }
+            default:
+                throw new System.Exception("Undefined Map Type!");
+        }
     }
-    public void Init(List<Hero> Heros, List<Enemy> Enemies)
+    public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
         HeroList = Heros;

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
 
+
+
     // ������ ���� ����ø� �˴ϴ�.
     #region Core
     [SerializeField] private StageManager _stage = new StageManager();
@@ -23,6 +25,14 @@ public class GameManager : MonoBehaviour
     #endregion
 
     private List<GlobalObject> ObjectCodex = new List<GlobalObject>();
+
+    public enum MapType
+    {
+        Jungle,
+        Dessert,
+        Boss
+    }
+
     private void Awake()
     {
         ImportCharData();
@@ -61,7 +71,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = new GameObject("BattleManager");
             _battle = obj.AddComponent<BattleSceneManager>();
-            Battle.Init();
+            Battle.Init(MapType.Jungle);
         }
     }
 
