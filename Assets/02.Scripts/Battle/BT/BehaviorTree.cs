@@ -46,7 +46,7 @@ namespace BT
             TreeState = RootNode.UpdateNode(owner_comp);
             return TreeState;
         }
-
+#if UNITY_EDITOR
         public Node CreateNode(System.Type type)
         {
 
@@ -149,6 +149,7 @@ namespace BT
                 return;
             }
         }
+#endif
         public List<Node> GetChilds(Node parentNode)
         {
             List<Node> tempList = new List<Node>();

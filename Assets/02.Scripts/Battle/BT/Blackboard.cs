@@ -31,7 +31,7 @@ public class Blackboard : ScriptableObject
         }
         return bBoard;
     }
-
+#if UNITY_EDITOR
     public bool AddKeyValue(string name, BT_Key.KeyType type)
     {
         foreach (var obj in bb_keys)
@@ -87,6 +87,7 @@ public class Blackboard : ScriptableObject
         DestroyImmediate(elem,true);
         AssetDatabase.SaveAssets();
     }
+#endif
     public bool GetValueAsBool(string str)
     {
         var temp = bb_keys.Find(n => n.Name == str);

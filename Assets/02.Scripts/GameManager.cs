@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = new GameObject("BattleManager");
             _battle = obj.AddComponent<BattleSceneManager>();
-            Battle.Init(MapType.Jungle);
+            Battle.Init(MapType.Dessert);
         }
     }
 
@@ -140,5 +142,26 @@ public class GameManager : MonoBehaviour
     public void TestFunc()
     {
         SceneManager.LoadScene("BattleSelectScene");
+    }
+
+    
+    /// <summary>
+    /// Load File From Andriod
+    /// </summary>
+    /// <param name="FilePath">FilePath begins from under the StreamingAssets folder</param>
+    /// <returns> Readed Bytes</returns>
+    public byte[] LoadFile(string FilePath)
+    {
+        byte[] data;
+        string path = Application.streamingAssetsPath+FilePath;
+        UnityWebRequest www = UnityWebRequest.Get(path);
+        www.SendWebRequest();
+        while(!www.isDone)
+        {}
+        if (www.error == null)
+            data = www.downloadHandler.data;
+        else
+            throw new System.Exception("Data cannot Arrive");
+        return data;
     }
 }
