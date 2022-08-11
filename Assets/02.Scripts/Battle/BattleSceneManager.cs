@@ -8,7 +8,8 @@ public class BattleSceneManager : MonoBehaviour
     private List<Hero> HeroList = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
-    public Path.PathManager PathMgr;
+    public Path.PathManager PathMgr = null;
+    Sprite backImg = null;
 
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
@@ -18,9 +19,27 @@ public class BattleSceneManager : MonoBehaviour
     public void Init(GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
+
+        SetBackground(mapType);
+
         PathMgr = new Path.PathManager();
+        PathMgr.Init(backImg);
+    }
+    public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
+    {
+        Debug.Log("BattleManager Initalized");
+        HeroList = Heros;
+        EnemyList = Enemies;
+
+        SetBackground(mapType);
+
+        PathMgr = new Path.PathManager();
+        PathMgr.Init(backImg);
+    }
+    void SetBackground(GameManager.MapType mapType)
+    {
         string mapName = "";
-        Sprite backImg = null;
+
         switch (mapType)
         {
             case GameManager.MapType.Boss:
@@ -44,23 +63,21 @@ public class BattleSceneManager : MonoBehaviour
 
         byte[] bytes = GameManager.Instance.LoadFile("/Sprites/Maps/" + mapName);
 
-        if(bytes.Length > 0)
+        if (bytes.Length > 0)
         {
             Texture2D tex = new Texture2D(0, 0);
             tex.LoadImage(bytes);
 
             backImg = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         }
-        PathMgr.Init(backImg);
     }
-    public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
-    {
-        Debug.Log("BattleManager Initalized");
-        HeroList = Heros;
-        EnemyList = Enemies;
-    }
+
+  
     void Update()
     {
         
     }
+
+
+
 }
