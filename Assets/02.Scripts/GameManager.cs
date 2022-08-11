@@ -10,22 +10,25 @@ public class GameManager : MonoBehaviour
         Enemy,
         Item
     }
+
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
 
     // ������ ���� ����ø� �˴ϴ�.
-    #region Core
+    #region Managers
+
     [SerializeField] private StageManager _stage = new StageManager();
-
     public static StageManager Stage { get { return Instance._stage; } }
-    public BattleSceneManager Battle = null;
 
-    [SerializeField] private HeroManager _hero;
+    [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
+
+    public BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
     #endregion
 
     private List<Character> characters = new List<Character>();
+
     private void Awake()
     {
         ImportCharData();
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
+        // Test();
     }
 
     private static void Init()
@@ -57,6 +61,13 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    private void Test()
+    {
+        Debug.Log("테스트를 진행합니다.");
+        // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "BattleSelectScene")
@@ -125,4 +136,15 @@ public class GameManager : MonoBehaviour
         else
             return null;
     }
+
+    #region SceneManager
+    public void ToStageSelectScene()
+    {
+        SceneManager.LoadScene("TestStageSelectScene");
+    }
+    public void ToInitGameScene()
+    {
+        SceneManager.LoadScene("TestInitScene");
+    }
+    #endregion
 }
