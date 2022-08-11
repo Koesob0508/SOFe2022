@@ -1,34 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    public enum ObjectType
-    {
-        Hero,
-        Enemy,
-        Item
-    }
+
     private static GameManager instance;
     public  static GameManager Instance { get { Init(); return instance; } }
+
+
 
     // ������ ���� ����ø� �˴ϴ�.
     #region Core
     [SerializeField] private StageManager _stage = new StageManager();
+    [SerializeField] private BattleSceneManager _battle;
+    [SerializeField] private HeroManager _hero;
 
     public static StageManager Stage { get { return Instance._stage; } }
-    public BattleSceneManager Battle = null;
-
-    [SerializeField] private HeroManager _hero;
+    public static BattleSceneManager Battle { get { return Instance._battle; } }
     public static HeroManager Hero { get { return Instance._hero; } }
+
+
 
     #endregion
 
-    private List<Character> characters = new List<Character>();
+    private List<GlobalObject> ObjectCodex = new List<GlobalObject>();
+
+    public enum MapType
+    {
+        Jungle,
+        Dessert,
+        Boss
+    }
+
     private void Awake()
     {
         ImportCharData();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -61,13 +71,14 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "BattleSelectScene")
         {
-            Battle = new BattleSceneManager();
+            GameObject obj = new GameObject("BattleManager");
+            _battle = obj.AddComponent<BattleSceneManager>();
+            Battle.Init(MapType.Dessert);
         }
     }
 
     void ImportCharData()
     {
-        List<Character> chars_tmp = new List<Character>();
         CSVImporter csvImp = new CSVImporter();
         csvImp.OpenFile("Data/Heros_values");
         csvImp.ReadHeader();
@@ -87,9 +98,10 @@ public class GameManager : MonoBehaviour
             hero.MaxMana = float.Parse(elems[6]);
             hero.MoveSpeed = float.Parse(elems[7]);
             hero.AttackRange = float.Parse(elems[8]);
+            hero.Type = ObjectType.Hero;
             line = csvImp.Readline();
 
-            chars_tmp.Add(hero);
+            ObjectCodex.Add(hero);
         }
 
         CSVImporter csvImp1 = new CSVImporter();
@@ -111,18 +123,45 @@ public class GameManager : MonoBehaviour
             enemy.MaxMana = float.Parse(elems[6]);
             enemy.MoveSpeed = float.Parse(elems[7]);
             enemy.AttackRange = float.Parse(elems[8]);
+            enemy.Type = ObjectType.Enemy;
             line1 = csvImp1.Readline();
 
-            chars_tmp.Add(enemy);
+            ObjectCodex.Add(enemy);
         }
-        characters = chars_tmp;
     }
 
-    public Character LoadObject(uint guid,ObjectType type)
+    public GlobalObject LoadObject(uint guid,ObjectType type)
     {
-        if (type == ObjectType.Hero || type == ObjectType.Enemy)
-            return characters.Find((elem) => { return elem.GUID == guid; });
+        GlobalObject obj = ObjectCodex.Find((elem) => { return elem.GUID == guid; });
+        if (obj.Type != type)
+            throw new System.Exception("GUID and Type Didn't matched!");
+        else 
+            return obj;
+    }
+
+    public void TestFunc()
+    {
+        SceneManager.LoadScene("BattleSelectScene");
+    }
+
+    
+    /// <summary>
+    /// Load File From Andriod
+    /// </summary>
+    /// <param name="FilePath">FilePath begins from under the StreamingAssets folder</param>
+    /// <returns> Readed Bytes</returns>
+    public byte[] LoadFile(string FilePath)
+    {
+        byte[] data;
+        string path = Application.streamingAssetsPath+FilePath;
+        UnityWebRequest www = UnityWebRequest.Get(path);
+        www.SendWebRequest();
+        while(!www.isDone)
+        {}
+        if (www.error == null)
+            data = www.downloadHandler.data;
         else
-            return null;
+            throw new System.Exception("Data cannot Arrive");
+        return data;
     }
 }

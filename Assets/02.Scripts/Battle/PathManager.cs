@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Path
 {
-    public class PathManager : MonoBehaviour
+    public class PathManager
     {
 
         private GameObject Background;
@@ -28,10 +28,17 @@ namespace Path
 
         float xMin, yMin;
         
-        void Start()
+        public void Init(Sprite BackgroundImage)
         {
-            Background = GameObject.FindGameObjectWithTag("Background");
+            if (BackgroundImage == null)
+                throw new System.Exception("Background Image not settled");
+
+            Background = GameObject.FindGameObjectWithTag("Map");
             SpriteRenderer backSpriteRender = Background.GetComponent<SpriteRenderer>();
+            backSpriteRender.sprite = BackgroundImage;
+
+            StrechImageToScreenSize(backSpriteRender);
+
             Width = backSpriteRender.bounds.size.x;
             Height = backSpriteRender.bounds.size.y;
             
@@ -54,13 +61,21 @@ namespace Path
                 }
             }
 
-            RefreshObstacles();
-        
-            //tmpPath = FindPath(nodes[0] as Node, nodes[35] as Node);
-            //foreach(Node n in tmpPath)
-            //{
-            //    Debug.Log(n.index);
-            //}
+            //RefreshObstacles();
+       
+        }
+
+
+        void StrechImageToScreenSize(SpriteRenderer Image)
+        {
+            float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
+            float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+            
+            Vector3 ScaleVector = new Vector3(1, 1, 1);
+            ScaleVector.x = worldScreenWidth / (Image.sprite.bounds.size.x);
+            ScaleVector.y = worldScreenHeight / (Image.sprite.bounds.size.y);
+
+            Image.gameObject.transform.localScale = ScaleVector;
         }
         void RefreshObstacles()
         {
