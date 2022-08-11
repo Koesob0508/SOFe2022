@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
         Item
     }
     private static GameManager instance;
-    public  static GameManager Instance { get { Init(); return instance; } }
+    public  static GameManager Instance { get { Init(); 
+            return instance; } }
 
     // ������ ���� ����ø� �˴ϴ�.
     #region Core

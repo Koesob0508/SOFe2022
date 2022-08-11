@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GetHeroInfo : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class GetHeroInfo : MonoBehaviour
             HeroUIList.Add(HeroList[i].GUID, HeroUI);
         }
 
+        Debug.Log("Start Set Status");
+        SetStatus();
     }
 
     private GameObject GetChildWithName(GameObject obj, string name)
@@ -64,6 +67,7 @@ public class GetHeroInfo : MonoBehaviour
         }
         else
         {
+            Debug.Log("오잉");
             return null;
         }
     }
@@ -72,7 +76,7 @@ public class GetHeroInfo : MonoBehaviour
     {
         // Status
         Image HeroImage;
-        Text HeroName, HeroMbti;
+        TextMeshProUGUI HeroName, HeroMbti;
         GameObject HealthBar, HungerBar;
         Slider HealthSlider, HungerSlider;
         Image fill;
@@ -92,21 +96,24 @@ public class GetHeroInfo : MonoBehaviour
                 }
             }
 
+            // HeroUI에 정보 입력
             if (hero != null)
             {
-                // HeroUI에 정보 입력
                 HeroImage = GetChildWithName(HeroUI, "HeroImage").transform.GetComponent<Image>();
                 // HeroImage.sprite = 
 
-                HeroName = GetChildWithName(HeroUI, "Name").transform.GetComponent<Text>();
+                Debug.Log(hero.Name);
+                HeroName = GetChildWithName(HeroUI, "Name").transform.GetComponent<TextMeshProUGUI>();
                 HeroName.text = hero.Name;
+                
 
-                HeroMbti = GetChildWithName(HeroUI, "MBTI").transform.GetComponent<Text>();
+                HeroMbti = GetChildWithName(HeroUI, "MBTI").transform.GetComponent<TextMeshProUGUI>();
                 // HeroMbti.text = hero.
 
                 HealthBar = GetChildWithName(HeroUI, "HealthBar");
                 HealthSlider = HealthBar.transform.GetComponent<Slider>();
-                HealthSlider.value = hero.CurrentHP / hero.MaxHP;
+                HealthSlider.maxValue = hero.MaxHP;
+                HealthSlider.value = hero.CurrentHP;
                 fill = GetChildWithName(HealthBar, "Fill").transform.GetComponent<Image>();
                 fill.color = gradient.Evaluate(HealthSlider.normalizedValue);
 
@@ -117,6 +124,7 @@ public class GetHeroInfo : MonoBehaviour
                 fill.color = gradient.Evaluate(HungerSlider.normalizedValue);
             }
         }
+    
 
     }    
     
