@@ -6,23 +6,39 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+    public enum ObjectType
+    {
+        Hero,
+        Enemy,
+        Item
+    }
 
     private static GameManager instance;
-    public  static GameManager Instance { get { Init(); return instance; } }
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                return null;
+            }
 
+            return instance;
+        }
+    }
 
+    #region Managers
 
-    // ������ ���� ����ø� �˴ϴ�.
-    #region Core
     [SerializeField] private StageManager _stage = new StageManager();
-    [SerializeField] private BattleSceneManager _battle;
-    [SerializeField] private HeroManager _hero;
-
     public static StageManager Stage { get { return Instance._stage; } }
-    public static BattleSceneManager Battle { get { return Instance._battle; } }
+
+    [SerializeField] private CustomSceneManager _scene = new CustomSceneManager();
+    public static CustomSceneManager Scene { get { return Instance._scene; } }
+
+    [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
 
-
+    public static BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
     #endregion
 
@@ -44,15 +60,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
+        // Test();
     }
 
-    private static void Init()
+    private void Init()
     {
-        if(instance == null)
+        if (instance == null)
         {
+            #region Initialize GameManager
+
             GameObject obj = GameObject.Find("Game Manager");
 
-            if(obj == null)
+            if (obj == null)
             {
                 obj = new GameObject { name = "Game Manager" };
                 obj.AddComponent<GameManager>();
@@ -61,20 +80,25 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(obj);
             instance = obj.GetComponent<GameManager>();
 
-            // ���⼭���� ������ Manager�� Init�ϸ� �˴ϴ�.
-            Stage.Init();
-            Hero.Init();
+            #endregion
 
+            Stage.Init();
+            Scene.Init();
+            Hero.Init();
         }
-    }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "BattleSelectScene")
+        else
         {
+            Destroy(this.gameObject);
             GameObject obj = new GameObject("BattleManager");
             _battle = obj.AddComponent<BattleSceneManager>();
             Battle.Init(MapType.Dessert);
         }
+    }
+
+    private void Test()
+    {
+        Debug.Log("테스트를 진행합니다.");
+        // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
     }
 
     void ImportCharData()
