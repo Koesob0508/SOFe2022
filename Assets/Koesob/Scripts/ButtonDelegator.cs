@@ -8,17 +8,17 @@ namespace Koesob
     {
         public void ToInit()
         {
-            GameManager.Instance.ToInitGameScene();
+            GameManager.Scene.ToInitGameScene();
         }
 
         public void ToStageSelect()
         {
-            GameManager.Instance.ToStageSelectScene();
+            GameManager.Scene.ToStageSelectScene();
         }
 
         public void ToBattle()
         {
-            GameManager.Instance.ToBattleScene();
+            GameManager.Scene.ToBattleScene();
         }
     }
 }

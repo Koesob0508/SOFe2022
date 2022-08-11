@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StageManager _stage = new StageManager();
     public static StageManager Stage { get { return Instance._stage; } }
 
+    [SerializeField] private CustomSceneManager _scene = new CustomSceneManager();
+    public static CustomSceneManager Scene { get { return Instance._scene; } }
+
     [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
 
@@ -54,6 +57,8 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
+            #region Initialize GameManager
+
             GameObject obj = GameObject.Find("Game Manager");
 
             if (obj == null)
@@ -65,10 +70,10 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(obj);
             instance = obj.GetComponent<GameManager>();
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            Debug.Log("Load");
+            #endregion
 
             Stage.Init();
+            Scene.Init();
             Hero.Init();
         }
         else
@@ -143,45 +148,4 @@ public class GameManager : MonoBehaviour
         else
             return null;
     }
-
-    #region SceneManager
-    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        switch (scene.name)
-        {
-            case "BattleSelectScene":
-                Battle = new BattleSceneManager();
-                break;
-
-            case "TestInitScene":
-                Debug.Log("This is Init Game Scene");
-                break;
-
-            case "TestStageSelectScene":
-                Debug.Log("This is Stage Select Scene");
-                break;
-
-            case "TestBattleScene":
-                Debug.Log("This is Battle Scene");
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public void ToStageSelectScene()
-    {
-        SceneManager.LoadScene("TestStageSelectScene");
-    }
-    public void ToInitGameScene()
-    {
-        SceneManager.LoadScene("TestInitScene");
-    }
-
-    public void ToBattleScene()
-    {
-        SceneManager.LoadScene("TestBattleScene");
-    }
-    #endregion
 }
