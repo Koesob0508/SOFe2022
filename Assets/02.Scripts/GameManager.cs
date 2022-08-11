@@ -12,9 +12,19 @@ public class GameManager : MonoBehaviour
     }
 
     private static GameManager instance;
-    public  static GameManager Instance { get { Init(); return instance; } }
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                return null;
+            }
 
-    // ������ ���� ����ø� �˴ϴ�.
+            return instance;
+        }
+    }
+
     #region Managers
 
     [SerializeField] private StageManager _stage = new StageManager();
@@ -23,7 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
 
-    public BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
+    public static BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
     #endregion
 
@@ -40,13 +50,13 @@ public class GameManager : MonoBehaviour
         // Test();
     }
 
-    private static void Init()
+    private void Init()
     {
-        if(instance == null)
+        if (instance == null)
         {
             GameObject obj = GameObject.Find("Game Manager");
 
-            if(obj == null)
+            if (obj == null)
             {
                 obj = new GameObject { name = "Game Manager" };
                 obj.AddComponent<GameManager>();
@@ -55,10 +65,15 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(obj);
             instance = obj.GetComponent<GameManager>();
 
-            // ���⼭���� ������ Manager�� Init�ϸ� �˴ϴ�.
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            Debug.Log("Load");
+
             Stage.Init();
             Hero.Init();
-
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -66,14 +81,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("테스트를 진행합니다.");
         // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "BattleSelectScene")
-        {
-            Battle = new BattleSceneManager();
-        }
     }
 
     void ImportCharData()
@@ -129,7 +136,7 @@ public class GameManager : MonoBehaviour
         characters = chars_tmp;
     }
 
-    public Character LoadObject(uint guid,ObjectType type)
+    public Character LoadObject(uint guid, ObjectType type)
     {
         if (type == ObjectType.Hero || type == ObjectType.Enemy)
             return characters.Find((elem) => { return elem.GUID == guid; });
@@ -138,6 +145,31 @@ public class GameManager : MonoBehaviour
     }
 
     #region SceneManager
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
+        {
+            case "BattleSelectScene":
+                Battle = new BattleSceneManager();
+                break;
+
+            case "TestInitScene":
+                Debug.Log("This is Init Game Scene");
+                break;
+
+            case "TestStageSelectScene":
+                Debug.Log("This is Stage Select Scene");
+                break;
+
+            case "TestBattleScene":
+                Debug.Log("This is Battle Scene");
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public void ToStageSelectScene()
     {
         SceneManager.LoadScene("TestStageSelectScene");
@@ -145,6 +177,11 @@ public class GameManager : MonoBehaviour
     public void ToInitGameScene()
     {
         SceneManager.LoadScene("TestInitScene");
+    }
+
+    public void ToBattleScene()
+    {
+        SceneManager.LoadScene("TestBattleScene");
     }
     #endregion
 }

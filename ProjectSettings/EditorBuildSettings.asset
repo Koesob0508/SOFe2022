@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Koesob/Scenes/TestStageSelectScene.unity
     guid: 0870ebb6399f76e408bc8ec337da5634
+  - enabled: 1
+    path: Assets/Koesob/Scenes/TestBattleScene.unity
+    guid: c15421012b313854b88b00b6083bde36
   m_configObjects: {}
