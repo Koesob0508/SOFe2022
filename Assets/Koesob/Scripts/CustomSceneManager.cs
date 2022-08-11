@@ -27,6 +27,7 @@ public class CustomSceneManager
 
             case "TestStageSelectScene":
                 Debug.Log("This is Stage Select Scene");
+                // 이제 여기다가 Stage Show 함수 넣어두면 될듯
                 break;
 
             case "TestBattleScene":
