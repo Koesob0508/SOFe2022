@@ -17,8 +17,20 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
-            List<Units> targetList = null;
-            
+            List<GameObject> targetList = null;
+            switch (owner_comp.gameObject.GetComponent<Units>().charData.Type)
+            {
+                case GameManager.ObjectType.Hero:
+                    targetList = GameManager.Battle.enemyObjects;
+                    break;
+                case GameManager.ObjectType.Enemy:
+                    targetList = GameManager.Battle.heroObjects;
+                    break;
+                default:
+                    Debug.Log("Cannot Set Target");
+                    break;
+            }
+
 
             float dis = float.MaxValue;
 

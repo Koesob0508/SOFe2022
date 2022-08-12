@@ -20,7 +20,7 @@ namespace BT
             if(target)
             {
                 float Dist = Vector2.Distance(owner_comp.gameObject.transform.position, target.transform.position);
-                if(Dist <= owner_comp.gameObject.GetComponent<Units>().unitAR)
+                if(Dist <= owner_comp.gameObject.GetComponent<Units>().charData.AttackRange)
                 {
                     owner_comp.TreeObject.bBoard.SetValueAsBool("CanAttack", true);
                 }

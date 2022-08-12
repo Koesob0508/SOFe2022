@@ -8,13 +8,18 @@ public class BattleSceneManager : MonoBehaviour
     private List<Hero> HeroList = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
-    private List<GameObject> heroObjects = new List<GameObject>();
-    private List<GameObject> enemyObjects = new List<GameObject>();
+    public List<GameObject> heroObjects = new List<GameObject>();
+    public List<GameObject> enemyObjects = new List<GameObject>();
 
     public Path.PathManager PathMgr = null;
     Sprite backImg = null;
     private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
+
+
+    private uint hCount = 0;
+    private uint eCount = 0;
+
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
     /// </summary>
@@ -38,6 +43,9 @@ public class BattleSceneManager : MonoBehaviour
 
         HeroList = Heros;
         EnemyList = Enemies;
+
+        hCount = (uint)HeroList.Count;
+        eCount = (uint)EnemyList.Count;
 
         for(int i = 0; i < Heros.Count; i++)
         {
@@ -100,9 +108,67 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
+
+    public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
+    {
+        var targetUnitComp = Target.GetComponent<Units>();
+        if (targetUnitComp != null)
+        {
+            targetUnitComp.GetDamage(Dmg);
+        }
+    }
+
+    /// <summary>
+    /// Damage POPUP_UI Instantiate ( OBJ Pool 적용예정 )
+    /// </summary>
+    /// <param name="pos">만들위치</param>
+    /// <param name="dur">지속시간</param>
+    /// <param name="Dmg">데미지 양</param>
+    /// <returns></returns>
+    IEnumerator DamageUI(Vector2 pos, float dur, float Dmg)
+    {
+
+        yield break;
+    }
+
+    public void DeadProcess(Character charData)
+    {
+        switch (charData.Type)
+        {
+            case GameManager.ObjectType.Hero:
+                hCount -= 1;
+                break;
+            case GameManager.ObjectType.Enemy:
+                eCount -= 1;
+                break;
+            default:
+                break;
+        }
+
+        if(hCount == 0)
+        {
+            FinishBattle(false);
+        }
+        if(eCount == 0)
+        {
+            FinishBattle(true);
+        }
+    }
+    void FinishBattle(bool bIsWin)
+    {
+        if(bIsWin)
+        {
+
+        }
+        else
+        {
+
+        }
+
+    }
     void Update()
     {
-        
+        Debug.Log("HERO LIST HP : " + HeroList[0].CurrentHP);
     }
 
 

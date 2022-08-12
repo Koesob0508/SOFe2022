@@ -7,16 +7,6 @@ public class Units : MonoBehaviour
 {
     bool isInitalized = false;
 
-    public float unitMaxHP = 100.0f; // Max Health Point
-    public float unitCurHP = 100.0f; // Current Health Point
-    public float unitAD = 10.0f; // Attack Damage
-    public float unitAS = 0.5f; // Attack Speed
-    public float unitDP = 1.0f; // Defense Point
-    public float unitMM = 1.0f; // Max Mana
-    public float unitCM = 1.0f; // Current Mana
-    public float unitMS = 1.0f; // Movement Speed
-    public float unitAR = 1.0f; // Attack Range
-
     
     public Animator animator;
     public bool bHasSkillAnimation;
@@ -31,6 +21,8 @@ public class Units : MonoBehaviour
     public Vector3 uiOffset;
 
     BehaviorTreeComponent btComp;
+
+    public Character charData;
 
     protected virtual void Start()
     {
@@ -50,16 +42,9 @@ public class Units : MonoBehaviour
     
     public void Initalize(Character charData)
     {
-        unitMaxHP = charData.MaxHP;
-        unitCurHP = charData.MaxHP;
-        unitCM = charData.CurrentMana;
-        unitMM = charData.MaxMana;
-        unitAD = charData.AttackDamage;
-        unitAS = charData.AttackSpeed;
-        unitAR = charData.AttackRange;
-        unitDP = charData.DefensePoint;
-        unitMS = charData.MoveSpeed;
-
+        this.charData = charData;
+        this.charData.CurrentHP = this.charData.MaxHP;
+        
         animator = GetComponent<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -70,23 +55,37 @@ public class Units : MonoBehaviour
         //bb 초기화
         btComp = GetComponent<BehaviorTreeComponent>();
         btComp.TreeObject.bBoard.SetValueAsBool("IsDead", false);
-        btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", unitAR);
-        btComp.TreeObject.bBoard.SetValueAsFloat("Damage", unitAD);
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
+        btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
         btComp.Initalize();
+
+        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
 
         isInitalized = true;
 
     }
 
-
+    public void StopBattle()
+    {
+        isInitalized=false;
+        btComp.Terminate();
+    }
     public void GetDamage(float damage)
     {
-        if (damage > unitDP)
-            unitCurHP -= damage - unitDP;
+        if (damage > charData.DefensePoint)
+        {
+            charData.CurrentHP -= damage - charData.DefensePoint;
+        }
         else // 방어력이 데미지 보다 높으면 1데미지만 
-            unitCurHP -= 1;
+        {
+            charData.CurrentHP -= 1;
+        }
 
-        
+        if(charData.CurrentHP <= 0)
+        {
+            btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
+            GameManager.Battle.DeadProcess(charData);
+        }
     }
     public void PlayAttackAnimation()
     {
@@ -115,6 +114,7 @@ public class Units : MonoBehaviour
 
     private void UpdateUI()
     {
-        hpBar.value = unitCurHP / unitMaxHP;
+        Debug.Log("Update UI");
+        hpBar.value = charData.CurrentHP / charData.MaxHP;
     }
 }

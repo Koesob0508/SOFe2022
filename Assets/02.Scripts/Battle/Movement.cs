@@ -41,9 +41,9 @@ public class Movement : MonoBehaviour
         if(bCanMove)
             Move();
     }
-    public void TempAttack()
+    public void SetSpeed(float Speed)
     {
-        
+        this.speed = Speed;
     }
     private void Move()
     {
@@ -64,7 +64,7 @@ public class Movement : MonoBehaviour
             moveDir = (path[curIdx + 1] as Path.Node).pos - (path[curIdx] as Path.Node).pos;
             gameObject.transform.Translate(moveDir.normalized * speed * Time.deltaTime);
             float tempDist = Vector2.Distance((path[curIdx + 1] as Path.Node).pos, gameObject.transform.position);
-            if (tempDist <= GetComponent<Units>().unitAR)
+            if (tempDist <= GetComponent<Units>().charData.AttackRange)
             {
                 bCanMove = false;
                 animator.SetBool("Run", false);
