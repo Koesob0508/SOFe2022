@@ -8,9 +8,19 @@ public class HeroManager : MonoBehaviour
     
     public void Init()
     {
-        // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
+        
         Debug.Log("Hero Manager Init");
 
+        GameObject obj = GameObject.Find("Hero Manager");
+        if (obj == null)
+        {
+            obj = new GameObject { name = "Hero Manager" };
+            obj.AddComponent<HeroManager>();
+        }
+
+        DontDestroyOnLoad(obj);
+
+        // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
         //for (uint guid = 1; guid <= 17; guid++)
         //{
         //    // Prefab 폴더에서 load 
