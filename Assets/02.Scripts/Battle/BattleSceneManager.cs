@@ -8,9 +8,13 @@ public class BattleSceneManager : MonoBehaviour
     private List<Hero> HeroList = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
+    private List<GameObject> heroObjects = new List<GameObject>();
+    private List<GameObject> enemyObjects = new List<GameObject>();
+
     public Path.PathManager PathMgr = null;
     Sprite backImg = null;
-
+    private List<Vector2> tmpPosHero = new List<Vector2>();
+    private List<Vector2> tmpPosEnemy = new List<Vector2>();
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
     /// </summary>
@@ -19,7 +23,6 @@ public class BattleSceneManager : MonoBehaviour
     public void Init(GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
-
         SetBackground(mapType);
 
         PathMgr = new Path.PathManager();
@@ -28,13 +31,38 @@ public class BattleSceneManager : MonoBehaviour
     public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
+        tmpPosHero.Add(new Vector2(-3.8f, 0f));
+        tmpPosHero.Add(new Vector2(-8f, -2.5f));
+        tmpPosEnemy.Add(new Vector2(3.8f, 0f));
+        tmpPosEnemy.Add(new Vector2(8f, -2.5f));
+
         HeroList = Heros;
         EnemyList = Enemies;
 
+        for(int i = 0; i < Heros.Count; i++)
+        {
+            GameObject h = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + HeroList[i].GUID);
+            GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
+
+            GameObject hTemp = Instantiate(h, tmpPosHero[i], new Quaternion());
+            GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
+
+            Units tempU = hTemp.GetComponent<Units>();
+            Units tempU2 = eTemp.GetComponent<Units>();
+
+            tempU.Initalize(HeroList[i]);
+            tempU2.Initalize(EnemyList[i]);
+
+            heroObjects.Add(hTemp);
+            enemyObjects.Add(eTemp);
+        }
+
         SetBackground(mapType);
 
-        PathMgr = new Path.PathManager();
+        PathMgr = GetComponent<Path.PathManager>();
         PathMgr.Init(backImg);
+
+
     }
     void SetBackground(GameManager.MapType mapType)
     {
@@ -72,7 +100,6 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
-  
     void Update()
     {
         

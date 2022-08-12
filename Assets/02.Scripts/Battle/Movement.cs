@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     public Animator animator;
     public bool bHasSkillAnimation;
 
-    float timer;
 
     bool bCanMove = false;
     int curIdx = 0;
@@ -25,7 +24,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0;
 
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Units : MonoBehaviour
 {
+    bool isInitalized = false;
 
     public float unitMaxHP = 100.0f; // Max Health Point
     public float unitCurHP = 100.0f; // Current Health Point
@@ -33,6 +34,32 @@ public class Units : MonoBehaviour
 
     protected virtual void Start()
     {
+
+    }
+
+    protected virtual void Update()
+    {
+
+        if (isInitalized)
+        {
+            UpdateTimers();
+            UpdateUI();
+        }
+            
+    }
+    
+    public void Initalize(Character charData)
+    {
+        unitMaxHP = charData.MaxHP;
+        unitCurHP = charData.MaxHP;
+        unitCM = charData.CurrentMana;
+        unitMM = charData.MaxMana;
+        unitAD = charData.AttackDamage;
+        unitAS = charData.AttackSpeed;
+        unitAR = charData.AttackRange;
+        unitDP = charData.DefensePoint;
+        unitMS = charData.MoveSpeed;
+
         animator = GetComponent<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -40,22 +67,15 @@ public class Units : MonoBehaviour
         hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
 
         localScaleX = transform.localScale.x;
-    }
-
-    protected virtual void Update()
-    {
-        UpdateTimers();
-        UpdateUI();
-    }
-    
-    public void Initalize()
-    {
         //bb 초기화
         btComp = GetComponent<BehaviorTreeComponent>();
         btComp.TreeObject.bBoard.SetValueAsBool("IsDead", false);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", unitAR);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", unitAD);
         btComp.Initalize();
+
+        isInitalized = true;
+
     }
 
 

@@ -16,9 +16,23 @@ public class CustomSceneManager
         switch (scene.name)
         {
             case "BattleSelectScene":
-                GameObject obj = new GameObject("BattleManager");
-                GameManager.Battle = obj.AddComponent<BattleSceneManager>();
-                GameManager.Battle.Init(GameManager.MapType.Boss);
+                {
+                    GameObject obj = new GameObject("BattleManager");
+                    obj.AddComponent<Path.PathManager>();
+                    GameManager.Battle = obj.AddComponent<BattleSceneManager>();
+                    Hero h1 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 0; });
+                    Hero h2 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 1; });
+                    Enemy e1 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
+                    Enemy e2 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
+                    List<Hero> hlist = new List<Hero>();
+                    List<Enemy> elist = new List<Enemy>();
+                    hlist.Add(h1);
+                    hlist.Add(h2);
+                    elist.Add(e1);
+                    elist.Add(e2);
+                    GameManager.Battle.Init(hlist,elist,GameManager.MapType.Boss);
+
+                }
                 break;
 
             case "TestInitScene":
