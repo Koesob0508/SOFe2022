@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         ImportCharData();
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -89,9 +88,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
-            GameObject obj = new GameObject("BattleManager");
-            _battle = obj.AddComponent<BattleSceneManager>();
-            Battle.Init(MapType.Dessert);
         }
     }
 
@@ -154,7 +150,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GlobalObject LoadObject(uint guid,ObjectType type)
+    public GlobalObject LoadObject(uint guid,GameManager.ObjectType type)
     {
         GlobalObject obj = ObjectCodex.Find((elem) => { return elem.GUID == guid; });
         if (obj.Type != type)

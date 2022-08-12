@@ -16,7 +16,9 @@ public class CustomSceneManager
         switch (scene.name)
         {
             case "BattleSelectScene":
-                GameManager.Battle = new BattleSceneManager();
+                GameObject obj = new GameObject("BattleManager");
+                GameManager.Battle = obj.AddComponent<BattleSceneManager>();
+                GameManager.Battle.Init(GameManager.MapType.Boss);
                 break;
 
             case "TestInitScene":
@@ -42,11 +44,11 @@ public class CustomSceneManager
     }
     public void ToInitGameScene()
     {
-        SceneManager.LoadScene("TestInitScene");
+        SceneManager.LoadScene("GameStartScene");
     }
 
     public void ToBattleScene()
     {
-        SceneManager.LoadScene("TestBattleScene");
+        SceneManager.LoadScene("BattleSelectScene");
     }
 }
