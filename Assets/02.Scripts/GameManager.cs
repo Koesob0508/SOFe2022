@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
 
     public void TestFunc()
     {
-        SceneManager.LoadScene("BattleSelectScene");
+        Scene.ToBattleScene();
     }
 
     
