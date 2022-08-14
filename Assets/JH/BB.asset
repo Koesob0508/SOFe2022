@@ -28,6 +28,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: CanAttack
   Type: 0
+--- !u!114 &-2411691548987482680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: CanSkill
+  Type: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,6 +60,7 @@ MonoBehaviour:
   - {fileID: 2186395849951284326}
   - {fileID: -8233085894503828793}
   - {fileID: 3546849276695337490}
+  - {fileID: -2411691548987482680}
 --- !u!114 &2186395849951284326
 MonoBehaviour:
   m_ObjectHideFlags: 0

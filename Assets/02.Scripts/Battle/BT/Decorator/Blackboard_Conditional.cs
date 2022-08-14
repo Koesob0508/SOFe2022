@@ -35,39 +35,39 @@ namespace BT
                         if ((bool)key.Value)
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }    
                         else return State.Failed;
                     case BT_Key.KeyType.E_int:
                         if ((int)key.Value != 0)
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                         else return State.Failed;
                     case BT_Key.KeyType.E_float:
                         if ((float)key.Value != 0.0f)
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                         else return State.Failed;
                     case BT_Key.KeyType.E_vector2:
                         if ((Vector2)key.Value != Vector2.zero)
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                         else return State.Failed;
                     case BT_Key.KeyType.E_gameobject:
                         if ((GameObject)key.Value != null)
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                         else return State.Failed;
                     default:
-                        return State.Succeeded;
+                        return State.Failed;
                 }
 
             }
@@ -82,7 +82,7 @@ namespace BT
                         else
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                     case BT_Key.KeyType.E_int:
                         if ((int)key.Value != 0)
@@ -90,7 +90,7 @@ namespace BT
                         else
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                     case BT_Key.KeyType.E_float:
                         if ((float)key.Value != 0.0f)
@@ -98,7 +98,7 @@ namespace BT
                         else
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                     case BT_Key.KeyType.E_vector2:
                         if ((Vector2)key.Value != Vector2.zero)
@@ -106,7 +106,7 @@ namespace BT
                         else
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                     case BT_Key.KeyType.E_gameobject:
                         if ((GameObject)key.Value != null)
@@ -114,10 +114,10 @@ namespace BT
                         else
                         {
                             Child.UpdateNode(owner_comp);
-                            return State.InProgress;
+                            return State.Succeeded;
                         }
                     default:
-                        return State.InProgress;
+                        return State.Failed;
                 }
             }
         }

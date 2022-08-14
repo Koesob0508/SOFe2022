@@ -38,8 +38,10 @@ public class BattleSceneManager : MonoBehaviour
         Debug.Log("BattleManager Initalized");
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
         tmpPosHero.Add(new Vector2(-8f, -2.5f));
+        tmpPosHero.Add(new Vector2(-4f, -4f));
         tmpPosEnemy.Add(new Vector2(3.8f, 0f));
         tmpPosEnemy.Add(new Vector2(8f, -2.5f));
+        tmpPosEnemy.Add(new Vector2(8f, -4f));
 
         HeroList = Heros;
         EnemyList = Enemies;
@@ -112,9 +114,11 @@ public class BattleSceneManager : MonoBehaviour
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
         var targetUnitComp = Target.GetComponent<Units>();
+        var causerUnitComp = Causer.GetComponent<Units>();
         if (targetUnitComp != null)
         {
-            targetUnitComp.GetDamage(Dmg);
+            causerUnitComp.Attack();
+            targetUnitComp.Hit(Dmg);
         }
     }
 
@@ -168,7 +172,6 @@ public class BattleSceneManager : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log("HERO LIST HP : " + HeroList[0].CurrentHP);
     }
 
 

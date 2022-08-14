@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 486718081053002561, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3770564687858348003, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
       propertyPath: m_Name
@@ -67,5 +67,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9111782273464896615, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
+      propertyPath: UnitUIObject
+      value: 
+      objectReference: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}

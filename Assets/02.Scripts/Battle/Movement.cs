@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
     }
     public void SetSpeed(float Speed)
     {
-        this.speed = Speed;
+        this.speed = Speed / 10;
     }
     private void Move()
     {
@@ -91,14 +91,15 @@ public class Movement : MonoBehaviour
         bool movingLeft = moveDir.x < 0;
         bool movingRight = moveDir.x > 0;
 
+        var spr =  GetComponent<SpriteRenderer>();
         if (movingLeft)
         {
-            transform.localScale = new Vector3(-localScaleX, transform.localScale.y);
+            spr.flipX = true;
         }
 
         if (movingRight)
         {
-            transform.localScale = new Vector3(localScaleX, transform.localScale.y);
+            spr.flipX = false;
         }
     }
 }

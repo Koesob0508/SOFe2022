@@ -50,7 +50,6 @@ namespace BT
 
             var moveComp = owner_comp.gameObject.GetComponent<Movement>();
             var end_ = path[path.Count - 1] as Path.Node;
-            Debug.Log(owner_comp.gameObject.name + " Path End : " + end_.pos);
             moveComp.SetPath(path);
             return State.Succeeded;
 
