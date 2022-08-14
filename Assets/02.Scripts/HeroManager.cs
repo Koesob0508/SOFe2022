@@ -8,28 +8,38 @@ public class HeroManager : MonoBehaviour
     
     public void Init()
     {
-        // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
+        
         Debug.Log("Hero Manager Init");
 
-        for (uint guid = 1; guid <= 17; guid++)
+        GameObject obj = GameObject.Find("Hero Manager");
+        if (obj == null)
         {
-            // Prefab 폴더에서 load 
-            GameObject Prefab = Resources.Load("Prefabs/Monsters/" + guid) as GameObject;
-            GameObject HeroObj = Instantiate(Prefab);
-            Hero LoadHero = HeroObj.GetComponent<Hero>();
-            // Load된 게임 Data에서 해당 Hero의 속성 가져옴
-            // LoadObject?
-            Hero HeroData = GameManager.Instance.LoadObject(guid,GameManager.ObjectType.Hero) as Hero;
-            // Hero의 속성 적용
-            LoadHero.IsActive = false;
-            LoadHero.MaxHP = HeroData.MaxHP;
-            LoadHero.AttackDamage = HeroData.AttackDamage;
-            LoadHero.AttackSpeed = HeroData.AttackSpeed;
-            LoadHero.DefensePoint = HeroData.DefensePoint;
-            LoadHero.MaxMana = HeroData.MaxMana;
-            LoadHero.MoveSpeed = HeroData.MoveSpeed;
-            LoadHero.AttackRange = HeroData.AttackRange;
+            obj = new GameObject { name = "Hero Manager" };
+            obj.AddComponent<HeroManager>();
         }
+
+        DontDestroyOnLoad(obj);
+
+        // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
+        //for (uint guid = 1; guid <= 17; guid++)
+        //{
+        //    // Prefab 폴더에서 load 
+        //    GameObject Prefab = Resources.Load("Prefabs/Monsters/" + guid) as GameObject;
+        //    GameObject HeroObj = Instantiate(Prefab);
+        //    Hero LoadHero = HeroObj.GetComponent<Hero>();
+        //    // Load된 게임 Data에서 해당 Hero의 속성 가져옴
+        //    // LoadObject?
+        //    Hero HeroData = GameManager.Instance.LoadObject(guid,ObjectType.Hero) as Hero;
+        //    // Hero의 속성 적용
+        //    LoadHero.IsActive = false;
+        //    LoadHero.MaxHP = HeroData.MaxHP;
+        //    LoadHero.AttackDamage = HeroData.AttackDamage;
+        //    LoadHero.AttackSpeed = HeroData.AttackSpeed;
+        //    LoadHero.DefensePoint = HeroData.DefensePoint;
+        //    LoadHero.MaxMana = HeroData.MaxMana;
+        //    LoadHero.MoveSpeed = HeroData.MoveSpeed;
+        //    LoadHero.AttackRange = HeroData.AttackRange;
+        //}
     }
 
     public void EnrollHero(uint guid)

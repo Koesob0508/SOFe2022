@@ -42,7 +42,7 @@ namespace BT
             {
                 return State.Succeeded;
             }
-            var pathManager = FindObjectOfType<Path.PathManager>();
+            var pathManager = GameManager.Battle.PathMgr;
 
             Path.Node start = pathManager.GetClosestNode(owner_comp.gameObject.transform.position);
             Path.Node end = pathManager.GetClosestNode(movePos);
