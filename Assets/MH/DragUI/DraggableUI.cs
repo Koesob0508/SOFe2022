@@ -15,9 +15,6 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		canvasGroup = GetComponent<CanvasGroup>();
 	}
 
-	/// <summary>
-	/// 현재 오브젝트를 드래그하기 시작할 때 1회 호출
-	/// </summary>
 	public void OnBeginDrag(PointerEventData eventData)
 	{
 		// 드래그 직전에 소속되어 있던 부모 Transform 정보 저장
@@ -33,21 +30,14 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		canvasGroup.blocksRaycasts = false;
 	}
 
-	/// <summary>
-	/// 현재 오브젝트를 드래그 중일 때 매 프레임 호출
-	/// </summary>
 	public void OnDrag(PointerEventData eventData)
 	{
 		// 현재 스크린상의 마우스 위치를 UI 위치로 설정 (UI가 마우스를 쫓아다니는 상태)
 		rect.position = eventData.position;
 	}
 
-	/// <summary>
-	/// 현재 오브젝트의 드래그를 종료할 때 1회 호출
-	/// </summary>
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		// 드래그를 시작하면 부모가 canvas로 설정되기 때문에
 		// 드래그를 종료할 때 부모가 canvas이면 아이템 슬롯이 아닌 엉뚱한 곳에
 		// 드롭을 했다는 뜻이기 때문에 드래그 직전에 소속되어 있던 아이템 슬롯으로 아이템 이동
 		if (transform.parent == canvas)

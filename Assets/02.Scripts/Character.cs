@@ -10,8 +10,8 @@ public class Character
     public uint GUID;
     public string Name;
     public float MaxHP;
-    public float CurrentHP =100;
-    public float CurHunger =100;
+    public float CurrentHP;
+    public float CurHunger;
     public float MaxMana;
     public float CurrentMana;
     public float MoveSpeed;
