@@ -20,5 +20,15 @@ namespace Koesob
         {
             GameManager.Scene.ToBattleScene();
         }
+
+        public void ToTown()
+        {
+            GameManager.Scene.ToTownScene();
+        }
+
+        public void ToEvent()
+        {
+            GameManager.Scene.ToEventScene();
+        }
     }
 }

@@ -8,5 +8,12 @@ public class StageManager
     {
         Debug.Log("Stage Manager Init");
     }
+    
+    public List<Enemy> GetEnemies()
+    {
+        List<Enemy> enemies = new List<Enemy>();
+
+        return enemies;
+    }
 
 }
