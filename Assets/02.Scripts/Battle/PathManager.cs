@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Path
 {
-    public class PathManager
+    public class PathManager : MonoBehaviour
     {
 
         private GameObject Background;
@@ -17,9 +17,9 @@ namespace Path
         ArrayList tmpPath = new ArrayList();
 
         [Range(0, 20)]
-        public int ColCount = 0;
+        public int ColCount = 20;
         [Range(0,20)]
-        public int RowCount = 0;
+        public int RowCount = 20;
 
         float offsetX = 0, offsetY = 0;
         float Width = 0, Height = 0;

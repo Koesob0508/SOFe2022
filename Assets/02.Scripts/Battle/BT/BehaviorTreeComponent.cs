@@ -6,23 +6,27 @@ using UnityEngine;
 public class BehaviorTreeComponent : MonoBehaviour
 {
     public BT.BehaviorTree TreeObject;
-    bool isInitalized = false;
+    bool isActive = false;
     protected void Start()
     {
         TreeObject = TreeObject.Clone();
     }
     protected void Update()
     {
-        if(isInitalized)
+        if(isActive)
             TreeObject.UpdateTree(this);
     }
     public void Initalize()
     {
-        isInitalized = true;
+        isActive = true;
+    }
+    public void Terminate()
+    {
+        isActive = false;
     }
     public Blackboard GetBlackBoardComponent()
     {
-        if (isInitalized)
+        if (isActive)
             return TreeObject.bBoard;
         else
             return null;

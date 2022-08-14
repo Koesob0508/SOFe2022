@@ -28,12 +28,12 @@ namespace BT
                 case State.Failed:
                     current++;
                     break;
-                // 다음 Update 시 다음 자식 실행.
+                // 종료.
                 case State.Succeeded:
                     return State.Succeeded;
             }
 
-            return current == Childs.Count ? State.Failed : State.InProgress;
+            return current == Childs.Count ? State.Succeeded : State.InProgress;
         }
     }
 }

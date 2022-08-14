@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5470650672359620912}
   - component: {fileID: 7280390964524895005}
   - component: {fileID: 2969987496241082816}
+  - component: {fileID: 9111782273464896615}
   - component: {fileID: 2327354003555471170}
   - component: {fileID: 5177436895270943241}
   m_Layer: 0
@@ -156,6 +157,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.0001, y: 0.0001}
   m_EdgeRadius: 0
+--- !u!114 &9111782273464896615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770564687858348003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02e042f4787f014e8658a5636c49d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitMaxHP: 100
+  unitCurHP: 100
+  unitAD: 10
+  unitAS: 0.5
+  unitDP: 1
+  unitMM: 1
+  unitCM: 1
+  unitMS: 1
+  unitAR: 1
+  animator: {fileID: 0}
+  bHasSkillAnimation: 0
+  attackTimer: 0
+  UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
+  uiOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2327354003555471170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,4 +210,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45915147e5d30034b9f6c17b5554b69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TreeObject: {fileID: 0}
+  TreeObject: {fileID: 11400000, guid: f77197376b558a044bd69a6cadc1dc6c, type: 2}

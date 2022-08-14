@@ -5,16 +5,7 @@ using UnityEngine.UI;
 
 public class Units : MonoBehaviour
 {
-
-    public float unitMaxHP = 100.0f; // Max Health Point
-    public float unitCurHP = 100.0f; // Current Health Point
-    public float unitAD = 10.0f; // Attack Damage
-    public float unitAS = 0.5f; // Attack Speed
-    public float unitDP = 1.0f; // Defense Point
-    public float unitMM = 1.0f; // Max Mana
-    public float unitCM = 1.0f; // Current Mana
-    public float unitMS = 1.0f; // Movement Speed
-    public float unitAR = 1.0f; // Attack Range
+    bool isInitalized = false;
 
     
     public Animator animator;
@@ -27,52 +18,117 @@ public class Units : MonoBehaviour
     public GameObject UnitUIObject;
     GameObject UnitUI;
     Slider hpBar;
+    Slider spBar;
     public Vector3 uiOffset;
 
     BehaviorTreeComponent btComp;
 
+    public Character charData;
+
     protected virtual void Start()
     {
-        animator = GetComponent<Animator>();
-        UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
-        UnitUI.transform.parent = transform;
-        UnitUI.transform.position += uiOffset;
-        hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
 
-        localScaleX = transform.localScale.x;
     }
 
     protected virtual void Update()
     {
-        UpdateTimers();
-        UpdateUI();
+
+        if (isInitalized)
+        {
+            UpdateTimers();
+            UpdateUI();
+        }
+            
     }
     
-    public void Initalize()
+    public void Initalize(Character charData)
     {
-        //bb 초기화
+        this.charData = charData;
+        this.charData.CurrentHP = this.charData.MaxHP;
+        this.charData.CurrentMana = 0;
+
+        animator = GetComponentInChildren<Animator>();
+        UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
+        UnitUI.transform.parent = transform;
+        UnitUI.transform.position += uiOffset;
+        hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
+        spBar = UnitUI.transform.GetChild(1).GetComponent<Slider>();
+        localScaleX = transform.localScale.x;
+
+        //BT,BB 초기화
         btComp = GetComponent<BehaviorTreeComponent>();
         btComp.TreeObject.bBoard.SetValueAsBool("IsDead", false);
-        btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", unitAR);
-        btComp.TreeObject.bBoard.SetValueAsFloat("Damage", unitAD);
+        btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
+        btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
         btComp.Initalize();
+
+        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
+
+        isInitalized = true;
+
     }
 
-
-    public void GetDamage(float damage)
+    public void StopBattle()
     {
-        if (damage > unitDP)
-            unitCurHP -= damage - unitDP;
+        isInitalized=false;
+        btComp.Terminate();
+    }
+    public void Attack()
+    {
+        charData.CurrentMana += 10;
+        if(charData.CurrentMana > charData.MaxMana)
+        {
+            btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
+        }
+    }
+    public void Hit(float damage)
+    {
+        if (damage > charData.DefensePoint)
+        {
+            charData.CurrentHP -= damage - charData.DefensePoint;
+        }
         else // 방어력이 데미지 보다 높으면 1데미지만 
-            unitCurHP -= 1;
+        {
+            charData.CurrentHP -= 1;
+        }
 
-        
+        if(charData.CurrentHP <= 0)
+        {
+            btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
+            GameManager.Battle.DeadProcess(charData);
+        }
+        else
+        {
+            PlayGetHitAniamtion();
+        }
+    }
+    public virtual void ExecuteSkill()
+    {
+        Debug.Log(name + " Executed skills");
+        PlaySkillAnimation();
+        charData.CurrentMana = 0;
+    }
+    public void PlaySkillAnimation()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
+            animator.SetTrigger("Skill");
+        }
     }
     public void PlayAttackAnimation()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             animator.SetTrigger("Attack");
+        }
+    }
+    public void PlayGetHitAniamtion()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
+        {
+            animator.SetTrigger("GetHit");
+
         }
     }
     public void PlayDeadAnimation()
@@ -92,9 +148,10 @@ public class Units : MonoBehaviour
         if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             attackTimer += Time.deltaTime;
     }
-
     private void UpdateUI()
     {
-        hpBar.value = unitCurHP / unitMaxHP;
+        Debug.Log(name + " Max Manna : " + charData.MaxMana);
+        hpBar.value = charData.CurrentHP / charData.MaxHP;
+        spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 }

@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    private List<GlobalObject> ObjectCodex = new List<GlobalObject>();
+    public List<GlobalObject> ObjectCodex = new List<GlobalObject>();
 
     public enum MapType
     {

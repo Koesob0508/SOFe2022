@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     public Animator animator;
     public bool bHasSkillAnimation;
 
-    float timer;
 
     bool bCanMove = false;
     int curIdx = 0;
@@ -25,7 +24,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0;
 
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -43,9 +41,9 @@ public class Movement : MonoBehaviour
         if(bCanMove)
             Move();
     }
-    public void TempAttack()
+    public void SetSpeed(float Speed)
     {
-        
+        this.speed = Speed / 10;
     }
     private void Move()
     {
@@ -66,7 +64,7 @@ public class Movement : MonoBehaviour
             moveDir = (path[curIdx + 1] as Path.Node).pos - (path[curIdx] as Path.Node).pos;
             gameObject.transform.Translate(moveDir.normalized * speed * Time.deltaTime);
             float tempDist = Vector2.Distance((path[curIdx + 1] as Path.Node).pos, gameObject.transform.position);
-            if (tempDist <= GetComponent<Units>().unitAR)
+            if (tempDist <= GetComponent<Units>().charData.AttackRange)
             {
                 bCanMove = false;
                 animator.SetBool("Run", false);
@@ -93,14 +91,15 @@ public class Movement : MonoBehaviour
         bool movingLeft = moveDir.x < 0;
         bool movingRight = moveDir.x > 0;
 
+        var spr =  GetComponent<SpriteRenderer>();
         if (movingLeft)
         {
-            transform.localScale = new Vector3(-localScaleX, transform.localScale.y);
+            spr.flipX = true;
         }
 
         if (movingRight)
         {
-            transform.localScale = new Vector3(localScaleX, transform.localScale.y);
+            spr.flipX = false;
         }
     }
 }

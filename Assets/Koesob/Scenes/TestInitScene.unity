@@ -254,7 +254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hero: {fileID: 1765471157}
-  Battle: {fileID: 0}
 --- !u!4 &244979661
 Transform:
   m_ObjectHideFlags: 0

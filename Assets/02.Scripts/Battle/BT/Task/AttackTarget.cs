@@ -18,8 +18,8 @@ namespace BT
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
             Blackboard bb = owner_comp.TreeObject.bBoard;
-            Units targetObj = bb.GetValueAsGameObject("targetObj").GetComponent<Units>();
-            if(targetObj.gameObject.GetComponent<BehaviorTreeComponent>().TreeObject.bBoard.GetValueAsBool("IsDead"))
+            GameObject targetObj = bb.GetValueAsGameObject("targetObj");
+            if(targetObj.GetComponent<BehaviorTreeComponent>().TreeObject.bBoard.GetValueAsBool("IsDead"))
             {
                 bb.SetValueAsGameObject("targetObj", null);
                 return State.Failed;
@@ -27,7 +27,7 @@ namespace BT
             float dmg = bb.GetValueAsFloat("Damage");
 
             owner_comp.gameObject.GetComponent<Units>().PlayAttackAnimation();
-            targetObj.GetDamage(dmg);
+            GameManager.Battle.GenerateHit(owner_comp.gameObject, targetObj.gameObject, dmg);
             return State.Succeeded;
         }
     }
