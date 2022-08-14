@@ -47,7 +47,7 @@ public class Units : MonoBehaviour
         this.charData.CurrentHP = this.charData.MaxHP;
         this.charData.CurrentMana = 0;
 
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
         UnitUI.transform.position += uiOffset;
