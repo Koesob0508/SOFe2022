@@ -110,7 +110,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: b6a30bb1513060640b8034e199ee2a94
-  position: {x: 721.60004, y: 1267.2001}
+  position: {x: 845.60004, y: 1573.6001}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   WaitTime: 1
 --- !u!114 &-740961285270585551
@@ -133,7 +133,6 @@ MonoBehaviour:
   Childs:
   - {fileID: -4327829606433147457}
   - {fileID: 6982194497466809063}
-  - {fileID: -816743086515593605}
 --- !u!114 &-564458516601651681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +190,7 @@ MonoBehaviour:
   - {fileID: 6982194497466809063}
   - {fileID: -6078588596175984267}
   - {fileID: 6205304364275148433}
+  - {fileID: 8560713264447939924}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &2361024463858042853
 MonoBehaviour:
@@ -264,7 +264,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0f1d04e07b9ce874d806f39639e0148e
-  position: {x: 713.4436, y: 1440}
+  position: {x: 636.9001, y: 1575.2003}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &4771013704612239501
 MonoBehaviour:
@@ -363,7 +363,7 @@ MonoBehaviour:
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Childs:
   - {fileID: -6078588596175984267}
-  - {fileID: 4259973212174531734}
+  - {fileID: 8560713264447939924}
 --- !u!114 &8215860550293318462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +384,26 @@ MonoBehaviour:
   Childs:
   - {fileID: 4771013704612239501}
   - {fileID: -3420939773599312849}
+--- !u!114 &8560713264447939924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5170caf740dc4d46bb910315fad8257, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 17bdfea179469a540a546a95bb6ac57a
+  position: {x: 733.32513, y: 1439.764}
+  bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
+  Childs:
+  - {fileID: 4259973212174531734}
+  - {fileID: -816743086515593605}
 --- !u!114 &8720441804864661420
 MonoBehaviour:
   m_ObjectHideFlags: 0

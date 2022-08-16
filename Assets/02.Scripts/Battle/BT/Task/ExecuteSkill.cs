@@ -9,7 +9,7 @@ namespace BT
         bool isFinished = false;
         protected override void OnStart()
         {
-            isFinished = false;
+            
         }
 
         protected override void OnStop()
@@ -18,12 +18,13 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
+            isFinished = false;
             var unitComp = owner_comp.gameObject.GetComponent<Units>();
             if (unitComp != null)
                 unitComp.ExecuteSkill();
+            unitComp.skillFinished += FinishSkill;
             owner_comp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
 
-            unitComp.skillFinished += FinishSkill;
 
             //불러주면 BT 멈추고 이 태스크의 TickTask 진행
             owner_comp.TreeObject.TaskInProgress(this);

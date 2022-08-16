@@ -109,11 +109,12 @@ public class BattleSceneManager : MonoBehaviour
         float prog = 0.0f;
         while(prog < 1.5f)
         {
-            prog += 0.01f;
+            prog += 0.03f;
             mat.SetFloat("_Progress", prog);
             Debug.Log(prog);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.01f);
         }
+        transition.gameObject.SetActive(false);
         yield break;
     }
     void SetBackground(GameManager.MapType mapType)

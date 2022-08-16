@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Units : MonoBehaviour
 {
     bool isUpdating = false;
-
+    bool isSkillPlaying = false;
     
     public Animator animator;
     public bool bHasSkillAnimation;
@@ -81,7 +81,7 @@ public class Units : MonoBehaviour
     public void Attack()
     {
         charData.CurrentMana += 10;
-        if(charData.CurrentMana > charData.MaxMana)
+        if(charData.CurrentMana >= charData.MaxMana)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
@@ -104,20 +104,23 @@ public class Units : MonoBehaviour
         }
         else
         {
-            PlayGetHitAniamtion();
+            if(!isSkillPlaying)
+                PlayGetHitAniamtion();
         }
     }
     public virtual void ExecuteSkill()
     {
+        isSkillPlaying = true;
         PlaySkillAnimation();
         charData.CurrentMana = 0;
-        Debug.Log(name +"Anim Time : " + GetCurrentAnimationTime());
-        StartCoroutine("finishSkill",3);
+        StartCoroutine("finishSkill", 3);
     }
     IEnumerator finishSkill(float t)
     {
         yield return new WaitForSeconds(t);
         skillFinished();
+        isSkillPlaying=false;
+        yield break;
     }
     float GetCurrentAnimationTime()
     {
