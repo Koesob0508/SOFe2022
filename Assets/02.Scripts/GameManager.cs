@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
             instance = obj.GetComponent<GameManager>();
 
             #endregion
-
             Stage.Init();
             Scene.Init();
             Hero.Init();

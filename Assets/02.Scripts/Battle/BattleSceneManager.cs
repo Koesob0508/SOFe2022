@@ -2,9 +2,15 @@ using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleSceneManager : MonoBehaviour
 {
+    private Canvas battleUI = null;
+    private Button startBtn = null;
+    private Sprite backImg = null;
+    private Image transition = null;
+
     private List<Hero> HeroList = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
@@ -12,7 +18,6 @@ public class BattleSceneManager : MonoBehaviour
     public List<GameObject> enemyObjects = new List<GameObject>();
 
     public Path.PathManager PathMgr = null;
-    Sprite backImg = null;
     private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
 
@@ -29,6 +34,8 @@ public class BattleSceneManager : MonoBehaviour
     {
         Debug.Log("BattleManager Initalized");
         SetBackground(mapType);
+
+        battleUI = FindObjectOfType<Canvas>();
 
         PathMgr = new Path.PathManager();
         PathMgr.Init(backImg);
@@ -69,10 +76,45 @@ public class BattleSceneManager : MonoBehaviour
 
         SetBackground(mapType);
 
+        battleUI = FindObjectOfType<Canvas>();
+        startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
+        transition = GameObject.Find("Transition").GetComponent<Image>();
+        startBtn.onClick.AddListener( delegate { StartBattle(); });
         PathMgr = GetComponent<Path.PathManager>();
         PathMgr.Init(backImg);
 
+        Color fadeColor;
+        switch (mapType)
+        {
+            case GameManager.MapType.Jungle:
+                fadeColor = new Color(0.71f, 0.9f, 0.11f);
+                break;
+            case GameManager.MapType.Dessert:
+                fadeColor = new Color(0.9f, 0.87f, 0.48f);
+                break;
+            case GameManager.MapType.Boss:
+                fadeColor = new Color(0.9f, 0.25f, 0.22f);
+                break;
+            default:
+                fadeColor = Color.white;
+                break;
+        }
+        StartCoroutine(FadeInTransition(fadeColor));
+    }
 
+    IEnumerator FadeInTransition(Color col)
+    {
+        Material mat = transition.material;
+        mat.SetColor("_NoiseCol",col);
+        float prog = 0.0f;
+        while(prog < 1.5f)
+        {
+            prog += 0.01f;
+            mat.SetFloat("_Progress", prog);
+            Debug.Log(prog);
+            yield return new WaitForSeconds(0.03f);
+        }
+        yield break;
     }
     void SetBackground(GameManager.MapType mapType)
     {
@@ -110,7 +152,18 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
-
+    void StartBattle()
+    {
+        foreach(var hero in heroObjects)
+        {
+            hero.GetComponent<Units>().StartBattle();
+        }
+        foreach (var enemy in enemyObjects)
+        {
+            enemy.GetComponent<Units>().StartBattle();
+        }
+        startBtn.gameObject.SetActive(false);
+    }
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
         var targetUnitComp = Target.GetComponent<Units>();

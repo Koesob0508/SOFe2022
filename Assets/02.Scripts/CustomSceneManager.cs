@@ -51,7 +51,7 @@ public class CustomSceneManager
                 elist.Add(e1);
                 elist.Add(e2);
                 elist.Add(e3);
-                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
+                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Jungle);
 
                 break;
 

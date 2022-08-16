@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Units : MonoBehaviour
 {
-    bool isInitalized = false;
+    bool isUpdating = false;
 
     
     public Animator animator;
@@ -26,6 +26,8 @@ public class Units : MonoBehaviour
     public Character charData;
 
     public System.Action skillFinished;
+
+
     protected virtual void Start()
     {
 
@@ -34,9 +36,8 @@ public class Units : MonoBehaviour
     protected virtual void Update()
     {
 
-        if (isInitalized)
+        if (isUpdating)
         {
-            UpdateTimers();
             UpdateUI();
         }
             
@@ -62,18 +63,20 @@ public class Units : MonoBehaviour
         btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
-        btComp.Initalize();
+        //btComp.Initalize();
 
         GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
-
-        isInitalized = true;
-
     }
-
-    public void StopBattle()
+    public void StartBattle()
     {
-        isInitalized=false;
+        btComp.Initalize();
+        isUpdating = true;
+    }
+    public void EndBattle()
+    {
         btComp.Terminate();
+        isUpdating = false;
+
     }
     public void Attack()
     {
@@ -153,12 +156,7 @@ public class Units : MonoBehaviour
     {
         animator.SetBool("Run", false);
     }
-    private void UpdateTimers()
-    {
-        tTimer += Time.deltaTime;
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            attackTimer += Time.deltaTime;
-    }
+
     private void UpdateUI()
     {
         hpBar.value = charData.CurrentHP / charData.MaxHP;
