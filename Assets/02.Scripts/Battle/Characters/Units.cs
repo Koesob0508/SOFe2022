@@ -25,6 +25,7 @@ public class Units : MonoBehaviour
 
     public Character charData;
 
+    public System.Action skillFinished;
     protected virtual void Start()
     {
 
@@ -105,9 +106,19 @@ public class Units : MonoBehaviour
     }
     public virtual void ExecuteSkill()
     {
-        Debug.Log(name + " Executed skills");
         PlaySkillAnimation();
         charData.CurrentMana = 0;
+        Debug.Log(name +"Anim Time : " + GetCurrentAnimationTime());
+        StartCoroutine("finishSkill",3);
+    }
+    IEnumerator finishSkill(float t)
+    {
+        yield return new WaitForSeconds(t);
+        skillFinished();
+    }
+    float GetCurrentAnimationTime()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
     public void PlaySkillAnimation()
     {
@@ -150,7 +161,6 @@ public class Units : MonoBehaviour
     }
     private void UpdateUI()
     {
-        Debug.Log(name + " Max Manna : " + charData.MaxMana);
         hpBar.value = charData.CurrentHP / charData.MaxHP;
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
