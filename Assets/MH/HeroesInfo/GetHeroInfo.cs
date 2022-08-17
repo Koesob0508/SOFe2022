@@ -7,8 +7,7 @@ using TMPro;
 
 public class GetHeroInfo : MonoBehaviour
 {
-    //public List<Hero> HeroList = GameManager.Hero.GetHeroList();
-    public List<Hero> HeroList = new List<Hero>();
+    public List<Hero> HeroList = GameManager.Hero.GetHeroList();
     public Dictionary<uint, GameObject> HeroUIList = new Dictionary<uint, GameObject>();
 
     public GameObject HeroUIObject;
@@ -27,29 +26,10 @@ public class GetHeroInfo : MonoBehaviour
         return guid;
     }
 
-    void Test()
-    {
-        Debug.Log("Hero Info Test");
-
-        Hero hero1 = new Hero();
-        Hero hero2 = new Hero();
-        Hero hero3 = new Hero();
-        Hero hero4 = new Hero();
-        hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
-        hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
-        hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
-        hero4 = GameManager.Instance.LoadObject(4, GameManager.ObjectType.Hero) as Hero;
-
-        HeroList.Add(hero1);
-        HeroList.Add(hero2);
-        HeroList.Add(hero3);
-        HeroList.Add(hero4);
-    }
 
     // Init()로 변경할 것
     void Start()
     {
-        Test();
 
         int HeroNUM = HeroList.Count;
 
