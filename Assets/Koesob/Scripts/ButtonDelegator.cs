@@ -30,5 +30,20 @@ namespace Koesob
         {
             GameManager.Scene.ToEventScene();
         }
+
+        public void ShowHeroInfo()
+        {
+            GameObject AllHeroInfoUI = GameObject.Find("AllHeroUI(Clone)");
+
+            if (AllHeroInfoUI != null)
+            {
+                Destroy(AllHeroInfoUI);
+            }
+            else
+            {
+                AllHeroInfoUI = Resources.Load<GameObject>("AllHeroUI");
+                Instantiate(AllHeroInfoUI);
+            }
+        }
     }
 }
