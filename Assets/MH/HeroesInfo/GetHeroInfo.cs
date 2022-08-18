@@ -16,7 +16,6 @@ public class GetHeroInfo : MonoBehaviour
     // Status
     public Gradient gradient;
 
-    // Choose Stage Scene 시작할 때 Init()
     // 마지막에 변경사항 적용된 HeroList를 HeroManager에게 전달 (?)
     //  ㄴ 체력, 장비, 새로 영입한 Hero의 정보 ... 등
 
@@ -30,7 +29,6 @@ public class GetHeroInfo : MonoBehaviour
     // Init()로 변경할 것
     void Start()
     {
-
         int HeroNUM = HeroList.Count;
 
         for (int i = 0; i < HeroNUM; i++)
@@ -40,7 +38,6 @@ public class GetHeroInfo : MonoBehaviour
             HeroUIList.Add(HeroList[i].GUID, HeroUI);
         }
 
-        Debug.Log("Start Set Status");
         SetStatus();
     }
 

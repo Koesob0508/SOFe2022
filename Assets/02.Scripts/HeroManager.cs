@@ -27,6 +27,7 @@ public class HeroManager : MonoBehaviour
         Hero hero2 = new Hero();
         Hero hero3 = new Hero();
         Hero hero4 = new Hero();
+
         hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
         hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
         hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
@@ -64,12 +65,24 @@ public class HeroManager : MonoBehaviour
     public void EnrollHero(uint guid)
     {
         // 해당 guid의 hero를 setActive, List에 등록한다 -> 이는 Battle Manager에 넘어감
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Hero"))
+
+        //foreach (GameObject g in GameObject.FindGameObjectsWithTag("Hero")) 
+        //{
+        //    if (g.GetComponent<Hero>().GUID == guid)
+        //    {
+        //        g.GetComponent<Hero>().IsActive = true;
+        //        HeroList.Add(g.GetComponent<Hero>());
+        //        break;
+        //    }
+        //}
+        
+        foreach (Hero hero in GameManager.Instance.ObjectCodex)
         {
-            if (g.GetComponent<Hero>().GUID == guid)
+            if (hero.GUID == guid)
             {
-                g.GetComponent<Hero>().IsActive = true;
-                HeroList.Add(g.GetComponent<Hero>());
+                hero.IsActive = true;
+                HeroList.Add(hero);
+                Debug.Log("Enroll " + hero.GUID + hero.Name);
                 break;
             }
         }

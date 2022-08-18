@@ -210,8 +210,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4206533501017213517}
-        m_TargetAssemblyTypeName: MouseEventItemInfo, Assembly-CSharp
-        m_MethodName: OnMouseEnter
+        m_TargetAssemblyTypeName: MouseEventUI, Assembly-CSharp
+        m_MethodName: LongMouseClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -225,8 +225,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4206533501017213517}
-        m_TargetAssemblyTypeName: MouseEventItemInfo, Assembly-CSharp
-        m_MethodName: OnMouseExit
+        m_TargetAssemblyTypeName: MouseEventUI, Assembly-CSharp
+        m_MethodName: LongMouseClickExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
