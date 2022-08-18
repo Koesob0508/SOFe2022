@@ -79,7 +79,7 @@ public class Units : MonoBehaviour
         isUpdating = false;
 
     }
-    public void Attack()
+    public virtual void Attack()
     {
         charData.CurrentMana += 10;
         if(charData.CurrentMana >= charData.MaxMana)
