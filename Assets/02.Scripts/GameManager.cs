@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     #region Managers
 
-    [SerializeField] private StageManager _stage = new StageManager();
+    [SerializeField] private StageManager _stage;
     public static StageManager Stage { get { return Instance._stage; } }
 
     [SerializeField] private CustomSceneManager _scene = new CustomSceneManager();

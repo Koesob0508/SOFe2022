@@ -28,10 +28,15 @@ public class CustomSceneManager
             case "01.StageSelectScene":
                 Debug.Log("This is Stage Select Scene");
                 // 이제 여기다가 Stage Show 함수 넣어두면 될듯
+                GameManager.Stage.ShowStageMap();
                 break;
 
             case "02.BattleSelectScene":
                 Debug.Log("This is Battle Scene");
+
+                GameManager.Stage.Test_SetBattleStage();
+                GameManager.Stage.HideStageMap();
+
                 GameObject obj = new GameObject("BattleManager");
                 GameManager.Battle = obj.AddComponent<BattleSceneManager>();
                 GameManager.Battle.Init(GameManager.MapType.Boss);
@@ -40,17 +45,15 @@ public class CustomSceneManager
                 Hero h1 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 0; });
                 Hero h2 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 1; });
                 Hero h3 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 12; });
-                Enemy e1 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
-                Enemy e2 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
-                Enemy e3 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
+
                 List<Hero> hlist = new List<Hero>();
-                List<Enemy> elist = new List<Enemy>();
+
                 hlist.Add(h1);
                 hlist.Add(h2);
                 hlist.Add(h3);
-                elist.Add(e1);
-                elist.Add(e2);
-                elist.Add(e3);
+
+                List<Enemy> elist = GameManager.Stage.GetEnemies();
+                
                 GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
 
                 break;
