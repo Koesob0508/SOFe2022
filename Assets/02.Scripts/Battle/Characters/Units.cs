@@ -59,6 +59,7 @@ public class Units : MonoBehaviour
 
         //BT,BB 초기화
         btComp = GetComponent<BehaviorTreeComponent>();
+        btComp.Initalize();
         btComp.TreeObject.bBoard.SetValueAsBool("IsDead", false);
         btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
@@ -69,12 +70,12 @@ public class Units : MonoBehaviour
     }
     public void StartBattle()
     {
-        btComp.Initalize();
+        btComp.StartTree();
         isUpdating = true;
     }
     public void EndBattle()
     {
-        btComp.Terminate();
+        btComp.StopTree();
         isUpdating = false;
 
     }

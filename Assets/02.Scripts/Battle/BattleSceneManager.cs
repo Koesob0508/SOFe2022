@@ -21,9 +21,12 @@ public class BattleSceneManager : MonoBehaviour
     private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
 
+    private BattleLogPanel LogPanel;
 
     private uint hCount = 0;
     private uint eCount = 0;
+
+    private Dictionary<uint, Sprite> unitUIImage = new Dictionary<uint, Sprite>();
 
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
@@ -42,7 +45,10 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
     {
+
         Debug.Log("BattleManager Initalized");
+
+        LogPanel = GameObject.Find("BattleLogPanel").GetComponent<BattleLogPanel>();
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
         tmpPosHero.Add(new Vector2(-8f, -2.5f));
         tmpPosHero.Add(new Vector2(-4f, -4f));
@@ -72,6 +78,11 @@ public class BattleSceneManager : MonoBehaviour
 
             heroObjects.Add(hTemp);
             enemyObjects.Add(eTemp);
+
+            unitUIImage.Add(tempU.charData.GUID, LoadSprite("/Sprites/HeroUI/" + tempU.charData.GUID + "_UI.png"));
+            if (!unitUIImage.ContainsKey(tempU2.charData.GUID))
+                unitUIImage.Add(tempU2.charData.GUID, LoadSprite("/Sprites/MonsterUI/" + tempU2.charData.GUID + "_UI.png"));
+
         }
 
         SetBackground(mapType);
@@ -100,8 +111,29 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
         StartCoroutine(FadeInTransition(fadeColor));
-    }
 
+    }
+    
+    Sprite LoadSprite(string path)
+    {
+        byte[] bytes = GameManager.Instance.LoadFile(path);
+        Sprite Image = null;
+        if (bytes.Length > 0)
+        {
+            Texture2D tex = new Texture2D(0, 0);
+            tex.LoadImage(bytes);
+
+            Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+        return Image;
+    }
+    public Sprite GetUIImage(uint guid)
+    {
+        if (unitUIImage.ContainsKey(guid))
+            return unitUIImage[guid];
+        else
+            throw new System.Exception(guid + "_UI.png Image Doenst Exist");
+    }
     IEnumerator FadeInTransition(Color col)
     {
         Material mat = transition.material;
@@ -117,6 +149,7 @@ public class BattleSceneManager : MonoBehaviour
         transition.gameObject.SetActive(false);
         yield break;
     }
+
     void SetBackground(GameManager.MapType mapType)
     {
         string mapName = "";
@@ -141,16 +174,16 @@ public class BattleSceneManager : MonoBehaviour
             default:
                 throw new System.Exception("Undefined Map Type!");
         }
+        backImg = LoadSprite("/Sprites/Maps/" + mapName);
+        //byte[] bytes = GameManager.Instance.LoadFile();
 
-        byte[] bytes = GameManager.Instance.LoadFile("/Sprites/Maps/" + mapName);
-
-        if (bytes.Length > 0)
-        {
-            Texture2D tex = new Texture2D(0, 0);
-            tex.LoadImage(bytes);
+        //if (bytes.Length > 0)
+        //{
+        //    Texture2D tex = new Texture2D(0, 0);
+        //    tex.LoadImage(bytes);
             
-            backImg = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        }
+        //    backImg = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        //}
     }
 
     void StartBattle()
@@ -174,6 +207,7 @@ public class BattleSceneManager : MonoBehaviour
             causerUnitComp.Attack();
             targetUnitComp.Hit(Dmg);
         }
+        LogPanel.AddLog(new System.Tuple<Character, float, Character>(targetUnitComp.charData, Dmg, causerUnitComp.charData));
     }
 
     /// <summary>
