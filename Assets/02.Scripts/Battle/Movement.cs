@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     {
 
         body = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         localScaleX = transform.localScale.x;
     }
@@ -91,7 +91,7 @@ public class Movement : MonoBehaviour
         bool movingLeft = moveDir.x < 0;
         bool movingRight = moveDir.x > 0;
 
-        var spr =  GetComponent<SpriteRenderer>();
+        var spr =  GetComponentInChildren<SpriteRenderer>();
         if (movingLeft)
         {
             spr.flipX = true;

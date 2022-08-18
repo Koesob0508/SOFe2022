@@ -34,7 +34,6 @@ public class CustomSceneManager
                 Debug.Log("This is Battle Scene");
                 GameObject obj = new GameObject("BattleManager");
                 GameManager.Battle = obj.AddComponent<BattleSceneManager>();
-                GameManager.Battle.Init(GameManager.MapType.Boss);
                 obj.AddComponent<Path.PathManager>();
 
                 Hero h1 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 0; });
@@ -51,7 +50,7 @@ public class CustomSceneManager
                 elist.Add(e1);
                 elist.Add(e2);
                 elist.Add(e3);
-                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
+                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Jungle);
 
                 break;
 

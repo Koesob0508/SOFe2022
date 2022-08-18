@@ -15,6 +15,8 @@ namespace BT
         public List<Node> nodes = new List<Node>();
         public Blackboard bBoard;
 
+        bool isInProgress = false;
+        Node progressNode = null;
 
         void Traverse(BT.Node node,System.Action<Node> visitor)
         {
@@ -40,10 +42,30 @@ namespace BT
             bTree.bBoard = bb;
             return bTree;
         }
+        public void TaskInProgress(Node n)
+        {
+            progressNode = n;
+            isInProgress = true;
+        }
         public Node.State UpdateTree(BehaviorTreeComponent owner_comp)
         {
             //rootNode 가 InProgress가 아닐 경우, Update 진행X -> 트리종료
-             TreeState = RootNode.UpdateNode(owner_comp);
+            if (isInProgress)
+            {
+                Node.State b = progressNode.TickTask(owner_comp);
+                if (b != Node.State.InProgress)
+                {
+                    isInProgress = false;
+                    progressNode = null;
+                    return b;
+                }
+                else
+                    return Node.State.InProgress;
+            }
+            else
+            {
+                TreeState = RootNode.UpdateNode(owner_comp);
+            }
             return TreeState;
         }
 #if UNITY_EDITOR

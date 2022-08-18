@@ -8,7 +8,6 @@ namespace BT
     {
         protected override void OnStart()
         {
-            Debug.Log("Start attack");
         }
 
         protected override void OnStop()

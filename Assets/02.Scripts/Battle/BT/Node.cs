@@ -45,6 +45,15 @@ namespace BT
         protected abstract void OnStart();
         protected abstract void OnStop();
         protected abstract State OnUpdate(BehaviorTreeComponent owner_comp);
+        /// <summary>
+        /// Called in Every Update in BT When Node Calls BehaviorTree::TaskInProgress 
+        /// </summary>
+        /// <param name="owner_comp"></param>
+        /// <returns> </returns>
+        public virtual State TickTask(BehaviorTreeComponent owner_comp)
+        {
+            return State.InProgress;
+        }
     }
 
 }

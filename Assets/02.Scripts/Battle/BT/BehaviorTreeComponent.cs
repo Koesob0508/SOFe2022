@@ -7,10 +7,6 @@ public class BehaviorTreeComponent : MonoBehaviour
 {
     public BT.BehaviorTree TreeObject;
     bool isActive = false;
-    protected void Start()
-    {
-        TreeObject = TreeObject.Clone();
-    }
     protected void Update()
     {
         if(isActive)
@@ -18,9 +14,14 @@ public class BehaviorTreeComponent : MonoBehaviour
     }
     public void Initalize()
     {
-        isActive = true;
+        TreeObject = TreeObject.Clone();
     }
-    public void Terminate()
+    public void StartTree()
+    {
+        isActive = true;
+
+    }
+    public void StopTree()
     {
         isActive = false;
     }
