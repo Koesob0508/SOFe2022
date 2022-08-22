@@ -91,7 +91,7 @@ public class GetHeroInfo : MonoBehaviour
                 HeroName.text = hero.Name;
                 
                 HeroMbti = GetChildWithName(HeroInfo, "MBTI").transform.GetComponent<TextMeshProUGUI>();
-                // HeroMbti.text = hero.
+                HeroMbti.text = hero.MBTI.ToString();
 
                 // 체력 및 허기 값
                 HealthBar = GetChildWithName(HeroUI, "HealthBar");

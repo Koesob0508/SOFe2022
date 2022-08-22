@@ -13,7 +13,7 @@ public class MouseEventUI : MonoBehaviour
         uint heroGUID;
         
         UIItemInfo = Resources.Load<GameObject>("ItemInfoUI");
-        Vector3 UIPosition =  new Vector3(Input.mousePosition.x + 90, Input.mousePosition.y, Input.mousePosition.z);
+        Vector3 UIPosition =  new Vector3(Input.mousePosition.x + 180, Input.mousePosition.y, Input.mousePosition.z);
         UIItemInfo = Instantiate(UIItemInfo, UIPosition, Quaternion.identity);
         UIItemInfo.transform.parent = this.transform;
 
