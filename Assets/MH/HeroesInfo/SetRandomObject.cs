@@ -70,9 +70,10 @@ public class SetRandomObject : MonoBehaviour
 
             if (CanActive)
             {
-                GlobalObject hero = GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
+                Hero hero = (Hero)GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
 
                 // 용병의 MBTI Random으로 지정
+                hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
                 // Debug.Log(hero.Name + "랜덤으로 등록");
                 HeroList.Add(hero);
             }
@@ -95,7 +96,7 @@ public class SetRandomObject : MonoBehaviour
         }
     }
 
-    private void SetStatus()
+    public void SetStatus()
     {
         // Status
         Image HeroImage;
@@ -129,7 +130,7 @@ public class SetRandomObject : MonoBehaviour
                 HeroName.text = hero.Name;
 
                 HeroMbti = GetChildWithName(HeroInfo, "MBTI").transform.GetComponent<TextMeshProUGUI>();
-                // HeroMbti.text = hero.
+                HeroMbti.text = hero.MBTI.ToString();
 
 
                 // Ability 값

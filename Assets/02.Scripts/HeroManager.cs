@@ -4,7 +4,36 @@ using UnityEngine;
 
 public class HeroManager : MonoBehaviour
 {
+
+    // 원래 정의된 관계 점수
+    public sbyte[,] MBTIScore = new sbyte[,] {  {+3, +3, +3, +5, +3, +5, +3, +3, -3, -3, -3, -3, -3, -3, -3, -3 },
+                                                {+3, +3, +5, +3, +5, +3, +3, +3, -3, -3, -3, -3, -3, -3, -3, -3 },
+                                                {+3, +5, +3, +3, +3, +3, +3, +5, -3, -3, -3, -3, -3, -3, -3, -3 },
+                                                {+5, +3, +3, +3, +3, +3, +3, +3, +5, -3, -3, -3, -3, -3, -3, -3 },
+                                                {+3, +5, +3, +3, +3, +3, +3, +5, +1, +1, +1, +1, 0, 0, 0, 0, },
+                                                {+5, +3, +3, +3, +3, +3, +5, +3, +1, +1, +1, +1, +1, +1, +1, +1 },
+                                                {+3, +3, +3, +3, +3, +5, +3, +3, +1, +1, +1, +1, 0, 0, 0, +5 },
+                                                {+3, +3, +5, +3, +5, +5, +3, +3, +1, +1, +1, +1, 0, 0, 0, 0 },
+                                                {-3, -3, -3, +5, +1, +1, +1, +1, 0, 0, 0, 0, +1, +5, +1, +5 },
+                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +5, +1, +5, +1 },
+                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +1, +5, +1, +5 },
+                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +5, +1, +5, +1 },
+                                                {-3, -3, -3, -3, 0, +1, 0, 0, +1, +5, +1, +5, +3, +3, +3, +3 },
+                                                {-3, -3, -3, -3, 0, +1, 0, 0, +5, +1, +5, +1, +3, +3, +3, +3 },
+                                                {-3, -3, -3, -3, 0, +1, 0, 0, +1, +5, +1, +5, +3, +3, +3, +3 },
+                                                {-3, -3, -3, -3, 0, +1, +5, 0, +5, +1, +5, +1, +3, +3, +3, +3 } };
+
+
     public List<Hero> HeroList = new List<Hero>();
+    // public List<GlobalObject> GuildList = new List<GlobalObject>();
+    private void Test()
+    {
+        Debug.Log("Test를 위해 Hero 임시로 등록합니다");
+        EnrollHero(0);
+        EnrollHero(1);
+        EnrollHero(2);
+        EnrollHero(3);
+    }
 
     public void Init()
     {
@@ -20,23 +49,23 @@ public class HeroManager : MonoBehaviour
 
         DontDestroyOnLoad(obj);
 
+        
         // === 임시 코드 ===
-        Debug.Log("Test를 위해 Hero 임시로 등록합니다");
+        Test();
+        //Hero hero1 = new Hero();
+        //Hero hero2 = new Hero();
+        //Hero hero3 = new Hero();
+        //Hero hero4 = new Hero();
 
-        Hero hero1 = new Hero();
-        Hero hero2 = new Hero();
-        Hero hero3 = new Hero();
-        Hero hero4 = new Hero();
+        //hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
+        //hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
+        //hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
+        //hero4 = GameManager.Instance.LoadObject(4, GameManager.ObjectType.Hero) as Hero;
 
-        hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
-        hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
-        hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
-        hero4 = GameManager.Instance.LoadObject(4, GameManager.ObjectType.Hero) as Hero;
-
-        HeroList.Add(hero1);
-        HeroList.Add(hero2);
-        HeroList.Add(hero3);
-        HeroList.Add(hero4);
+        //HeroList.Add(hero1);
+        //HeroList.Add(hero2);
+        //HeroList.Add(hero3);
+        //HeroList.Add(hero4);
         // ==================
 
 
@@ -62,6 +91,11 @@ public class HeroManager : MonoBehaviour
         //}
     }
 
+    public void GetTeamScore()
+    {
+        // TeamScore를 Return
+    }
+
     public void EnrollHero(uint guid)
     {
         // 해당 guid의 hero를 setActive, List에 등록한다 -> 이는 Battle Manager에 넘어감
@@ -81,6 +115,9 @@ public class HeroManager : MonoBehaviour
             if (hero.GUID == guid)
             {
                 hero.IsActive = true;
+                // 임시로 등록하기 위해서 mbti 여기서도 등록할 수 있게 해놓음
+                // hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
+
                 HeroList.Add(hero);
                 Debug.Log("Enroll " + hero.GUID + hero.Name);
                 break;

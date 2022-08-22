@@ -13,6 +13,26 @@ public class GameManager : MonoBehaviour
         Item
     }
 
+    public enum MbtiType
+    {
+        INFP,
+        ENFP,
+        INFJ,
+        ENFJ,
+        INTJ,
+        ENTJ,
+        INTP,
+        ENTP,
+        ISFP,
+        ESFP,
+        ISTP,
+        ESTP,
+        ISFJ,
+        ESFJ,
+        ISTJ,
+        ESTJ
+    }
+
     private static GameManager instance;
     public static GameManager Instance
     {
