@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     #region Managers
 
-    [SerializeField] private StageManager _stage = new StageManager();
+    [SerializeField] private StageManager _stage;
     public static StageManager Stage { get { return Instance._stage; } }
 
     [SerializeField] private CustomSceneManager _scene = new CustomSceneManager();
@@ -182,5 +182,18 @@ public class GameManager : MonoBehaviour
         else
             throw new System.Exception("Data cannot Arrive");
         return data;
+    }
+    public Sprite LoadSprite(string path)
+    {
+        byte[] bytes = Instance.LoadFile(path);
+        Sprite Image = null;
+        if (bytes.Length > 0)
+        {
+            Texture2D tex = new Texture2D(0, 0);
+            tex.LoadImage(bytes);
+
+            Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+        return Image;
     }
 }

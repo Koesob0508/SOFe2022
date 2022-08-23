@@ -27,31 +27,28 @@ public class CustomSceneManager
 
             case "01.StageSelectScene":
                 Debug.Log("This is Stage Select Scene");
-                // ÀÌÁ¦ ¿©±â´Ù°¡ Stage Show ÇÔ¼ö ³Ö¾îµÎ¸é µÉµí
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ Stage Show ï¿½Ô¼ï¿½ ï¿½Ö¾ï¿½Î¸ï¿½ ï¿½Éµï¿½
+                GameManager.Stage.ShowStageMap();
                 break;
 
             case "02.BattleSelectScene":
                 Debug.Log("This is Battle Scene");
+
+                GameManager.Stage.Test_SetBattleStage();
+                GameManager.Stage.HideStageMap();
+
                 GameObject obj = new GameObject("BattleManager");
                 GameManager.Battle = obj.AddComponent<BattleSceneManager>();
                 obj.AddComponent<Path.PathManager>();
-
                 Hero h1 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 0; });
                 Hero h2 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 1; });
                 Hero h3 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 12; });
-                Enemy e1 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
-                Enemy e2 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
-                Enemy e3 = (Enemy)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 100; });
                 List<Hero> hlist = new List<Hero>();
-                List<Enemy> elist = new List<Enemy>();
                 hlist.Add(h1);
                 hlist.Add(h2);
                 hlist.Add(h3);
-                elist.Add(e1);
-                elist.Add(e2);
-                elist.Add(e3);
-                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Jungle);
-
+                List<Enemy> elist = GameManager.Stage.GetEnemies();
+                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
                 break;
 
             case "03.TownScene":
