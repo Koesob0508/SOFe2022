@@ -40,9 +40,9 @@ public class CustomSceneManager
                 GameObject obj = new GameObject("BattleManager");
                 GameManager.Battle = obj.AddComponent<BattleSceneManager>();
                 obj.AddComponent<Path.PathManager>();
-                Hero h1 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 0; });
-                Hero h2 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 1; });
-                Hero h3 = (Hero)GameManager.Instance.ObjectCodex.Find((elem) => { return elem.GUID == 12; });
+                Hero h1 = (Hero)GameManager.Instance.ObjectCodex[0];
+                Hero h2 = (Hero)GameManager.Instance.ObjectCodex[1];
+                Hero h3 = (Hero)GameManager.Instance.ObjectCodex[12];
                 List<Hero> hlist = new List<Hero>();
                 hlist.Add(h1);
                 hlist.Add(h2);

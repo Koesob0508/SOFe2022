@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public List<GlobalObject> ObjectCodex = new List<GlobalObject>();
+    public Dictionary<uint,GlobalObject> ObjectCodex = new Dictionary<uint,GlobalObject>();
 
     public enum MapType
     {
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
             hero.Type = ObjectType.Hero;
             line = csvImp.Readline();
 
-            ObjectCodex.Add(hero);
+            ObjectCodex.Add(hero.GUID,hero);
         }
 
         CSVImporter csvImp1 = new CSVImporter();
@@ -165,13 +165,13 @@ public class GameManager : MonoBehaviour
             enemy.Type = ObjectType.Enemy;
             line1 = csvImp1.Readline();
 
-            ObjectCodex.Add(enemy);
+            ObjectCodex.Add(enemy.GUID,enemy);
         }
     }
 
     public GlobalObject LoadObject(uint guid,GameManager.ObjectType type)
     {
-        GlobalObject obj = ObjectCodex.Find((elem) => { return elem.GUID == guid; });
+        GlobalObject obj = ObjectCodex[guid];
         if (obj.Type != type)
             throw new System.Exception("GUID and Type Didn't matched!");
         else 
@@ -215,5 +215,36 @@ public class GameManager : MonoBehaviour
             Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         }
         return Image;
+    }
+    public Sprite LoadSprite(uint guid)
+    {
+        if (ObjectCodex[guid].UI_Image != null)
+            return ObjectCodex[guid].UI_Image;
+        else
+        {
+            string pathByType = "";
+            switch (ObjectCodex[guid].Type)
+            {
+                case ObjectType.Hero:
+                    pathByType = "/Sprites/HeroUI/";
+                    break;
+                case ObjectType.Enemy:
+                    pathByType = "/Sprites/MonsterUI/";
+                    break;
+                case ObjectType.Item:
+                    break;
+            }
+            byte[] bytes = Instance.LoadFile(pathByType + guid + "_UI.png");
+            Sprite Image = null;
+            if (bytes.Length > 0)
+            {
+                Texture2D tex = new Texture2D(0, 0);
+                tex.LoadImage(bytes);
+                Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            }
+            ObjectCodex[guid].UI_Image = Image;
+            return Image;
+
+        }
     }
 }

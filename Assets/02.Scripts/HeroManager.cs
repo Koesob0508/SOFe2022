@@ -110,7 +110,7 @@ public class HeroManager : MonoBehaviour
         //    }
         //}
         
-        foreach (Hero hero in GameManager.Instance.ObjectCodex)
+        foreach (Hero hero in GameManager.Instance.ObjectCodex.Values)
         {
             if (hero.GUID == guid)
             {

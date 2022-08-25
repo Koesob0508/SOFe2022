@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Units : MonoBehaviour
+public class Units : MonoBehaviour, IPointerClickHandler 
 {
     bool isUpdating = false;
     bool isSkillPlaying = false;
@@ -27,6 +28,7 @@ public class Units : MonoBehaviour
 
     public System.Action skillFinished;
 
+    HeroInvenItem invenItemUI;
 
     protected virtual void Start()
     {
@@ -64,9 +66,13 @@ public class Units : MonoBehaviour
         btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
-        //btComp.Initalize();
 
         GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
+    }
+
+    public void SetItemUI(HeroInvenItem itemUI)
+    {
+        this.invenItemUI = itemUI;
     }
     public void StartBattle()
     {
@@ -165,5 +171,10 @@ public class Units : MonoBehaviour
     {
         hpBar.value = charData.CurrentHP / charData.MaxHP;
         spBar.value = charData.CurrentMana / charData.MaxMana;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        invenItemUI.ReturnToInven();
     }
 }

@@ -3,7 +3,11 @@ guid: 199ff7c7f29659444ade1cd41d15a367
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PathMgr: {instanceID: 0}
+  - BattleLogPanel: {instanceID: 0}
+  - HeroInvenPanel: {instanceID: 0}
+  - Inven_Obj: {fileID: 5813877764721520684, guid: e971ac50219933b42ae325a61a23a235, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
