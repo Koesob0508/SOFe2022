@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ public class BattleSceneManager : MonoBehaviour
     private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
 
-    private BattleLogPanel LogPanel;
+    public BattleLogPanel LogPanel;
 
     private uint hCount = 0;
     private uint eCount = 0;
@@ -79,9 +80,9 @@ public class BattleSceneManager : MonoBehaviour
             heroObjects.Add(hTemp);
             enemyObjects.Add(eTemp);
 
-            unitUIImage.Add(tempU.charData.GUID, LoadSprite("/Sprites/HeroUI/" + tempU.charData.GUID + "_UI.png"));
+            unitUIImage.Add(tempU.charData.GUID, GameManager.Instance.LoadSprite("/Sprites/HeroUI/" + tempU.charData.GUID + "_UI.png"));
             if (!unitUIImage.ContainsKey(tempU2.charData.GUID))
-                unitUIImage.Add(tempU2.charData.GUID, LoadSprite("/Sprites/MonsterUI/" + tempU2.charData.GUID + "_UI.png"));
+                unitUIImage.Add(tempU2.charData.GUID, GameManager.Instance.LoadSprite("/Sprites/MonsterUI/" + tempU2.charData.GUID + "_UI.png"));
 
         }
 
@@ -114,19 +115,7 @@ public class BattleSceneManager : MonoBehaviour
 
     }
     
-    Sprite LoadSprite(string path)
-    {
-        byte[] bytes = GameManager.Instance.LoadFile(path);
-        Sprite Image = null;
-        if (bytes.Length > 0)
-        {
-            Texture2D tex = new Texture2D(0, 0);
-            tex.LoadImage(bytes);
-
-            Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        }
-        return Image;
-    }
+    
     public Sprite GetUIImage(uint guid)
     {
         if (unitUIImage.ContainsKey(guid))
@@ -174,7 +163,7 @@ public class BattleSceneManager : MonoBehaviour
             default:
                 throw new System.Exception("Undefined Map Type!");
         }
-        backImg = LoadSprite("/Sprites/Maps/" + mapName);
+        backImg = GameManager.Instance.LoadSprite("/Sprites/Maps/" + mapName);
         //byte[] bytes = GameManager.Instance.LoadFile();
 
         //if (bytes.Length > 0)
@@ -261,7 +250,5 @@ public class BattleSceneManager : MonoBehaviour
     void Update()
     {
     }
-
-
 
 }

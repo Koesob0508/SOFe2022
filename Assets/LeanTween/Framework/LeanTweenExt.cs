@@ -64,6 +64,7 @@ public static class LeanTweenExt
     public static LTDescr LeanMove(this Transform transform, LTBezierPath to, float time) { return LeanTween.move(transform.gameObject, to, time); }
     public static LTDescr LeanMove(this Transform transform, LTSpline to, float time) { return LeanTween.move(transform.gameObject, to, time); }
     //LeanTween.moveLocal
+    
     public static LTDescr LeanMoveLocal(this GameObject gameObject, Vector3 to, float time) { return LeanTween.moveLocal(gameObject, to, time); }
     public static LTDescr LeanMoveLocal(this GameObject gameObject, LTBezierPath to, float time) { return LeanTween.moveLocal(gameObject, to, time); }
     public static LTDescr LeanMoveLocal(this GameObject gameObject, LTSpline to, float time) { return LeanTween.moveLocal(gameObject, to, time); }
