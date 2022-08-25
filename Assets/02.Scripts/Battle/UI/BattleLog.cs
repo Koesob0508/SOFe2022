@@ -48,17 +48,21 @@ public class BattleLog : MonoBehaviour
         if(UIGroup == null)
             UIGroup = GetComponent<CanvasGroup>();
         UIGroup.alpha = 1;
-
-        
+        CauserImg = transform.GetChild(0).GetComponent<Image>();
+        ContentTxt = transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
+        TargetImg = transform.GetChild(2).GetComponent<Image>();
+        CauserImg.sprite = GameManager.Instance.LoadSprite(log.Item1.GUID);
+        ContentTxt.SetText(log.Item1.Name + " 가(아) " + log.Item3.Name + " 에게 " + log.Item2 + " 의 데미지!");
+        TargetImg.sprite = GameManager.Instance.LoadSprite(log.Item3.GUID);
 
         RectTransform logRectT = gameObject.GetComponent<RectTransform>();
         logRectT.anchorMin = new Vector2(0, 0);
         logRectT.anchorMax = new Vector2(1, 0.2f);
         float width = logRectT.rect.width;
-        logRectT.offsetMin = new Vector2(width, 0); //left, btm
-        logRectT.offsetMax = new Vector2(width, 0); //-right,-top
+        logRectT.offsetMin = new Vector2(width/2, 0); //left, btm
+        logRectT.offsetMax = new Vector2(width/2, 0); //-right,-top
 
-        LeanTween.value(this.gameObject, width, 0, 0.5f).setOnUpdate((float val) =>
+        LeanTween.value(this.gameObject, width/2, 0, 0.5f).setOnUpdate((float val) =>
         {
             logRectT.offsetMin = new Vector2(val, 0); //left, btm
             logRectT.offsetMax = new Vector2(val, 0); //-right,-top
@@ -71,16 +75,13 @@ public class BattleLog : MonoBehaviour
 
         LeanTween.value(this.gameObject, 0, anc.x, 0.5f).setOnUpdate((float val) =>
         {
-            Debug.Log(gameObject.name + " Moving To AncMin.y : " + val);
             logRectT.anchorMin = new Vector2(0, val);
         }).setEaseInOutCirc().setDelay(0.5f);
         LeanTween.value(this.gameObject, 0.2f, anc.y, 0.5f).setOnUpdate((float val) =>
         {
-            Debug.Log(gameObject.name + " Moving To AncMax.y : " + val);
             logRectT.anchorMax = new Vector2(1, val); 
         }).setEaseInOutCirc().setDelay(0.5f).setOnComplete(()=>
         {
-            Debug.Log(gameObject.name + " AncMax.y Move Finished in" + logRectT.anchorMax.y);
             if (logRectT.anchorMax.y > 0.9f)
             {
                 ReserveDelete(lifeTime);
@@ -109,7 +110,7 @@ public class BattleLog : MonoBehaviour
 
     private void ReserveDelete(float time)
     {
-        LeanTween.value(this.gameObject, 1f, 0f, time).setOnUpdate((float val) =>
+        LeanTween.value(this.gameObject, 1f, 0.1f, time).setOnUpdate((float val) =>
         {
             UIGroup.alpha = val;
         }).setOnComplete(()=>
