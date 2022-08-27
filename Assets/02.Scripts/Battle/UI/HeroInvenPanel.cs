@@ -8,6 +8,8 @@ public class HeroInvenPanel : MonoBehaviour
     public GameObject Item_Prefab;
     GameObject Half_UI;
 
+    List<HeroInvenItem> childItems= new List<HeroInvenItem>();
+
     public Color StartCol = new Color(0,0,1.0f,0.5f);
     public Color EndCol = new Color(0,0,1.0f,0.0f);
     public void Initalize(List<Hero> Heros)
@@ -15,8 +17,10 @@ public class HeroInvenPanel : MonoBehaviour
         foreach(Hero hero in Heros)
         {
             GameObject g = Instantiate(Item_Prefab, transform);
+            var item = g.GetComponentInChildren<HeroInvenItem>();
+            childItems.Add(item);
             g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.LoadSprite(hero.GUID);
-            g.GetComponentInChildren<HeroInvenItem>().SetHeroObj(GameManager.Battle.CreateHero(hero));
+            item.SetHeroObj(GameManager.Battle.CreateHero(hero));
         }
         Half_UI = new GameObject("Half_Panel");
         RectTransform rt = Half_UI.AddComponent<RectTransform>();
@@ -28,7 +32,7 @@ public class HeroInvenPanel : MonoBehaviour
         rt.anchorMax = new Vector2(0.5f, 1);
         rt.offsetMin = new Vector2(0, 0); //left, btm
         rt.offsetMax = new Vector2(0, 0); //-right,-top
-
+        rt.localScale = new Vector3(1, 1, 1);
         img.color = StartCol;
         Half_UI.SetActive(false);
     }
@@ -45,6 +49,16 @@ public class HeroInvenPanel : MonoBehaviour
         Half_UI.SetActive(false);
         ToInvisible();
     }
+
+    public void CloseOtherPopUp(HeroInvenItem ignore)
+    {
+        foreach(var item in childItems)
+        {
+            if(item != ignore)
+                item.ClosePopUp();
+        }
+    }
+
     void ToVisible()
     {
         Debug.Log("To visible");

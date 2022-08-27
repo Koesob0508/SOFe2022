@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public class HeroInvenItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     Image HeroImage;
     GameObject HeroObject;
 
     HeroInvenPanel parentPanel;
+    HeroInfo_PopUp infoPopUp;
+
     Vector3 HalfPos;
+
+    bool isPopUpOpened = false;
     public void SetHeroObj(GameObject HeroObj)
     {
         HeroObject = HeroObj;
@@ -51,11 +54,23 @@ public class HeroInvenItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         GameManager.Battle.SetHeroOnBattle(HeroObject);
         parentPanel.EndDragging();
     }
-
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        isPopUpOpened = !isPopUpOpened;
+        parentPanel.CloseOtherPopUp(this);
+        infoPopUp.gameObject.SetActive(isPopUpOpened);
+    }
+    public void ClosePopUp()
+    {
+        isPopUpOpened = false;
+        infoPopUp.gameObject.SetActive(isPopUpOpened);
+    }
     void Start()
     {
         parentPanel = GetComponentInParent<HeroInvenPanel>();
         HeroImage = GetComponent<Image>();
+        infoPopUp = parentPanel.GetComponentInChildren<HeroInfo_PopUp>();
+        infoPopUp.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -63,4 +78,5 @@ public class HeroInvenItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         
     }
+
 }

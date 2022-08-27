@@ -477,6 +477,17 @@ MonoBehaviour:
   Item_Prefab: {fileID: 5813877764721520684, guid: e971ac50219933b42ae325a61a23a235, type: 3}
   StartCol: {r: 0, g: 0, b: 1, a: 0.5}
   EndCol: {r: 0, g: 0, b: 1, a: 0}
+--- !u!210 &1254970683
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254970677}
+  m_Enabled: 1
+  m_SortingLayerID: 472459215
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &1843552099
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,8 +908,8 @@ Canvas:
   m_GameObject: {fileID: 2093523182}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 226532789}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -906,7 +917,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 472459215
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &2093523186

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Units : MonoBehaviour, IPointerClickHandler 
+public class Units : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDragHandler
 {
     bool isUpdating = false;
     bool isSkillPlaying = false;
@@ -175,6 +175,32 @@ public class Units : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        invenItemUI.ReturnToInven();
+        if (eventData.button == PointerEventData.InputButton.Right)
+            invenItemUI.ReturnToInven();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        Vector2 screenPos = eventData.position;
+        if (screenPos.x > Screen.width / 2)
+        {
+            screenPos.x = Screen.width / 2;
+        }
+        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        WorldPos.z = 0;
+        transform.position = WorldPos;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
+
+        if (hit.collider != null)
+        {
+            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
+            if (item == invenItemUI)
+                invenItemUI.ReturnToInven();
+        }
     }
 }

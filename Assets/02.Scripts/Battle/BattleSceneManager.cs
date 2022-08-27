@@ -26,7 +26,6 @@ public class BattleSceneManager : MonoBehaviour
     public BattleLogPanel bLogPanel;
     public HeroInvenPanel hInvenPanel;
 
-    public GameObject HeroInven_Item;
 
     private uint hCount = 0;
     private uint eCount = 0;
@@ -64,6 +63,8 @@ public class BattleSceneManager : MonoBehaviour
 
         bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
+
+        bLogPanel.gameObject.SetActive(false);
 
         //Init Hero
         hInvenPanel.Initalize(Heros);
@@ -185,6 +186,9 @@ public class BattleSceneManager : MonoBehaviour
             enemy.GetComponent<Units>().StartBattle();
         }
         startBtn.gameObject.SetActive(false);
+        hInvenPanel.gameObject.SetActive(false);
+        bLogPanel.gameObject.SetActive(true);
+        
     }
 
     public GameObject CreateHero(Hero heroData)
