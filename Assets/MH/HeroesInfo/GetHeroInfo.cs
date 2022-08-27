@@ -16,17 +16,12 @@ public class GetHeroInfo : MonoBehaviour
     // Status
     public Gradient gradient;
 
-    // 마지막에 변경사항 적용된 HeroList를 HeroManager에게 전달 (?)
-    //  ㄴ 체력, 장비, 새로 영입한 Hero의 정보 ... 등
-
     public uint GetHeroUIOrder(GameObject _hero)
     {
         uint guid = HeroUIList.FirstOrDefault(x => x.Value == _hero).Key;
         return guid;
     }
 
-
-    // Init()로 변경할 것
     void Start()
     {
         int HeroNUM = HeroList.Count;
@@ -85,7 +80,7 @@ public class GetHeroInfo : MonoBehaviour
                 // Info 값
                 HeroInfo = GetChildWithName(HeroUI, "Info");
                 HeroImage = GetChildWithName(HeroInfo, "HeroImage").transform.GetComponent<Image>();
-                // HeroImage.sprite = 
+                //HeroImage.sprite = GameManager.Battle.GetUIImage(hero.GUID);
 
                 HeroName = GetChildWithName(HeroInfo, "Name").transform.GetComponent<TextMeshProUGUI>();
                 HeroName.text = hero.Name;

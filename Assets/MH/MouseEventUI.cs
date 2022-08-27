@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MouseEventUI : MonoBehaviour
 {
 
     private GameObject UIItemInfo;
+    private bool CanBuy = true;
 
     public void LongMouseClick()
     {
@@ -27,16 +29,55 @@ public class MouseEventUI : MonoBehaviour
 
     }
 
+    // Shop에서 Hero를 등록한다.
     public void OnButtonClick()
     {
-        uint heroGUID;
+        if (CanBuy)
+        {
+            GameObject Hero = this.transform.parent.parent.gameObject;
+            GameObject HeroUIContent = Hero.transform.parent.gameObject;
 
-        GameObject Hero = this.transform.parent.gameObject;
-        GameObject HeroUIContent = this.transform.parent.parent.gameObject;
+            uint heroGUID = HeroUIContent.GetComponent<SetRandomObject>().GetHeroUIOrder(Hero);
+            GameManager.Hero.EnrollHero(heroGUID);
 
-        heroGUID = HeroUIContent.GetComponent<SetRandomObject>().GetHeroUIOrder(Hero);
+            foreach (Hero _hero in GameManager.Hero.ShopHeroList)
+            {
+                if (_hero.GUID == heroGUID)
+                {
+                    GameManager.Hero.ShopHeroList.Remove(_hero);
+                    break;
+                }
+            }
+            Image button = this.transform.parent.GetComponent<Image>();
+            button.color = new Color32(102, 102, 255, 225);
+            this.transform.parent.GetComponent<Button>().interactable = false;
 
-        GameManager.Hero.EnrollHero(heroGUID);
+            CanBuy = false;
+
+        }
+    }
+
+    public void OnMouseOver()
+    {
+        if (CanBuy)
+        {
+            TextMeshProUGUI Text = this.transform.parent.GetChild(0).GetComponent<TextMeshProUGUI>();
+            Text.text = "Recruit";
+        }
+    }
+    public void OnMouseExit()
+    {
+        if (CanBuy)
+        {
+            GameObject Hero = this.transform.parent.parent.gameObject;
+            GameObject HeroUIContent = Hero.transform.parent.gameObject;
+
+            uint heroGUID = HeroUIContent.GetComponent<SetRandomObject>().GetHeroUIOrder(Hero);
+            Hero _hero = (Hero)GameManager.Instance.LoadObject(heroGUID, GameManager.ObjectType.Hero);
+
+            TextMeshProUGUI Text = this.transform.parent.GetChild(0).GetComponent<TextMeshProUGUI>();
+            Text.text = _hero.Cost.ToString() + "G";
+        }
     }
 
     public void LongMouseClickExit()
