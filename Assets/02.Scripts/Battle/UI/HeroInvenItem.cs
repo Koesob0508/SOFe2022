@@ -23,7 +23,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     public void ReturnToInven()
     {
         HeroObject.SetActive(false);
-        GameManager.Battle.SetHeroOnBattle(HeroObject);
+        GameManager.Battle.DeleteHeroOnBattle(HeroObject);
         HeroImage.sprite = GameManager.Instance.LoadSprite(HeroObject.GetComponent<Units>().charData.GUID);
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -53,6 +53,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     {
         GameManager.Battle.SetHeroOnBattle(HeroObject);
         parentPanel.EndDragging();
+        GameManager.Battle.SetHeroOnBattle(HeroObject);
     }
     public void OnPointerClick(PointerEventData eventData)
     {

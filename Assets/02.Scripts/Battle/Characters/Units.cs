@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Units : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDragHandler
+public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     bool isUpdating = false;
     bool isSkillPlaying = false;
@@ -173,12 +173,6 @@ public class Units : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDrag
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-            invenItemUI.ReturnToInven();
-    }
-
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 screenPos = eventData.position;
@@ -200,7 +194,10 @@ public class Units : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDrag
         {
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
             if (item == invenItemUI)
+            {
+                GameManager.Battle.DeleteHeroOnBattle(gameObject);
                 invenItemUI.ReturnToInven();
+            }
         }
     }
 }
