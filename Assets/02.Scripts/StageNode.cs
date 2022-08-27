@@ -39,7 +39,7 @@ public class StageNode : MonoBehaviour
 
             enemies.Add(e1);
             enemies.Add(e2);
-            enemies.Add(e3);
+            // enemies.Add(e3);
         }
         
         switch(type)

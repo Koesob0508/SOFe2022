@@ -45,8 +45,8 @@ public class CustomSceneManager
                 Hero h3 = (Hero)GameManager.Instance.ObjectCodex[12];
                 List<Hero> hlist = new List<Hero>();
                 hlist.Add(h1);
-                hlist.Add(h2);
-                hlist.Add(h3);
+                //hlist.Add(h2);
+                //hlist.Add(h3);
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
                 GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
                 break;

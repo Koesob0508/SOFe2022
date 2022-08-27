@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     bool isUpdating = false;
-    bool isSkillPlaying = false;
+    protected bool isSkillPlaying = false;
     
     public Animator animator;
     public bool bHasSkillAnimation;
@@ -18,12 +18,12 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public GameObject UnitUIObject;
     GameObject UnitUI;
-    Slider hpBar;
-    Slider spBar;
+    protected Slider hpBar;
+    protected Slider spBar;
     public Vector3 uiOffset;
 
-    BehaviorTreeComponent btComp;
-
+    protected BehaviorTreeComponent btComp;
+
     public Character charData;
 
     public System.Action skillFinished;
@@ -38,19 +38,15 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     protected virtual void Update()
     {
 
-        if (isUpdating)
+        if (isUpdating)
         {
             UpdateUI();
         }
             
     }
     
-    public void Initalize(Character charData)
-    {
-        this.charData = charData;
-        this.charData.CurrentHP = this.charData.MaxHP;
-        this.charData.CurrentMana = 0;
-
+    public virtual void Initalize(Character charData)
+    {
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -67,78 +63,55 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
 
-        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
-    }
-
-    public void SetItemUI(HeroInvenItem itemUI)
-    {
-        this.invenItemUI = itemUI;
-    }
-    public void StartBattle()
-    {
-        btComp.StartTree();
-        isUpdating = true;
-    }
-    public void EndBattle()
-    {
-        btComp.StopTree();
-        isUpdating = false;
+        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
 
     }
-    public virtual void Attack()
-    {
-        charData.CurrentMana += 10;
-        if(charData.CurrentMana >= charData.MaxMana)
-        {
-            btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
-        }
-    }
-    public void Hit(float damage)
-    {
-        if (damage > charData.DefensePoint)
-        {
-            charData.CurrentHP -= damage - charData.DefensePoint;
-        }
-        else // 방어력이 데미지 보다 높으면 1데미지만 
-        {
-            charData.CurrentHP -= 1;
-        }
 
-        if(charData.CurrentHP <= 0)
-        {
-            btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData);
-        }
-        else
-        {
-            if(!isSkillPlaying)
-                PlayGetHitAniamtion();
-        }
+    public void SetItemUI(HeroInvenItem itemUI)
+    {
+        this.invenItemUI = itemUI;
     }
-    public virtual void ExecuteSkill()
-    {
-        isSkillPlaying = true;
-        PlaySkillAnimation();
-        charData.CurrentMana = 0;
-        StartCoroutine("finishSkill", 3);
+    public void StartBattle()
+    {
+        btComp.StartTree();
+        isUpdating = true;
     }
-    IEnumerator finishSkill(float t)
-    {
-        yield return new WaitForSeconds(t);
-        skillFinished();
-        isSkillPlaying=false;
-        yield break;
+    public void EndBattle()
+    {
+        btComp.StopTree();
+        isUpdating = false;
+
     }
-    float GetCurrentAnimationTime()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    public virtual void Attack()
+    {
     }
-    public void PlaySkillAnimation()
+    public virtual void Hit(float damage)
     {
+    }
+    public virtual void ExecuteSkill()
+    {
+        isSkillPlaying = true;
+        PlaySkillAnimation();
+        Debug.Log(GetCurrentAnimationTime());
+        StartCoroutine("finishSkill", GetCurrentAnimationTime());
+    }
+    IEnumerator finishSkill(float t)
+    {
+        yield return new WaitForSeconds(t);
+        skillFinished();
+        isSkillPlaying = false;
+        yield break;
+    }
+    float GetCurrentAnimationTime()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).speed;
+    }
+    public void PlaySkillAnimation()
+    {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
         {
             animator.SetTrigger("Skill");
-        }
+        }
     }
     public void PlayAttackAnimation()
     {
@@ -147,14 +120,14 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
             animator.SetTrigger("Attack");
         }
     }
-    public void PlayGetHitAniamtion()
-    {
+    public void PlayGetHitAniamtion()
+    {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
         {
-            animator.SetTrigger("GetHit");
-
-        }
-    }
+            animator.SetTrigger("GetHit");
+
+        }
+    }
     public void PlayDeadAnimation()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
@@ -167,37 +140,37 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         animator.SetBool("Run", false);
     }
 
-    private void UpdateUI()
+    public virtual void UpdateUI()
     {
         hpBar.value = charData.CurrentHP / charData.MaxHP;
         spBar.value = charData.CurrentMana / charData.MaxMana;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector2 screenPos = eventData.position;
-        if (screenPos.x > Screen.width / 2)
-        {
-            screenPos.x = Screen.width / 2;
-        }
-        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        WorldPos.z = 0;
-        transform.position = WorldPos;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
-
-        if (hit.collider != null)
-        {
-            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == invenItemUI)
-            {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
-                invenItemUI.ReturnToInven();
-            }
-        }
-    }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        Vector2 screenPos = eventData.position;
+        if (screenPos.x > Screen.width / 2)
+        {
+            screenPos.x = Screen.width / 2;
+        }
+        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        WorldPos.z = 0;
+        transform.position = WorldPos;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
+
+        if (hit.collider != null)
+        {
+            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
+            if (item == invenItemUI)
+            {
+                GameManager.Battle.DeleteHeroOnBattle(gameObject);
+                invenItemUI.ReturnToInven();
+            }
+        }
+    }
 }

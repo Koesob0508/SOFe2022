@@ -18,6 +18,7 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
+
             isFinished = false;
             var unitComp = owner_comp.gameObject.GetComponent<Units>();
             if (unitComp != null)
