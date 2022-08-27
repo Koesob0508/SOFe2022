@@ -29,9 +29,9 @@ public class StageNode : MonoBehaviour
         {
             enemies = new List<Enemy>();
 
-            Enemy e1 = (Enemy)GameManager.Instance.ObjectCodex[100];
-            Enemy e2 = (Enemy)GameManager.Instance.ObjectCodex[100];
-            Enemy e3 = (Enemy)GameManager.Instance.ObjectCodex[100];
+            Enemy e1 = (Enemy)GameManager.Data.ObjectCodex[100];
+            Enemy e2 = (Enemy)GameManager.Data.ObjectCodex[100];
+            Enemy e3 = (Enemy)GameManager.Data.ObjectCodex[100];
 
             e1.Position = new Vector2(3, 5);
             e2.Position = new Vector2(0, 8);
