@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+      propertyPath: bHasSkillAnimation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2578763801058129855, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Controller
       value: 
@@ -58,7 +62,7 @@ PrefabInstance:
     - target: {fileID: 3457577737788312710, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: TreeObject
       value: 
-      objectReference: {fileID: 11400000, guid: 815dbc1db7777b54c9170a2a0a409a36, type: 2}
+      objectReference: {fileID: 11400000, guid: f77197376b558a044bd69a6cadc1dc6c, type: 2}
     - target: {fileID: 3881633362113553926, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: _Name
       value: Knight
@@ -129,4 +133,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3881633362113553926, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+    - {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+--- !u!1 &2248329681590061789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+  m_PrefabInstance: {fileID: 4846485331727537073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3733900785105418122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248329681590061789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3bb1ac52c4bc746a0a7b4c82b1b4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  bHasSkillAnimation: 1
+  attackTimer: 0
+  UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
+  uiOffset: {x: 0, y: 0, z: 0}

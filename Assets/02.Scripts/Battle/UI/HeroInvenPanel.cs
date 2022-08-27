@@ -19,7 +19,7 @@ public class HeroInvenPanel : MonoBehaviour
             GameObject g = Instantiate(Item_Prefab, transform);
             var item = g.GetComponentInChildren<HeroInvenItem>();
             childItems.Add(item);
-            g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.LoadSprite(hero.GUID);
+            g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
             item.SetHeroObj(GameManager.Battle.CreateHero(hero));
         }
         Half_UI = new GameObject("Half_Panel");

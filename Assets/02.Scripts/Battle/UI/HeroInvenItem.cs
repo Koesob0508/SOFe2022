@@ -24,7 +24,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     {
         HeroObject.SetActive(false);
         GameManager.Battle.DeleteHeroOnBattle(HeroObject);
-        HeroImage.sprite = GameManager.Instance.LoadSprite(HeroObject.GetComponent<Units>().charData.GUID);
+        HeroImage.sprite = GameManager.Data.LoadSprite(HeroObject.GetComponent<Units>().charData.GUID);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

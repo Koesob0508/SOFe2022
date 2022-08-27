@@ -51,9 +51,9 @@ public class BattleLog : MonoBehaviour
         CauserImg = transform.GetChild(0).GetComponent<Image>();
         ContentTxt = transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
         TargetImg = transform.GetChild(2).GetComponent<Image>();
-        CauserImg.sprite = GameManager.Instance.LoadSprite(log.Item1.GUID);
+        CauserImg.sprite = GameManager.Data.LoadSprite(log.Item1.GUID);
         ContentTxt.SetText(log.Item1.Name + " 가(아) " + log.Item3.Name + " 에게 " + log.Item2 + " 의 데미지!");
-        TargetImg.sprite = GameManager.Instance.LoadSprite(log.Item3.GUID);
+        TargetImg.sprite = GameManager.Data.LoadSprite(log.Item3.GUID);
 
         RectTransform logRectT = gameObject.GetComponent<RectTransform>();
         logRectT.anchorMin = new Vector2(0, 0);

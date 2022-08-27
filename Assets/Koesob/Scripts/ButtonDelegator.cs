@@ -48,34 +48,37 @@ namespace Koesob
 
         public void ShowHeroShop()
         {
-            GameObject HeroShop = null;
-            GameObject[] AllObject = GameObject.FindGameObjectsWithTag("UI");
+            GameObject HeroShop = GameObject.Find("GuildUI(Clone)");
 
-            foreach (GameObject obj in AllObject)
+            if (HeroShop != null)
             {
-                if (obj.name == "EnrollHeroUI(Clone)")
-                {
-                    HeroShop = obj;
-                    break;
-                }
-            }
-
-            if (HeroShop == null)
-            {
-                HeroShop = Resources.Load<GameObject>("EnrollHeroUI");
-                Instantiate(HeroShop);
+                Destroy(HeroShop);
             }
             else
             {
-                if (HeroShop.activeInHierarchy)
-                {
-                    HeroShop.SetActive(false);
-                }
-                else
-                {
-                    HeroShop.SetActive(true);
-                }
+                HeroShop = Resources.Load<GameObject>("GuildUI");
+                Instantiate(HeroShop);
             }
+
+            //GameObject HeroShop = GameObject.Find("HeroShopUI");
+            //GameObject UI = null;
+
+            //if (HeroShop.transform.childCount == 0)
+            //{
+            //    UI = Instantiate(Resources.Load<GameObject>("GuildUI"));
+            //    UI.transform.SetParent(HeroShop.transform);
+            //}
+            //else
+            //{
+            //    if (HeroShop.transform.GetChild(0).gameObject.activeSelf)
+            //    {
+            //        HeroShop.transform.GetChild(0).gameObject.SetActive(false);
+            //    }
+            //    else
+            //    {
+            //        HeroShop.transform.GetChild(0).gameObject.SetActive(true);
+            //    }
+            //}
         }
     }
 }

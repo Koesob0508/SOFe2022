@@ -20,13 +20,27 @@ public class SetRandomObject : MonoBehaviour
         return guid;
     }
 
-    public void SetRandomList()
+    public void SetShopList()
     {
         switch (Type)
         {
             case GameManager.ObjectType.Hero:
                 {
-                    EnrollList = GetRandomHero();
+                    EnrollList = GameManager.Hero.GetShopHeroList();
+
+                    if (EnrollList.Count == 0)
+                    {
+                        this.transform.parent.parent.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().SetText("해당 마을에서 더 이상 용병을 구할 수 없습니다");
+                    }
+
+                    for (int i = 0; i < EnrollList.Count(); i++)
+                    {
+                        ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
+                        ObjectUI.transform.parent = transform;
+                        ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
+
+                        SetStatus();
+                    }
                     break;
                 }
             case GameManager.ObjectType.Item:
@@ -41,46 +55,47 @@ public class SetRandomObject : MonoBehaviour
 
     }
 
-    public List<GlobalObject> GetRandomHero()
-    {
-        List<GlobalObject> HeroList = new List<GlobalObject>();
+    //public List<GlobalObject> GetRandomHero()
+    //{
+    //    List<GlobalObject> HeroList = new List<GlobalObject>();
 
-        while (HeroList.Count < 3)
-        {
-            uint guid = (uint)Random.Range(0, 17);
-            bool CanActive = true;
+    //    while (HeroList.Count < 3)
+    //    {
+    //        uint guid = (uint)Random.Range(0, 17);
+    //        bool CanActive = true;
 
-            foreach (Hero hero in HeroList)
-            {
-                if (hero.GUID == guid)
-                {
-                    CanActive = false;
-                    break;
-                }
-            }
+    //        foreach (Hero hero in HeroList)
+    //        {
+    //            if (hero.GUID == guid)
+    //            {
+    //                CanActive = false;
+    //                break;
+    //            }
+    //        }
 
-            foreach (Hero hero in GameManager.Hero.GetHeroList())
-            {
-                if (hero.GUID == guid)
-                {
-                    CanActive = false;
-                    break;
-                }
-            }
+    //        foreach (Hero hero in GameManager.Hero.GetHeroList())
+    //        {
+    //            if (hero.GUID == guid)
+    //            {
+    //                CanActive = false;
+    //                break;
+    //            }
+    //        }
 
-            if (CanActive)
-            {
-                GlobalObject hero = GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
+    //        if (CanActive)
+    //        {
+    //            Hero hero = (Hero)GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
 
-                // 용병의 MBTI Random으로 지정
-                // Debug.Log(hero.Name + "랜덤으로 등록");
-                HeroList.Add(hero);
-            }
+    //            // 용병의 MBTI Random으로 지정
+    //            hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
+    //            // Debug.Log(hero.Name + "랜덤으로 등록");
+    //            HeroList.Add(hero);
+    //        }
 
-        }
+    //    }
 
-        return HeroList;
-    }
+    //    return HeroList;
+    //}
     private GameObject GetChildWithName(GameObject obj, string name)
     {
         Transform trans = obj.transform;
@@ -95,7 +110,7 @@ public class SetRandomObject : MonoBehaviour
         }
     }
 
-    private void SetStatus()
+    public void SetStatus()
     {
         // Status
         Image HeroImage;
@@ -129,7 +144,7 @@ public class SetRandomObject : MonoBehaviour
                 HeroName.text = hero.Name;
 
                 HeroMbti = GetChildWithName(HeroInfo, "MBTI").transform.GetComponent<TextMeshProUGUI>();
-                // HeroMbti.text = hero.
+                HeroMbti.text = hero.MBTI.ToString();
 
 
                 // Ability 값
@@ -153,17 +168,7 @@ public class SetRandomObject : MonoBehaviour
         {
             case GameManager.ObjectType.Hero:
                 {
-                    if (EnrollList.Count < 3)
-                        SetRandomList();
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
-                        ObjectUI.transform.parent = transform;
-                        ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
-
-                        SetStatus();
-                    }
+                    SetShopList();
                     break;
                 }
             case GameManager.ObjectType.Item:
