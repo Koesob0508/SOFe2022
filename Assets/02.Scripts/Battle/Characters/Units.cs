@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Units : MonoBehaviour
 {
     bool isUpdating = false;
-    bool isSkillPlaying = false;
+    protected bool isSkillPlaying = false;
     
     public Animator animator;
     public bool bHasSkillAnimation;
@@ -17,16 +17,15 @@ public class Units : MonoBehaviour
 
     public GameObject UnitUIObject;
     GameObject UnitUI;
-    Slider hpBar;
-    Slider spBar;
+    protected Slider hpBar;
+    protected Slider spBar;
     public Vector3 uiOffset;
 
-    BehaviorTreeComponent btComp;
+    protected BehaviorTreeComponent btComp;
 
     public Character charData;
 
     public System.Action skillFinished;
-
 
     protected virtual void Start()
     {
@@ -43,12 +42,8 @@ public class Units : MonoBehaviour
             
     }
     
-    public void Initalize(Character charData)
+    public virtual void Initalize(Character charData)
     {
-        this.charData = charData;
-        this.charData.CurrentHP = this.charData.MaxHP;
-        this.charData.CurrentMana = 0;
-
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -67,6 +62,7 @@ public class Units : MonoBehaviour
         //btComp.Initalize();
 
         GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
+
     }
     public void StartBattle()
     {
@@ -81,51 +77,27 @@ public class Units : MonoBehaviour
     }
     public virtual void Attack()
     {
-        charData.CurrentMana += 10;
-        if(charData.CurrentMana >= charData.MaxMana)
-        {
-            btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
-        }
     }
-    public void Hit(float damage)
+    public virtual void Hit(float damage)
     {
-        if (damage > charData.DefensePoint)
-        {
-            charData.CurrentHP -= damage - charData.DefensePoint;
-        }
-        else // 방어력이 데미지 보다 높으면 1데미지만 
-        {
-            charData.CurrentHP -= 1;
-        }
-
-        if(charData.CurrentHP <= 0)
-        {
-            btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData);
-        }
-        else
-        {
-            if(!isSkillPlaying)
-                PlayGetHitAniamtion();
-        }
     }
     public virtual void ExecuteSkill()
     {
         isSkillPlaying = true;
         PlaySkillAnimation();
-        charData.CurrentMana = 0;
-        StartCoroutine("finishSkill", 3);
+        Debug.Log(GetCurrentAnimationTime());
+        StartCoroutine("finishSkill", GetCurrentAnimationTime());
     }
     IEnumerator finishSkill(float t)
     {
         yield return new WaitForSeconds(t);
         skillFinished();
-        isSkillPlaying=false;
+        isSkillPlaying = false;
         yield break;
     }
     float GetCurrentAnimationTime()
     {
-        return animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return animator.GetCurrentAnimatorStateInfo(0).speed;
     }
     public void PlaySkillAnimation()
     {
@@ -161,9 +133,7 @@ public class Units : MonoBehaviour
         animator.SetBool("Run", false);
     }
 
-    private void UpdateUI()
+    public virtual void UpdateUI()
     {
-        hpBar.value = charData.CurrentHP / charData.MaxHP;
-        spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 }

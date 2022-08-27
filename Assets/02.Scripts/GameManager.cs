@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
             string[] elems = line.Split(',');
 
             Hero hero = new Hero();
+            Debug.Log(elems[0]);
             hero.GUID = uint.Parse(elems[0]);
             hero.Name = elems[1];
             hero.MaxHP = float.Parse(elems[2]);

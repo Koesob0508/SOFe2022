@@ -50,11 +50,11 @@ public class BattleSceneManager : MonoBehaviour
 
         LogPanel = GameObject.Find("BattleLogPanel").GetComponent<BattleLogPanel>();
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
-        tmpPosHero.Add(new Vector2(-8f, -2.5f));
-        tmpPosHero.Add(new Vector2(-4f, -4f));
-        tmpPosEnemy.Add(new Vector2(3.8f, 0f));
-        tmpPosEnemy.Add(new Vector2(8f, -2.5f));
-        tmpPosEnemy.Add(new Vector2(8f, -4f));
+        //tmpPosHero.Add(new Vector2(-8f, -2.5f));
+        //tmpPosHero.Add(new Vector2(-4f, -4f));
+        tmpPosEnemy.Add(new Vector2(1.8f, 0f));
+        tmpPosEnemy.Add(new Vector2(4.5f, -2.5f));
+        //tmpPosEnemy.Add(new Vector2(8f, -4f));
 
         HeroList = Heros;
         EnemyList = Enemies;
@@ -62,27 +62,28 @@ public class BattleSceneManager : MonoBehaviour
         hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
-        for(int i = 0; i < Heros.Count; i++)
+        Debug.Log("Heros: " + hCount  + "Enemys: " + eCount);
+
+        for(int i = 0; i < hCount; i++)
         {
             GameObject h = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + HeroList[i].GUID);
-            GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
-
             GameObject hTemp = Instantiate(h, tmpPosHero[i], new Quaternion());
-            GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
-
-            Units tempU = hTemp.GetComponent<Units>();
-            Units tempU2 = eTemp.GetComponent<Units>();
-
+            Battle_Heros tempU = hTemp.GetComponent<Battle_Heros>();
             tempU.Initalize(HeroList[i]);
-            tempU2.Initalize(EnemyList[i]);
-
             heroObjects.Add(hTemp);
-            enemyObjects.Add(eTemp);
-
+            Debug.Log(tempU.charData.GUID);
             unitUIImage.Add(tempU.charData.GUID, LoadSprite("/Sprites/HeroUI/" + tempU.charData.GUID + "_UI.png"));
+        }
+
+        for(int i =0; i<eCount; i++)
+        {
+            GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
+            GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
+            Battle_Enemys tempU2 = eTemp.GetComponent<Battle_Enemys>();
+            tempU2.Initalize(EnemyList[i]);
+            enemyObjects.Add(eTemp);
             if (!unitUIImage.ContainsKey(tempU2.charData.GUID))
                 unitUIImage.Add(tempU2.charData.GUID, LoadSprite("/Sprites/MonsterUI/" + tempU2.charData.GUID + "_UI.png"));
-
         }
 
         SetBackground(mapType);
@@ -143,7 +144,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             prog += 0.03f;
             mat.SetFloat("_Progress", prog);
-            Debug.Log(prog);
+            // Debug.Log(prog);
             yield return new WaitForSeconds(0.01f);
         }
         transition.gameObject.SetActive(false);
@@ -223,9 +224,9 @@ public class BattleSceneManager : MonoBehaviour
         yield break;
     }
 
-    public void DeadProcess(Character charData)
+    public void DeadProcess(GameManager.ObjectType type)
     {
-        switch (charData.Type)
+        switch (type)
         {
             case GameManager.ObjectType.Hero:
                 hCount -= 1;
