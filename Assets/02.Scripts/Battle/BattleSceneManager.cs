@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class BattleSceneManager : MonoBehaviour
 {
-    private Canvas battleUI = null;
+    private Canvas BattleCanvas = null;
     private Button startBtn = null;
     private Sprite backImg = null;
     private Image transition = null;
@@ -21,12 +22,16 @@ public class BattleSceneManager : MonoBehaviour
     private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
 
-    private BattleLogPanel LogPanel;
+
+    public BattleLogPanel bLogPanel;
+    public HeroInvenPanel hInvenPanel;
+
 
     private uint hCount = 0;
     private uint eCount = 0;
 
-    private Dictionary<uint, Sprite> unitUIImage = new Dictionary<uint, Sprite>();
+
+
 
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
@@ -38,17 +43,37 @@ public class BattleSceneManager : MonoBehaviour
         Debug.Log("BattleManager Initalized");
         SetBackground(mapType);
 
-        battleUI = FindObjectOfType<Canvas>();
+        BattleCanvas = FindObjectOfType<Canvas>();
 
         PathMgr = new Path.PathManager();
         PathMgr.Init(backImg);
     }
+    /// <summary>
+    /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
+    /// </summary>
+    /// <param name="Heros"> Heros List that player owns</param>
+    /// <param name="Enemies">Enemy List of this stage</param>
     public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
     {
 
         Debug.Log("BattleManager Initalized");
 
-        LogPanel = GameObject.Find("BattleLogPanel").GetComponent<BattleLogPanel>();
+        // Get UI Elements
+        BattleCanvas = FindObjectOfType<Canvas>();
+
+        bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
+        hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
+
+        bLogPanel.gameObject.SetActive(false);
+
+        //Init Hero
+        hInvenPanel.Initalize(Heros);
+
+        //Setup Start Btn
+        startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
+        startBtn.onClick.AddListener(delegate { StartBattle(); });
+
+        //temp
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
         tmpPosHero.Add(new Vector2(-8f, -2.5f));
         tmpPosHero.Add(new Vector2(-4f, -4f));
@@ -56,44 +81,37 @@ public class BattleSceneManager : MonoBehaviour
         tmpPosEnemy.Add(new Vector2(8f, -2.5f));
         tmpPosEnemy.Add(new Vector2(8f, -4f));
 
+        //Get Hero and Enemy
         HeroList = Heros;
         EnemyList = Enemies;
 
         hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
-        for(int i = 0; i < Heros.Count; i++)
+        //Init Enemy
+        for(int i = 0; i < eCount; i++)
         {
-            GameObject h = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + HeroList[i].GUID);
             GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
-
-            GameObject hTemp = Instantiate(h, tmpPosHero[i], new Quaternion());
             GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
-
-            Units tempU = hTemp.GetComponent<Units>();
-            Units tempU2 = eTemp.GetComponent<Units>();
-
-            tempU.Initalize(HeroList[i]);
-            tempU2.Initalize(EnemyList[i]);
-
-            heroObjects.Add(hTemp);
+            Units tempU = eTemp.GetComponent<Units>();
+            tempU.Initalize(EnemyList[i]);
             enemyObjects.Add(eTemp);
-
-            unitUIImage.Add(tempU.charData.GUID, LoadSprite("/Sprites/HeroUI/" + tempU.charData.GUID + "_UI.png"));
-            if (!unitUIImage.ContainsKey(tempU2.charData.GUID))
-                unitUIImage.Add(tempU2.charData.GUID, LoadSprite("/Sprites/MonsterUI/" + tempU2.charData.GUID + "_UI.png"));
-
         }
 
+
+        // Set Background
         SetBackground(mapType);
 
-        battleUI = FindObjectOfType<Canvas>();
-        startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
-        transition = GameObject.Find("Transition").GetComponent<Image>();
-        startBtn.onClick.AddListener( delegate { StartBattle(); });
+
+        // Setup PathManager
         PathMgr = GetComponent<Path.PathManager>();
         PathMgr.Init(backImg);
 
+
+  
+
+        // Setup and Play Transition
+        transition = GameObject.Find("Transition").GetComponent<Image>();
         Color fadeColor;
         switch (mapType)
         {
@@ -111,29 +129,8 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
         StartCoroutine(FadeInTransition(fadeColor));
-
     }
-    
-    Sprite LoadSprite(string path)
-    {
-        byte[] bytes = GameManager.Instance.LoadFile(path);
-        Sprite Image = null;
-        if (bytes.Length > 0)
-        {
-            Texture2D tex = new Texture2D(0, 0);
-            tex.LoadImage(bytes);
-
-            Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        }
-        return Image;
-    }
-    public Sprite GetUIImage(uint guid)
-    {
-        if (unitUIImage.ContainsKey(guid))
-            return unitUIImage[guid];
-        else
-            throw new System.Exception(guid + "_UI.png Image Doenst Exist");
-    }
+   
     IEnumerator FadeInTransition(Color col)
     {
         Material mat = transition.material;
@@ -174,16 +171,8 @@ public class BattleSceneManager : MonoBehaviour
             default:
                 throw new System.Exception("Undefined Map Type!");
         }
-        backImg = LoadSprite("/Sprites/Maps/" + mapName);
-        //byte[] bytes = GameManager.Instance.LoadFile();
-
-        //if (bytes.Length > 0)
-        //{
-        //    Texture2D tex = new Texture2D(0, 0);
-        //    tex.LoadImage(bytes);
-            
-        //    backImg = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        //}
+        backImg = GameManager.Instance.LoadSprite("/Sprites/Maps/" + mapName);
+      
     }
 
     void StartBattle()
@@ -197,6 +186,29 @@ public class BattleSceneManager : MonoBehaviour
             enemy.GetComponent<Units>().StartBattle();
         }
         startBtn.gameObject.SetActive(false);
+        hInvenPanel.gameObject.SetActive(false);
+        bLogPanel.gameObject.SetActive(true);
+        
+    }
+
+    public GameObject CreateHero(Hero heroData)
+    {
+        GameObject h = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + heroData.GUID);
+        GameObject hObj =  Instantiate(h);
+        Units tempU = hObj.GetComponent<Units>();
+        tempU.Initalize(heroData);
+
+        hObj.SetActive(false);
+        return hObj;
+    }
+
+    public void SetHeroOnBattle(GameObject Hero)
+    {
+        heroObjects.Add(Hero);
+    }
+    public void DeleteHeroOnBattle(GameObject Hero)
+    {
+        heroObjects.Remove(Hero);
     }
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
@@ -207,7 +219,7 @@ public class BattleSceneManager : MonoBehaviour
             causerUnitComp.Attack();
             targetUnitComp.Hit(Dmg);
         }
-        LogPanel.AddLog(new System.Tuple<Character, float, Character>(targetUnitComp.charData, Dmg, causerUnitComp.charData));
+        bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
     }
 
     /// <summary>
@@ -261,7 +273,5 @@ public class BattleSceneManager : MonoBehaviour
     void Update()
     {
     }
-
-
 
 }

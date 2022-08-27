@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 9111782273464896615}
   - component: {fileID: 2327354003555471170}
   - component: {fileID: 5177436895270943241}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BaseChar
-  m_TagString: Untagged
+  m_TagString: Units
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,9 +76,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1980396161
+  m_SortingLayer: 2
+  m_SortingOrder: -100
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -169,15 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02e042f4787f014e8658a5636c49d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitMaxHP: 100
-  unitCurHP: 100
-  unitAD: 10
-  unitAS: 0.5
-  unitDP: 1
-  unitMM: 1
-  unitCM: 1
-  unitMS: 1
-  unitAR: 1
   animator: {fileID: 0}
   bHasSkillAnimation: 0
   attackTimer: 0

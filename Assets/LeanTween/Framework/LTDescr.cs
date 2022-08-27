@@ -446,7 +446,26 @@ public class LTDescr
 		};
 		return this;
 	}
+	public LTDescr setImageColor()
+	{
+		this.type = TweenAction.IMAGE_COLOR;
+		this.initInternal = () => {
+			this.uiImage = trans.GetComponent<UnityEngine.UI.Image>();
+			this.setFromColor(this.uiImage != null ? this.uiImage.color : Color.white);
+		};
+		this.easeInternal = () => {
+			newVect = easeMethod();
+			val = newVect.x;
+			Color toColor = tweenColor(this, val);
+			this.uiImage.color = toColor;
+			if (dt != 0f && this._optional.onUpdateColor != null)
+				this._optional.onUpdateColor(toColor);
 
+			//if (this.useRecursion && trans.childCount > 0)
+			//textColorRecursive(this.trans, toColor);
+		};
+		return this;
+	}
 	public LTDescr setTextAlpha(){
 		this.type = TweenAction.TEXT_ALPHA;
 		this.initInternal = ()=>{
