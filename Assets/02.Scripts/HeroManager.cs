@@ -116,7 +116,7 @@ public class HeroManager : MonoBehaviour
         //    }
         //}
         
-        foreach (Hero hero in GameManager.Instance.ObjectCodex.Values)
+        foreach (Hero hero in GameManager.Data.ObjectCodex.Values)
         {
             if (hero.GUID == guid)
             {
@@ -228,7 +228,7 @@ public class HeroManager : MonoBehaviour
 
             if (CanActive)
             {
-                Hero hero = (Hero)GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
+                Hero hero = (Hero)GameManager.Data.LoadObject(guid, GameManager.ObjectType.Hero);
 
                 // 용병의 MBTI Random으로 지정
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);

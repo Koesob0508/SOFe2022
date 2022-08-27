@@ -73,7 +73,7 @@ public class MouseEventUI : MonoBehaviour
             GameObject HeroUIContent = Hero.transform.parent.gameObject;
 
             uint heroGUID = HeroUIContent.GetComponent<SetRandomObject>().GetHeroUIOrder(Hero);
-            Hero _hero = (Hero)GameManager.Instance.LoadObject(heroGUID, GameManager.ObjectType.Hero);
+            Hero _hero = (Hero)GameManager.Data.LoadObject(heroGUID, GameManager.ObjectType.Hero);
 
             TextMeshProUGUI Text = this.transform.parent.GetChild(0).GetComponent<TextMeshProUGUI>();
             Text.text = _hero.Cost.ToString() + "G";

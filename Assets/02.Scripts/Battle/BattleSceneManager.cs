@@ -171,7 +171,7 @@ public class BattleSceneManager : MonoBehaviour
             default:
                 throw new System.Exception("Undefined Map Type!");
         }
-        backImg = GameManager.Instance.LoadSprite("/Sprites/Maps/" + mapName);
+        backImg = GameManager.Data.LoadSprite("/Sprites/Maps/" + mapName);
       
     }
 
