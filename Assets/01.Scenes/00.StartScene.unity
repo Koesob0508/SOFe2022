@@ -1041,7 +1041,7 @@ GameObject:
   - component: {fileID: 842497413}
   - component: {fileID: 842497412}
   m_Layer: 0
-  m_Name: HeroManager
+  m_Name: Hero Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -25,7 +25,9 @@ public class HeroManager : MonoBehaviour
 
 
     public List<Hero> HeroList = new List<Hero>();
+    public List<GlobalObject> ShopHeroList = new List<GlobalObject>();
     // public List<GlobalObject> GuildList = new List<GlobalObject>();
+
     private void Test()
     {
         Debug.Log("Test를 위해 Hero 임시로 등록합니다");
@@ -33,12 +35,16 @@ public class HeroManager : MonoBehaviour
         EnrollHero(1);
         EnrollHero(2);
         EnrollHero(3);
+
+        // 잠시 Text로 여기에서 확인
+        SetShopHero();
     }
 
     public void Init()
     {
-
         Debug.Log("Hero Manager Init");
+
+        DontDestroyOnLoad(this);
 
         GameObject obj = GameObject.Find("Hero Manager");
         if (obj == null)
@@ -192,4 +198,49 @@ public class HeroManager : MonoBehaviour
         List<Item> Items = GetHeroItemList(hero);
         Items.Remove(item);
     }
+
+    public void SetShopHero()
+    {
+        ShopHeroList.Clear();
+
+        while (ShopHeroList.Count < 3)
+        {
+            uint guid = (uint)Random.Range(0, 17);
+            bool CanActive = true;
+
+            foreach (Hero hero in ShopHeroList)
+            {
+                if (hero.GUID == guid)
+                {
+                    CanActive = false;
+                    break;
+                }
+            }
+
+            foreach (Hero hero in GameManager.Hero.GetHeroList())
+            {
+                if (hero.GUID == guid)
+                {
+                    CanActive = false;
+                    break;
+                }
+            }
+
+            if (CanActive)
+            {
+                Hero hero = (Hero)GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
+
+                // 용병의 MBTI Random으로 지정
+                hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
+                // Debug.Log(hero.Name + "랜덤으로 등록");
+                ShopHeroList.Add(hero);
+            }
+        }
+    }
+
+    public List<GlobalObject> GetShopHeroList()
+    {
+        return ShopHeroList;
+    }
+
 }
