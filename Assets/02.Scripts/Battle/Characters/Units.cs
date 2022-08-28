@@ -67,9 +67,9 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     }
 
-    public void SetItemUI(HeroInvenItem itemUI)
-    {
-        this.invenItemUI = itemUI;
+    public void SetItemUI(HeroInvenItem itemUI)
+    {
+        this.invenItemUI = itemUI;
     }
     public void StartBattle()
     {
@@ -158,19 +158,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         transform.position = WorldPos;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
-
-        if (hit.collider != null)
-        {
-            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == invenItemUI)
-            {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
-                invenItemUI.ReturnToInven();
-            }
-        }
-    }
+    public void OnEndDrag(PointerEventData eventData)    {        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
+        if (hit.collider != null)        {            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();            if (item == invenItemUI)            {                GameManager.Battle.DeleteHeroOnBattle(gameObject);                invenItemUI.ReturnToInven();            }        }    }
 }
