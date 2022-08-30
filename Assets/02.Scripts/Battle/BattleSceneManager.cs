@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class BattleSceneManager : MonoBehaviour
 {
@@ -58,11 +56,17 @@ public class BattleSceneManager : MonoBehaviour
         //Setup Start Btn
         startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
         startBtn.onClick.AddListener(delegate { StartBattle(); });
-
+        startBtn.gameObject.SetActive(false);
         //temp
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
         tmpPosEnemy.Add(new Vector2(1.8f, 0f));
         tmpPosEnemy.Add(new Vector2(4.5f, -2.5f));
+
+        dmgPopupPool = new ObjectPool<GameObject>(
+            Create_DmgPopup,
+            OnGet_DmgPopup,
+            OnRelease__DmgPopup,
+            OnDestroy__DmgPopup);
 
         //Get Hero and Enemy
         HeroList = Heros;
@@ -115,10 +119,13 @@ public class BattleSceneManager : MonoBehaviour
     public void SetHeroOnBattle(GameObject Hero)
     {
         heroObjects.Add(Hero);
+        startBtn.gameObject.SetActive(true);
     }
     public void DeleteHeroOnBattle(GameObject Hero)
     {
         heroObjects.Remove(Hero);
+        if (heroObjects.Count == 0)
+            startBtn.gameObject.SetActive(false);
     }
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
@@ -130,7 +137,7 @@ public class BattleSceneManager : MonoBehaviour
             targetUnitComp.Hit(Dmg);
         }
         bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
-        DamageUI(Target.transform.position, Dmg);
+        MakeDamagePopup(Target.transform.position, Dmg);
     }
     public GameObject CreateHero(Hero heroData)
     {
@@ -166,20 +173,54 @@ public class BattleSceneManager : MonoBehaviour
 
     #endregion
     #region Private Methods
-    DamagePopUp Create_DmgPopup()
+    #region DamagePopup
+    void MakeDamagePopup(Vector2 pos, float Damage)
     {
-        return new DamagePopUp();
+        GameObject obj = dmgPopupPool.Get();
+
+        RectTransform rt = obj.GetComponent<RectTransform>();
+        DamagePopUp dmgPopup = obj.GetComponent<DamagePopUp>();
+        TMPro.TextMeshProUGUI text = obj.GetComponent<TMPro.TextMeshProUGUI>();
+
+
+        Vector2 AnchoredPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(BattleCanvas.gameObject.GetComponent<RectTransform>(), Camera.main.WorldToScreenPoint(pos), Camera.main, out AnchoredPos);
+        rt.anchoredPosition = AnchoredPos;
+        rt.localScale = Vector3.one;
+
+        text.SetText("-" + Damage);
+        text.color = Color.red;
+        text.alignment = TMPro.TextAlignmentOptions.Center;
+
+        dmgPopup.SetPool(dmgPopupPool);
+        dmgPopup.StartAnimation();
+
+    }
+    GameObject Create_DmgPopup()
+    {
+        GameObject obj = new GameObject("Dmg_Popup");
+        obj.transform.SetParent(BattleCanvas.transform);
+
+        obj.AddComponent<DamagePopUp>();
+        obj.AddComponent<RectTransform>();
+        obj.AddComponent<TMPro.TextMeshProUGUI>();
+
+        obj.SetActive(false);
+        return obj;
     }
     void OnGet_DmgPopup(GameObject popup)
     {
+        popup.SetActive(true);
     }
     void OnRelease__DmgPopup(GameObject popup)
     {
-        
+        popup.SetActive(false);
     }
     void OnDestroy__DmgPopup(GameObject popup)
     {
+        Destroy(popup);
     }
+    #endregion
     void SetBackground(GameManager.MapType mapType)
     {
         string mapName = "";
@@ -219,16 +260,6 @@ public class BattleSceneManager : MonoBehaviour
         startBtn.gameObject.SetActive(false);
         hInvenPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(true);
-    }
-
-
-
-    void DamageUI(Vector2 pos, float Dmg)
-    {
-        RectTransform CanvasRect = BattleCanvas.GetComponent<RectTransform>();
-        Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(pos);
-        Vector2 WorldObject_ScreenPosition = new Vector2(((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)), ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-        dmgPopupPool.Get().gameObject.GetComponent<RectTransform>().anchoredPosition = WorldObject_ScreenPosition;
     }
 
     
