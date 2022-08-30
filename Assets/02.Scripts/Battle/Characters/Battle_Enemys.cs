@@ -73,5 +73,4 @@ public class Battle_Enemys : Units
         hpBar.value = state.CurrentHP / state.MaxHP;
         spBar.value = state.CurrentMana / state.MaxMana;
     }
-
 }

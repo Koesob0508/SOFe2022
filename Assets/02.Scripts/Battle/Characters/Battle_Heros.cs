@@ -51,4 +51,5 @@ public class Battle_Heros : Units
         hpBar.value = charData.CurrentHP / charData.MaxHP;
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
+
 }

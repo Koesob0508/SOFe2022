@@ -25,7 +25,7 @@ public class BattleSceneManager : MonoBehaviour
 
     public BattleLogPanel bLogPanel;
     public HeroInvenPanel hInvenPanel;
-
+    public BattleEndUI bEndPanel;
 
     private uint hCount = 0;
     private uint eCount = 0;
@@ -47,7 +47,9 @@ public class BattleSceneManager : MonoBehaviour
         BattleCanvas = FindObjectOfType<Canvas>();
         bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
+        bEndPanel = BattleCanvas.GetComponentInChildren<BattleEndUI>();
 
+        bEndPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(false);
 
         //Init Hero
@@ -76,7 +78,7 @@ public class BattleSceneManager : MonoBehaviour
         eCount = (uint)EnemyList.Count;
 
         //Init Enemy
-        for(int i = 0; i < eCount; i++)
+        for (int i = 0; i < eCount; i++)
         {
             GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
             GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
@@ -163,12 +165,19 @@ public class BattleSceneManager : MonoBehaviour
         }
         if (hCount == 0)
         {
-            FinishBattle(false);
+            ActivateBattleEndUI(false);
         }
         if (eCount == 0)
         {
-            FinishBattle(true);
+            ActivateBattleEndUI(true);
         }
+    }
+    public void FinishBattle(bool bIsWin)
+    {
+        if (bIsWin)
+            GameManager.Scene.ToStageSelectScene();
+        else
+            GameManager.Scene.ToTownScene();
     }
 
     #endregion
@@ -249,7 +258,7 @@ public class BattleSceneManager : MonoBehaviour
 
     void StartBattle()
     {
-        foreach(var hero in heroObjects)
+        foreach (var hero in heroObjects)
         {
             hero.GetComponent<Units>().StartBattle();
         }
@@ -262,30 +271,14 @@ public class BattleSceneManager : MonoBehaviour
         bLogPanel.gameObject.SetActive(true);
     }
 
-    
-    void FinishBattle(bool bIsWin)
 
+    void ActivateBattleEndUI(bool bIsWin)
     {
-
-        if(bIsWin)
-
-        {
-
-
-
-        }
-
-        else
-
-        {
-
-
-
-        }
-
-
-
+        bEndPanel.gameObject.SetActive(true);
+        bEndPanel.Initalize(bIsWin);
     }
+
+  
     void Update()
     {
     }

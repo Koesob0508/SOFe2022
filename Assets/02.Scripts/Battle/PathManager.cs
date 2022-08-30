@@ -16,10 +16,10 @@ namespace Path
         ArrayList nodes = new ArrayList();
         ArrayList tmpPath = new ArrayList();
 
-        [Range(0, 20)]
-        public int ColCount = 20;
-        [Range(0,20)]
-        public int RowCount = 20;
+        [Range(0, 40)]
+        public int ColCount = 40;
+        [Range(0,40)]
+        public int RowCount = 40;
 
         float offsetX = 0, offsetY = 0;
         float Width = 0, Height = 0;

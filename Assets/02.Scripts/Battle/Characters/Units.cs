@@ -63,45 +63,20 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
 
-        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
-
-    }
+        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);    }
 
     public void SetItemUI(HeroInvenItem itemUI)
     {
         this.invenItemUI = itemUI;
     }
-    public void StartBattle()
-    {
-        btComp.StartTree();
-        isUpdating = true;
-    }
-    public void EndBattle()
-    {
-        btComp.StopTree();
-        isUpdating = false;
-
-    }
-    public virtual void Attack()
-    {
-    }
+    public void StartBattle()    {        btComp.StartTree();        isUpdating = true;    }
+    public void EndBattle()    {        btComp.StopTree();        isUpdating = false;    }
+    public virtual void Attack()    {    }
     public virtual void Hit(float damage)
     {
     }
-    public virtual void ExecuteSkill()
-    {
-        isSkillPlaying = true;
-        PlaySkillAnimation();
-        Debug.Log(GetCurrentAnimationTime());
-        StartCoroutine("finishSkill", GetCurrentAnimationTime());
-    }
-    IEnumerator finishSkill(float t)
-    {
-        yield return new WaitForSeconds(t);
-        skillFinished();
-        isSkillPlaying = false;
-        yield break;
-    }
+    public virtual void ExecuteSkill()    {        isSkillPlaying = true;        PlaySkillAnimation();        Debug.Log(GetCurrentAnimationTime());        StartCoroutine("finishSkill", GetCurrentAnimationTime());    }
+    IEnumerator finishSkill(float t)    {        yield return new WaitForSeconds(t);        skillFinished();        isSkillPlaying = false;        yield break;    }
     float GetCurrentAnimationTime()
     {
         return animator.GetCurrentAnimatorStateInfo(0).speed;
