@@ -146,11 +146,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector2 screenPos = eventData.position;
-        if (screenPos.x > Screen.width / 2)
-        {
+    public void OnDrag(PointerEventData eventData)    {        Vector2 screenPos = eventData.position;        if (screenPos.x > Screen.width / 2)        {
             screenPos.x = Screen.width / 2;
         }
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
