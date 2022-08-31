@@ -14,7 +14,13 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     Vector3 HalfPos;
 
     bool isPopUpOpened = false;
-    public void SetHeroObj(GameObject HeroObj)
+    bool isHeroInInven = true;
+
+    private void SetPopUpData(Hero hero)
+    {
+        infoPopUp.SetUpData(hero);
+    }
+    private void SetHeroObj(GameObject HeroObj)
     {
         HeroObject = HeroObj;
         HeroObject.GetComponent<Units>().SetItemUI(this);
@@ -22,12 +28,19 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
 
     public void ReturnToInven()
     {
+        isHeroInInven = true;
         HeroObject.SetActive(false);
         GameManager.Battle.DeleteHeroOnBattle(HeroObject);
         HeroImage.sprite = GameManager.Data.LoadSprite(HeroObject.GetComponent<Units>().charData.GUID);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(isPopUpOpened)
+        {
+            isPopUpOpened = !isPopUpOpened;
+            infoPopUp.gameObject.SetActive(isPopUpOpened);
+        }
+        isHeroInInven = false;
         HeroImage.sprite = null;
         HeroObject.SetActive(true);
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
@@ -54,25 +67,46 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
         GameManager.Battle.SetHeroOnBattle(HeroObject);
         parentPanel.EndDragging();
         GameManager.Battle.SetHeroOnBattle(HeroObject);
+
+        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero, Mathf.Infinity, layerMask);
+
+        if (hit.collider != null)
+        {
+            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
+            if (item == this)
+            {
+                GameManager.Battle.DeleteHeroOnBattle(gameObject);
+                ReturnToInven();
+            }
+        }
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        isPopUpOpened = !isPopUpOpened;
-        parentPanel.CloseOtherPopUp(this);
-        infoPopUp.gameObject.SetActive(isPopUpOpened);
+        if(isHeroInInven)
+        {
+            isPopUpOpened = !isPopUpOpened;
+            parentPanel.CloseOtherPopUp(this);
+            infoPopUp.gameObject.SetActive(isPopUpOpened);
+        }
     }
     public void ClosePopUp()
     {
         isPopUpOpened = false;
         infoPopUp.gameObject.SetActive(isPopUpOpened);
     }
-    void Start()
+
+    public void Initalize(Hero hero)
     {
         parentPanel = GetComponentInParent<HeroInvenPanel>();
         HeroImage = GetComponent<Image>();
         infoPopUp = parentPanel.GetComponentInChildren<HeroInfo_PopUp>();
         infoPopUp.gameObject.SetActive(false);
+
+        SetPopUpData(hero);
+        SetHeroObj(GameManager.Battle.CreateHero(hero));
     }
+
 
     // Update is called once per frame
     void Update()

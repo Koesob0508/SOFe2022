@@ -18,9 +18,11 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     public float attackTimer = 0.0f;
 
     public GameObject UnitUIObject;
+    
     GameObject UnitUI;
     protected Slider hpBar;
     protected Slider spBar;
+
     public Vector3 uiOffset;
 
     protected BehaviorTreeComponent btComp;
@@ -40,12 +42,9 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected virtual void Update()
     {
-
-        if (isUpdating)
-        {
+        if (isUpdating)        {
             UpdateUI();
         }
-            
     }
     
     public virtual void Initalize(Character charData)
@@ -66,8 +65,11 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
 
-        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
+        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);    }
 
+    public void SetItemUI(HeroInvenItem itemUI)
+    {
+        this.invenItemUI = itemUI;
     }
 
     public void SetItemUI(HeroInvenItem itemUI)
@@ -132,7 +134,13 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             animator.SetTrigger("GetHit");
         }
-    }
+    }    public virtual void Dead()
+    {
+        isUpdating = false;
+        UnitUI.gameObject.SetActive(false);
+        PlayDeadAnimation();
+
+    }
     public void PlayDeadAnimation()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
@@ -151,31 +159,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector2 screenPos = eventData.position;
-        if (screenPos.x > Screen.width / 2)
-        {
-            screenPos.x = Screen.width / 2;
-        }
-        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        WorldPos.z = 0;
-        transform.position = WorldPos;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
-
-        if (hit.collider != null)
-        {
-            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == invenItemUI)
-            {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
-                invenItemUI.ReturnToInven();
-            }
-        }
-    }
+    public void OnDrag(PointerEventData eventData)    {        Vector2 screenPos = eventData.position;        if (screenPos.x > Screen.width / 2)        {            screenPos.x = Screen.width / 2;        }
+        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);        WorldPos.z = 0;        transform.position = WorldPos;    }
+    public void OnEndDrag(PointerEventData eventData)    {        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
+        if (hit.collider != null)        {            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();            if (item == invenItemUI)            {                GameManager.Battle.DeleteHeroOnBattle(gameObject);                invenItemUI.ReturnToInven();            }        }    }
 }

@@ -9,7 +9,7 @@ public class BattleLogPanel : MonoBehaviour
     public uint curLogCount = 0;
     public uint maxLogCount = 5;
 
-    public float logRemainTime = 2.0f;
+    public float logRemainTime = 1.0f;
     public float spacing = 5f;
 
     public GameObject logPrefab;
@@ -32,8 +32,7 @@ public class BattleLogPanel : MonoBehaviour
             CreateLog,
             OnGet,
             OnRelease,
-            OnDestroyLog,
-            maxSize: (int)maxLogCount
+            OnDestroyLog
             );
 
         ancBetween = 1.0f / maxLogCount;
@@ -54,9 +53,11 @@ public class BattleLogPanel : MonoBehaviour
     void PublishLog()
     {
         BattleLog log = LogPool.Get();
+        log.name = log.name + curLogCount;
         log.ConstructWithInfo(logQueue.Dequeue());
         log.SetLifeTime(logRemainTime);
         log.SetAnchorMoveOffset(ancBetween);
+        log.Setnum((int)curLogCount);
         log.AnchorMoveTo(AnchorVecList[(int)curLogCount++]);
     }
     /// <summary>
@@ -70,7 +71,7 @@ public class BattleLogPanel : MonoBehaviour
 
     BattleLog CreateLog()
     {
-        GameObject g = GameObject.Instantiate(logPrefab,this.gameObject.transform);
+        GameObject g = Instantiate(logPrefab,this.gameObject.transform);
         g.GetComponent<BattleLog>().SetPool(LogPool);
         g.SetActive(false);
         return g.GetComponent<BattleLog>();
@@ -82,13 +83,14 @@ public class BattleLogPanel : MonoBehaviour
     }
     void OnRelease(BattleLog log)
     {
-        log.gameObject.SetActive(false);
-        ActiveLog.Remove(log.gameObject);
         curLogCount--;
+        ActiveLog.Remove(log.gameObject);
+        log.gameObject.SetActive(false);
         foreach(var alog in ActiveLog)
         {
             alog.GetComponent<BattleLog>().AnchorMoveUp();
         }
+        
     }
     void OnDestroyLog(BattleLog log)
     {

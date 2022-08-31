@@ -20,7 +20,7 @@ public class HeroInvenPanel : MonoBehaviour
             var item = g.GetComponentInChildren<HeroInvenItem>();
             childItems.Add(item);
             g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
-            item.SetHeroObj(GameManager.Battle.CreateHero(hero));
+            item.Initalize(hero);
         }
         Half_UI = new GameObject("Half_Panel");
         RectTransform rt = Half_UI.AddComponent<RectTransform>();

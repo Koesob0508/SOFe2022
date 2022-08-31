@@ -29,7 +29,7 @@ public class Battle_Heros : Units
 
     public override void Hit(float damage)
     {
-        // µ¥¹ÌÁö Ã³¸® = ( 100 / ¹æ¾î·Â + 100 ) * µ¥¹ÌÁö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ = ( 100 / ï¿½ï¿½ï¿½ï¿½ + 100 ) * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
 
@@ -58,7 +58,7 @@ public class Battle_Heros : Units
     }
     
 
-    //±ÙÁ¢ °ø°Ý½Ã È£Ãâ. ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³ª´Â ½ÃÁ¡¿¡¼­ µ¥¹ÌÁö °Ô»ê.
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ È£ï¿½ï¿½. ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô»ï¿½.
     IEnumerator CouroutineCloseAttack()
     {
         yield return new WaitForSeconds(0.01f);
@@ -69,12 +69,12 @@ public class Battle_Heros : Units
 
         if (isCloseAttackUnit)
         {
-            //±ÙÁ¢ À¯´ÖÀÎ °æ¿ì ¹Ù·Î µ¥¹ÌÁö °è»ê
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
         }
         else
         {
-            //¿ø°Å¸® À¯´ÖÀÎ °æ¿ì Åõ»çÃ¼ »ý¼º
+            //ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
             GameObject projectile = Instantiate(projectileObject, transform);
             projectile.GetComponent<Projectile>().Initialize(attackTarget, charData.AttackDamage);
 

@@ -51,7 +51,7 @@ public class Battle_Enemys : Units
 
     public override void Hit(float damage)
     {
-        // µ¥¹ÌÁö Ã³¸® = ( 100 / ¹æ¾î·Â + 100 ) * µ¥¹ÌÁö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ = ( 100 / ï¿½ï¿½ï¿½ï¿½ + 100 ) * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         state.CurrentHP -= (100 / (state.DefensePoint + 100)) * damage;
 
         if (state.CurrentHP <= 0)
@@ -78,7 +78,7 @@ public class Battle_Enemys : Units
         spBar.value = state.CurrentMana / state.MaxMana;
     }
 
-    //±ÙÁ¢ °ø°Ý½Ã È£Ãâ. ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³ª´Â ½ÃÁ¡¿¡¼­ µ¥¹ÌÁö °Ô»ê.
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ È£ï¿½ï¿½. ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô»ï¿½.
     IEnumerator CouroutineCloseAttack()
     {
         yield return new WaitForSeconds(0.01f);
@@ -87,7 +87,7 @@ public class Battle_Enemys : Units
 
         yield return new WaitForSeconds(t);
 
-        //µ¥¹ÌÁö °è»ê
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         attackTarget.GetComponent<Units>().Hit(state.AttackDamage);
     }
 }

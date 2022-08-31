@@ -18,7 +18,7 @@ namespace BT
             Units unitComp = owner_comp.gameObject.GetComponent<Units>();
             if (unitComp != null)
             {
-                unitComp.PlayDeadAnimation();
+                unitComp.Dead();
             }
                 
             return State.Succeeded;
