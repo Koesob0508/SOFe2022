@@ -37,12 +37,17 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
                 isLongPressed = true;
                 elapsedTime = 0f;
                 if (button.interactable && !object.ReferenceEquals(onLongPress, null))
+                {
                     onLongPress.Invoke();
+                    LeanTween.scale(this.gameObject, new Vector3(1.3f, 1.3f, 1.3f), .3f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);
+
+                }
             }
         }
         else if (!isPointerDown)
         {
             NoPress.Invoke();
+            LeanTween.scale(this.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);
         }
     }
 

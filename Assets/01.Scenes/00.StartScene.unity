@@ -370,13 +370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26250db3313ecd4493d89d66ae52002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startCount: 0
-  stepCount: 0
-  height: 0
-  width: 0
-  battleStage: {fileID: 0}
-  townStage: {fileID: 0}
-  eventStage: {fileID: 0}
   stageNodes: []
 --- !u!4 &109787964
 Transform:
@@ -438,12 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9251a0e048ef0ee4e8e2878df5fc72b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0
-  isCompleted: 0
-  nextStages: []
-  timeThreshold: 0
-  pathObject: {fileID: 0}
-  lanePrefab: {fileID: 0}
   button: {fileID: 630363065}
 --- !u!1 &406601512
 GameObject:
@@ -1297,6 +1284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stage: {fileID: 109787963}
   _hero: {fileID: 842497412}
+  _relation: {fileID: 1651774850}
 --- !u!4 &1235062114
 Transform:
   m_ObjectHideFlags: 0
@@ -1762,13 +1750,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9251a0e048ef0ee4e8e2878df5fc72b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0
-  isCompleted: 0
-  nextStages: []
-  timeThreshold: 0
-  pathObject: {fileID: 0}
-  lanePrefab: {fileID: 0}
   button: {fileID: 406601514}
+--- !u!1 &1651774849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1651774851}
+  - component: {fileID: 1651774850}
+  m_Layer: 0
+  m_Name: Relationship Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1651774850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651774849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b437f24cee42c364fa8e875f3f88df17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RelationScore: 0
+--- !u!4 &1651774851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651774849}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1950.3601, y: 240.25851, z: -14.306541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777497257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,12 +1841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9251a0e048ef0ee4e8e2878df5fc72b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0
-  isCompleted: 0
-  nextStages: []
-  timeThreshold: 0
-  pathObject: {fileID: 0}
-  lanePrefab: {fileID: 0}
   button: {fileID: 637718774}
 --- !u!1 &2057818251
 GameObject:
