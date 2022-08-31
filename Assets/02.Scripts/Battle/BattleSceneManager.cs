@@ -75,11 +75,11 @@ public class BattleSceneManager : MonoBehaviour
 
         //temp
         tmpPosHero.Add(new Vector2(-3.8f, 0f));
-        //tmpPosHero.Add(new Vector2(-8f, -2.5f));
+        tmpPosHero.Add(new Vector2(-8f, -2.5f));
         //tmpPosHero.Add(new Vector2(-4f, -4f));
         tmpPosEnemy.Add(new Vector2(1.8f, 0f));
         tmpPosEnemy.Add(new Vector2(4.5f, -2.5f));
-        //tmpPosEnemy.Add(new Vector2(8f, -4f));
+        tmpPosEnemy.Add(new Vector2(8f, -4f));
 
         //Get Hero and Enemy
         HeroList = Heros;
@@ -214,11 +214,11 @@ public class BattleSceneManager : MonoBehaviour
     {
         var targetUnitComp = Target.GetComponent<Units>();
         var causerUnitComp = Causer.GetComponent<Units>();
-        if (targetUnitComp != null)
-        {
-            causerUnitComp.Attack();
-            targetUnitComp.Hit(Dmg);
-        }
+        //if (targetUnitComp != null)
+        //{
+        //    causerUnitComp.Attack();
+        //    targetUnitComp.Hit(Dmg);
+        //}
         bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
     }
 

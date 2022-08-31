@@ -5,11 +5,12 @@ using UnityEngine;
 public class Archer01 : Battle_Heros
 {
 
-
-    public override void Attack()
+    protected override void Start()
     {
-        base.Attack();
+        isCloseAttackUnit = false;
+
     }
+
 
     public override void ExecuteSkill()
     {

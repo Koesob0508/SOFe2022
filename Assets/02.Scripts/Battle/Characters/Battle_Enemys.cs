@@ -38,6 +38,10 @@ public class Battle_Enemys : Units
 
     public override void Attack()
     {
+        base.Attack();
+        if (isCloseAttackUnit)
+            StartCoroutine("CouroutineCloseAttack");
+
         state.CurrentMana += 10;
         if (state.CurrentMana >= state.MaxMana && bHasSkillAnimation)
         {
@@ -74,4 +78,16 @@ public class Battle_Enemys : Units
         spBar.value = state.CurrentMana / state.MaxMana;
     }
 
+    //근접 공격시 호출. 애니메이션이 끝나는 시점에서 데미지 게산.
+    IEnumerator CouroutineCloseAttack()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        float t = GetCurrentAnimationTime();
+
+        yield return new WaitForSeconds(t);
+
+        //데미지 계산
+        attackTarget.GetComponent<Units>().Hit(state.AttackDamage);
+    }
 }

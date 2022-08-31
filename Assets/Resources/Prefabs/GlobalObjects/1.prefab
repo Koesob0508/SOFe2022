@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+      propertyPath: m_TagString
+      value: Heros
+      objectReference: {fileID: 0}
     - target: {fileID: 7990248078049770958, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Size.x
       value: 3.125
@@ -127,7 +131,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_PrefabInstance: {fileID: 3589320661107169560}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-9077064969708481396
+--- !u!114 &2295631200505019348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7907849573432098932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4b5703add37ec343a6fc84447972005, type: 3}
+  m_Script: {fileID: 11500000, guid: 77589b358a0f12b4ca27d49fdc5a6b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -144,3 +148,5 @@ MonoBehaviour:
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
+  attackTarget: {fileID: 0}
+  projectileObject: {fileID: 6840111932400894857, guid: 584686e8cfd6c8a478f3097552c1c588, type: 3}

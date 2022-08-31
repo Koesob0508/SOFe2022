@@ -8,6 +8,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     bool isUpdating = false;
     protected bool isSkillPlaying = false;
+    protected bool isCloseAttackUnit; // 근접 유닛
     
     public Animator animator;
     public bool bHasSkillAnimation;
@@ -23,16 +24,18 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     public Vector3 uiOffset;
 
     protected BehaviorTreeComponent btComp;
-
+    public GameObject attackTarget;
     public Character charData;
 
     public System.Action skillFinished;
 
     HeroInvenItem invenItemUI;
 
+    public GameObject projectileObject;
+
     protected virtual void Start()
     {
-
+        isCloseAttackUnit = true;
     }
 
     protected virtual void Update()
@@ -82,29 +85,32 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         isUpdating = false;
 
     }
-    public virtual void Attack()
-    {
+    public virtual void Attack()
+    {        PlayAttackAnimation();
     }
     public virtual void Hit(float damage)
     {
     }
-    public virtual void ExecuteSkill()
+    public virtual void ExecuteSkill()
     {
         isSkillPlaying = true;
         PlaySkillAnimation();
-        Debug.Log(GetCurrentAnimationTime());
-        StartCoroutine("finishSkill", GetCurrentAnimationTime());
+        StartCoroutine("CouroutineSkill");
     }
-    IEnumerator finishSkill(float t)
-    {
+
+    IEnumerator CouroutineSkill()
+    {
+        yield return new WaitForSeconds(0.05f);
+
+        float t = GetCurrentAnimationTime();
+
         yield return new WaitForSeconds(t);
         skillFinished();
-        isSkillPlaying = false;
-        yield break;
+        isSkillPlaying = false;
     }
-    float GetCurrentAnimationTime()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).speed;
+    protected float GetCurrentAnimationTime()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).length;
     }
     public void PlaySkillAnimation()
     {
@@ -125,7 +131,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
         {
             animator.SetTrigger("GetHit");
-
         }
     }
     public void PlayDeadAnimation()
