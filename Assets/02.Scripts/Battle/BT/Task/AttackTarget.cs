@@ -23,9 +23,13 @@ namespace BT
                 bb.SetValueAsGameObject("targetObj", null);
                 return State.Failed;
             }
+
             float dmg = bb.GetValueAsFloat("Damage");
 
-            owner_comp.gameObject.GetComponent<Units>().PlayAttackAnimation();
+            // owner_comp.gameObject.GetComponent<Units>().PlayAttackAnimation();
+            owner_comp.gameObject.GetComponent<Units>().attackTarget = targetObj.gameObject;
+            owner_comp.gameObject.GetComponent<Units>().Attack();
+
             GameManager.Battle.GenerateHit(owner_comp.gameObject, targetObj.gameObject, dmg);
             return State.Succeeded;
         }

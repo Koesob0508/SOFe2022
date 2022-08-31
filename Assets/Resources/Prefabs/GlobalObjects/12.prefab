@@ -212,6 +212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+      propertyPath: m_TagString
+      value: Heros
+      objectReference: {fileID: 0}
     - target: {fileID: 7990248078049770958, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Size.x
       value: 3.125
@@ -260,3 +264,5 @@ MonoBehaviour:
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
+  attackTarget: {fileID: 0}
+  projectileObject: {fileID: 0}
