@@ -52,6 +52,15 @@ public class MouseEventUI : MonoBehaviour
             button.color = new Color32(102, 102, 255, 225);
             this.transform.parent.GetComponent<Button>().interactable = false;
 
+            LeanTween.scale(Hero.transform.GetChild(0).gameObject, new Vector3(1.2f, 1.2f, 1.2f), .3f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(Hero.transform.GetChild(1).gameObject, new Vector3(1.2f, 0.8f, 0.8f), .3f).setDelay(0.3f).setEase(LeanTweenType.easeOutCirc);
+
+            Hero.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().LeanAlpha(0.3f, 0.3f);
+            LeanTween.scale(Hero.transform.GetChild(0).gameObject, new Vector3(1f, 1f, 1f), .3f).setDelay(0.4f).setEase(LeanTweenType.easeOutCirc);
+
+            Hero.transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().LeanAlpha(0.3f, 0.3f);
+            LeanTween.scale(Hero.transform.GetChild(1).gameObject, new Vector3(1.47f, 1f, 1f), .3f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+
             CanBuy = false;
 
         }

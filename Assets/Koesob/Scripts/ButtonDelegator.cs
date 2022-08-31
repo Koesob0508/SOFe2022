@@ -43,7 +43,7 @@ namespace Koesob
             else
             {
                 AllHeroInfoUI = Instantiate(Resources.Load<GameObject>("AllHeroUI"));
-                AllHeroInfoUI.transform.SetParent(GameObject.Find("Canvas").transform);
+                //AllHeroInfoUI.transform.SetParent(GameObject.Find("Main Canvas").transform);
             }
         }
 
