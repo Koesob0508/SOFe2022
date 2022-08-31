@@ -12,13 +12,17 @@ public class BattleLog : MonoBehaviour
     TMPro.TextMeshProUGUI ContentTxt;
     Image TargetImg;
 
-    float lifeTime = 0;
+    float lifeTime = 1;
     float ancOffset = 0;
 
     private IObjectPool<BattleLog> pool;
-
+    public int CurNumber = 0;
     CanvasGroup UIGroup;
 
+    public void Setnum(int num)
+    {
+        CurNumber = num;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -62,7 +66,7 @@ public class BattleLog : MonoBehaviour
         logRectT.offsetMin = new Vector2(width/2, 0); //left, btm
         logRectT.offsetMax = new Vector2(width/2, 0); //-right,-top
 
-        LeanTween.value(this.gameObject, width/2, 0, 0.5f).setOnUpdate((float val) =>
+        LeanTween.value(this.gameObject, width/2, 0, 0.3f).setOnUpdate((float val) =>
         {
             logRectT.offsetMin = new Vector2(val, 0); //left, btm
             logRectT.offsetMax = new Vector2(val, 0); //-right,-top
@@ -72,34 +76,15 @@ public class BattleLog : MonoBehaviour
     public void AnchorMoveTo(Vector2 anc)
     {
         RectTransform logRectT = gameObject.GetComponent<RectTransform>();
-
+        
         LeanTween.value(this.gameObject, 0, anc.x, 0.5f).setOnUpdate((float val) =>
         {
             logRectT.anchorMin = new Vector2(0, val);
-        }).setEaseInOutCirc().setDelay(0.5f);
+        }).setEaseInOutCirc().setDelay(0.6f);
         LeanTween.value(this.gameObject, 0.2f, anc.y, 0.5f).setOnUpdate((float val) =>
         {
             logRectT.anchorMax = new Vector2(1, val); 
-        }).setEaseInOutCirc().setDelay(0.5f).setOnComplete(()=>
-        {
-            if (logRectT.anchorMax.y > 0.9f)
-            {
-                ReserveDelete(lifeTime);
-            }
-        });
-    }
-    public void AnchorMoveUp()
-    {
-        RectTransform logRectT = gameObject.GetComponent<RectTransform>();
-
-        LeanTween.value(this.gameObject, logRectT.anchorMin.y, logRectT.anchorMin.y + ancOffset, 0.5f).setOnUpdate((float val) =>
-        {
-            logRectT.anchorMin = new Vector2(0, val);
-        }).setEaseInOutCirc().setDelay(0.5f);
-        LeanTween.value(this.gameObject, logRectT.anchorMax.y, logRectT.anchorMax.y + ancOffset, 0.5f).setOnUpdate((float val) =>
-        {
-            logRectT.anchorMax = new Vector2(1, val);
-        }).setEaseInOutCirc().setDelay(0.5f).setOnComplete(() =>
+        }).setEaseInOutCirc().setDelay(0.6f).setOnComplete(()=>
         {
             if (logRectT.anchorMax.y >= 0.9f)
             {
@@ -107,10 +92,31 @@ public class BattleLog : MonoBehaviour
             }
         });
     }
+    public void AnchorMoveUp()
+    {
+        CurNumber--;
+        RectTransform logRectT = gameObject.GetComponent<RectTransform>();
+
+        LeanTween.value(this.gameObject, logRectT.anchorMin.y, logRectT.anchorMin.y + ancOffset, 0.5f).setOnUpdate((float val) =>
+        {
+            logRectT.anchorMin = new Vector2(0, val);
+        }).setEaseInOutCirc();
+        LeanTween.value(this.gameObject, logRectT.anchorMax.y, logRectT.anchorMax.y + ancOffset, 0.5f).setOnUpdate((float val) =>
+        {
+            logRectT.anchorMax = new Vector2(1, val);
+        }).setEaseInOutCirc().setOnComplete(() =>
+        {
+            if (logRectT.anchorMax.y >= 0.9f)
+            {
+                ReserveDelete(lifeTime);
+            }
+        });
+
+    }
 
     private void ReserveDelete(float time)
     {
-        LeanTween.value(this.gameObject, 1f, 0.1f, time).setOnUpdate((float val) =>
+        LeanTween.value(this.gameObject, 1f, 0.1f, 1.3f).setOnUpdate((float val) =>
         {
             UIGroup.alpha = val;
         }).setOnComplete(()=>
