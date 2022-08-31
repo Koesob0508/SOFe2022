@@ -29,7 +29,7 @@ public class GetHeroInfo : MonoBehaviour
         for (int i = 0; i < HeroNUM; i++)
         {
             HeroUI = Instantiate(HeroUIObject, transform.position, Quaternion.identity);
-            HeroUI.transform.parent = transform;
+            HeroUI.transform.SetParent(transform);
             HeroUIList.Add(HeroList[i].GUID, HeroUI);
         }
 

@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
 
+    [SerializeField] private RelationshipManager _relation;
+    public static RelationshipManager Relation { get { return Instance._relation; } }
+
     public static BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
     #endregion 
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
-        // Test();
+        Test();
     }
 
     private void Init()
@@ -102,6 +105,8 @@ public class GameManager : MonoBehaviour
             Stage.Init();
             Scene.Init();
             Hero.Init();
+            Relation.Init();
+            
         }
         else
         {
@@ -112,6 +117,7 @@ public class GameManager : MonoBehaviour
     private void Test()
     {
         Debug.Log("테스트를 진행합니다.");
+        Hero.Test();
         // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
     }
 

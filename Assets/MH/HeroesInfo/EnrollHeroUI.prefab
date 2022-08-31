@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2741124872704396897}
   - component: {fileID: 5684292681483672122}
   - component: {fileID: 3404966575154929962}
+  - component: {fileID: 3038914929226080518}
   m_Layer: 5
   m_Name: AbilityInfo
   m_TagString: Untagged
@@ -147,6 +148,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 5, z: 0, w: 5}
   m_Softness: {x: 0, y: 0}
+--- !u!225 &3038914929226080518
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911112012080619320}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1923514713089083157
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +355,7 @@ MonoBehaviour:
   m_text: New Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: -3506612679978746277, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -516,7 +529,7 @@ MonoBehaviour:
   m_text: New Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: -3506612679978746277, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -957,7 +970,7 @@ MonoBehaviour:
   m_text: 1000G
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: -3506612679978746277, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1034,6 +1047,7 @@ GameObject:
   - component: {fileID: 8533345505354466603}
   - component: {fileID: 8117819922655419553}
   - component: {fileID: 4201182877873532654}
+  - component: {fileID: 6820634394200552627}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -1102,6 +1116,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &6820634394200552627
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9210119136623837006}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &881831551707691818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1197,6 +1223,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC2A4\uD0AC: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: Skill
@@ -1303,6 +1333,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uCD5C\uB300 \uB9C8\uB098: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MaxMana
@@ -1405,6 +1439,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MaxHP
@@ -1511,6 +1549,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uBC29\uC5B4\uB825: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: DefensePoint
@@ -1617,6 +1659,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC774\uB3D9 \uC18D\uB3C4: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MoveSpeed
@@ -1723,6 +1769,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9\uB825:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackDamage
@@ -1829,6 +1879,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9 \uBC94\uC704: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackRange
@@ -1935,6 +1989,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9 \uC18D\uB3C4: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1638347729510965985, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackSpeed

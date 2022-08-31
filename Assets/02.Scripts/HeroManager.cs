@@ -4,31 +4,11 @@ using UnityEngine;
 
 public class HeroManager : MonoBehaviour
 {
-
-    // 원래 정의된 관계 점수
-    public sbyte[,] MBTIScore = new sbyte[,] {  {+3, +3, +3, +5, +3, +5, +3, +3, -3, -3, -3, -3, -3, -3, -3, -3 },
-                                                {+3, +3, +5, +3, +5, +3, +3, +3, -3, -3, -3, -3, -3, -3, -3, -3 },
-                                                {+3, +5, +3, +3, +3, +3, +3, +5, -3, -3, -3, -3, -3, -3, -3, -3 },
-                                                {+5, +3, +3, +3, +3, +3, +3, +3, +5, -3, -3, -3, -3, -3, -3, -3 },
-                                                {+3, +5, +3, +3, +3, +3, +3, +5, +1, +1, +1, +1, 0, 0, 0, 0, },
-                                                {+5, +3, +3, +3, +3, +3, +5, +3, +1, +1, +1, +1, +1, +1, +1, +1 },
-                                                {+3, +3, +3, +3, +3, +5, +3, +3, +1, +1, +1, +1, 0, 0, 0, +5 },
-                                                {+3, +3, +5, +3, +5, +5, +3, +3, +1, +1, +1, +1, 0, 0, 0, 0 },
-                                                {-3, -3, -3, +5, +1, +1, +1, +1, 0, 0, 0, 0, +1, +5, +1, +5 },
-                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +5, +1, +5, +1 },
-                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +1, +5, +1, +5 },
-                                                {-3, -3, -3, -3, +1, +1, +1, +1, 0, 0, 0, 0, +5, +1, +5, +1 },
-                                                {-3, -3, -3, -3, 0, +1, 0, 0, +1, +5, +1, +5, +3, +3, +3, +3 },
-                                                {-3, -3, -3, -3, 0, +1, 0, 0, +5, +1, +5, +1, +3, +3, +3, +3 },
-                                                {-3, -3, -3, -3, 0, +1, 0, 0, +1, +5, +1, +5, +3, +3, +3, +3 },
-                                                {-3, -3, -3, -3, 0, +1, +5, 0, +5, +1, +5, +1, +3, +3, +3, +3 } };
-
-
     public List<Hero> HeroList = new List<Hero>();
     public List<GlobalObject> ShopHeroList = new List<GlobalObject>();
     // public List<GlobalObject> GuildList = new List<GlobalObject>();
 
-    private void Test()
+    public void Test()
     {
         Debug.Log("Test를 위해 Hero 임시로 등록합니다");
         EnrollHero(0);
@@ -36,8 +16,10 @@ public class HeroManager : MonoBehaviour
         EnrollHero(2);
         EnrollHero(3);
 
-        // 잠시 Text로 여기에서 확인
+        // !! 임시 !!
         SetShopHero();
+
+        GameManager.Relation.GetTeamScore();
     }
 
     public void Init()
@@ -55,9 +37,8 @@ public class HeroManager : MonoBehaviour
 
         DontDestroyOnLoad(obj);
 
-        
+
         // === 임시 코드 ===
-        Test();
         //Hero hero1 = new Hero();
         //Hero hero2 = new Hero();
         //Hero hero3 = new Hero();
@@ -97,11 +78,6 @@ public class HeroManager : MonoBehaviour
         //}
     }
 
-    public void GetTeamScore()
-    {
-        // TeamScore를 Return
-    }
-
     public void EnrollHero(uint guid)
     {
         // 해당 guid의 hero를 setActive, List에 등록한다 -> 이는 Battle Manager에 넘어감
@@ -115,17 +91,24 @@ public class HeroManager : MonoBehaviour
         //        break;
         //    }
         //}
-        
+
         foreach (Hero hero in GameManager.Data.ObjectCodex.Values)
         {
             if (hero.GUID == guid)
             {
+                if (hero.IsActive)
+                    break;
+
                 hero.IsActive = true;
-                // 임시로 등록하기 위해서 mbti 여기서도 등록할 수 있게 해놓음
-                // hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
+
+                // !! 임시 !!
+                hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
+
+                // Team Score에 해당 Hero를 Update
+                GameManager.Relation.NewHeroScore(hero);
 
                 HeroList.Add(hero);
-                Debug.Log("Enroll " + hero.GUID + hero.Name);
+                // Debug.Log("Enroll " + hero.GUID + hero.Name);
                 break;
             }
         }
