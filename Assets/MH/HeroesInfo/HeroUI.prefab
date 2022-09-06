@@ -342,7 +342,7 @@ MonoBehaviour:
   m_text: New Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: -3506612679978746277, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_text: New Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: -3506612679978746277, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1524,6 +1524,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uBC29\uC5B4\uB825:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: DefensePoint
@@ -1926,6 +1930,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MaxHP
@@ -2032,6 +2040,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9\uB825:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackDamage
@@ -2138,6 +2150,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC774\uB3D9 \uC18D\uB3C4:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MoveSpeed
@@ -2346,6 +2362,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC2A4\uD0AC:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: Skill
@@ -2452,6 +2472,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uCD5C\uB300 \uB9C8\uB098: "
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: MaxMana
@@ -2558,6 +2582,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9 \uBC94\uC704:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackRange
@@ -2664,6 +2692,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uACF5\uACA9 \uC18D\uB3C4:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7708023122537454082, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4567137015258799580, guid: 7f87547db61f46941956a0058b0d2ac6, type: 2}
     - target: {fileID: 8607797836018912640, guid: 59dc7a3b72648774a83a7d7d1c9d7fe1, type: 3}
       propertyPath: m_Name
       value: AttackSpeed

@@ -72,10 +72,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         this.invenItemUI = itemUI;
     }
 
-    public void SetItemUI(HeroInvenItem itemUI)
-    {
-        this.invenItemUI = itemUI;
-    }
     public void StartBattle()
     {
         btComp.StartTree();
