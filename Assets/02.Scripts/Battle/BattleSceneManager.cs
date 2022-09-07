@@ -174,7 +174,10 @@ public class BattleSceneManager : MonoBehaviour
     public void FinishBattle(bool bIsWin)
     {
         if (bIsWin)
+        {
+            GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
+        }
         else
             GameManager.Scene.ToTownScene();
     }
