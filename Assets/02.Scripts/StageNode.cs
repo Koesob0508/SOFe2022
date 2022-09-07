@@ -14,16 +14,31 @@ public class StageNode : MonoBehaviour
     }
 
     public StageType type { get; private set; }
-    public Vector2 position { get; private set; }
-    public bool isCompleted { get; private set; }
+    private int step;
+    public bool isMerged;
+    private bool isCompleted;
+    private bool isPassPoint;
+    private List<StageNode> nextStages;
     public List<Enemy> enemies { get; private set; }
     public Button button;
 
-    public void Init(StageType _type, Vector2 _position, bool _isCompleted)
+    public void Init(StageType _type, int _step)
     {
         type = _type;
-        position = _position;
-        isCompleted = _isCompleted;
+        step = _step;
+        isMerged = false;
+        isCompleted = false;
+        isPassPoint = false;
+        nextStages = new List<StageNode>();
+
+        if(this.step == 0)
+        {
+            button.interactable = true;
+        }
+        else
+        {
+            button.interactable = false;
+        }
 
         if (_type == StageType.Battle)
         {
@@ -55,6 +70,25 @@ public class StageNode : MonoBehaviour
             case StageType.Event:
                 button.onClick.AddListener(GameManager.Scene.ToEventScene);
                 break;
+        }
+    }
+
+    public void AddNextStage(StageNode _nextStage)
+    {
+        if(!this.nextStages.Contains(_nextStage))
+        {
+            nextStages.Add(_nextStage);
+        }
+    }
+
+    public void Complete()
+    {
+        isCompleted = true;
+        isPassPoint = true;
+
+        foreach(StageNode stage in nextStages)
+        {
+            stage.button.interactable = true;
         }
     }
 }
