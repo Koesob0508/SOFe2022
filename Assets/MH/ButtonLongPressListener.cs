@@ -9,10 +9,11 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
     [Tooltip("Hold duration in seconds")]
     [Range(0.3f, 5f)] public float holdDuration = 0.5f;
     public UnityEvent onLongPress;
-    public UnityEvent NoPress;
+    public UnityEvent OutLongPress;
 
     private bool isPointerDown = false;
     private bool isLongPressed = false;
+    private bool isactive = true;
     private float elapsedTime = 0f;
 
     private Button button;
@@ -39,15 +40,10 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
                 if (button.interactable && !object.ReferenceEquals(onLongPress, null))
                 {
                     onLongPress.Invoke();
-                    LeanTween.scale(this.gameObject, new Vector3(1.3f, 1.3f, 1.3f), .3f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);
-
+                    LeanTween.scale(this.transform.gameObject, new Vector3(1.3f, 1.3f, 1.3f), .3f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);
+                    isactive = true;
                 }
             }
-        }
-        else if (!isPointerDown)
-        {
-            NoPress.Invoke();
-            LeanTween.scale(this.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);
         }
     }
 
@@ -56,5 +52,9 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
         isPointerDown = false;
         isLongPressed = false;
         elapsedTime = 0f;
+        LeanTween.scale(this.transform.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(0.2f).setEase(LeanTweenType.easeInQuad);           
+        isactive = false;
+
+        OutLongPress.Invoke();
     }
 }
