@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_text: To Stage Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 3267624518660266068, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_text: To Start Battle
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: 3267624518660266068, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

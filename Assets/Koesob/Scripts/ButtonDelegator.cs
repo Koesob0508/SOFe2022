@@ -42,7 +42,7 @@ namespace Koesob
             }
             else
             {
-                AllHeroInfoUI = Instantiate(Resources.Load<GameObject>("AllHeroUI"));
+                AllHeroInfoUI = Instantiate(Resources.Load<GameObject>("Prefabs/UI/AllHeroUI"));
                 //AllHeroInfoUI.transform.SetParent(GameObject.Find("Main Canvas").transform);
             }
         }
@@ -57,7 +57,7 @@ namespace Koesob
             }
             else
             {
-                HeroShop = Resources.Load<GameObject>("GuildUI");
+                HeroShop = Resources.Load<GameObject>("Prefabs/UI/GuildUI");
                 Instantiate(HeroShop);
             }
 

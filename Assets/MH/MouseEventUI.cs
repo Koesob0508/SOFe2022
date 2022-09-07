@@ -7,17 +7,17 @@ using TMPro;
 public class MouseEventUI : MonoBehaviour
 {
 
-    private GameObject UIItemInfo;
+    private GameObject HeroImage;
     private bool CanBuy = true;
 
     public void LongMouseClick()
     {
         uint heroGUID;
         
-        UIItemInfo = Resources.Load<GameObject>("ItemInfoUI");
+        HeroImage = Resources.Load<GameObject>("Prefabs/UI/ItemInfoUI");
         Vector3 UIPosition =  new Vector3(Input.mousePosition.x + 180, Input.mousePosition.y, Input.mousePosition.z);
-        UIItemInfo = Instantiate(UIItemInfo, UIPosition, Quaternion.identity);
-        UIItemInfo.transform.SetParent(this.transform);
+        HeroImage = Instantiate(HeroImage, UIPosition, Quaternion.identity);
+        HeroImage.transform.SetParent(this.transform);
 
         GameObject Hero = this.transform.parent.parent.parent.parent.gameObject;
         GameObject HeroUIContent = this.transform.parent.parent.parent.parent.parent.gameObject;
@@ -25,7 +25,7 @@ public class MouseEventUI : MonoBehaviour
         heroGUID = HeroUIContent.GetComponent<GetHeroInfo>().GetHeroUIOrder(Hero);
         // heroGUID = HeroUIContent.GetComponent<Hero>().GUID;
         // Debug.Log(UIItemInfo.transform.GetChild(0).GetChild(0).gameObject.name);
-        UIItemInfo.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(GameManager.Hero.GetHero(heroGUID).Name);
+        HeroImage.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(GameManager.Hero.GetHero(heroGUID).Name);
 
     }
 
@@ -61,6 +61,14 @@ public class MouseEventUI : MonoBehaviour
             Hero.transform.GetChild(1).gameObject.GetComponent<CanvasGroup>().LeanAlpha(0.3f, 0.3f);
             LeanTween.scale(Hero.transform.GetChild(1).gameObject, new Vector3(1.47f, 1f, 1f), .3f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
 
+            // Hero 등록 애니메이션
+            HeroImage = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
+            HeroImage = Instantiate(HeroImage, new Vector3(0, 0, -2), Quaternion.identity);
+            //HeroImage.GetComponent<Image>().sprite = Hero.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite;
+            LeanTween.moveLocal(HeroImage, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(HeroImage, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+            Destroy(HeroImage, 3f);
+
             CanBuy = false;
 
         }
@@ -91,6 +99,6 @@ public class MouseEventUI : MonoBehaviour
 
     public void LongMouseClickExit()
     {
-        Destroy(UIItemInfo);
+        Destroy(HeroImage);
     }
 }
