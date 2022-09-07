@@ -11,7 +11,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     protected bool isCloseAttackUnit; // 근접 유닛
     
     public Animator animator;
-    public bool bHasSkillAnimation;
+    public bool bHasSkill;
     float localScaleX;
 
     float tTimer = 1.0f;
@@ -36,6 +36,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     HeroInvenItem invenItemUI;
 
     public GameObject projectileObject;
+    public GameObject projectileSpawnPoint;
 
     protected virtual void Start()
     {

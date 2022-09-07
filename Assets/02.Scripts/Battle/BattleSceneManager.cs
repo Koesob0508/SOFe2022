@@ -132,11 +132,8 @@ public class BattleSceneManager : MonoBehaviour
     {
         var targetUnitComp = Target.GetComponent<Units>();
         var causerUnitComp = Causer.GetComponent<Units>();
-        if (targetUnitComp != null)
-        {
-            causerUnitComp.Attack();
-            targetUnitComp.Hit(Dmg);
-        }
+
+        // 얘네도 피격 시점으로 수정 해줘야 함
         bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
         MakeDamagePopup(Target.transform.position, Dmg);
     }

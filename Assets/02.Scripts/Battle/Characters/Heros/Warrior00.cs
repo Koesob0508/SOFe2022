@@ -19,7 +19,7 @@ public class Warrior00: Battle_Heros
 
         for(int i = 0; i<hitUnits.Length; i++)
         {
-            if (!hitUnits[i].gameObject.CompareTag("Enemy"))
+            if (!hitUnits[i].CompareTag("Enemy"))
                 continue;
 
             hitUnits[i].GetComponent<Units>().Hit(charData.AttackDamage * 1.5f);

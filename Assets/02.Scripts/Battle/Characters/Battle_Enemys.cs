@@ -43,7 +43,7 @@ public class Battle_Enemys : Units
             StartCoroutine("CouroutineCloseAttack");
 
         state.CurrentMana += 10;
-        if (state.CurrentMana >= state.MaxMana && bHasSkillAnimation)
+        if (state.CurrentMana >= state.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
