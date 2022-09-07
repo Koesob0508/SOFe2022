@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     private static GameManager instance;
+    private static string game_version;
     public static GameManager Instance
     {
         get
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
             Scene.Init();
             Hero.Init();
             Relation.Init();
-            
+            game_version = Application.version;
         }
         else
         {
@@ -119,6 +120,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("테스트를 진행합니다.");
         Hero.Test();
         // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
+        Data.Save();
+    }
+
+    public string GetVersion()
+    {
+        return game_version;
     }
 
     public void TestFunc()
