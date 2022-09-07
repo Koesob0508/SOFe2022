@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8628288685468256873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7320200601997640036}
+  m_Layer: 3
+  m_Name: spawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7320200601997640036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628288685468256873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.421, y: 0.352, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1989863855221829655}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3589320661107169560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,6 +157,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+--- !u!4 &1989863855221829655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3049709620930128143, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+  m_PrefabInstance: {fileID: 3589320661107169560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7907849573432098932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
@@ -144,9 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkillAnimation: 1
+  bHasSkill: 1
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
   projectileObject: {fileID: 6840111932400894857, guid: 584686e8cfd6c8a478f3097552c1c588, type: 3}
+  projectileSpawnPoint: {fileID: 8628288685468256873}

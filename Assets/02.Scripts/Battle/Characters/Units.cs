@@ -11,7 +11,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     protected bool isCloseAttackUnit; // 근접 유닛
     
     public Animator animator;
-    public bool bHasSkillAnimation;
+    public bool bHasSkill;
     float localScaleX;
 
     float tTimer = 1.0f;
@@ -34,6 +34,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     HeroInvenItem invenItemUI;
 
     public GameObject projectileObject;
+    public GameObject projectileSpawnPoint;
 
     protected virtual void Start()
     {
@@ -72,10 +73,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         this.invenItemUI = itemUI;
     }
 
-    public void SetItemUI(HeroInvenItem itemUI)
-    {
-        this.invenItemUI = itemUI;
-    }
     public void StartBattle()
     {
         btComp.StartTree();

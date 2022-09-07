@@ -17,11 +17,11 @@ public class Battle_Heros : Units
     public override void Attack()
     {
         base.Attack();
-           
-        StartCoroutine("CouroutineCloseAttack");
+
+        StartCoroutine("CouroutineAttack");
 
         charData.CurrentMana += 10;
-        if (charData.CurrentMana >= charData.MaxMana && bHasSkillAnimation)
+        if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
@@ -58,8 +58,7 @@ public class Battle_Heros : Units
     }
     
 
-    //���� ���ݽ� ȣ��. �ִϸ��̼��� ������ �������� ������ �Ի�.
-    IEnumerator CouroutineCloseAttack()
+    IEnumerator CouroutineAttack()
     {
         yield return new WaitForSeconds(0.01f);
 
@@ -69,14 +68,14 @@ public class Battle_Heros : Units
 
         if (isCloseAttackUnit)
         {
-            //���� ������ ��� �ٷ� ������ ���
             attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
         }
         else
         {
-            //���Ÿ� ������ ��� ����ü ����
-            GameObject projectile = Instantiate(projectileObject, transform);
-            projectile.GetComponent<Projectile>().Initialize(attackTarget, charData.AttackDamage);
+            Vector2 dir = attackTarget.transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
+            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage);
 
         }
     }

@@ -31,7 +31,7 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
-    - _Progress: 0.86999965
+    - _Progress: 1.529999
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _NoiseCol: {r: 0.9, g: 0.25, b: 0.22, a: 1}
