@@ -269,3 +269,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMerged: 0
   button: {fileID: 5516310785283232548}
+  lanePrefab: {fileID: 2589148069966960717, guid: dd8384b57ad848f41a342c955c0567bf, type: 3}

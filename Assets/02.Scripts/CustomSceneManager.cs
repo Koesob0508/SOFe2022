@@ -35,7 +35,7 @@ public class CustomSceneManager
             case "02.BattleSelectScene":
                 Debug.Log("This is Battle Scene");
 
-                GameManager.Stage.Test_SetBattleStage();
+                // GameManager.Stage.Test_SetBattleStage();
                 GameManager.Stage.HideStageMap();
 
                 GameObject obj = new GameObject("BattleManager");
