@@ -1,0 +1,451 @@
+{
+    "stageList": [
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 0,
+                    "index": 0,
+                    "poistion": {
+                        "x": -6.085447311401367,
+                        "y": -3.469012498855591,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 1,
+                            "y": 2
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 0,
+                    "index": 1,
+                    "poistion": {
+                        "x": -5.864824295043945,
+                        "y": -1.253645420074463,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 1,
+                            "y": 2
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 0,
+                    "index": 2,
+                    "poistion": {
+                        "x": -6.315282821655273,
+                        "y": 0.3964381217956543,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 1,
+                            "y": 2
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 0,
+                    "index": 3,
+                    "poistion": {
+                        "x": -6.175370216369629,
+                        "y": 2.8198776245117189,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 1,
+                            "y": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 1,
+                    "index": 0,
+                    "poistion": {
+                        "x": -3.5617799758911135,
+                        "y": -3.438690185546875,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 1,
+                    "index": 1,
+                    "poistion": {
+                        "x": -2.7027812004089357,
+                        "y": -1.05908203125,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 1,
+                    "index": 2,
+                    "poistion": {
+                        "x": -3.5455262660980226,
+                        "y": 0.5687093734741211,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 2,
+                            "y": 2
+                        },
+                        {
+                            "x": 2,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 0
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 1,
+                    "index": 3,
+                    "poistion": {
+                        "x": -3.546013355255127,
+                        "y": 2.5098390579223635,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 2,
+                            "y": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 2,
+                    "index": 0,
+                    "poistion": {
+                        "x": 0.27676820755004885,
+                        "y": -3.5520448684692385,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 3,
+                            "y": 1
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 2,
+                    "index": 1,
+                    "poistion": {
+                        "x": 0.3109121322631836,
+                        "y": -0.892181396484375,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 3,
+                            "y": 1
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 2,
+                    "index": 2,
+                    "poistion": {
+                        "x": -0.35678911209106448,
+                        "y": 0.48242664337158205,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 3,
+                            "y": 3
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 2,
+                    "index": 3,
+                    "poistion": {
+                        "x": -0.40921735763549807,
+                        "y": 3.114823341369629,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 3,
+                            "y": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 3,
+                    "index": 0,
+                    "poistion": {
+                        "x": 2.7044615745544435,
+                        "y": -2.9535858631134035,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 3,
+                    "index": 1,
+                    "poistion": {
+                        "x": 2.9608216285705568,
+                        "y": -1.2202329635620118,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 4,
+                            "y": 1
+                        },
+                        {
+                            "x": 4,
+                            "y": 0
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 3,
+                    "index": 2,
+                    "poistion": {
+                        "x": 2.7537331581115724,
+                        "y": 0.5152878761291504,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 3,
+                    "index": 3,
+                    "poistion": {
+                        "x": 2.920093059539795,
+                        "y": 2.3580703735351564,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 4,
+                            "y": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 4,
+                    "index": 0,
+                    "poistion": {
+                        "x": 5.586489200592041,
+                        "y": -3.159573554992676,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 5,
+                            "y": 3
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 4,
+                    "index": 1,
+                    "poistion": {
+                        "x": 5.940950870513916,
+                        "y": -1.6197466850280762,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 5,
+                            "y": 3
+                        }
+                    ]
+                },
+                {
+                    "type": 0,
+                    "step": 4,
+                    "index": 2,
+                    "poistion": {
+                        "x": 6.330058574676514,
+                        "y": 0.6283431053161621,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 4,
+                    "index": 3,
+                    "poistion": {
+                        "x": 5.786207675933838,
+                        "y": 2.794588088989258,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": [
+                        {
+                            "x": 5,
+                            "y": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "serializeNodes": [
+                {
+                    "type": 0,
+                    "step": 5,
+                    "index": 0,
+                    "poistion": {
+                        "x": 8.677091598510743,
+                        "y": -3.1287999153137209,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 5,
+                    "index": 1,
+                    "poistion": {
+                        "x": 9.310394287109375,
+                        "y": -1.5641789436340333,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 5,
+                    "index": 2,
+                    "poistion": {
+                        "x": 8.755203247070313,
+                        "y": 0.9085202217102051,
+                        "z": 0.0
+                    },
+                    "isMerged": true,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                },
+                {
+                    "type": 0,
+                    "step": 5,
+                    "index": 3,
+                    "poistion": {
+                        "x": 8.894590377807618,
+                        "y": 2.3727331161499025,
+                        "z": 0.0
+                    },
+                    "isMerged": false,
+                    "isCompleted": false,
+                    "isPassPoint": false,
+                    "nextStages": []
+                }
+            ]
+        }
+    ]
+}
