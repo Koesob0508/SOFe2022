@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMerged: 0
   button: {fileID: 8038116898237091516}
+  lanePrefab: {fileID: 2589148069966960717, guid: dd8384b57ad848f41a342c955c0567bf, type: 3}
 --- !u!1 &8038116898237091506
 GameObject:
   m_ObjectHideFlags: 0
