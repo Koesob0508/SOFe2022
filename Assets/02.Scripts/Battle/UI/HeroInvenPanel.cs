@@ -39,13 +39,11 @@ public class HeroInvenPanel : MonoBehaviour
 
     public void StartDragging()
     {
-        Debug.Log("StartDragging");
         Half_UI.SetActive(true);
         ToVisible();
     }
     public void EndDragging()
     {
-        Debug.Log("EndDragging");
         Half_UI.SetActive(false);
         ToInvisible();
     }
@@ -61,7 +59,6 @@ public class HeroInvenPanel : MonoBehaviour
 
     void ToVisible()
     {
-        Debug.Log("To visible");
         LeanTween.imageColor(Half_UI.GetComponent<RectTransform>(),StartCol,0.5f).setOnComplete(() => {
             if (Half_UI.activeSelf)
                 ToInvisible();

@@ -76,6 +76,7 @@ public class BattleSceneManager : MonoBehaviour
         hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
+
         //Init Enemy
         for (int i = 0; i < eCount; i++)
         {
@@ -172,6 +173,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         if (bIsWin)
         {
+            UpdateHeroData();
             GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
         }
@@ -229,6 +231,11 @@ public class BattleSceneManager : MonoBehaviour
         Destroy(popup);
     }
     #endregion
+    void UpdateHeroData()
+    {
+        foreach (Hero h in HeroList)
+            GameManager.Data.ObjectCodex[h.GUID] = h;
+    }
     void SetBackground(GameManager.MapType mapType)
     {
         string mapName = "";

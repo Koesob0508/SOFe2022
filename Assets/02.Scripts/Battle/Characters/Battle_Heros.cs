@@ -8,9 +8,7 @@ public class Battle_Heros : Units
     public override void Initalize(Character charData)
     {
         this.charData = charData;
-        this.charData.CurrentHP = this.charData.MaxHP;
         this.charData.CurrentMana = 0;
-
         base.Initalize(charData);
     }
 

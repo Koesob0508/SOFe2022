@@ -15,7 +15,6 @@ public class BehaviorTreeComponent : MonoBehaviour
     public void Initalize()
     {
         TreeObject = TreeObject.Clone();
-        Debug.Log(TreeObject.GetInstanceID());
     }
     public void StartTree()
     {
