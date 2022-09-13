@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Battle_Heros : Units
 {
+    
     public override void Initalize(Character charData)
     {
         this.charData = charData;
@@ -15,8 +16,12 @@ public class Battle_Heros : Units
 
     public override void Attack()
     {
+        base.Attack();
+
+        StartCoroutine("CouroutineAttack");
+
         charData.CurrentMana += 10;
-        if (charData.CurrentMana >= charData.MaxMana && bHasSkillAnimation)
+        if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
@@ -24,7 +29,7 @@ public class Battle_Heros : Units
 
     public override void Hit(float damage)
     {
-        // µ¥¹ÌÁö Ã³¸® = ( 100 / ¹æ¾î·Â + 100 ) * µ¥¹ÌÁö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ = ( 100 / ï¿½ï¿½ï¿½ï¿½ + 100 ) * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
 
@@ -51,5 +56,27 @@ public class Battle_Heros : Units
         hpBar.value = charData.CurrentHP / charData.MaxHP;
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
+    
 
+    IEnumerator CouroutineAttack()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        float t = GetCurrentAnimationTime();
+
+        yield return new WaitForSeconds(t);
+
+        if (isCloseAttackUnit)
+        {
+            attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
+        }
+        else
+        {
+            Vector2 dir = attackTarget.transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
+            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage);
+
+        }
+    }
 }

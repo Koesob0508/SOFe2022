@@ -1,8 +1,10 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
 public class Character : GlobalObject
 {
     // 접근 한정자를 어떻게 할 것인지, 프로퍼티를 사용할 것인지

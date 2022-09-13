@@ -23,6 +23,7 @@ public class CustomSceneManager
         {
             case "00.StartScene":
                 Debug.Log("This is Start Scene");
+                GameManager.Stage.HideStageMap();
                 break;
 
             case "01.StageSelectScene":
@@ -34,7 +35,7 @@ public class CustomSceneManager
             case "02.BattleSelectScene":
                 Debug.Log("This is Battle Scene");
 
-                GameManager.Stage.Test_SetBattleStage();
+                // GameManager.Stage.Test_SetBattleStage();
                 GameManager.Stage.HideStageMap();
 
                 GameObject obj = new GameObject("BattleManager");
@@ -53,10 +54,12 @@ public class CustomSceneManager
 
             case "03.TownScene":
                 Debug.Log("This is Town Scene");
+                GameManager.Stage.HideStageMap();
                 break;
 
             case "04.EvevntScene":
                 Debug.Log("This is Event Scene");
+                GameManager.Stage.HideStageMap();
                 break;
 
             default:

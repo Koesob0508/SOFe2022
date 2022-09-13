@@ -8,6 +8,8 @@ TagManager:
   - UI
   - Heros
   - Units
+  - Enemy
+  - Enemys
   layers:
   - Default
   - TransparentFX

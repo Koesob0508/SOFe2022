@@ -38,8 +38,12 @@ public class Battle_Enemys : Units
 
     public override void Attack()
     {
+        base.Attack();
+        if (isCloseAttackUnit)
+            StartCoroutine("CouroutineCloseAttack");
+
         state.CurrentMana += 10;
-        if (state.CurrentMana >= state.MaxMana && bHasSkillAnimation)
+        if (state.CurrentMana >= state.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
@@ -47,7 +51,7 @@ public class Battle_Enemys : Units
 
     public override void Hit(float damage)
     {
-        // µ¥¹ÌÁö Ã³¸® = ( 100 / ¹æ¾î·Â + 100 ) * µ¥¹ÌÁö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ = ( 100 / ï¿½ï¿½ï¿½ï¿½ + 100 ) * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         state.CurrentHP -= (100 / (state.DefensePoint + 100)) * damage;
 
         if (state.CurrentHP <= 0)
@@ -72,5 +76,18 @@ public class Battle_Enemys : Units
     {
         hpBar.value = state.CurrentHP / state.MaxHP;
         spBar.value = state.CurrentMana / state.MaxMana;
+    }
+
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ È£ï¿½ï¿½. ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô»ï¿½.
+    IEnumerator CouroutineCloseAttack()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        float t = GetCurrentAnimationTime();
+
+        yield return new WaitForSeconds(t);
+
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        attackTarget.GetComponent<Units>().Hit(state.AttackDamage);
     }
 }

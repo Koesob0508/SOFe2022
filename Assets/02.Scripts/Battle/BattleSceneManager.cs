@@ -60,7 +60,6 @@ public class BattleSceneManager : MonoBehaviour
         startBtn.onClick.AddListener(delegate { StartBattle(); });
         startBtn.gameObject.SetActive(false);
         //temp
-        tmpPosHero.Add(new Vector2(-3.8f, 0f));
         tmpPosEnemy.Add(new Vector2(1.8f, 0f));
         tmpPosEnemy.Add(new Vector2(4.5f, -2.5f));
 
@@ -133,11 +132,8 @@ public class BattleSceneManager : MonoBehaviour
     {
         var targetUnitComp = Target.GetComponent<Units>();
         var causerUnitComp = Causer.GetComponent<Units>();
-        if (targetUnitComp != null)
-        {
-            causerUnitComp.Attack();
-            targetUnitComp.Hit(Dmg);
-        }
+
+        // 얘네도 피격 시점으로 수정 해줘야 함
         bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
         MakeDamagePopup(Target.transform.position, Dmg);
     }
@@ -175,7 +171,10 @@ public class BattleSceneManager : MonoBehaviour
     public void FinishBattle(bool bIsWin)
     {
         if (bIsWin)
+        {
+            GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
+        }
         else
             GameManager.Scene.ToTownScene();
     }

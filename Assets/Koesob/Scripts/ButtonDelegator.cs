@@ -37,12 +37,13 @@ namespace Koesob
 
             if (AllHeroInfoUI != null)
             {
-                Destroy(AllHeroInfoUI);
+                AllHeroInfoUI.transform.GetChild(0).GetComponent<HeroUItween>().SetRemove();
+                Destroy(AllHeroInfoUI, 1f);
             }
             else
             {
-                AllHeroInfoUI = Resources.Load<GameObject>("AllHeroUI");
-                Instantiate(AllHeroInfoUI);
+                AllHeroInfoUI = Instantiate(Resources.Load<GameObject>("Prefabs/UI/AllHeroUI"));
+                //AllHeroInfoUI.transform.SetParent(GameObject.Find("Main Canvas").transform);
             }
         }
 
@@ -56,7 +57,7 @@ namespace Koesob
             }
             else
             {
-                HeroShop = Resources.Load<GameObject>("GuildUI");
+                HeroShop = Resources.Load<GameObject>("Prefabs/UI/GuildUI");
                 Instantiate(HeroShop);
             }
 

@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class DataManager
 {
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
-
+    public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
+    public uint Money;
     public void Init()
     {
         ImportCharData();
@@ -26,13 +29,14 @@ public class DataManager
             Hero hero = new Hero();
             hero.GUID = uint.Parse(elems[0]);
             hero.Name = elems[1];
-            hero.MaxHP = float.Parse(elems[2]);
-            hero.AttackDamage = float.Parse(elems[3]);
-            hero.AttackSpeed = float.Parse(elems[4]);
-            hero.DefensePoint = float.Parse(elems[5]);
-            hero.MaxMana = float.Parse(elems[6]);
-            hero.MoveSpeed = float.Parse(elems[7]);
-            hero.AttackRange = float.Parse(elems[8]);
+            hero.Type = (GameManager.ObjectType)Int32.Parse(elems[2]);
+            hero.MaxHP = float.Parse(elems[3]);
+            hero.AttackDamage = float.Parse(elems[4]);
+            hero.AttackSpeed = float.Parse(elems[5]);
+            hero.DefensePoint = float.Parse(elems[6]);
+            hero.MaxMana = float.Parse(elems[7]);
+            hero.MoveSpeed = float.Parse(elems[8]);
+            hero.AttackRange = float.Parse(elems[9]);
             hero.Type = GameManager.ObjectType.Hero;
             line = csvImp.Readline();
 
@@ -51,13 +55,14 @@ public class DataManager
             Enemy enemy = new Enemy();
             enemy.GUID = uint.Parse(elems[0]);
             enemy.Name = elems[1];
-            enemy.MaxHP = float.Parse(elems[2]);
-            enemy.AttackDamage = float.Parse(elems[3]);
-            enemy.AttackSpeed = float.Parse(elems[4]);
-            enemy.DefensePoint = float.Parse(elems[5]);
-            enemy.MaxMana = float.Parse(elems[6]);
-            enemy.MoveSpeed = float.Parse(elems[7]);
-            enemy.AttackRange = float.Parse(elems[8]);
+            enemy.Type = (GameManager.ObjectType)Int32.Parse(elems[2]);
+            enemy.MaxHP = float.Parse(elems[3]);
+            enemy.AttackDamage = float.Parse(elems[4]);
+            enemy.AttackSpeed = float.Parse(elems[5]);
+            enemy.DefensePoint = float.Parse(elems[6]);
+            enemy.MaxMana = float.Parse(elems[7]);
+            enemy.MoveSpeed = float.Parse(elems[8]);
+            enemy.AttackRange = float.Parse(elems[9]);
             enemy.Type = GameManager.ObjectType.Enemy;
             line1 = csvImp1.Readline();
 
@@ -108,8 +113,9 @@ public class DataManager
     }
     public Sprite LoadSprite(uint guid)
     {
-        if (ObjectCodex[guid].UI_Image != null)
-            return ObjectCodex[guid].UI_Image;
+        Sprite sprite = null;
+        if (UI_Img.TryGetValue(guid, out sprite))
+            return sprite;
         else
         {
             string pathByType = "";
@@ -132,9 +138,47 @@ public class DataManager
                 tex.LoadImage(bytes);
                 Image = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
             }
-            ObjectCodex[guid].UI_Image = Image;
+            UI_Img[guid] = Image;
             return Image;
 
         }
+    }
+    
+    public void Save()
+    {
+        string saveStr = "";
+        List<Hero> hListToSave = new List<Hero>();
+        foreach(var obj in ObjectCodex.Values)
+        {
+            if(((GlobalObject)obj).Type == GameManager.ObjectType.Hero)
+            {
+                Hero h = (Hero)obj;
+                if(h.IsActive)
+                {
+                    hListToSave.Add(h);
+                }
+            }
+        }
+        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+
+        System.IO.File.Create(path).Close();
+        System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.OpenOrCreate);
+
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(fStream, hListToSave);
+        fStream.Close();
+        Load();
+    }
+
+    public void Load()
+    {
+        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+
+        System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.Open);
+        BinaryFormatter formatter = new BinaryFormatter();
+        List<Hero> hList = (List<Hero>)formatter.Deserialize(fStream);
+        fStream.Close();
+        foreach (Hero h in hList)
+            Debug.Log(h.Name);
     }
 }
