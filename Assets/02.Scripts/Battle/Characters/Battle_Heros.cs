@@ -31,10 +31,10 @@ public class Battle_Heros : Units
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
 
-        if (charData.CurrentHP <= 0)
+        if (charData.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
         {
             btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData.Type);
+            GameManager.Battle.DeadProcess(charData.Type, gameObject);
         }
         else
         {

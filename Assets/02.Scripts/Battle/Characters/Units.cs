@@ -45,10 +45,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected virtual void Update()
     {
-        if (isUpdating)
-        {
-            UpdateUI();
-        }
+        UpdateUI();
     }
     
     public virtual void Initalize(Character charData)
@@ -176,6 +173,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        UpdateUI();
         Vector2 screenPos = eventData.position;
         if (screenPos.x > Screen.width / 2)
         {
