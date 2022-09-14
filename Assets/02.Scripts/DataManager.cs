@@ -25,9 +25,13 @@ public class DataManager
     {
         LoadInitalEnemyData();
         if(IsExistSaveData())
+        {
             Load();
+        }
         else
+        {
             LoadInitalHeroData();
+        }
     }
 
     void LoadInitalHeroData()
@@ -166,25 +170,25 @@ public class DataManager
     private bool IsExistSaveData()
     {
         string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
-        return System.IO.File.Exists(path);
+        return System.IO.File.Exists(@path);
     }
     public void Save()
     {
-        Debug.Log(SystemInfo.deviceUniqueIdentifier);
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();
         saveData.Money = Money;
 
-        foreach(var obj in ObjectCodex.Values)
+        foreach (var obj in ObjectCodex.Values)
         {
-            if(((GlobalObject)obj).Type == GameManager.ObjectType.Hero)
+            if (((GlobalObject)obj).Type == GameManager.ObjectType.Hero)
             {
                 Hero h = (Hero)obj;
                 saveData.HeroData.Add(h);
             }
         }
+
         string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
 
         System.IO.File.Create(path).Close();
@@ -193,7 +197,6 @@ public class DataManager
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(fStream, saveData);
         fStream.Close();
-        Load();
     }
 
     public void Load()
