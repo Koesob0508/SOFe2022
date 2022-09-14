@@ -6,7 +6,6 @@ public class HeroManager : MonoBehaviour
 {
     public List<Hero> HeroList = new List<Hero>();
     public List<GlobalObject> ShopHeroList = new List<GlobalObject>();
-    // public List<GlobalObject> GuildList = new List<GlobalObject>();
 
     public void Test()
     {
@@ -27,16 +26,6 @@ public class HeroManager : MonoBehaviour
         Debug.Log("Hero Manager Init");
 
         DontDestroyOnLoad(this);
-
-        GameObject obj = GameObject.Find("Hero Manager");
-        if (obj == null)
-        {
-            obj = new GameObject { name = "Hero Manager" };
-            obj.AddComponent<HeroManager>();
-        }
-
-        DontDestroyOnLoad(obj);
-
 
         // === 임시 코드 ===
         //Hero hero1 = new Hero();
