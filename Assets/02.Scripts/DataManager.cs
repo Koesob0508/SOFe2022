@@ -58,6 +58,9 @@ public class DataManager
             hero.AttackRange = float.Parse(elems[9]);
             hero.Type = GameManager.ObjectType.Hero;
             hero.CurrentHP = hero.MaxHP;
+            // Hard-Coding Part
+            hero.CurHunger = 100;
+            hero.IsActive = true;
             line = csvImp.Readline();
 
             ObjectCodex.Add(hero.GUID, hero);

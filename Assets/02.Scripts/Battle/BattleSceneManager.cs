@@ -178,6 +178,10 @@ public class BattleSceneManager : MonoBehaviour
     public void FinishBattle(bool bIsWin)
     {
         bBattleStarted = false;
+        foreach(GameObject g in heroObjects)
+        {
+            g.GetComponent<Battle_Heros>().ReduceHunger(10);
+        }
         if (bIsWin)
         {
             UpdateHeroData();

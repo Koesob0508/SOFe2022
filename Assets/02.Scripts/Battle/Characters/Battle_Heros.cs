@@ -24,7 +24,7 @@ public class Battle_Heros : Units
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
     }
-
+    
     public override void Hit(float damage)
     {
         // ������ ó�� = ( 100 / ���� + 100 ) * ������
@@ -42,7 +42,21 @@ public class Battle_Heros : Units
                 PlayGetHitAniamtion();
         }
     }
+    public override void Dead()
+    {
+        base.Dead();
+        var h = charData as Hero;
+        h.IsActive = false;
+    }
 
+    public void ReduceHunger(int amount)
+    {
+        charData.CurHunger -= amount;
+        if(charData.CurHunger < 0)
+        {
+            charData.CurHunger = 0;
+        }
+    }
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();

@@ -108,9 +108,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         skillFinished();
 
         isSkillPlaying = false;
-
-
     }
+
+    
+
     protected float GetCurrentAnimationTime()
     {
         return animator.GetCurrentAnimatorStateInfo(0).length;
@@ -149,7 +150,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         isUpdating = false;
         UnitUI.gameObject.SetActive(false);
         PlayDeadAnimation();
-
     }
     public void PlayDeadAnimation()
     {

@@ -16,11 +16,18 @@ public class HeroInvenPanel : MonoBehaviour
     {
         foreach(Hero hero in Heros)
         {
-            GameObject g = Instantiate(Item_Prefab, transform);
-            var item = g.GetComponentInChildren<HeroInvenItem>();
-            childItems.Add(item);
-            g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
-            item.Initalize(hero);
+            if(hero.IsActive)
+            {
+                GameObject g = Instantiate(Item_Prefab, transform);
+                var item = g.GetComponentInChildren<HeroInvenItem>();
+                childItems.Add(item);
+                g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
+                item.Initalize(hero);
+            }
+            else
+            {
+                // Whether Dead or Hunger is 0
+            }
         }
         Half_UI = new GameObject("Half_Panel");
         RectTransform rt = Half_UI.AddComponent<RectTransform>();
