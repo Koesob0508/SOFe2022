@@ -169,7 +169,11 @@ public class DataManager
     
     private bool IsExistSaveData()
     {
-        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+        if (!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
+        {
+            return false;
+        }
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
         return System.IO.File.Exists(@path);
     }
     public void Save()
@@ -188,9 +192,12 @@ public class DataManager
                 saveData.HeroData.Add(h);
             }
         }
+        if(!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
+        {
+            System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Save");
+        }
 
-        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
-
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
         System.IO.File.Create(path).Close();
         System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.OpenOrCreate);
 
@@ -201,7 +208,7 @@ public class DataManager
 
     public void Load()
     {
-        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
 
         System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.Open);
         BinaryFormatter formatter = new BinaryFormatter();
