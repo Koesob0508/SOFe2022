@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2891216835324272217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6901344522753601759}
+  m_Layer: 3
+  m_Name: spawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6901344522753601759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891216835324272217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.243, y: 0.173, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 362775614806456748}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5149957489124189740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,6 +149,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 9111782273464896615, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
+--- !u!4 &362775614806456748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4787473133368663936, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
+  m_PrefabInstance: {fileID: 5149957489124189740}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8298990173634529743 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3770564687858348003, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
@@ -141,5 +177,5 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
-  projectileObject: {fileID: 0}
-  projectileSpawnPoint: {fileID: 0}
+  projectileObject: {fileID: 8020984950568338588, guid: 564f43be790df16419731af6239d745c, type: 3}
+  projectileSpawnPoint: {fileID: 2891216835324272217}

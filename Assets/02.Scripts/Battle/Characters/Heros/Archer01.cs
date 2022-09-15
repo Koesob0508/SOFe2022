@@ -26,13 +26,13 @@ public class Archer01 : Battle_Heros
 
         Vector3 targetPosition = attackTarget.transform.position;
 
-        projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
+        projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
 
-        targetPosition.y += 10.0f;
-        projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
+        //targetPosition.y += 10.0f;
+        //projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
 
-        targetPosition.y -= 20.0f;
-        projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
+        //targetPosition.y -= 20.0f;
+        //projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
 
     }
 

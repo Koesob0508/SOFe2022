@@ -136,10 +136,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkill: 0
+  bHasSkill: 1
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
   projectileObject: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
+  skillEffect: {fileID: 1168479745262994983, guid: e547f9eccd441a841ba6231a9078be92, type: 3}
