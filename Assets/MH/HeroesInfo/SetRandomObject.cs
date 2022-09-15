@@ -36,7 +36,7 @@ public class SetRandomObject : MonoBehaviour
                     for (int i = 0; i < EnrollList.Count(); i++)
                     {
                         ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
-                        ObjectUI.transform.parent = transform;
+                        ObjectUI.transform.SetParent(transform);
                         ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
 
                         SetStatus();
