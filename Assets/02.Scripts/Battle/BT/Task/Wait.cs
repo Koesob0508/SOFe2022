@@ -6,10 +6,16 @@ namespace BT
 {
     public class Wait : TaskNode
     {
-        public float WaitTime = 1f;
+
+
+        [HideInInspector] public int keyIdx = 0;
+        [HideInInspector] public string keyName;
+
+        private float WaitTime = 1f;
         private float startTime = 0.0f;
         protected override void OnStart()
         {
+            WaitTime = (float)bBoard.bb_keys.Find(n => n.Name == keyName).Value;
             startTime = Time.time;
         }
 
