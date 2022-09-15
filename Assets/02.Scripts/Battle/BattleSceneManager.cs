@@ -35,6 +35,7 @@ public class BattleSceneManager : MonoBehaviour
 
     bool bBattleStarted = false;
 
+    Observer_Battle observer_;
 
     #region Initalize
     /// <summary>
@@ -45,6 +46,9 @@ public class BattleSceneManager : MonoBehaviour
     public void Init(List<Hero> Heros, List<Enemy> Enemies, GameManager.MapType mapType)
     {
         Debug.Log("BattleManager Initalized");
+
+        //Observer Attach
+        observer_ = GameManager.Observer_Battle;
 
         // Get UI Elements
         BattleCanvas = FindObjectOfType<Canvas>();
@@ -125,8 +129,10 @@ public class BattleSceneManager : MonoBehaviour
 
     public void SetHeroOnBattle(GameObject Hero)
     {
+        //observer_.onNotify(new[]{ (GlobalObject)Hero.GetComponent<Units>().charData }, ObserverBase.EventType.R_EnrollENFP);
         heroObjects.Add(Hero);
         startBtn.gameObject.SetActive(true);
+
     }
     public void DeleteHeroOnBattle(GameObject Hero)
     {

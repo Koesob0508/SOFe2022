@@ -76,8 +76,11 @@ public class GameManager : MonoBehaviour
 
     public static BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
-    #endregion 
-
+    #endregion
+    #region Observers
+    [SerializeField] private Observer_Battle observer_Battle = new Observer_Battle();
+    public static Observer_Battle Observer_Battle { get { return Instance.observer_Battle; } }
+    #endregion
     private void Start()
     {
         Init();

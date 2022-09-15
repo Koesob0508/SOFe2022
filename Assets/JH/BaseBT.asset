@@ -73,7 +73,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: cebb027e15ffa2c4f87fb7f9f9ed0217
-  position: {x: 71.18048, y: 1185.1007}
+  position: {x: 72.79988, y: 1204}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   keyIdx: 0
   keyName: targetObj
@@ -110,9 +110,10 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: b6a30bb1513060640b8034e199ee2a94
-  position: {x: 845.60004, y: 1573.6001}
+  position: {x: 865.2112, y: 1583.2001}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
-  WaitTime: 1
+  keyIdx: 2
+  keyName: AttackDelay
 --- !u!114 &-740961285270585551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +323,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: db5647f293fd04043bbd8801739b1f60
-  position: {x: 424.00003, y: 1566.941}
+  position: {x: 453.59995, y: 1581.6001}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &6710677224026444237
 MonoBehaviour:
