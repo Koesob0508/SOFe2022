@@ -108,6 +108,8 @@ public partial class StageManager : MonoBehaviour
     private float screenHeight;
     private float stageNodeScale;
 
+    private string saveData; 
+
     // 현재는 GameManager에 StageManager가 할당되어 있어야 한다.
     public void Init()
     {
@@ -435,6 +437,13 @@ public partial class StageManager : MonoBehaviour
     public string SerializeStageMap()
     {
         return JsonUtility.ToJson(stageMap);
+    }
+
+    public void LoadStageSaveData(string _saveData)
+    {
+        Debug.Log("Load 완료");
+        saveData = _saveData;
+        Debug.Log(saveData);
     }
 
     private void SaveStageMap(string _serializedStageMap)
