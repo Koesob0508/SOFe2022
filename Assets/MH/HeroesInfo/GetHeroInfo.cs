@@ -7,7 +7,7 @@ using TMPro;
 
 public class GetHeroInfo : MonoBehaviour
 {
-    public List<Hero> HeroList = GameManager.Hero.GetHeroList();
+    public List<Hero> HeroList = new List<Hero>();
     public Dictionary<uint, GameObject> HeroUIList = new Dictionary<uint, GameObject>();
 
     public GameObject HeroUIObject;
@@ -24,6 +24,7 @@ public class GetHeroInfo : MonoBehaviour
 
     void Start()
     {
+        HeroList = GameManager.Hero.GetHeroList();
         int HeroNUM = HeroList.Count;
 
         for (int i = 0; i < HeroNUM; i++)
@@ -80,7 +81,7 @@ public class GetHeroInfo : MonoBehaviour
                 // Info °ª
                 HeroInfo = GetChildWithName(HeroUI, "Info");
                 HeroImage = GetChildWithName(HeroInfo, "HeroImage").transform.GetComponent<Image>();
-                //HeroImage.sprite = GameManager.Battle.GetUIImage(hero.GUID);
+                // HeroImage.sprite = GameManager.Data.LoadSprite("/Sprites/HeroUI/" + HeroGuid + "_UI");
 
                 HeroName = GetChildWithName(HeroInfo, "Name").transform.GetComponent<TextMeshProUGUI>();
                 HeroName.text = hero.Name;
@@ -116,8 +117,6 @@ public class GetHeroInfo : MonoBehaviour
                 // Items °ª
             }
         }
-    
-
     }    
     
     // Update is called once per frame

@@ -14,15 +14,25 @@ public class Battle_Heros : Units
 
     public override void Attack()
     {
-        base.Attack();
-
-        StartCoroutine("CouroutineAttack");
-
-        charData.CurrentMana += 10;
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
-            btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
+            ExecuteSkill();
         }
+        else
+        {
+            base.Attack();
+            StartCoroutine("CouroutineAttack");
+            charData.CurrentMana += 100;
+        }
+
+        //base.Attack();
+        //StartCoroutine("CouroutineAttack");
+        //charData.CurrentMana += 100;
+
+        //if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
+        //{
+        //    btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
+        //}
     }
     
     public override void Hit(float damage)
@@ -87,7 +97,7 @@ public class Battle_Heros : Units
             Vector2 dir = attackTarget.transform.position - transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
-            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage);
+            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage, 500f);
 
         }
     }
