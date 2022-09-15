@@ -76,10 +76,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         this.invenItemUI = itemUI;
     }
-    public void StartBattle()
-    {
-        btComp.StartTree();
-        isUpdating = true;
+    public void StartBattle()
+    {
+        btComp.StartTree();
+        isUpdating = true;
     }
     public virtual void Attack()
     {
@@ -105,9 +105,9 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         float t = GetCurrentAnimationTime();
 
-        yield return new WaitForSeconds(t);
-        skillFinished();
-        isSkillPlaying = false;
+        yield return new WaitForSeconds(t);
+        skillFinished();
+        isSkillPlaying = false;
     }
 
     
