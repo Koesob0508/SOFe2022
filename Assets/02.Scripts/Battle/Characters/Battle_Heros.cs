@@ -14,25 +14,25 @@ public class Battle_Heros : Units
 
     public override void Attack()
     {
-        if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
-        {
-            ExecuteSkill();
-        }
-        else
-        {
-            base.Attack();
-            StartCoroutine("CouroutineAttack");
-            charData.CurrentMana += 100;
-        }
-
-        //base.Attack();
-        //StartCoroutine("CouroutineAttack");
-        //charData.CurrentMana += 100;
-
         //if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         //{
-        //    btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
+        //    ExecuteSkill();
         //}
+        //else
+        //{
+        //    base.Attack();
+        //    StartCoroutine("CouroutineAttack");
+        //    charData.CurrentMana += 100;
+        //}
+
+        base.Attack();
+        StartCoroutine("CouroutineAttack");
+        charData.CurrentMana += 100;
+
+        if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
+        {
+            btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
+        }
     }
     
     public override void Hit(float damage)
