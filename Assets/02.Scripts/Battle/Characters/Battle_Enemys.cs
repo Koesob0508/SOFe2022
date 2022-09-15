@@ -54,10 +54,10 @@ public class Battle_Enemys : Units
         // ������ ó�� = ( 100 / ���� + 100 ) * ������
         state.CurrentHP -= (100 / (state.DefensePoint + 100)) * damage;
 
-        if (state.CurrentHP <= 0)
+        if (state.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
         {
             btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData.Type);
+            GameManager.Battle.DeadProcess(charData.Type,gameObject);
         }
         else
         {

@@ -45,10 +45,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected virtual void Update()
     {
-        if (isUpdating)
-        {
-            UpdateUI();
-        }
+        UpdateUI();
     }
     
     public virtual void Initalize(Character charData)
@@ -111,9 +108,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         skillFinished();
 
         isSkillPlaying = false;
-
-
     }
+
+    
+
     protected float GetCurrentAnimationTime()
     {
         return animator.GetCurrentAnimatorStateInfo(0).length;
@@ -152,7 +150,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         isUpdating = false;
         UnitUI.gameObject.SetActive(false);
         PlayDeadAnimation();
-
     }
     public void PlayDeadAnimation()
     {
@@ -176,6 +173,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        UpdateUI();
         Vector2 screenPos = eventData.position;
         if (screenPos.x > Screen.width / 2)
         {

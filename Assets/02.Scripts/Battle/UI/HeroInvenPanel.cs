@@ -16,11 +16,18 @@ public class HeroInvenPanel : MonoBehaviour
     {
         foreach(Hero hero in Heros)
         {
-            GameObject g = Instantiate(Item_Prefab, transform);
-            var item = g.GetComponentInChildren<HeroInvenItem>();
-            childItems.Add(item);
-            g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
-            item.Initalize(hero);
+            if(hero.IsActive)
+            {
+                GameObject g = Instantiate(Item_Prefab, transform);
+                var item = g.GetComponentInChildren<HeroInvenItem>();
+                childItems.Add(item);
+                g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
+                item.Initalize(hero);
+            }
+            else
+            {
+                // Whether Dead or Hunger is 0
+            }
         }
         Half_UI = new GameObject("Half_Panel");
         RectTransform rt = Half_UI.AddComponent<RectTransform>();
@@ -39,13 +46,11 @@ public class HeroInvenPanel : MonoBehaviour
 
     public void StartDragging()
     {
-        Debug.Log("StartDragging");
         Half_UI.SetActive(true);
         ToVisible();
     }
     public void EndDragging()
     {
-        Debug.Log("EndDragging");
         Half_UI.SetActive(false);
         ToInvisible();
     }
@@ -61,7 +66,6 @@ public class HeroInvenPanel : MonoBehaviour
 
     void ToVisible()
     {
-        Debug.Log("To visible");
         LeanTween.imageColor(Half_UI.GetComponent<RectTransform>(),StartCol,0.5f).setOnComplete(() => {
             if (Half_UI.activeSelf)
                 ToInvisible();

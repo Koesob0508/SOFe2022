@@ -495,26 +495,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4598637012028709640, guid: b8592e4375439fd41a82f1229f45565e, type: 3}
   m_PrefabInstance: {fileID: 731655176}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &731655178 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4598637012028709643, guid: b8592e4375439fd41a82f1229f45565e, type: 3}
-  m_PrefabInstance: {fileID: 731655176}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &731655179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731655178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1285b44c19dbfe34b8e6d9578f8d6971, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Item_Prefab: {fileID: 0}
-  StartCol: {r: 0, g: 0, b: 1, a: 0.5}
-  EndCol: {r: 0, g: 0, b: 1, a: 0}
 --- !u!1001 &1006508002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,7 +962,7 @@ MonoBehaviour:
   m_text: "\uC804\uD22C \uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: -6281953535192120640, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

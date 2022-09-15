@@ -26,7 +26,6 @@ namespace BT
                 }
                 else
                 {
-                    Debug.Log(target.name + " Is not in attack range!");
                     owner_comp.TreeObject.bBoard.SetValueAsBool("CanAttack", false);
                 }
             }
