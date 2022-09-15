@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: blueAttack
+  m_Name: 08BlueAttack
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,29 +20,21 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -2256524004051076624, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -2256524004051076624, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.083333336
-      value: {fileID: -9078422701824300910, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -9078422701824300910, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.16666667
-      value: {fileID: 7238360692837751153, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: 7238360692837751153, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.25
-      value: {fileID: -8442838531018050751, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -8442838531018050751, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.33333334
-      value: {fileID: -4024692783875801349, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -4024692783875801349, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.41666666
-      value: {fileID: 4640800853956266320, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: 4640800853956266320, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.5
-      value: {fileID: -6482081916739643334, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -6482081916739643334, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     - time: 0.5833333
-      value: {fileID: -8280719134527713833, guid: c533386360b887044b1513fbbaa6ac94,
-        type: 3}
+      value: {fileID: -8280719134527713833, guid: c533386360b887044b1513fbbaa6ac94, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212

@@ -35,6 +35,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public GameObject projectileObject;
     public GameObject projectileSpawnPoint;
+    public GameObject skillEffect;
 
     protected virtual void Start()
     {
@@ -104,8 +105,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t);
-        skillFinished();
-        isSkillPlaying = false;
+        //skillFinished();
+        isSkillPlaying = false;
     }
     protected float GetCurrentAnimationTime()
     {
