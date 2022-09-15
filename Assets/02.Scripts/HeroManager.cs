@@ -88,9 +88,7 @@ public class HeroManager : MonoBehaviour
             {
                 if (hero.IsActive)
                     break;
-
                 hero.IsActive = true;
-
                 // !! юс╫ц !!
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
 

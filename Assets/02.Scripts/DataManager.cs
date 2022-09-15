@@ -217,6 +217,8 @@ public class DataManager
         BinaryFormatter formatter = new BinaryFormatter();
         SaveFormat savedData = (SaveFormat)formatter.Deserialize(fStream);
         fStream.Close();
+        Money = savedData.Money;
+        GameManager.Stage.LoadStageSaveData(savedData.MapData);
         foreach (Hero h in savedData.HeroData)
         {
             ObjectCodex.Add(h.GUID, h);
