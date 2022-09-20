@@ -15,9 +15,6 @@ public class HeroManager : MonoBehaviour
         EnrollHero(2);
         EnrollHero(3);
 
-        // !! юс╫ц !!
-        SetShopHero();
-
         GameManager.Relation.GetTeamScore();
     }
 
@@ -171,7 +168,7 @@ public class HeroManager : MonoBehaviour
         Items.Remove(item);
     }
 
-    public void SetShopHero()
+    public void SetGuildHero()
     {
         ShopHeroList.Clear();
 
