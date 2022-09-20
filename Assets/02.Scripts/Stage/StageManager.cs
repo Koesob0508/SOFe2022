@@ -18,9 +18,11 @@ public partial class StageManager : MonoBehaviour
     [Header("스테이지 시작 갯수와 단계 갯수 설정")]
     public int startCount;
     public int stepCount;
+    public int townCount;
 
     private List<List<Seed>> seeds;
     private List<Step> stages;
+    public List<int> townIndices;
     [SerializeField] private StageMap stageMap;
     private float screenHeight;
     private float stageNodeScale;
@@ -63,17 +65,24 @@ public partial class StageManager : MonoBehaviour
         }
         else
         {
+            townIndices = new List<int>();
+            int step = stepCount / townCount;
+            for(int index = step; index < stepCount; index+=step)
+            {
+                townIndices.Add(index-1);
+                Debug.Log(index);
+            }
             Debug.Log("Save data did not found, Init save data");
-            InitStageMap(startCount, stepCount);
+            InitStageMap(startCount, stepCount, townIndices);
         }
     }
 
-    private void InitStageMap(int _startCount, int _stepCount)
+    private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices)
     {
         Debug.Log("Stage Node Instantiate");
 
         seeds = InitSeed(_startCount, _stepCount);
-        seeds = RandomizeSeed(seeds);
+        seeds = RandomizeSeed(seeds, _townIndices);
         seeds = RandomizePosition(seeds, screenHeight);
 
         stages = GenerateNode(seeds, stageNodeScale);
@@ -106,7 +115,7 @@ public partial class StageManager : MonoBehaviour
 
             for (int index = 0; index < _startCount; index++)
             {
-                Seed initSeed = new Seed(index, step);
+                Seed initSeed = new(index, step);
                 stepList.Add(initSeed);
             }
 
@@ -116,7 +125,7 @@ public partial class StageManager : MonoBehaviour
         return resultList;
     }
 
-    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds)
+    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices)
     {
         foreach (List<Seed> stepList in _seeds)
         {
@@ -128,6 +137,24 @@ public partial class StageManager : MonoBehaviour
                     foreach (Seed seed in stepList)
                     {
                         seed.SetNextStage(seed.Index);
+
+                        if(_townIndices.Contains(seed.Step))
+                        {
+                            seed.Type = StageType.Town;
+                        }
+                        else
+                        {
+                            int dice = Random.Range(0, 100);
+
+                            if(dice > 10)
+                            {
+                                seed.Type = StageType.Battle;
+                            }
+                            else
+                            {
+                                seed.Type = StageType.Event;
+                            }
+                        }
                     }
 
                     int count = Random.Range(0, stepList.Count - 1);
@@ -229,8 +256,20 @@ public partial class StageManager : MonoBehaviour
             {
                 Vector2 position = seed.Position + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
 
-                StageNode stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
-                // Seed로부터 StageNode 정보 불러오기
+                StageNode stageNode = null;
+
+                switch (seed.Type)
+                {
+                    case StageType.Battle:
+                        stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                    case StageType.Town:
+                        stageNode = Instantiate(townNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                    case StageType.Event:
+                        stageNode = Instantiate(eventNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                }
 
                 stageNode.Init(seed, _nodeScale);
 

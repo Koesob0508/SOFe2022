@@ -13,7 +13,7 @@ public partial class StageManager
 
     public class Seed
     {
-        public StageManager.StageType Type { get; private set; }
+        public StageManager.StageType Type { get; set; }
         public int Index { get; private set; }
         public int Step { get; private set; }
         public Vector2 Position { get; private set; }
