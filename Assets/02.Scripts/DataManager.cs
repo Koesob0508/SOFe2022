@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,13 +10,31 @@ public class DataManager
 {
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
-    public uint Money;
-    public void Init()
+    public uint Money = 0;
+
+    [Serializable]
+    private struct SaveFormat
     {
-        ImportCharData();
+        public List<Hero> HeroData;
+        public string MapData;
+        public uint Money;
+        public string Version;
     }
 
-    void ImportCharData()
+    public void Init()
+    {
+        LoadInitalEnemyData();
+        if(IsExistSaveData())
+        {
+            Load();
+        }
+        else
+        {
+            LoadInitalHeroData();
+        }
+    }
+
+    void LoadInitalHeroData()
     {
         CSVImporter csvImp = new CSVImporter();
         csvImp.OpenFile("Data/Heros_values");
@@ -38,11 +57,19 @@ public class DataManager
             hero.MoveSpeed = float.Parse(elems[8]);
             hero.AttackRange = float.Parse(elems[9]);
             hero.Type = GameManager.ObjectType.Hero;
+            hero.CurrentHP = hero.MaxHP;
+            // Hard-Coding Part
+            hero.CurHunger = 100;
+            hero.IsActive = true;
             line = csvImp.Readline();
 
             ObjectCodex.Add(hero.GUID, hero);
         }
 
+       
+    }
+    void LoadInitalEnemyData()
+    {
         CSVImporter csvImp1 = new CSVImporter();
         csvImp1.OpenFile("Data/Monsters_values");
         csvImp1.ReadHeader();
@@ -69,7 +96,6 @@ public class DataManager
             ObjectCodex.Add(enemy.GUID, enemy);
         }
     }
-
     public GlobalObject LoadObject(uint guid, GameManager.ObjectType type)
     {
         GlobalObject obj = ObjectCodex[guid];
@@ -144,41 +170,58 @@ public class DataManager
         }
     }
     
+    private bool IsExistSaveData()
+    {
+        if (!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
+        {
+            return false;
+        }
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
+        return System.IO.File.Exists(@path);
+    }
     public void Save()
     {
-        string saveStr = "";
-        List<Hero> hListToSave = new List<Hero>();
-        foreach(var obj in ObjectCodex.Values)
+        SaveFormat saveData;
+        saveData.HeroData = new List<Hero>();
+        saveData.MapData = GameManager.Stage.SerializeStageMap();
+        saveData.Version = GameManager.Instance.GetVersion();
+        saveData.Money = Money;
+
+        foreach (var obj in ObjectCodex.Values)
         {
-            if(((GlobalObject)obj).Type == GameManager.ObjectType.Hero)
+            if (((GlobalObject)obj).Type == GameManager.ObjectType.Hero)
             {
                 Hero h = (Hero)obj;
-                if(h.IsActive)
-                {
-                    hListToSave.Add(h);
-                }
+                saveData.HeroData.Add(h);
             }
         }
-        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+        if(!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
+        {
+            System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Save");
+        }
 
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
         System.IO.File.Create(path).Close();
         System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.OpenOrCreate);
 
         BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(fStream, hListToSave);
+        formatter.Serialize(fStream, saveData);
         fStream.Close();
-        Load();
     }
 
     public void Load()
     {
-        string path = Application.streamingAssetsPath + "/Save/s_" + GameManager.Instance.GetVersion();
+        string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
 
         System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.Open);
         BinaryFormatter formatter = new BinaryFormatter();
-        List<Hero> hList = (List<Hero>)formatter.Deserialize(fStream);
+        SaveFormat savedData = (SaveFormat)formatter.Deserialize(fStream);
         fStream.Close();
-        foreach (Hero h in hList)
-            Debug.Log(h.Name);
+        Money = savedData.Money;
+        GameManager.Stage.LoadStageSaveData(savedData.MapData);
+        foreach (Hero h in savedData.HeroData)
+        {
+            ObjectCodex.Add(h.GUID, h);
+        }
     }
 }

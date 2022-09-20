@@ -16,6 +16,7 @@ public class BattleSceneManager : MonoBehaviour
 
     public List<GameObject> heroObjects = new List<GameObject>();
     public List<GameObject> enemyObjects = new List<GameObject>();
+    private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     public Path.PathManager PathMgr = null;
 
@@ -31,6 +32,8 @@ public class BattleSceneManager : MonoBehaviour
     private uint eCount = 0;
 
     IObjectPool<GameObject> dmgPopupPool;
+
+    bool bBattleStarted = false;
 
 
     #region Initalize
@@ -76,6 +79,7 @@ public class BattleSceneManager : MonoBehaviour
         hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
+
         //Init Enemy
         for (int i = 0; i < eCount; i++)
         {
@@ -112,6 +116,8 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
         StartCoroutine(FadeInTransition(fadeColor));
+
+
     }
 
     #endregion
@@ -146,8 +152,9 @@ public class BattleSceneManager : MonoBehaviour
         hObj.SetActive(false);
         return hObj;
     }
-    public void DeadProcess(GameManager.ObjectType type)
+    public void DeadProcess(GameManager.ObjectType type, GameObject obj)
     {
+        spriteRenderers.Remove(obj.GetComponent<SpriteRenderer>());
         switch (type)
         {
             case GameManager.ObjectType.Hero:
@@ -170,8 +177,15 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void FinishBattle(bool bIsWin)
     {
+        bBattleStarted = false;
+        foreach(GameObject g in heroObjects)
+        {
+            g.GetComponent<Battle_Heros>().ReduceHunger(10);
+        }
         if (bIsWin)
         {
+            UpdateHeroData();
+            GameManager.Data.Save();
             GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
         }
@@ -229,6 +243,18 @@ public class BattleSceneManager : MonoBehaviour
         Destroy(popup);
     }
     #endregion
+
+    void AlignUnitsByY()
+    {
+        spriteRenderers.Sort((lhs, rhs) => { return rhs.gameObject.transform.position.y.CompareTo(lhs.gameObject.transform.position.y); });
+        for (int i = 0; i < spriteRenderers.Count; i++)
+            spriteRenderers[i].sortingOrder = -100 + i;
+    }
+    void UpdateHeroData()
+    {
+        foreach (Hero h in HeroList)
+            GameManager.Data.ObjectCodex[h.GUID] = h;
+    }
     void SetBackground(GameManager.MapType mapType)
     {
         string mapName = "";
@@ -259,15 +285,19 @@ public class BattleSceneManager : MonoBehaviour
     {
         foreach (var hero in heroObjects)
         {
+           
+            spriteRenderers.Add(hero.GetComponent<SpriteRenderer>());
             hero.GetComponent<Units>().StartBattle();
         }
         foreach (var enemy in enemyObjects)
         {
+            spriteRenderers.Add(enemy.GetComponent<SpriteRenderer>());
             enemy.GetComponent<Units>().StartBattle();
         }
         startBtn.gameObject.SetActive(false);
         hInvenPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(true);
+        bBattleStarted = true;
     }
 
 
@@ -280,6 +310,8 @@ public class BattleSceneManager : MonoBehaviour
   
     void Update()
     {
+        if(bBattleStarted)
+            AlignUnitsByY();
     }
     #endregion
     #region Coroutine

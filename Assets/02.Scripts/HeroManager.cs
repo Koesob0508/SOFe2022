@@ -78,15 +78,14 @@ public class HeroManager : MonoBehaviour
         //    }
         //}
 
-        foreach (Hero hero in GameManager.Data.ObjectCodex.Values)
+        foreach (GlobalObject g in GameManager.Data.ObjectCodex.Values)
         {
-            if (hero.GUID == guid)
+            Hero hero = g as Hero;
+            if (hero != null && hero.GUID == guid)
             {
                 if (hero.IsActive)
                     break;
-
                 hero.IsActive = true;
-
                 // !! юс╫ц !!
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
 

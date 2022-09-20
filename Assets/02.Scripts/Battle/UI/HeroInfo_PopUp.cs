@@ -25,6 +25,5 @@ public class HeroInfo_PopUp : MonoBehaviour
         PersonalityTXT.text = hero.MBTI.ToString();
         HealthBar.fillAmount = hero.CurrentHP / (float)hero.MaxHP;
         HungerBar.fillAmount = hero.CurHunger / 100.0f;
-
     }
 }

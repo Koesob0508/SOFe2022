@@ -14,6 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: AttackRange
   Type: 2
+--- !u!114 &-7001961212287170448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed8017df6ad684c9d0cc20ab72dfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: AttackDelay
+  Type: 2
 --- !u!114 &-2513623323309123474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +75,7 @@ MonoBehaviour:
   - {fileID: -8233085894503828793}
   - {fileID: 3546849276695337490}
   - {fileID: -2411691548987482680}
+  - {fileID: -7001961212287170448}
 --- !u!114 &2186395849951284326
 MonoBehaviour:
   m_ObjectHideFlags: 0

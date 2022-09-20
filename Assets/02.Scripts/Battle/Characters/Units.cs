@@ -37,6 +37,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public GameObject projectileObject;
     public GameObject projectileSpawnPoint;
+    public GameObject skillEffect;
 
     protected virtual void Start()
     {
@@ -45,10 +46,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected virtual void Update()
     {
-        if (isUpdating)
-        {
-            UpdateUI();
-        }
+        UpdateUI();
     }
     
     public virtual void Initalize(Character charData)
@@ -69,6 +67,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", false);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackRange", charData.AttackRange);
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
+        //btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 3.0f);
 
         GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
     }
@@ -107,13 +106,12 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t);
-
         skillFinished();
-
         isSkillPlaying = false;
-
-
     }
+
+    
+
     protected float GetCurrentAnimationTime()
     {
         return animator.GetCurrentAnimatorStateInfo(0).length;
@@ -143,7 +141,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
         {
             animator.SetTrigger("GetHit");
-
         }
 
     }
@@ -152,7 +149,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         isUpdating = false;
         UnitUI.gameObject.SetActive(false);
         PlayDeadAnimation();
-
     }
     public void PlayDeadAnimation()
     {
@@ -176,6 +172,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        UpdateUI();
         Vector2 screenPos = eventData.position;
         if (screenPos.x > Screen.width / 2)
         {
