@@ -25,7 +25,7 @@ public class StageNode : MonoBehaviour
     public Button button;
     public UnityAction<StageNode> RegistStageNode;
 
-    public void Init(StageType _type, int _step, int _index)
+    public void Init(StageType _type, int _step, int _index, bool _isMerged, float _scale)
     {
         Type = _type;
         Step = _step;
@@ -34,6 +34,10 @@ public class StageNode : MonoBehaviour
         IsCompleted = false;
         IsPassPoint = false;
         NextStages = new List<Vector2Int>();
+
+        name = string.Format("Step : {0} Index : {1}", Step, Index);
+        transform.localScale = new Vector3(_scale, _scale, 1f);
+        
 
         if (this.Step == 0)
         {
