@@ -46,6 +46,7 @@ public partial class StageManager : MonoBehaviour
 
         screenHeight = Camera.main.orthographicSize * 2;
         float screenWidth = screenHeight * Camera.main.aspect;
+        stageNodeScale = screenHeight * 0.1f;
 
         var stageManagerPosition = this.transform.position;
         stageManagerPosition.x -= screenWidth * 3 / 8;
@@ -73,8 +74,6 @@ public partial class StageManager : MonoBehaviour
         seeds = InitSeed(_startCount, _stepCount);
         seeds = RandomizeSeed(seeds);
         seeds = RandomizePosition(seeds, screenHeight);
-
-        stageNodeScale = screenHeight * 0.1f;
 
         stages = GenerateNode(seeds, stageNodeScale);
 

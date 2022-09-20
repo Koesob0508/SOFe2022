@@ -38,7 +38,6 @@ public class StageNode : MonoBehaviour
         name = string.Format("Step : {0} Index : {1}", Step, Index);
         transform.localScale = new Vector3(_scale, _scale, 1f);
         
-
         if (this.Step == 0)
         {
             button.interactable = true;
