@@ -70,7 +70,6 @@ public partial class StageManager : MonoBehaviour
             for(int index = step; index < stepCount; index+=step)
             {
                 townIndices.Add(index-1);
-                Debug.Log(index);
             }
             Debug.Log("Save data did not found, Init save data");
             InitStageMap(startCount, stepCount, townIndices);

@@ -87,7 +87,6 @@ public class StageNode : MonoBehaviour
         IsMerged = _saved.isMerged;
         IsCompleted = _saved.isCompleted;
         IsPassPoint = _saved.isPassPoint;
-        //IsInteractable = _saved.isInteractable;
         IsInteractable = _saved.isInteractable;
         NextStages = _saved.nextStages;
         Enemies = _saved.enemies;

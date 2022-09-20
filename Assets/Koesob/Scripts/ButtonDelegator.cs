@@ -81,5 +81,12 @@ namespace Koesob
             //    }
             //}
         }
+
+        public void StageCompleted()
+        {
+            GameManager.Stage.CompleteStage();
+            GameManager.Data.Save();
+            GameManager.Scene.ToStageSelectScene();
+        }
     }
 }
