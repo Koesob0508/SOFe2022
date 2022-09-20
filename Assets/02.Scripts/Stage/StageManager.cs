@@ -4,89 +4,6 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 
-public partial class StageManager
-{
-    [System.Serializable]
-    public struct SerializedNode
-    {
-        public StageNode.StageType type;
-        public int step;
-        public int index;
-        public Vector3 poistion;
-        public bool isMerged;
-        public bool isCompleted;
-        public bool isPassPoint;
-        public List<Vector2Int> nextStages;
-        public List<Enemy> enemies;
-    }
-
-    [System.Serializable]
-    public class Step : ISerializationCallbackReceiver
-    {
-        public List<SerializedNode> serializeNodes;
-        private List<StageNode> stageNodes;
-
-        public Step()
-        {
-            stageNodes = new List<StageNode>();
-            serializeNodes = new List<SerializedNode>();
-        }
-
-        public void AddStageNode(StageNode _stageNode)
-        {
-            stageNodes.Add(_stageNode);
-        }
-
-        public StageNode GetStageNode(int _index)
-        {
-            return stageNodes[_index];
-        }
-
-        public List<StageNode> GetStageNodes()
-        {
-            return stageNodes;
-        }
-
-        public void OnAfterDeserialize()
-        {
-            // 하위 stageNode들을 새로운 struct로 받아줘야한다.
-            Debug.Log("구현하세욧"); 
-        }
-
-        public void OnBeforeSerialize()
-        {
-            serializeNodes.Clear();
-
-            foreach(StageNode stage in stageNodes)
-            {
-                SerializedNode node;
-
-                node.type = stage.Type;
-                node.step = stage.Step;
-                node.index = stage.Index;
-                node.poistion = stage.transform.position;
-                node.isMerged = stage.IsMerged;
-                node.isCompleted = stage.IsCompleted;
-                node.isPassPoint = stage.IsPassPoint;
-                node.nextStages = stage.NextStages;
-                node.enemies = stage.Enemies;
-
-                serializeNodes.Add(node);
-            }
-        }
-    }
-
-    [System.Serializable]
-    public class StageMap
-    {
-        public List<Step> stageList;
-
-        public StageMap(List<Step> _stageList)
-        {
-            stageList = _stageList;
-        }
-    }
-}
 
 public partial class StageManager : MonoBehaviour
 {
@@ -135,11 +52,21 @@ public partial class StageManager : MonoBehaviour
         stageManagerPosition.y -= screenHeight * 3 / 8;
 
         canvas.transform.position = stageManagerPosition;
+        canvas.SetActive(false);
 
-        InitStageMap(startCount, stepCount);
+        if(saveData != null)
+        {
+            Debug.Log("Save data is found, Load save data");
+            LoadStageMap(saveData);
+        }
+        else
+        {
+            Debug.Log("Save data did not found, Init save data");
+            InitStageMap(startCount, stepCount);
+        }
     }
 
-    public void InitStageMap(int _startCount, int _stepCount)
+    private void InitStageMap(int _startCount, int _stepCount)
     {
         Debug.Log("Stage Node Instantiate");
 
@@ -161,6 +88,13 @@ public partial class StageManager : MonoBehaviour
 
         //string stageMapToString = SerializeStageMap();
         //SaveStageMap(stageMapToString);
+    }
+
+    private void LoadStageMap(string _saveData)
+    {
+        stageMap = DeserializeStageMap(_saveData);
+        Debug.Log(_saveData);
+        ReconstructStageNodes(stageMap);
     }
 
     private List<List<Seed>> InitSeed(int _startCount, int _stepCount)
@@ -295,23 +229,14 @@ public partial class StageManager : MonoBehaviour
             foreach(Seed seed in steps)
             {
                 Vector2 position = seed.GetPosition() + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
-                int step = seed.GetStep();
-                int index = seed.GetIndex();
 
                 StageNode stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
                 // Seed로부터 StageNode 정보 불러오기
-                stageNode.name = string.Format("Step : {0} Index : {1}", step, index);
-                stageNode.transform.localScale = new Vector3(_nodeScale, _nodeScale, 1f);
 
-                stageNode.Init(battleNode.Type, step, index);
-                stageNode.RegistStageNode += UpdateCurrentNode;
+                stageNode.Init(battleNode.Type, seed.GetStep(), seed.GetIndex(), seed.isMerged(), _nodeScale);
+                stageNode.RegistStageNode += GameManager.Stage.UpdateCurrentNode;
 
                 stageSteps.AddStageNode(stageNode);
-
-                if(seed.isMerged())
-                {
-                    stageNode.SetIsMerged(seed.isMerged());
-                }
             }
 
             resultList.Add(stageSteps);
@@ -362,36 +287,16 @@ public partial class StageManager : MonoBehaviour
                     node.GenerateLane(_lanePrefab, _stages);
                 }
             }
-
         }
     }
 
     public void ShowStageMap()
     {
-        //foreach (Step stages in stages)
-        //{
-        //    foreach(StageNode stage in stages.stageNodes)
-        //    {
-        //        if(!stage.isMerged)
-        //        {
-        //            stage.gameObject.SetActive(true);
-        //        }
-        //    }
-        //}
-
         canvas.SetActive(true);
     }
 
     public void HideStageMap()
     {
-        //foreach (Step stages in stages)
-        //{
-        //    foreach (StageNode stage in stages.stageNodes)
-        //    {
-        //        stage.gameObject.SetActive(false);
-        //    }
-        //}
-
         canvas.SetActive(false);
     }
 
@@ -439,11 +344,14 @@ public partial class StageManager : MonoBehaviour
         return JsonUtility.ToJson(stageMap);
     }
 
+    public StageMap DeserializeStageMap(string _jsonData)
+    {
+        return JsonUtility.FromJson<StageMap>(_jsonData);
+    }
+
     public void LoadStageSaveData(string _saveData)
     {
-        Debug.Log("Load 완료");
         saveData = _saveData;
-        Debug.Log(saveData);
     }
 
     private void SaveStageMap(string _serializedStageMap)
@@ -452,5 +360,18 @@ public partial class StageManager : MonoBehaviour
         byte[] data = Encoding.UTF8.GetBytes(_serializedStageMap);
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
+    }
+
+    private void ReconstructStageNodes(StageMap _stageMap)
+    {
+        List<Step> steps = _stageMap.stages;
+
+        foreach(Step step in steps)
+        {
+            foreach(SerializedNode node in step.serializeNodes)
+            {
+                GameObject stageNode = new GameObject(string.Format("Stage Node "));
+            }
+        }
     }
 }
