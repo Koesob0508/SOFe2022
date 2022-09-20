@@ -24,24 +24,6 @@ public class HeroManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        // === 임시 코드 ===
-        //Hero hero1 = new Hero();
-        //Hero hero2 = new Hero();
-        //Hero hero3 = new Hero();
-        //Hero hero4 = new Hero();
-
-        //hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
-        //hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
-        //hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
-        //hero4 = GameManager.Instance.LoadObject(4, GameManager.ObjectType.Hero) as Hero;
-
-        //HeroList.Add(hero1);
-        //HeroList.Add(hero2);
-        //HeroList.Add(hero3);
-        //HeroList.Add(hero4);
-        // ==================
-
-
         // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
         //for (uint guid = 1; guid <= 17; guid++)
         //{
@@ -81,6 +63,12 @@ public class HeroManager : MonoBehaviour
         foreach (GlobalObject g in GameManager.Data.ObjectCodex.Values)
         {
             Hero hero = g as Hero;
+
+            //if (hero == null)
+            //{
+            //    Debug.Log("Null");
+            //}
+
             if (hero != null && hero.GUID == guid)
             {
                 if (hero.IsActive)
@@ -93,7 +81,6 @@ public class HeroManager : MonoBehaviour
                 GameManager.Relation.NewHeroScore(hero);
 
                 HeroList.Add(hero);
-                // Debug.Log("Enroll " + hero.GUID + hero.Name);
                 break;
             }
         }
