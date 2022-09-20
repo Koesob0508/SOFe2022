@@ -7,86 +7,135 @@ using UnityEngine.Events;
 
 public class StageNode : MonoBehaviour
 {
-    public enum StageType
-    {
-        Battle = 0,
-        Town,
-        Event
-    }
-
-    public StageType Type { get; private set; }
+    public StageManager.StageType Type { get; private set; }
     public int Step { get; private set; }
     public int Index { get; private set; }
     public bool IsMerged { get; private set; }
     public bool IsCompleted { get; private set; }
     public bool IsPassPoint { get; private set; }
-    public List<Vector2Int> NextStages { get; private set; }
+    public bool IsInteractable { get; set; }
+    public List<int> NextStages { get; private set; }
     public List<Enemy> Enemies { get; private set; }
     public Button button;
     public UnityAction<StageNode> RegistStageNode;
 
-    public void Init(StageType _type, int _step, int _index, bool _isMerged, float _scale)
+    public void Init(StageManager.Seed _seed, float _scale)
     {
-        Type = _type;
-        Step = _step;
-        Index = _index;
-        IsMerged = false;
+        Type = _seed.Type;
+        Step = _seed.Step;
+        Index = _seed.Index;
+        IsMerged = _seed.IsMerged;
         IsCompleted = false;
         IsPassPoint = false;
-        NextStages = new List<Vector2Int>();
+        IsInteractable = false;
+        NextStages = new List<int>();
 
         name = string.Format("Step : {0} Index : {1}", Step, Index);
         transform.localScale = new Vector3(_scale, _scale, 1f);
-        
-        if (this.Step == 0)
+
+        if (Step == 0)
         {
+            IsInteractable = true;
             button.interactable = true;
         }
         else
         {
+            IsInteractable = true;
             button.interactable = false;
         }
 
-        if (_type == StageType.Battle)
+        if(_seed.Type == StageManager.StageType.Battle)
         {
             Enemies = new List<Enemy>();
 
-            Enemy e1 = (Enemy)GameManager.Data.ObjectCodex[100];
-            Enemy e2 = (Enemy)GameManager.Data.ObjectCodex[100];
-            Enemy e3 = (Enemy)GameManager.Data.ObjectCodex[100];
+            Enemy enemy1 = (Enemy)GameManager.Data.ObjectCodex[100];
+            Enemy enemy2 = (Enemy)GameManager.Data.ObjectCodex[100];
+            Enemy enemy3 = (Enemy)GameManager.Data.ObjectCodex[100];
 
-            e1.Position = new Vector2(3, 5);
-            e2.Position = new Vector2(0, 8);
-            e3.Position = new Vector2(3, -5);
+            enemy1.Position = new Vector2(3, 5);
+            enemy2.Position = new Vector2(0, 8);
+            enemy3.Position = new Vector2(3, -5);
 
-            Enemies.Add(e1);
-            Enemies.Add(e2);
-            // enemies.Add(e3);
+            Enemies.Add(enemy1);
+            Enemies.Add(enemy2);
+            //Enemies.Add(enemy3);
         }
 
         button.onClick.AddListener(() => RegistStageNode(this));
 
         switch (Type)
         {
-            case StageType.Battle:
+            case StageManager.StageType.Battle:
                 button.onClick.AddListener(GameManager.Scene.ToBattleScene);
                 break;
 
-            case StageType.Town:
+            case StageManager.StageType.Town:
                 button.onClick.AddListener(GameManager.Scene.ToTownScene);
                 break;
 
-            case StageType.Event:
+            case StageManager.StageType.Event:
                 button.onClick.AddListener(GameManager.Scene.ToEventScene);
                 break;
         }
     }
 
+    public void LoadInit(StageManager.SerializedNode _saved, float _scale)
+    {
+        Type = _saved.type;
+        Step = _saved.step;
+        Index = _saved.index;
+        IsMerged = _saved.isMerged;
+        IsCompleted = _saved.isCompleted;
+        IsPassPoint = _saved.isPassPoint;
+        //IsInteractable = _saved.isInteractable;
+        IsInteractable = _saved.isInteractable;
+        NextStages = _saved.nextStages;
+        Enemies = _saved.enemies;
+
+        name = string.Format("Step : {0} Index : {1}", Step, Index);
+        transform.localScale = new Vector3(_scale, _scale, 1f);  
+
+        if(IsMerged)
+        {
+            gameObject.SetActive(false);
+            button.interactable = false;
+        }
+        else
+        {
+            if (IsInteractable)
+            {
+                button.interactable = true;
+            }
+            else
+            {
+                button.interactable = false;
+            }
+
+            button.onClick.AddListener(() => RegistStageNode(this));
+
+            switch (Type)
+            {
+                case StageManager.StageType.Battle:
+                    button.onClick.AddListener(GameManager.Scene.ToBattleScene);
+                    break;
+
+                case StageManager.StageType.Town:
+                    button.onClick.AddListener(GameManager.Scene.ToTownScene);
+                    break;
+
+                case StageManager.StageType.Event:
+                    button.onClick.AddListener(GameManager.Scene.ToEventScene);
+                    break;
+            }
+        }
+    }
+
+
     public void AddNextStage(StageNode _nextStage)
     {
-        if (!this.NextStages.Contains(new Vector2Int(_nextStage.Step, _nextStage.Index)))
+        if (!this.NextStages.Contains(_nextStage.Index))
         {
-            Vector2Int nextStage = new Vector2Int(_nextStage.Step, _nextStage.Index);
+            int nextStage = _nextStage.Index;
             NextStages.Add(nextStage);
         }
     }
@@ -95,10 +144,12 @@ public class StageNode : MonoBehaviour
     {
         IsCompleted = true;
         IsPassPoint = true;
+        IsInteractable = false;
 
-        foreach (Vector2Int stage in NextStages)
+        foreach (int stage in NextStages)
         {
-            _stages[stage.x].GetStageNode(stage.y).button.interactable = true;
+            _stages[Step + 1].GetStageNode(stage).button.interactable = true;
+            _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
         }
     }
 
@@ -106,13 +157,13 @@ public class StageNode : MonoBehaviour
     {
         //foreach (StageNode nextStage in nextStages)
         //{
-        foreach (Vector2Int nextStage in NextStages)
+        foreach (int nextStage in NextStages)
         {
             // 시작 위치와 목표 위치 받아옴
             Vector2 startPosition = this.transform.position;
             // Vector2 targetPosition = nextStage.transform.position; // 이 부분만 바꾸면 돼
-            int targetStep = nextStage.x;
-            int targetIndex = nextStage.y;
+            int targetStep = Step + 1;
+            int targetIndex = nextStage;
             Vector2 targetPosition = _stages[targetStep].GetStageNode(targetIndex).transform.position;
             Vector2 instantiatePosition = (targetPosition + startPosition) / 2;
             Quaternion angle;

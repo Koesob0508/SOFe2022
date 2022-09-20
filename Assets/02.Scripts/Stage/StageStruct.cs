@@ -6,14 +6,15 @@ public partial class StageManager
     [System.Serializable]
     public class SerializedNode
     {
-        public StageNode.StageType type;
+        public StageManager.StageType type;
         public int step;
         public int index;
         public Vector3 position;
         public bool isMerged;
         public bool isCompleted;
         public bool isPassPoint;
-        public List<Vector2Int> nextStages;
+        public bool isInteractable;
+        public List<int> nextStages;
         public List<Enemy> enemies;
 
         public string ToLog()
@@ -73,10 +74,10 @@ public partial class StageManager
                 node.step = stage.Step;
                 node.index = stage.Index;
                 node.position = stage.transform.position;
-                Debug.Log("Node Position is " + node.position);
                 node.isMerged = stage.IsMerged;
                 node.isCompleted = stage.IsCompleted;
                 node.isPassPoint = stage.IsPassPoint;
+                node.isInteractable = stage.IsInteractable;
                 node.nextStages = stage.NextStages;
                 node.enemies = stage.Enemies;
 

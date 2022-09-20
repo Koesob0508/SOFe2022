@@ -4,38 +4,61 @@ using UnityEngine;
 
 public partial class StageManager
 {
+    public enum StageType
+    {
+        Battle = 0,
+        Town,
+        Event
+    }
+
     public class Seed
     {
-        private int index;
-        private int step;
-        private Vector2 position;
-        private List<int> nextStage;
-        private Seed pointer;
+        public StageManager.StageType Type { get; private set; }
+        public int Index { get; private set; }
+        public int Step { get; private set; }
+        public Vector2 Position { get; private set; }
+        public List<int> NextStages { get; private set; }
+        public Seed Pointer { get; private set; }
+        public bool IsMerged
+        {
+            get
+            {
+                if (Pointer == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
 
         public Seed(int _index, int _step)
         {
-            this.index = _index;
-            this.step = _step;
-            this.nextStage = new List<int>();
+            Type = StageManager.StageType.Battle; // 임시로 Battle로 고정
+            Index = _index;
+            this.Step = _step;
+            this.NextStages = new List<int>();
 
         }
 
         public string ToLog()
         {
-            string log = string.Format("index : {0}, step : {1}, Position : x={2}, y={3}", index, step, position.x, position.y);
+            string log = string.Format("index : {0}, step : {1}, Position : x={2}, y={3}", Index, Step, Position.x, Position.y);
             log += ", ";
             string next = "Next Stage : ";
             string nextPointer = "Pointer : ";
 
-            foreach (int nextIndex in this.nextStage)
+            foreach (int nextIndex in this.NextStages)
             {
                 next += nextIndex;
             }
             next += ", ";
 
-            if (this.pointer != null)
+            if (this.Pointer != null)
             {
-                nextPointer += this.pointer.index.ToString();
+                nextPointer += this.Pointer.Index.ToString();
             }
             else
             {
@@ -45,83 +68,51 @@ public partial class StageManager
             return log + next + nextPointer;
         }
 
-        public int GetIndex()
-        {
-            return this.index;
-        }
-
-        public int GetStep()
-        {
-            return this.step;
-        }
-
-        public Vector2 GetPosition()
-        {
-            return this.position;
-        }
-
         public void SetPosition(float _xPosition, float _yPosition)
         {
             float xPosition = _xPosition;
             float yPosition = _yPosition;
-            position = new Vector2(xPosition, yPosition);
-        }
-
-        public List<int> GetNextStage()
-        {
-            return this.nextStage;
+            Position = new Vector2(xPosition, yPosition);
         }
 
         public void SetNextStage(int _index)
         {
-            if (!nextStage.Contains(_index))
+            if (!NextStages.Contains(_index))
             {
-                this.nextStage.Add(_index);
-            }
-        }
-
-        public bool isMerged()
-        {
-            if (pointer == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
+                this.NextStages.Add(_index);
             }
         }
 
         public void RandomizePosition(float _xRange, float _yRange)
         {
-            var randomPosition = position;
+            var randomPosition = Position;
 
             randomPosition.x += Random.Range(0f, _xRange);
             randomPosition.y += Random.Range(0f, _yRange);
 
-            position = randomPosition;
+            Position = randomPosition;
         }
 
         public void Merge(Seed _to)
         {
-            this.pointer = _to;
+            Pointer = _to;
             // to의 nextStage를 바꿔줘야 한다.
-            foreach (int index in this.nextStage)
+            foreach (int index in NextStages)
             {
-                if (!_to.nextStage.Contains(index))
+                if (!_to.NextStages.Contains(index))
                 {
-                    _to.nextStage.Add(index);
+                    _to.NextStages.Add(index);
                 }
             }
         }
 
         public int GetResultPointer()
         {
-            int resultIndex = this.index;
+            int resultIndex = Index;
 
-            if (this.pointer != null)
+            if (this.Pointer != null)
             {
-                resultIndex = this.pointer.GetResultPointer();
+                resultIndex = this.Pointer.GetResultPointer();
             }
 
             return resultIndex;

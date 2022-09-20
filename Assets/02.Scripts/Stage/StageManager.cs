@@ -59,6 +59,7 @@ public partial class StageManager : MonoBehaviour
         {
             Debug.Log("Save data is found, Load save data");
             LoadStageMap(saveData);
+            //InitStageMap(startCount, stepCount);
         }
         else
         {
@@ -81,8 +82,6 @@ public partial class StageManager : MonoBehaviour
 
         InitLane(laneObject, stages);
 
-        canvas.SetActive(false);
-
         stageMap = new StageMap(stages);
 
         //string stageMapToString = SerializeStageMap();
@@ -94,6 +93,7 @@ public partial class StageManager : MonoBehaviour
         stageMap = DeserializeStageMap(_saveData);
         Debug.Log(_saveData);
         ReconstructStageNodes(stageMap);
+        ReconstructLane(laneObject, stageMap);
     }
 
     private List<List<Seed>> InitSeed(int _startCount, int _stepCount)
@@ -120,14 +120,14 @@ public partial class StageManager : MonoBehaviour
     {
         foreach (List<Seed> stepList in _seeds)
         {
-            if (stepList[0].GetStep() != _seeds.Count - 1)
+            if (stepList[0].Step != _seeds.Count - 1)
             {
                 // 시작과 끝 사이에 있는 단계 처리
-                if (stepList[0].GetStep() != 0)
+                if (stepList[0].Step != 0)
                 {
                     foreach (Seed seed in stepList)
                     {
-                        seed.SetNextStage(seed.GetIndex());
+                        seed.SetNextStage(seed.Index);
                     }
 
                     int count = Random.Range(0, stepList.Count - 1);
@@ -144,7 +144,7 @@ public partial class StageManager : MonoBehaviour
                 {
                     foreach (Seed seed in stepList)
                     {
-                        seed.SetNextStage(seed.GetIndex());
+                        seed.SetNextStage(seed.Index);
                     }
                 }
             }
@@ -205,8 +205,8 @@ public partial class StageManager : MonoBehaviour
                 float xRange = yStep / 2;
                 float yRange = yStep / 2;
 
-                float xPosition = seed.GetStep() * xStep;
-                float yPosition = seed.GetIndex() * yStep;
+                float xPosition = seed.Step * xStep;
+                float yPosition = seed.Index * yStep;
 
                 // seed의 값에 따라 적당한 포지션으로
                 seed.SetPosition(xPosition, yPosition);
@@ -227,12 +227,13 @@ public partial class StageManager : MonoBehaviour
 
             foreach(Seed seed in steps)
             {
-                Vector2 position = seed.GetPosition() + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
+                Vector2 position = seed.Position + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
 
                 StageNode stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
                 // Seed로부터 StageNode 정보 불러오기
 
-                stageNode.Init(battleNode.Type, seed.GetStep(), seed.GetIndex(), seed.isMerged(), _nodeScale);
+                stageNode.Init(seed, _nodeScale);
+
                 stageNode.RegistStageNode += GameManager.Stage.UpdateCurrentNode;
 
                 stageSteps.AddStageNode(stageNode);
@@ -250,23 +251,23 @@ public partial class StageManager : MonoBehaviour
         {
             foreach(Seed seed in steps)
             {
-                if(!seed.isMerged())
+                if(!seed.IsMerged)
                 {
-                    int currentStep = seed.GetStep();
-                    int currentIndex = seed.GetIndex();
+                    int currentStep = seed.Step;
+                    int currentIndex = seed.Index;
                     int nextStep = currentStep + 1;
 
-                    foreach(int targetIndex in seed.GetNextStage())
+                    foreach(int nextIndex in seed.NextStages)
                     {
-                        int resultIndex = seeds[nextStep][targetIndex].GetResultPointer();
+                        int resultIndex = seeds[nextStep][nextIndex].GetResultPointer();
 
                         stages[currentStep].GetStageNode(currentIndex).AddNextStage(_stages[nextStep].GetStageNode(resultIndex));
                     }
                 }
                 else
                 {
-                    int currentStep = seed.GetStep();
-                    int currentIndex = seed.GetIndex();
+                    int currentStep = seed.Step;
+                    int currentIndex = seed.Index;
                     stages[currentStep].GetStageNode(currentIndex).gameObject.SetActive(false);
                 }
             }
@@ -301,7 +302,7 @@ public partial class StageManager : MonoBehaviour
 
     public List<Enemy> GetEnemies()
     {
-        if (currentStageNode.Type == StageNode.StageType.Battle)
+        if (currentStageNode.Type == StageManager.StageType.Battle)
         {
             return currentStageNode.Enemies;
         }
@@ -312,14 +313,15 @@ public partial class StageManager : MonoBehaviour
 
     public void CompleteStage()
     {
-        foreach (Step step in stages)
+        foreach (Step step in stageMap.stages)
         {
             foreach (StageNode node in step.GetStageNodes())
             {
+                node.IsInteractable = false;
                 node.button.interactable = false;
             }
         }
-        currentStageNode.Complete(stages);
+        currentStageNode.Complete(stageMap.stages);
     }
 
     private void UpdateCurrentNode(StageNode _currentNode)
@@ -329,7 +331,7 @@ public partial class StageManager : MonoBehaviour
 
     private void UnloadStages()
     {
-        foreach (Step step in stages)
+        foreach (Step step in stageMap.stages)
         {
             foreach (StageNode node in step.GetStageNodes())
             {
@@ -363,14 +365,46 @@ public partial class StageManager : MonoBehaviour
 
     private void ReconstructStageNodes(StageMap _stageMap)
     {
-        List<Step> steps = _stageMap.stages;
-
-        foreach(Step step in steps)
+        foreach (Step step in _stageMap.stages)
         {
-            foreach(SerializedNode node in step.serializeNodes)
+            foreach (SerializedNode node in step.serializeNodes)
             {
-                GameObject stageNode = new GameObject(string.Format("Stage Node "));
+                Vector2 position = node.position;
+                StageNode stageNode = null;
+                
+                switch (node.type)
+                {
+                    case StageType.Battle:
+                        stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                    case StageType.Town:
+                        stageNode = Instantiate(townNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                    case StageType.Event:
+                        stageNode = Instantiate(eventNode, position, Quaternion.identity, canvas.transform);
+                        break;
+                }
+
+                stageNode.LoadInit(node, stageNodeScale);
+
+                stageNode.RegistStageNode += GameManager.Stage.UpdateCurrentNode;
+
+                step.AddStageNode(stageNode);
             }
         }
+    }
+
+    private void ReconstructLane(GameObject _lanePrefab, StageMap _stageMap)
+    {
+        foreach(Step step in _stageMap.stages)
+        {
+            foreach(StageNode node in step.GetStageNodes())
+            {
+                if(!node.IsMerged)
+                {
+                    node.GenerateLane(_lanePrefab, _stageMap.stages);
+                }
+            }
+        }    
     }
 }
