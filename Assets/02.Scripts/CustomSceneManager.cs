@@ -119,6 +119,9 @@ public class CustomSceneManager
     public void ToTownScene()
     {
         SceneManager.LoadScene("03.TownScene");
+
+        // Guild의 Random으로 3명의 Hero Set
+        GameManager.Hero.SetGuildHero();
     }
 
     public void ToEventScene()

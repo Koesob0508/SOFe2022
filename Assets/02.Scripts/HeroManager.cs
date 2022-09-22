@@ -15,9 +15,6 @@ public class HeroManager : MonoBehaviour
         EnrollHero(2);
         EnrollHero(3);
 
-        // !! 임시 !!
-        SetShopHero();
-
         GameManager.Relation.GetTeamScore();
     }
 
@@ -26,68 +23,20 @@ public class HeroManager : MonoBehaviour
         Debug.Log("Hero Manager Init");
 
         DontDestroyOnLoad(this);
-
-        // === 임시 코드 ===
-        //Hero hero1 = new Hero();
-        //Hero hero2 = new Hero();
-        //Hero hero3 = new Hero();
-        //Hero hero4 = new Hero();
-
-        //hero1 = GameManager.Instance.LoadObject(1, GameManager.ObjectType.Hero) as Hero;
-        //hero2 = GameManager.Instance.LoadObject(2, GameManager.ObjectType.Hero) as Hero;
-        //hero3 = GameManager.Instance.LoadObject(3, GameManager.ObjectType.Hero) as Hero;
-        //hero4 = GameManager.Instance.LoadObject(4, GameManager.ObjectType.Hero) as Hero;
-
-        //HeroList.Add(hero1);
-        //HeroList.Add(hero2);
-        //HeroList.Add(hero3);
-        //HeroList.Add(hero4);
-        // ==================
-
-
-        // GameManager로부터 csv파일의 Hero 정보 받아온 뒤 Instance
-        //for (uint guid = 1; guid <= 17; guid++)
-        //{
-        //    // Prefab 폴더에서 load 
-        //    GameObject Prefab = Resources.Load("Prefabs/Monsters/" + guid) as GameObject;
-        //    GameObject HeroObj = Instantiate(Prefab);
-        //    Hero LoadHero = HeroObj.GetComponent<Hero>();
-        //    // Load된 게임 Data에서 해당 Hero의 속성 가져옴
-        //    // LoadObject?
-        //    Hero HeroData = GameManager.Instance.LoadObject(guid,ObjectType.Hero) as Hero;
-        //    // Hero의 속성 적용
-        //    LoadHero.IsActive = false;
-        //    LoadHero.MaxHP = HeroData.MaxHP;
-        //    LoadHero.AttackDamage = HeroData.AttackDamage;
-        //    LoadHero.AttackSpeed = HeroData.AttackSpeed;
-        //    LoadHero.DefensePoint = HeroData.DefensePoint;
-        //    LoadHero.MaxMana = HeroData.MaxMana;
-        //    LoadHero.MoveSpeed = HeroData.MoveSpeed;
-        //    LoadHero.AttackRange = HeroData.AttackRange;
-        //}
     }
 
     public void EnrollHero(uint guid)
     {
-        // 해당 guid의 hero를 setActive, List에 등록한다 -> 이는 Battle Manager에 넘어감
-
-        //foreach (GameObject g in GameObject.FindGameObjectsWithTag("Hero")) 
-        //{
-        //    if (g.GetComponent<Hero>().GUID == guid)
-        //    {
-        //        g.GetComponent<Hero>().IsActive = true;
-        //        HeroList.Add(g.GetComponent<Hero>());
-        //        break;
-        //    }
-        //}
 
         foreach (GlobalObject g in GameManager.Data.ObjectCodex.Values)
         {
             Hero hero = g as Hero;
+
             if (hero != null && hero.GUID == guid)
             {
                 if (hero.IsActive)
                     break;
+
                 hero.IsActive = true;
                 // !! 임시 !!
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
@@ -96,7 +45,6 @@ public class HeroManager : MonoBehaviour
                 GameManager.Relation.NewHeroScore(hero);
 
                 HeroList.Add(hero);
-                // Debug.Log("Enroll " + hero.GUID + hero.Name);
                 break;
             }
         }
@@ -170,7 +118,7 @@ public class HeroManager : MonoBehaviour
         Items.Remove(item);
     }
 
-    public void SetShopHero()
+    public void SetGuildHero()
     {
         ShopHeroList.Clear();
 

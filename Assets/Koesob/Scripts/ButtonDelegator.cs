@@ -60,26 +60,6 @@ namespace Koesob
                 HeroShop = Resources.Load<GameObject>("Prefabs/UI/GuildUI");
                 Instantiate(HeroShop);
             }
-
-            //GameObject HeroShop = GameObject.Find("HeroShopUI");
-            //GameObject UI = null;
-
-            //if (HeroShop.transform.childCount == 0)
-            //{
-            //    UI = Instantiate(Resources.Load<GameObject>("GuildUI"));
-            //    UI.transform.SetParent(HeroShop.transform);
-            //}
-            //else
-            //{
-            //    if (HeroShop.transform.GetChild(0).gameObject.activeSelf)
-            //    {
-            //        HeroShop.transform.GetChild(0).gameObject.SetActive(false);
-            //    }
-            //    else
-            //    {
-            //        HeroShop.transform.GetChild(0).gameObject.SetActive(true);
-            //    }
-            //}
         }
     }
 }

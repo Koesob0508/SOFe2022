@@ -36,7 +36,7 @@ public class SetRandomObject : MonoBehaviour
                     for (int i = 0; i < EnrollList.Count(); i++)
                     {
                         ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
-                        ObjectUI.transform.parent = transform;
+                        ObjectUI.transform.SetParent(transform);
                         ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
 
                         SetStatus();
@@ -55,47 +55,6 @@ public class SetRandomObject : MonoBehaviour
 
     }
 
-    //public List<GlobalObject> GetRandomHero()
-    //{
-    //    List<GlobalObject> HeroList = new List<GlobalObject>();
-
-    //    while (HeroList.Count < 3)
-    //    {
-    //        uint guid = (uint)Random.Range(0, 17);
-    //        bool CanActive = true;
-
-    //        foreach (Hero hero in HeroList)
-    //        {
-    //            if (hero.GUID == guid)
-    //            {
-    //                CanActive = false;
-    //                break;
-    //            }
-    //        }
-
-    //        foreach (Hero hero in GameManager.Hero.GetHeroList())
-    //        {
-    //            if (hero.GUID == guid)
-    //            {
-    //                CanActive = false;
-    //                break;
-    //            }
-    //        }
-
-    //        if (CanActive)
-    //        {
-    //            Hero hero = (Hero)GameManager.Instance.LoadObject(guid, GameManager.ObjectType.Hero);
-
-    //            // 용병의 MBTI Random으로 지정
-    //            hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
-    //            // Debug.Log(hero.Name + "랜덤으로 등록");
-    //            HeroList.Add(hero);
-    //        }
-
-    //    }
-
-    //    return HeroList;
-    //}
     private GameObject GetChildWithName(GameObject obj, string name)
     {
         Transform trans = obj.transform;
