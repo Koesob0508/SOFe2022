@@ -59,7 +59,7 @@ public class CustomSceneManager
                 GameManager.Stage.HideStageMap();
                 break;
 
-            case "04.EvevntScene":
+            case "04.EventScene":
                 Debug.Log("This is Event Scene");
                 GameManager.Stage.HideStageMap();
                 break;
