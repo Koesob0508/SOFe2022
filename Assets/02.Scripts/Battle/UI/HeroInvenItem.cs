@@ -15,6 +15,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
 
     bool isPopUpOpened = false;
     bool isHeroInInven = true;
+    bool isDead = true;
 
     private void SetPopUpData(Hero hero)
     {
@@ -35,49 +36,57 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(isPopUpOpened)
+        if(!isDead)
         {
-            isPopUpOpened = !isPopUpOpened;
-            infoPopUp.gameObject.SetActive(isPopUpOpened);
-        }
-        isHeroInInven = false;
-        HeroImage.sprite = null;
-        HeroObject.SetActive(true);
-        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        WorldPos.z = 0;
-        HeroObject.transform.position = WorldPos;
+            if(isPopUpOpened)
+            {
+                isPopUpOpened = !isPopUpOpened;
+                infoPopUp.gameObject.SetActive(isPopUpOpened);
+            }
+            isHeroInInven = false;
+            HeroImage.sprite = null;
+            HeroObject.SetActive(true);
+            Vector3 WorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            WorldPos.z = 0;
+            HeroObject.transform.position = WorldPos;
 
-        parentPanel.StartDragging();
+            parentPanel.StartDragging();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 screenPos = eventData.position;
-        if(screenPos.x > Screen.width / 2)
+        if(!isDead)
         {
-            screenPos.x = Screen.width / 2;
+            Vector2 screenPos = eventData.position;
+            if(screenPos.x > Screen.width / 2)
+            {
+                screenPos.x = Screen.width / 2;
+            }
+            Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+            WorldPos.z = 0;
+            HeroObject.transform.position = WorldPos;
         }
-        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        WorldPos.z = 0;
-        HeroObject.transform.position = WorldPos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        GameManager.Battle.SetHeroOnBattle(HeroObject);
-        parentPanel.EndDragging();
-        GameManager.Battle.SetHeroOnBattle(HeroObject);
-
-        int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero, Mathf.Infinity, layerMask);
-
-        if (hit.collider != null)
+        if(!isDead)
         {
-            HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == this)
+            parentPanel.EndDragging();
+            GameManager.Battle.SetHeroOnBattle(HeroObject);
+
+            int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero, Mathf.Infinity, layerMask);
+
+            if (hit.collider != null)
             {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
-                ReturnToInven();
+                HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
+                if (item == this)
+                {
+                    GameManager.Battle.DeleteHeroOnBattle(gameObject);
+                    ReturnToInven();
+                }
             }
         }
     }
@@ -103,15 +112,12 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
         infoPopUp = parentPanel.GetComponentInChildren<HeroInfo_PopUp>();
         infoPopUp.gameObject.SetActive(false);
 
+        isDead = hero.isDead;
+
+        if (isDead)
+            HeroImage.color = new Color(1, 1, 1, 0.5f);
+
         SetPopUpData(hero);
         SetHeroObj(GameManager.Battle.CreateHero(hero));
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    } 
 }

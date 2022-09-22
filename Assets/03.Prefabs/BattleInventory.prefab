@@ -69,7 +69,7 @@ MonoBehaviour:
   m_text: " \uC6A9\uBCD1 \uBC30\uCE58"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
-  m_sharedMaterial: {fileID: 8684071271751656202, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
+  m_sharedMaterial: {fileID: -6281953535192120640, guid: 56f330b02bf4e924ba3de8d2800e7c03, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
