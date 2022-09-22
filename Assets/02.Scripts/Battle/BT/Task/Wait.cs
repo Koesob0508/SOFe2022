@@ -15,6 +15,7 @@ namespace BT
         private float startTime = 0.0f;
         protected override void OnStart()
         {
+            Debug.Log("waitStarted");
             WaitTime = (float)bBoard.bb_keys.Find(n => n.Name == keyName).Value;
             startTime = Time.time;
         }

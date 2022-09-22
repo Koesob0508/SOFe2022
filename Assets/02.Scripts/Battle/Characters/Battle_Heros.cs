@@ -56,7 +56,7 @@ public class Battle_Heros : Units
     {
         base.Dead();
         var h = charData as Hero;
-        h.IsActive = false;
+        h.isDead = true;
     }
 
     public void ReduceHunger(int amount)

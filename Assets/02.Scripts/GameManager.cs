@@ -76,8 +76,7 @@ public class GameManager : MonoBehaviour
 
     public static BattleSceneManager Battle = null; // Battle 돌입 때마다 새로 할당
 
-    #endregion 
-
+    #endregion
     private void Start()
     {
         Init();
@@ -132,6 +131,5 @@ public class GameManager : MonoBehaviour
         Scene.ToBattleScene();
     }
 
-    
-    
+
 }

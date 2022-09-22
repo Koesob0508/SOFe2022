@@ -17,7 +17,7 @@ namespace BT
         {
             Units unitComp = owner_comp.gameObject.GetComponent<Units>();
             if (unitComp != null)
-            {
+            {                
                 unitComp.Dead();
             }
                 

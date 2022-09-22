@@ -35,6 +35,7 @@ public class BattleSceneManager : MonoBehaviour
 
     bool bBattleStarted = false;
 
+    Observer_Battle observer_;
 
     #region Initalize
     /// <summary>
@@ -76,7 +77,6 @@ public class BattleSceneManager : MonoBehaviour
         HeroList = Heros;
         EnemyList = Enemies;
 
-        hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
 
@@ -117,7 +117,6 @@ public class BattleSceneManager : MonoBehaviour
         }
         StartCoroutine(FadeInTransition(fadeColor));
 
-
     }
 
     #endregion
@@ -125,11 +124,14 @@ public class BattleSceneManager : MonoBehaviour
 
     public void SetHeroOnBattle(GameObject Hero)
     {
+        hCount++;
         heroObjects.Add(Hero);
         startBtn.gameObject.SetActive(true);
+
     }
     public void DeleteHeroOnBattle(GameObject Hero)
     {
+        hCount--;
         heroObjects.Remove(Hero);
         if (heroObjects.Count == 0)
             startBtn.gameObject.SetActive(false);
@@ -177,6 +179,8 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void FinishBattle(bool bIsWin)
     {
+        GameManager.Data.Save();
+
         bBattleStarted = false;
         foreach(GameObject g in heroObjects)
         {
@@ -185,7 +189,6 @@ public class BattleSceneManager : MonoBehaviour
         if (bIsWin)
         {
             UpdateHeroData();
-            GameManager.Data.Save();
             GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
         }

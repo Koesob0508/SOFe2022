@@ -6,9 +6,10 @@ using UnityEngine;
 [Serializable]
 public class Hero : Character
 {
-    public bool IsActive;
     public GameManager.MbtiType MBTI;
     public uint Cost = 1000;
+    public bool isDead = false;
+    public bool IsActive;
 
     public List<Item> Items = new List<Item>();
 }

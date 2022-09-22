@@ -10,4 +10,5 @@ public class GlobalObject
     public uint GUID;
     public string Name;
     public GameManager.ObjectType Type;
+
 }

@@ -40,13 +40,11 @@ public class ObserverBase : MonoBehaviour
         R_DismissESTJ,
         B_Attack,
         B_Hit,
+        B_Skill,
+        B_Win,
+        B_Lose
     }
-    public virtual void onNotify(List<GlobalObject> causers, EventType type)
+    public virtual void onNotify(GlobalObject[] entities, EventType type)
     {
-
-    }
-    protected virtual void UnLock()
-    {
-
     }
 }
