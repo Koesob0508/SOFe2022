@@ -61,5 +61,12 @@ namespace Koesob
                 Instantiate(HeroShop);
             }
         }
+
+        public void StageCompleted()
+        {
+            GameManager.Stage.CompleteStage();
+            GameManager.Data.Save();
+            GameManager.Scene.ToStageSelectScene();
+        }
     }
 }
