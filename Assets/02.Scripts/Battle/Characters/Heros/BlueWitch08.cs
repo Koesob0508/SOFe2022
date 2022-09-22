@@ -40,6 +40,21 @@ public class BlueWitch08 : Battle_Heros
 
     IEnumerator SkillEffect()
     {
+
+        if (isFilped)
+        {
+            Vector3 rot = AttackRange.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 180f, rot.z);
+            AttackRange.transform.rotation = Quaternion.Euler(rot);
+        }
+        else
+        {
+            Vector3 rot = AttackRange.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 0f, rot.z);
+            AttackRange.transform.rotation = Quaternion.Euler(rot);
+        }
+
+
         GameObject effect = Instantiate(skillEffect, transform);
         Destroy(effect, 0.5f);
 

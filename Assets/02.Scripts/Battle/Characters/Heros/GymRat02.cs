@@ -22,6 +22,19 @@ public class GymRat02 : Battle_Heros
 
     IEnumerator SkillEffect()
     {
+        if (isFilped)
+        {
+            Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 180f, rot.z);
+            projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+        }
+        else
+        {
+            Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 0f, rot.z);
+            projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+        }
+
         yield return new WaitForSeconds(0.05f);
 
         float t = GetCurrentAnimationTime();

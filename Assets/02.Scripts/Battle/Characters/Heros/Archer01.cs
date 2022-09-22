@@ -20,19 +20,21 @@ public class Archer01 : Battle_Heros
         Vector2 dir = attackTarget.transform.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         GameObject projectile1 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
-        GameObject projectile2 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
-        GameObject projectile3 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
 
 
         Vector3 targetPosition = attackTarget.transform.position;
 
         projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
+        
+        angle += 20f;
+        GameObject projectile2 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        targetPosition.y += 1.0f;
+        projectile2.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
 
-        //targetPosition.y += 10.0f;
-        //projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
-
-        //targetPosition.y -= 20.0f;
-        //projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage);
+        angle -= 40f;
+        targetPosition.y -= 2.0f;
+        GameObject projectile3 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        projectile3.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
 
     }
 

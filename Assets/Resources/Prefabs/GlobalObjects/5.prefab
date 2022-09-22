@@ -117,6 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 409e1564f6d381242ad43550133bc722, type: 2}
     m_RemovedComponents:
     - {fileID: 9111782273464896615, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
+    - {fileID: 2327354003555471170, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
 --- !u!1 &3542867732116237084 stripped
 GameObject:
@@ -141,5 +142,21 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
+  skillEffect: {fileID: 0}
+  speed: 1

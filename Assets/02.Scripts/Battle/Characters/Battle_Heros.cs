@@ -94,6 +94,19 @@ public class Battle_Heros : Units
         }
         else
         {
+            if (isFilped)
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 180f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+            }
+            else
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 0f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+            }
+
             Vector2 dir = attackTarget.transform.position - transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
