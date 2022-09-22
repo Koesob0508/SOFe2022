@@ -106,7 +106,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t);
-        skillFinished();
+        //skillFinished();
         isSkillPlaying = false;
     }
 
