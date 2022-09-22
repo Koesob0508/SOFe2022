@@ -88,13 +88,13 @@ public class Swipe : MonoBehaviour
             if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
             {
                 //Debug.Log("left swipe");
-                Target.transform.GetChild(0).GetComponent<TownUITween>().DoClockwise();
+                Target.transform.GetChild(3).GetComponent<TownUITween>().DoClockwise();
             }
             //swipe right
             if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
             {
                 //Debug.Log("right swipe");
-                Target.transform.GetChild(0).GetComponent<TownUITween>().DoCounterClockwise();
+                Target.transform.GetChild(3).GetComponent<TownUITween>().DoCounterClockwise();
             }
         }
 
