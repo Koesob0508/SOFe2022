@@ -16,7 +16,7 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
-            owner_comp.gameObject.GetComponent<Movement>().StopMovement();
+            owner_comp.gameObject.GetComponent<Units>().StopMovement();
             owner_comp.gameObject.GetComponent<Units>().PlayIdleAnimation();
             return State.Succeeded;
         }

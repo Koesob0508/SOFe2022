@@ -21,6 +21,19 @@ public class WaterPriestess14 : Battle_Heros
 
     IEnumerator SkillDamage()
     {
+        if (isFilped)
+        {
+            Vector3 rot = AttackRange.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 180f, rot.z);
+            AttackRange.transform.rotation = Quaternion.Euler(rot);
+        }
+        else
+        {
+            Vector3 rot = AttackRange.transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x, 0f, rot.z);
+            AttackRange.transform.rotation = Quaternion.Euler(rot);
+        }
+
         yield return new WaitForSeconds(0.65f);
         attackList = AttackRange.GetComponent<AttackRange>().attackList;
 

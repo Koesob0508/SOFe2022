@@ -39,16 +39,35 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     public GameObject projectileSpawnPoint;
     public GameObject skillEffect;
 
+
+    [SerializeField] private float speed = 1;
+
+    bool bCanMove = false;
+
+    int curIdx = 0;
+    int maxIdx = 0;
+
+    protected bool isFilped = false; // 범위 스킬 사용하는 유닛 용
+
+    Vector2 moveDir = new Vector2();
+    ArrayList path;
+
+    protected SpriteRenderer spr;
+
     protected virtual void Start()
     {
         isCloseAttackUnit = true;
+       
     }
 
     protected virtual void Update()
     {
         UpdateUI();
+
+        if (bCanMove)
+            Move();
     }
-    
+        
     public virtual void Initalize(Character charData)
     {
 
@@ -69,7 +88,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         btComp.TreeObject.bBoard.SetValueAsFloat("Damage", charData.AttackDamage);
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / charData.AttackSpeed);
 
-        GetComponent<Movement>().SetSpeed(charData.MoveSpeed);
+        GetComponent<Units>().SetSpeed(charData.MoveSpeed);
+        spr = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void SetItemUI(HeroInvenItem itemUI)
@@ -109,8 +129,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         //skillFinished();
         isSkillPlaying = false;
     }
-
-    
 
     protected float GetCurrentAnimationTime()
     {
@@ -199,5 +217,67 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
             }
         }
     }
+    public void SetSpeed(float Speed)
+    {
+        this.speed = Speed / 10;
+    }
+    private void Move()
+    {
+        Vector2 curPos = gameObject.transform.position;
+        float dist = Vector2.Distance(curPos, (path[path.Count - 1] as Path.Node).pos);
+        if (curIdx != maxIdx - 1)
+        {
+            moveDir = (path[curIdx + 1] as Path.Node).pos - (path[curIdx] as Path.Node).pos;
+            gameObject.transform.Translate(moveDir * speed * Time.deltaTime);
+            float tempDist = Vector2.Distance((path[curIdx + 1] as Path.Node).pos, gameObject.transform.position);
+            if (tempDist < 0.1f)
+            {
+                curIdx++;
+            }
+        }
+        else
+        {
+            moveDir = (path[curIdx + 1] as Path.Node).pos - (path[curIdx] as Path.Node).pos;
+            gameObject.transform.Translate(moveDir.normalized * speed * Time.deltaTime);
+            float tempDist = Vector2.Distance((path[curIdx + 1] as Path.Node).pos, gameObject.transform.position);
+            if (tempDist <= GetComponent<Units>().charData.AttackRange)
+            {
+                bCanMove = false;
+                animator.SetBool("Run", false);
+            }
+            return;
+        }
+        animator.SetBool("Run", true);
 
+        CheckForFlipping();
+    }
+    public void StopMovement()
+    {
+        bCanMove = false;
+    }
+    public void SetPath(ArrayList path)
+    {
+        this.path = path;
+        curIdx = 0;
+        maxIdx = path.Count - 1;
+        bCanMove = true;
+    }
+    private void CheckForFlipping()
+    {
+        bool movingLeft = moveDir.x < 0;
+        bool movingRight = moveDir.x > 0;
+
+        var spr = GetComponentInChildren<SpriteRenderer>();
+        if (movingLeft)
+        {
+            spr.flipX = true;
+            isFilped = true;
+        }
+
+        if (movingRight)
+        {
+            spr.flipX = false;
+            isFilped = false;
+        }
+    }
 }
