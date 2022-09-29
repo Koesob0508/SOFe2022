@@ -84,7 +84,8 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
                 HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
                 if (item == this)
                 {
-                    GameManager.Battle.DeleteHeroOnBattle(gameObject);
+                    Debug.Log("here2");
+
                     ReturnToInven();
                 }
             }

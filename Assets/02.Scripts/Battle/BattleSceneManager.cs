@@ -35,7 +35,9 @@ public class BattleSceneManager : MonoBehaviour
 
     bool bBattleStarted = false;
 
-    Observer_Battle observer_;
+
+    List<ObserverBase> Observers = new List<ObserverBase>();
+
 
     #region Initalize
     /// <summary>
@@ -116,17 +118,31 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
         StartCoroutine(FadeInTransition(fadeColor));
-
+        var ob = new Observer_Battle();
+        ob.Init();
+        Observers.Add(ob);
     }
 
     #endregion
     #region Publlic Methods
-
+    public void UpdateSynergy(Dictionary<Observer_Battle.SynergyEvent, bool> syn_Update)
+    {
+        foreach(var e in syn_Update)
+        {
+            if (e.Value)
+                Debug.Log(e.Key + " is Activated");
+            else
+                Debug.Log(e.Key + " is Deactivated");
+        }
+    }
     public void SetHeroOnBattle(GameObject Hero)
     {
         hCount++;
         heroObjects.Add(Hero);
         startBtn.gameObject.SetActive(true);
+
+        foreach (var obj in Observers)
+            obj.onNotify(ObserverBase.EventType.R_Enroll, new Object[] { Hero });
 
     }
     public void DeleteHeroOnBattle(GameObject Hero)
@@ -135,6 +151,8 @@ public class BattleSceneManager : MonoBehaviour
         heroObjects.Remove(Hero);
         if (heroObjects.Count == 0)
             startBtn.gameObject.SetActive(false);
+        foreach (var obj in Observers)
+            obj.onNotify(ObserverBase.EventType.R_Dismiss, new Object[] { Hero });
     }
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
