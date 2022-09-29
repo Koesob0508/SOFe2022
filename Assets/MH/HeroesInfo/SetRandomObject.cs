@@ -97,7 +97,7 @@ public class SetRandomObject : MonoBehaviour
                 // Info °ª
                 HeroInfo = GetChildWithName(HeroUI, "Info");
                 HeroImage = GetChildWithName(HeroInfo, "HeroImage").transform.GetComponent<Image>();
-                // HeroImage.sprite = 
+                HeroImage.sprite = GameManager.Data.LoadSprite(hero.GUID);
 
                 HeroName = GetChildWithName(HeroInfo, "Name").transform.GetComponent<TextMeshProUGUI>();
                 HeroName.text = hero.Name;

@@ -329,6 +329,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8960564356398629560, guid: e37090d4526028843b3ebd23deea65bc, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
+    - target: {fileID: 8960564356398629560, guid: e37090d4526028843b3ebd23deea65bc, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4733943525457378940, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
     - target: {fileID: 8960564357343744466, guid: e37090d4526028843b3ebd23deea65bc, type: 3}
       propertyPath: m_Name
       value: TestButton

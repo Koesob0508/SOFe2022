@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 
 public class EventManager : MonoBehaviour
@@ -29,8 +30,8 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         ChoiceMode = 0;
-        // Type = (EventType)5;
-        Type = (EventType)Random.Range(0, 5);
+        //Type = (EventType)5;
+        Type = (EventType)UnityEngine.Random.Range(0, 5);
 
         if ((int)Type < 5)
         {
@@ -41,10 +42,9 @@ public class EventManager : MonoBehaviour
             Ask = EventPanel.transform.GetChild(1).gameObject;
             choiceA = EventPanel.transform.GetChild(2).gameObject;
             choiceB = EventPanel.transform.GetChild(3).gameObject;
+            choiceA.GetComponent<Button>().onClick.AddListener(ChoiceOption);
+            choiceB.GetComponent<Button>().onClick.AddListener(ChoiceOption);
 
-            choiceA.GetComponent<Button>().onClick.AddListener(ChoiceOptionA);
-            //choiceA.GetComponent<Button>().onClick.RemoveListener(ChoiceOptionA);
-            choiceB.GetComponent<Button>().onClick.AddListener(ChoiceOptionB);
             //choiceB.GetComponent<Button>().onClick.RemoveListener(ChoiceOptionB);
         }
 
@@ -98,21 +98,16 @@ public class EventManager : MonoBehaviour
                 }
             case EventType.QnA:
                 {
-                    int option = 0;
-                    SetQnA(option);
+                    SetQnA();
                     break;
                 }
         }
     }
 
-    public void ChoiceOptionA()
+    public void ChoiceOption()
     {
-        ChoiceMode = 1;
-    }
-
-    public void ChoiceOptionB()
-    {
-        ChoiceMode = 2;
+        string choice = this.transform.name;
+        ChoiceMode = Int32.Parse(choice.Substring(choice.Length-1));
     }
 
 
@@ -122,6 +117,14 @@ public class EventManager : MonoBehaviour
         Debug.Log("LifeLake " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 0)
+        {
+
+        }
+        else
+        {
+
+        }
         // 선택에 따른 결과를 띄워준다
 
         ChoiceMode = 0;
@@ -164,48 +167,38 @@ public class EventManager : MonoBehaviour
         Destroy(EventPanel);
 
         // 선택에 따른 결과를 띄워준다
-
         ChoiceMode = 0;
     }
 
-    private void SetQnA(int option)
+    private void QnA(int mode)
     {
-        EventPanel = Instantiate(MBTIQnABox, new Vector3(1200, 540, 0), Quaternion.identity);
+        // 선택지
+        Debug.Log("QnA " + mode + " 선택지의 기능을 수행합니다");
+        Destroy(EventPanel);
+
+        // 선택에 따른 결과를 띄워준다
+        ChoiceMode = 0;
+    }
+
+    private void SetQnA()
+    {
+        //int num = UnityEngine.Random.Range(1, 6);
+        int num = 1;
+
+        EventPanel = Instantiate(Resources.Load("Prefabs/Event_QnA/MBTI_Q" + num) as GameObject, new Vector3(1200, 540, 0), Quaternion.identity);
         EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
 
         Name = EventPanel.transform.GetChild(0).gameObject;
         Ask = EventPanel.transform.GetChild(1).gameObject;
         Name.GetComponent<TextMeshProUGUI>().text = "Q n A";
-        Ask.GetComponent<TextMeshProUGUI>().text = MBTIQnABox.GetComponent<ChioiceController>().Ask;
-        switch (option)
+        Ask.GetComponent<TextMeshProUGUI>().text = EventPanel.GetComponent<ChoiceController>().Ask;
+
+        for (int i = 0; i < EventPanel.GetComponent<ChoiceController>().choiceNum; i++)
         {
-            case 0:
-                {
-                    for (int i = 0; i < MBTIQnABox.GetComponent<ChioiceController>().choiceNum; i++)
-                    {
-                        // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-                        GameObject choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
-                        choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
-                    }
-                    break;
-                }
+            // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+            GameObject choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
+            choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
         }
-    }
-
-    private void QnA(int mode)
-    {
-        Choice choice1 = new Choice();
-        choice1.text = "";
-        choice1.num = 3;
-        choice1.TargetMbti = new List<GameManager.MbtiType> { 
-            GameManager.MbtiType.ESFP, 
-            GameManager.MbtiType.ESFP, 
-            GameManager.MbtiType.ESFP 
-        };
-
-
-        ChioiceController QnA = new ChioiceController();
-
     }
 
     void Update()
@@ -241,6 +234,7 @@ public class EventManager : MonoBehaviour
                     }
                 case EventType.QnA:
                     {
+                        QnA(ChoiceMode);
                         break;
                     }
             }
