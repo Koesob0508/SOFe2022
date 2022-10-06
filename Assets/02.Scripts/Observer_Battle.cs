@@ -45,21 +45,31 @@ public class Observer_Battle : ObserverBase
         syn_State.Add(SynergyEvent.SilentScream, false);
         syn_State.Add(SynergyEvent.NoPlan, false);
     }
+
+    bool isEnoughHero() { return heroTotal > 2; }
     bool Check_SendMeHome()
     {
-        return ((heroTotal * ((float)2 / 3)) < ExxxCount) ? true : false;
+        if (!isEnoughHero())
+            return false;
+        return ((heroTotal * ((float)2 / 3)) < ExxxCount && IxxxCount > 0) ? true : false;
     }
     bool Check_TillPlanZ()
     {
-        return ((heroTotal * ((float)2 / 3)) < xxxJCount) ? true : false;
+        if (!isEnoughHero())
+            return false;
+        return ((heroTotal * ((float)2 / 3)) < xxxJCount && xxxPCount > 0) ? true : false;
     }
     bool Check_SilentScream()
     {
-        return ((heroTotal * ((float)2 / 3)) < IxxxCount) ? true : false;
+        if (!isEnoughHero())
+            return false;
+        return ((heroTotal * ((float)2 / 3)) < IxxxCount && ExxxCount > 0) ? true : false;
     }
     bool Check_NoPlan()
     {
-        return ((heroTotal * ((float)2 / 3)) < xxxPCount) ? true : false;
+        if (!isEnoughHero())
+            return false;
+        return ((heroTotal * ((float)2 / 3)) < xxxPCount && xxxJCount > 0) ? true : false;
     }
     void CheckSynergy()
     {
