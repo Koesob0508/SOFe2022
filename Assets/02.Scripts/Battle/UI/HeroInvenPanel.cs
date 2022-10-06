@@ -43,7 +43,11 @@ public class HeroInvenPanel : MonoBehaviour
         img.color = StartCol;
         Half_UI.SetActive(false);
     }
-
+    public void UpdateInfo()
+    {
+        foreach (var item in childItems)
+            item.UpdateInfo();
+    }
     public void StartDragging()
     {
         Half_UI.SetActive(true);

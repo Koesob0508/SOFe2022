@@ -70,7 +70,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         
     public virtual void Initalize(Character charData)
     {
-
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -126,7 +125,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t);
-        //skillFinished();
+        skillFinished();
         isSkillPlaying = false;
     }
 
@@ -212,7 +211,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
             if (item == invenItemUI)
             {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
                 invenItemUI.ReturnToInven();
             }
         }
