@@ -619,7 +619,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   QuestionBox: {fileID: 5639045032356255858, guid: 27a80ef58ae88214b97bbd8cca85684d, type: 3}
   MBTIQnABox: {fileID: 5639045032356255858, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
+  ResultBox: {fileID: 4183998605058941747, guid: a42a0553dafb1894ab6300a2dccc894c, type: 3}
+  Image: {fileID: 1423175881284383602, guid: d719657029b7d29449f7f7022a67527e, type: 3}
   ChoiceMode: 0
+  ResultMent: 
+  ResultType: 
+  ResultNum: 0
+  ResultSign: 0
+  ResultTarget: []
 --- !u!4 &1820093352
 Transform:
   m_ObjectHideFlags: 0
