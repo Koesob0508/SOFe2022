@@ -64,7 +64,7 @@ public class MouseEventUI : MonoBehaviour
             // Hero 등록 애니메이션
             HeroImage = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
             HeroImage = Instantiate(HeroImage, new Vector3(0, 0, -2), Quaternion.identity);
-            //HeroImage.GetComponent<Image>().sprite = Hero.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite;
+            HeroImage.GetComponent<SpriteRenderer>().sprite = GameManager.Data.LoadSprite(heroGUID);
             LeanTween.moveLocal(HeroImage, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
             LeanTween.scale(HeroImage, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
             Destroy(HeroImage, 3f);
