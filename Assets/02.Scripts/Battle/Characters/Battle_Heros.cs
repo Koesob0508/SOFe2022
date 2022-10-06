@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Battle_Heros : Units
 {
-    
+
     public override void Initalize(Character charData)
     {
         this.charData = charData;

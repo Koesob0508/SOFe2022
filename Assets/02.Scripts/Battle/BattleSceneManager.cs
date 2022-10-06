@@ -12,7 +12,8 @@ public class BattleSceneManager : MonoBehaviour
     private Sprite backImg = null;
     private Image transition = null;
 
-    private List<Hero> HeroList = new List<Hero>();
+    private List<Hero> hDataList = new List<Hero>();
+    private List<Hero> hDataList_Original = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
     public List<GameObject> heroObjects = new List<GameObject>();
@@ -39,8 +40,7 @@ public class BattleSceneManager : MonoBehaviour
     List<ObserverBase> Observers = new List<ObserverBase>();
 
 
-    Dictionary<Observer_Battle.SynergyEvent, Action<bool>> synFuncDict = new Dictionary<Observer_Battle.SynergyEvent, Action<bool>>();
-    List<Observer_Battle.SynergyEvent> activeSynergy = new List<Observer_Battle.SynergyEvent>();
+
 
     #region Initalize
     /// <summary>
@@ -80,7 +80,11 @@ public class BattleSceneManager : MonoBehaviour
             OnDestroy__DmgPopup);
 
         //Get Hero and Enemy
-        HeroList = Heros;
+        hDataList = Heros;
+        foreach(var h in hDataList)
+        {
+            hDataList_Original.Add(h.DeepCopy());
+        }
         EnemyList = Enemies;
 
         eCount = (uint)EnemyList.Count;
@@ -126,29 +130,23 @@ public class BattleSceneManager : MonoBehaviour
         ob.Init();
         Observers.Add(ob);
 
-        synFuncDict.Add(Observer_Battle.SynergyEvent.SendMeHome, Synergy_Func_SendMeHome);
-        synFuncDict.Add(Observer_Battle.SynergyEvent.SilentScream, Synergy_Func_SilentScream);
-        synFuncDict.Add(Observer_Battle.SynergyEvent.TillPlanZ, Synergy_Func_TillPlanZ);
-        synFuncDict.Add(Observer_Battle.SynergyEvent.NoPlan, Synergy_Func_NoPlan);
+        
 
     }
 
     #endregion
     #region Publlic Methods
-    public void UpdateSynergy(Dictionary<Observer_Battle.SynergyEvent, bool> syn_Update)
+    public void UpdateInfoPopUp()
     {
-        foreach(var e in syn_Update)
-        {
-
-            synFuncDict[e.Key](e.Value);
-            if (e.Value)
-                Debug.Log(e.Key + " is Activated");
-            else
-                Debug.Log(e.Key + " is Deactivated");
-        }
+        hInvenPanel.UpdateInfo();
     }
-
-    
+    public void RestoreHeroData(Hero hero)
+    {
+        Hero hData = hDataList_Original.Find((obj) => { return obj.GUID == hero.GUID; });
+        Hero hDataToChange = hDataList.Find((obj) => { return obj.GUID == hero.GUID; });
+        hDataToChange.MaxHP = hData.MaxHP;
+        hDataToChange.CurrentHP = hData.CurrentHP;
+    }
     public void SetHeroOnBattle(GameObject Hero)
     {
         hCount++;
@@ -227,7 +225,14 @@ public class BattleSceneManager : MonoBehaviour
         else
             GameManager.Scene.ToTownScene();
     }
-
+    public void AddSynergyUIText(Observer_Battle.SynergyEvent type)
+    {
+        synergyPanel.AddSynergy(type);
+    }
+    public void RemoveSynergyUIText(Observer_Battle.SynergyEvent type)
+    {
+        synergyPanel.RemoveSynergy(type);
+    }
     #endregion
     #region Private Methods
     #region DamagePopup
@@ -279,104 +284,7 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
 
-    #region Synergy_Functions
-    void Synergy_Func_SendMeHome(bool isActivate)
-    {
-        Observer_Battle.SynergyEvent target = Observer_Battle.SynergyEvent.SendMeHome;
-        bool wasActivated = FindSynergyActivated(target);
-        if(isActivate)
-        {
-            if (!wasActivated)
-            {
-                activeSynergy.Add(target);
-                synergyPanel.AddSynergy(target);
-            }
-            // Activation Code
-        }
-        else
-        {
-            if (wasActivated)
-            {
-                activeSynergy.Remove(target);
-                synergyPanel.RemoveSynergy(target);
-            }
-            // Deactivation Code
-        }
-    }
-    void Synergy_Func_SilentScream(bool isActivate)
-    {
-        Observer_Battle.SynergyEvent target = Observer_Battle.SynergyEvent.SilentScream;
-        bool wasActivated = FindSynergyActivated(target);
-        if (isActivate)
-        {
-            if (!wasActivated)
-            {
-                activeSynergy.Add(target);
-                synergyPanel.AddSynergy(target);
-            }
-            // Activation Code
-        }
-        else
-        {
-            if (wasActivated)
-            {
-                activeSynergy.Remove(target);
-                synergyPanel.RemoveSynergy(target);
-            }
-            // Deactivation Code
-        }
-    }
-    void Synergy_Func_TillPlanZ(bool isActivate)
-    {
-        Observer_Battle.SynergyEvent target = Observer_Battle.SynergyEvent.TillPlanZ;
-        bool wasActivated = FindSynergyActivated(target);
-        if (isActivate)
-        {
-            if (!wasActivated)
-            {
-                activeSynergy.Add(target);
-                synergyPanel.AddSynergy(target);
-            }
-            // Activation Code
-        }
-        else
-        {
-            if (wasActivated)
-            {
-                activeSynergy.Remove(target);
-                synergyPanel.RemoveSynergy(target);
-            }
-            // Deactivation Code
-        }
-    }
-    void Synergy_Func_NoPlan(bool isActivate)
-    {
-        Observer_Battle.SynergyEvent target = Observer_Battle.SynergyEvent.NoPlan;
-        bool wasActivated = FindSynergyActivated(target);
-        if (isActivate)
-        {
-            if (!wasActivated)
-            {
-                activeSynergy.Add(target);
-                synergyPanel.AddSynergy(target);
-            }
-            // Activation Code
-        }
-        else
-        {
-            if (wasActivated)
-            {
-                activeSynergy.Remove(target);
-                synergyPanel.RemoveSynergy(target);
-            }
-            // Deactivation Code
-        }
-    }
-    bool FindSynergyActivated(Observer_Battle.SynergyEvent syn)
-    {
-        return activeSynergy.Contains(syn);
-    }
-    #endregion
+
     void AlignUnitsByY()
     {
         spriteRenderers.Sort((lhs, rhs) => { return rhs.gameObject.transform.position.y.CompareTo(lhs.gameObject.transform.position.y); });
@@ -385,8 +293,13 @@ public class BattleSceneManager : MonoBehaviour
     }
     void UpdateHeroData()
     {
-        foreach (Hero h in HeroList)
+        foreach (Hero h in hDataList)
+        {
+            Hero originData = hDataList_Original.Find((obj) => { return obj.GUID == h.GUID; });
+            if (originData != null)
+                h.MaxHP = originData.MaxHP;
             GameManager.Data.ObjectCodex[h.GUID] = h;
+        }
     }
     void SetBackground(GameManager.MapType mapType)
     {

@@ -70,7 +70,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         
     public virtual void Initalize(Character charData)
     {
-
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;

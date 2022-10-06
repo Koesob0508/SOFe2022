@@ -17,6 +17,11 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     bool isHeroInInven = true;
     bool isDead = true;
 
+
+    public void UpdateInfo()
+    {
+        infoPopUp.UpdateInfo();
+    }
     private void SetPopUpData(Hero hero)
     {
         infoPopUp.SetUpData(hero);
