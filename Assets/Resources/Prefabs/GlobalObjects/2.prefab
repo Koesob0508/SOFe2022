@@ -165,6 +165,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3881633362113553926, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
     - {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+    - {fileID: 5219205690518288845, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
 --- !u!1 &2248329681590061789 stripped
 GameObject:
@@ -189,8 +190,24 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 7652662414583939244, guid: 3217986aeb34bb84389b4b12d165a893, type: 3}
   projectileSpawnPoint: {fileID: 8574484224914894441}
+  skillEffect: {fileID: 0}
+  speed: 1
 --- !u!4 &7570711531321785022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3049709620930128143, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}

@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     public Animator animator;
     public bool bHasSkillAnimation;
 
-
     bool bCanMove = false;
     int curIdx = 0;
     int maxIdx = 0;

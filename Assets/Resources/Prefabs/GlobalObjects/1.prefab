@@ -93,7 +93,7 @@ PrefabInstance:
     - target: {fileID: 3457577737788312710, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: TreeObject
       value: 
-      objectReference: {fileID: 11400000, guid: 815dbc1db7777b54c9170a2a0a409a36, type: 2}
+      objectReference: {fileID: 11400000, guid: f77197376b558a044bd69a6cadc1dc6c, type: 2}
     - target: {fileID: 4689857079740385103, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Size.x
       value: 1
@@ -156,6 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+    - {fileID: 5219205690518288845, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
 --- !u!4 &1989863855221829655 stripped
 Transform:
@@ -185,5 +186,21 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 6840111932400894857, guid: 584686e8cfd6c8a478f3097552c1c588, type: 3}
   projectileSpawnPoint: {fileID: 8628288685468256873}
+  skillEffect: {fileID: 0}
+  speed: 1

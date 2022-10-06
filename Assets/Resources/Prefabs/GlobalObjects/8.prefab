@@ -185,6 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 215ce944e6cf40d41acf8e00da89fde3, type: 2}
     m_RemovedComponents:
     - {fileID: 9111782273464896615, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
+    - {fileID: 2327354003555471170, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
 --- !u!4 &944779034380277268 stripped
 Transform:
@@ -214,8 +215,23 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 5774591380011743843, guid: 7d29bd664a7da5043a2f9bec5e436bc1, type: 3}
+  speed: 1
   AttackRange: {fileID: 1168324289336927225}
   attackList: []

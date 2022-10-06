@@ -82,7 +82,7 @@ PrefabInstance:
     - target: {fileID: 6986623777847110083, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: TreeObject
       value: 
-      objectReference: {fileID: 11400000, guid: 815dbc1db7777b54c9170a2a0a409a36, type: 2}
+      objectReference: {fileID: 11400000, guid: f77197376b558a044bd69a6cadc1dc6c, type: 2}
     - target: {fileID: 7303729536159812682, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -133,6 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 35a60694e6fb60f43866f12b3dfa3a6c, type: 2}
     m_RemovedComponents:
     - {fileID: 6439874309181431725, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
+    - {fileID: 531677649290796168, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
 --- !u!1 &7019653078246472943 stripped
 GameObject:
@@ -152,9 +153,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkillAnimation: 0
+  bHasSkill: 0
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 0}
+  projectileSpawnPoint: {fileID: 0}
+  skillEffect: {fileID: 0}
+  speed: 1

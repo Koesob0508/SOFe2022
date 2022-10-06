@@ -24,7 +24,9 @@ public class Projectile : MonoBehaviour
         damage = d;
         isPenetration = false;
 
+
         Vector2 dir = (targetVector - transform.position).normalized;
+        Debug.Log("dir:"+dir);
         GetComponent<Rigidbody2D>().AddForce(dir * speed);
     }
 

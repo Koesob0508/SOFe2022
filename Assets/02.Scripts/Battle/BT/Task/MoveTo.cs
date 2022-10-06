@@ -48,7 +48,7 @@ namespace BT
             Path.Node end = pathManager.GetClosestNode(movePos);
             var path = pathManager.FindPath(start, end);
 
-            var moveComp = owner_comp.gameObject.GetComponent<Movement>();
+            var moveComp = owner_comp.gameObject.GetComponent<Units>();
             var end_ = path[path.Count - 1] as Path.Node;
             moveComp.SetPath(path);
             return State.Succeeded;

@@ -111,6 +111,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5219205690518288845, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Name
       value: 0
@@ -138,6 +142,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3881633362113553926, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
     - {fileID: 1608267191832574696, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+    - {fileID: 5219205690518288845, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
 --- !u!1 &2248329681590061789 stripped
 GameObject:
@@ -162,5 +167,21 @@ MonoBehaviour:
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
   attackTarget: {fileID: 0}
+  charData:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
   projectileObject: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
+  skillEffect: {fileID: 0}
+  speed: 1
