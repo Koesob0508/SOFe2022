@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkill: 0
+  bHasSkill: 1
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
@@ -160,3 +160,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: 4d73833d01e29b34289df5a6ab986cd2, type: 2}
+  skill2AnimationClip: {fileID: 7400000, guid: 37158fad66a96424ab241c8c9e55dad9, type: 2}
+  skill3AnimationClip: {fileID: 7400000, guid: bed60497d82cec9489712ca941953cf7, type: 2}

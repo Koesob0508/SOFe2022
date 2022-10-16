@@ -15,6 +15,16 @@ public class Hunter03 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
-    }
 
+        Debug.Log("Use Hunter Skill");
+
+        isCloseAttackUnit = true;
+        animator.SetBool("Skill", true);
+        bHasSkill = false;
+
+        charData.AttackSpeed *= 2;
+        charData.AttackDamage *= 1.2f;
+        charData.AttackRange = 1;
+
+    }
 }

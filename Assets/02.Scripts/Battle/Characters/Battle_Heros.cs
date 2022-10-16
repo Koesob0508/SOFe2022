@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Battle_Heros : Units
 {
-    
+
+    public AnimationClip attackAnimationClip;
+    protected float animationDamageDelay;
+
     public override void Initalize(Character charData)
     {
         this.charData = charData;
         this.charData.CurrentMana = 0;
         base.Initalize(charData);
+        animationDamageDelay = attackAnimationClip.length;
     }
 
     public override void Attack()
@@ -82,11 +86,8 @@ public class Battle_Heros : Units
 
     IEnumerator CouroutineAttack()
     {
-        yield return new WaitForSeconds(0.01f);
 
-        float t = GetCurrentAnimationTime();
-
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(animationDamageDelay);
 
         if (isCloseAttackUnit)
         {
