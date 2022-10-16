@@ -60,7 +60,7 @@ public class DataManager
             hero.CurrentHP = hero.MaxHP;
             // Hard-Coding Part
             hero.CurHunger = 100;
-            hero.IsActive = true;
+            hero.IsActive = false;
             line = csvImp.Readline();
 
             ObjectCodex.Add(hero.GUID, hero);

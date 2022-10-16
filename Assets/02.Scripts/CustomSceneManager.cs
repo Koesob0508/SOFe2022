@@ -91,7 +91,7 @@ public class CustomSceneManager
                 GameManager.Stage.HideStageMap();
                 break;
 
-            case "04.EvevntScene":
+            case "04.EventScene":
                 Debug.Log("This is Event Scene");
                 GameManager.Stage.HideStageMap();
                 break;
@@ -119,6 +119,9 @@ public class CustomSceneManager
     public void ToTownScene()
     {
         SceneManager.LoadScene("03.TownScene");
+
+        // Guild의 Random으로 3명의 Hero Set
+        GameManager.Hero.SetGuildHero();
     }
 
     public void ToEventScene()

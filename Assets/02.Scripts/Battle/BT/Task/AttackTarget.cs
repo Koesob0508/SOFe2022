@@ -16,6 +16,7 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
+            Debug.Log(owner_comp.gameObject.name + " Attack");
             Blackboard bb = owner_comp.TreeObject.bBoard;
             GameObject targetObj = bb.GetValueAsGameObject("targetObj");
             if(targetObj.GetComponent<BehaviorTreeComponent>().TreeObject.bBoard.GetValueAsBool("IsDead"))

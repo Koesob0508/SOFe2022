@@ -70,7 +70,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         
     public virtual void Initalize(Character charData)
     {
-
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
         UnitUI.transform.parent = transform;
@@ -96,10 +95,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         this.invenItemUI = itemUI;
     }
-    public void StartBattle()
-    {
-        btComp.StartTree();
-        isUpdating = true;
+    public void StartBattle()
+    {
+        btComp.StartTree();
+        isUpdating = true;
     }
     public virtual void Attack()
     {
@@ -125,9 +124,9 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         float t = GetCurrentAnimationTime();
 
-        yield return new WaitForSeconds(t);
-        skillFinished();
-        isSkillPlaying = false;
+        yield return new WaitForSeconds(t);
+        skillFinished();
+        isSkillPlaying = false;
     }
 
     protected float GetCurrentAnimationTime()
@@ -212,7 +211,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
             if (item == invenItemUI)
             {
-                GameManager.Battle.DeleteHeroOnBattle(gameObject);
                 invenItemUI.ReturnToInven();
             }
         }

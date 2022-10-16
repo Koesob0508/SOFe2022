@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Heros : Units
-{
-
-    public AnimationClip attackAnimationClip;
-    protected float animationDamageDelay;
-
+{
+
+    public AnimationClip attackAnimationClip;
+    protected float animationDamageDelay;
+
     public override void Initalize(Character charData)
     {
         this.charData = charData;
@@ -56,20 +56,20 @@ public class Battle_Heros : Units
                 PlayGetHitAniamtion();
         }
     }
-    public override void Dead()
-    {
-        base.Dead();
-        var h = charData as Hero;
-        h.IsActive = false;
+    public override void Dead()
+    {
+        base.Dead();
+        var h = charData as Hero;
+        h.isDead = true;
     }
 
-    public void ReduceHunger(int amount)
-    {
-        charData.CurHunger -= amount;
-        if(charData.CurHunger < 0)
-        {
-            charData.CurHunger = 0;
-        }
+    public void ReduceHunger(int amount)
+    {
+        charData.CurHunger -= amount;
+        if(charData.CurHunger < 0)
+        {
+            charData.CurHunger = 0;
+        }
     }
     public override void ExecuteSkill()
     {
@@ -94,18 +94,18 @@ public class Battle_Heros : Units
             attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
         }
         else
-        {
-            if (isFilped)
-            {
-                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
-                rot = new Vector3(rot.x, 180f, rot.z);
-                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
-            }
-            else
-            {
-                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
-                rot = new Vector3(rot.x, 0f, rot.z);
-                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+        {
+            if (isFilped)
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 180f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+            }
+            else
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 0f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
             }
 
             Vector2 dir = attackTarget.transform.position - transform.position;

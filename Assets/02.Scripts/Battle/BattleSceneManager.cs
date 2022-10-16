@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class BattleSceneManager : MonoBehaviour
     private Sprite backImg = null;
     private Image transition = null;
 
-    private List<Hero> HeroList = new List<Hero>();
+    private List<Hero> hDataList = new List<Hero>();
+    private List<Hero> hDataList_Original = new List<Hero>();
     private List<Enemy> EnemyList = new List<Enemy>();
 
     public List<GameObject> heroObjects = new List<GameObject>();
@@ -20,14 +22,13 @@ public class BattleSceneManager : MonoBehaviour
 
     public Path.PathManager PathMgr = null;
 
-    private List<Vector2> tmpPosHero = new List<Vector2>();
     private List<Vector2> tmpPosEnemy = new List<Vector2>();
 
 
     public BattleLogPanel bLogPanel;
     public HeroInvenPanel hInvenPanel;
     public BattleEndUI bEndPanel;
-
+    public SynergyPanel synergyPanel;
     private uint hCount = 0;
     private uint eCount = 0;
 
@@ -35,7 +36,11 @@ public class BattleSceneManager : MonoBehaviour
 
     bool bBattleStarted = false;
 
-    Observer_Battle observer_;
+
+    List<ObserverBase> Observers = new List<ObserverBase>();
+
+
+
 
     #region Initalize
     /// <summary>
@@ -47,14 +52,12 @@ public class BattleSceneManager : MonoBehaviour
     {
         Debug.Log("BattleManager Initalized");
 
-        //Observer Attach
-        observer_ = GameManager.Observer_Battle;
-
         // Get UI Elements
         BattleCanvas = FindObjectOfType<Canvas>();
         bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
         bEndPanel = BattleCanvas.GetComponentInChildren<BattleEndUI>();
+        synergyPanel = BattleCanvas.GetComponentInChildren<SynergyPanel>();
 
         bEndPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(false);
@@ -77,10 +80,13 @@ public class BattleSceneManager : MonoBehaviour
             OnDestroy__DmgPopup);
 
         //Get Hero and Enemy
-        HeroList = Heros;
+        hDataList = Heros;
+        foreach(var h in hDataList)
+        {
+            hDataList_Original.Add(h.DeepCopy());
+        }
         EnemyList = Enemies;
 
-        hCount = (uint)HeroList.Count;
         eCount = (uint)EnemyList.Count;
 
 
@@ -120,25 +126,45 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
         StartCoroutine(FadeInTransition(fadeColor));
+        var ob = new Observer_Battle();
+        ob.Init();
+        Observers.Add(ob);
 
+        
 
     }
 
     #endregion
     #region Publlic Methods
-
+    public void UpdateInfoPopUp()
+    {
+        hInvenPanel.UpdateInfo();
+    }
+    public void RestoreHeroData(Hero hero)
+    {
+        Hero hData = hDataList_Original.Find((obj) => { return obj.GUID == hero.GUID; });
+        Hero hDataToChange = hDataList.Find((obj) => { return obj.GUID == hero.GUID; });
+        hDataToChange.MaxHP = hData.MaxHP;
+        hDataToChange.CurrentHP = hData.CurrentHP;
+    }
     public void SetHeroOnBattle(GameObject Hero)
     {
-        //observer_.onNotify(new[]{ (GlobalObject)Hero.GetComponent<Units>().charData }, ObserverBase.EventType.R_EnrollENFP);
+        hCount++;
         heroObjects.Add(Hero);
         startBtn.gameObject.SetActive(true);
+
+        foreach (var obj in Observers)
+            obj.onNotify(ObserverBase.EventType.R_Enroll, new UnityEngine.Object[] { Hero });
 
     }
     public void DeleteHeroOnBattle(GameObject Hero)
     {
+        hCount--;
         heroObjects.Remove(Hero);
         if (heroObjects.Count == 0)
             startBtn.gameObject.SetActive(false);
+        foreach (var obj in Observers)
+            obj.onNotify(ObserverBase.EventType.R_Dismiss, new UnityEngine.Object[] { Hero });
     }
     public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
     {
@@ -183,6 +209,8 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void FinishBattle(bool bIsWin)
     {
+        GameManager.Data.Save();
+
         bBattleStarted = false;
         foreach(GameObject g in heroObjects)
         {
@@ -191,14 +219,20 @@ public class BattleSceneManager : MonoBehaviour
         if (bIsWin)
         {
             UpdateHeroData();
-            GameManager.Data.Save();
             GameManager.Stage.CompleteStage();
             GameManager.Scene.ToStageSelectScene();
         }
         else
             GameManager.Scene.ToTownScene();
     }
-
+    public void AddSynergyUIText(Observer_Battle.SynergyEvent type)
+    {
+        synergyPanel.AddSynergy(type);
+    }
+    public void RemoveSynergyUIText(Observer_Battle.SynergyEvent type)
+    {
+        synergyPanel.RemoveSynergy(type);
+    }
     #endregion
     #region Private Methods
     #region DamagePopup
@@ -250,6 +284,7 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
 
+
     void AlignUnitsByY()
     {
         spriteRenderers.Sort((lhs, rhs) => { return rhs.gameObject.transform.position.y.CompareTo(lhs.gameObject.transform.position.y); });
@@ -258,8 +293,13 @@ public class BattleSceneManager : MonoBehaviour
     }
     void UpdateHeroData()
     {
-        foreach (Hero h in HeroList)
+        foreach (Hero h in hDataList)
+        {
+            Hero originData = hDataList_Original.Find((obj) => { return obj.GUID == h.GUID; });
+            if (originData != null)
+                h.MaxHP = originData.MaxHP;
             GameManager.Data.ObjectCodex[h.GUID] = h;
+        }
     }
     void SetBackground(GameManager.MapType mapType)
     {
