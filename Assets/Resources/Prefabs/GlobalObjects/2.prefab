@@ -208,6 +208,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 8574484224914894441}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: 63c227e4bf9106448b39d32e9de68ac1, type: 2}
+  skillAnimationClip: {fileID: 7400000, guid: 2db91da7f5693264da398800e65fac09, type: 2}
 --- !u!4 &7570711531321785022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3049709620930128143, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}

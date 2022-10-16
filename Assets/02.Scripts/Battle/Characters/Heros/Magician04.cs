@@ -5,6 +5,8 @@ using UnityEngine;
 public class Magician04 : Battle_Heros
 {
 
+    public AnimationClip skillAnimationClip;
+
     protected override void Start()
     {
         isCloseAttackUnit = true;
@@ -21,11 +23,8 @@ public class Magician04 : Battle_Heros
 
     IEnumerator SkillEffect()
     {
-        yield return new WaitForSeconds(0.05f);
 
-        float t = GetCurrentAnimationTime();
-
-        yield return new WaitForSeconds(t - 0.1f);
+        yield return new WaitForSeconds(skillAnimationClip.length - 0.1f);
 
         Vector2 center = new Vector2(transform.position.x, transform.position.y);
 
