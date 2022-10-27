@@ -68,5 +68,10 @@ namespace Koesob
             GameManager.Data.Save();
             GameManager.Scene.ToStageSelectScene();
         }
+
+        public void NewGame()
+        {
+            GameManager.Instance.NewGame();
+        }
     }
 }

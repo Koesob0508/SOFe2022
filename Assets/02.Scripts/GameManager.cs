@@ -114,6 +114,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void NewGame()
+    {
+        Data.Delete();
+
+        Stage.Clear();
+
+        Data.Init();
+        Stage.Init();
+
+        GameManager.Scene.ToStageSelectScene();
+    }
+
     private void Test()
     {
         Debug.Log("테스트를 진행합니다.");

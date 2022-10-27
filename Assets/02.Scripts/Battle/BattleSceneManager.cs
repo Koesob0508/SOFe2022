@@ -209,7 +209,7 @@ public class BattleSceneManager : MonoBehaviour
     }
     public void FinishBattle(bool bIsWin)
     {
-        GameManager.Data.Save();
+        // GameManager.Data.Save();
 
         bBattleStarted = false;
         foreach(GameObject g in heroObjects)
@@ -223,7 +223,11 @@ public class BattleSceneManager : MonoBehaviour
             GameManager.Scene.ToStageSelectScene();
         }
         else
+        {
             GameManager.Scene.ToTownScene();
+        }
+
+        GameManager.Data.Save();
     }
     public void AddSynergyUIText(Observer_Battle.SynergyEvent type)
     {
