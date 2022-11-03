@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 
 public class EventManager : MonoBehaviour
@@ -22,15 +23,24 @@ public class EventManager : MonoBehaviour
     // 해당 이벤트 지역에 나타날 지역 유형
     private EventType Type;
 
-    public GameObject QuestionBox, MBTIQnABox;
+    public GameObject QuestionBox, MBTIQnABox, ResultBox, Image;
     private GameObject EventPanel, Name, Ask, choiceA, choiceB;
     public int ChoiceMode;
+
+    // 이벤트에 Result 관련 변수
+    public string ResultMent;
+    public string ResultType;
+    public string ResultNum;
+    public string ResultSign;
+    public List<Hero> ResultTarget = new List<Hero>();
 
     void Start()
     {
         ChoiceMode = 0;
-        // Type = (EventType)5;
-        Type = (EventType)Random.Range(0, 5);
+        Type = (EventType)0;
+        //Type = (EventType)UnityEngine.Random.Range(0, 5);
+        ResultTarget.Clear();
+
 
         if ((int)Type < 5)
         {
@@ -41,10 +51,9 @@ public class EventManager : MonoBehaviour
             Ask = EventPanel.transform.GetChild(1).gameObject;
             choiceA = EventPanel.transform.GetChild(2).gameObject;
             choiceB = EventPanel.transform.GetChild(3).gameObject;
+            choiceA.GetComponent<Button>().onClick.AddListener(ChoiceOption);
+            choiceB.GetComponent<Button>().onClick.AddListener(ChoiceOption);
 
-            choiceA.GetComponent<Button>().onClick.AddListener(ChoiceOptionA);
-            //choiceA.GetComponent<Button>().onClick.RemoveListener(ChoiceOptionA);
-            choiceB.GetComponent<Button>().onClick.AddListener(ChoiceOptionB);
             //choiceB.GetComponent<Button>().onClick.RemoveListener(ChoiceOptionB);
         }
 
@@ -98,21 +107,36 @@ public class EventManager : MonoBehaviour
                 }
             case EventType.QnA:
                 {
-                    int option = 0;
-                    SetQnA(option);
+                    SetQnA();
                     break;
                 }
         }
     }
 
-    public void ChoiceOptionA()
+    public void ChoiceOption()
     {
-        ChoiceMode = 1;
+        string choice = this.transform.name;
+        ChoiceMode = Int32.Parse(choice.Substring(choice.Length-1));
     }
 
-    public void ChoiceOptionB()
+    public void Result()
     {
-        ChoiceMode = 2;
+        EventPanel = Instantiate(ResultBox, new Vector3(1200, 540, 0), Quaternion.identity);
+        EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
+
+        EventPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ResultMent;
+        EventPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = ResultType;
+        EventPanel.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = ResultNum.ToString();
+        EventPanel.transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = ResultSign;
+        
+        foreach (Hero _hero in ResultTarget)
+        {
+            Debug.Log(ResultTarget.Count());
+            GameObject HeroImage = Instantiate(Image, new Vector3(0, 0, 0), Quaternion.identity);
+            HeroImage.transform.SetParent(EventPanel.transform.GetChild(2).GetChild(0).transform);
+            HeroImage.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(_hero.GUID);
+        }
+
     }
 
 
@@ -122,7 +146,40 @@ public class EventManager : MonoBehaviour
         Debug.Log("LifeLake " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 1)
+        {
+            ResultTarget = GameManager.Hero.GetHeroList();
+            foreach (Hero _hero in ResultTarget)
+            {
+                // 체력을 용병의 최대 체력의 10%씩 회복.
+                _hero.CurrentHP += _hero.MaxHP * (float)0.1;
+
+                if (_hero.CurrentHP > _hero.MaxHP)
+                {
+                    _hero.CurrentHP = _hero.MaxHP;
+                }
+            }
+            ResultMent = "모든 용병의 생명력이 조금씩 회복됩니다!";
+            ResultType = "체력";
+            ResultNum = "10 %";
+            ResultSign = "+";
+        }
+        else if (mode == 2)
+        {
+            ResultTarget.Add(GameManager.Hero.GetHeroList()[UnityEngine.Random.Range(0, GameManager.Hero.HeroList.Count())]);
+            foreach (Hero _hero in ResultTarget)
+            {
+                // 체력을 용병의 최대 체력으로 회복
+                _hero.CurrentHP = _hero.MaxHP;
+            }
+            ResultMent = "랜덤으로 한 용병의 생명력을 완전히 회복시킵니다!";
+            ResultType = "체력";
+            ResultNum = "100 %";
+            ResultSign = "+";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
 
         ChoiceMode = 0;
     }
@@ -133,7 +190,35 @@ public class EventManager : MonoBehaviour
         Debug.Log("CampFire " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 1)
+        {
+            ResultTarget = GameManager.Hero.GetHeroList();
+            ResultMent = "용병들은 진실 게임을 진행합니다 ...";
+            ResultType = "팀포인트";
+            ResultNum = "2 point";
+            ResultSign = "+";
+        }
+        else if (mode == 2)
+        {
+            ResultTarget = GameManager.Hero.GetHeroList();
+            foreach (Hero _hero in ResultTarget)
+            {
+                // 체력을 용병의 최대 체력의 10%씩 회복.
+                _hero.CurrentHP += _hero.MaxHP * (float)0.1;
+
+                if (_hero.CurrentHP > _hero.MaxHP)
+                {
+                    _hero.CurrentHP = _hero.MaxHP;
+                }
+            }
+            ResultMent = "용병들은 각자 휴식 시간을 즐깁니다 ...";
+            ResultType = "체력";
+            ResultNum = "10 %";
+            ResultSign = "+";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
 
         ChoiceMode = 0;
     }
@@ -143,7 +228,27 @@ public class EventManager : MonoBehaviour
         Debug.Log("TelltheTruth " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 1)
+        {
+            Hero _hero = GameManager.Hero.GetHeroList()[UnityEngine.Random.Range(0, GameManager.Hero.HeroList.Count())];
+            _hero.MBTI = (GameManager.MbtiType)UnityEngine.Random.Range(0, 16);
+            ResultTarget.Add(_hero);
+
+            ResultMent = "한 용병에게 진실을 요구했습니다";
+            ResultType = "MBTI";
+            ResultNum = " ??? ";
+            ResultSign = " ??? ";
+        }
+        else if (mode == 2)
+        {
+            ResultMent = "누군가는 거짓말을 하고 있을 것입니다\n...다음 기회에...";
+            ResultType = " ??? ";
+            ResultNum = " ??? ";
+            ResultSign = " ??? ";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
 
         ChoiceMode = 0;
     }
@@ -164,48 +269,38 @@ public class EventManager : MonoBehaviour
         Destroy(EventPanel);
 
         // 선택에 따른 결과를 띄워준다
-
         ChoiceMode = 0;
     }
 
-    private void SetQnA(int option)
+    private void QnA(int mode)
     {
-        EventPanel = Instantiate(MBTIQnABox, new Vector3(1200, 540, 0), Quaternion.identity);
+        // 선택지
+        Debug.Log("QnA " + mode + " 선택지의 기능을 수행합니다");
+        Destroy(EventPanel);
+
+        // 선택에 따른 결과를 띄워준다
+        ChoiceMode = 0;
+    }
+
+    private void SetQnA()
+    {
+        //int num = UnityEngine.Random.Range(1, 6);
+        int num = 1;
+
+        EventPanel = Instantiate(Resources.Load("Prefabs/Event_QnA/MBTI_Q" + num) as GameObject, new Vector3(1200, 540, 0), Quaternion.identity);
         EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
 
         Name = EventPanel.transform.GetChild(0).gameObject;
         Ask = EventPanel.transform.GetChild(1).gameObject;
         Name.GetComponent<TextMeshProUGUI>().text = "Q n A";
-        Ask.GetComponent<TextMeshProUGUI>().text = MBTIQnABox.GetComponent<ChioiceController>().Ask;
-        switch (option)
+        Ask.GetComponent<TextMeshProUGUI>().text = EventPanel.GetComponent<ChoiceController>().Ask;
+
+        for (int i = 0; i < EventPanel.GetComponent<ChoiceController>().choiceNum; i++)
         {
-            case 0:
-                {
-                    for (int i = 0; i < MBTIQnABox.GetComponent<ChioiceController>().choiceNum; i++)
-                    {
-                        // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-                        GameObject choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
-                        choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
-                    }
-                    break;
-                }
+            // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+            GameObject choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
+            choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
         }
-    }
-
-    private void QnA(int mode)
-    {
-        Choice choice1 = new Choice();
-        choice1.text = "";
-        choice1.num = 3;
-        choice1.TargetMbti = new List<GameManager.MbtiType> { 
-            GameManager.MbtiType.ESFP, 
-            GameManager.MbtiType.ESFP, 
-            GameManager.MbtiType.ESFP 
-        };
-
-
-        ChioiceController QnA = new ChioiceController();
-
     }
 
     void Update()
@@ -241,6 +336,7 @@ public class EventManager : MonoBehaviour
                     }
                 case EventType.QnA:
                     {
+                        QnA(ChoiceMode);
                         break;
                     }
             }

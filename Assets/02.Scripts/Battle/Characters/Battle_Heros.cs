@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Heros : Units
-{
-
+{
+
+    public AnimationClip attackAnimationClip;
+    protected float animationDamageDelay;
+
     public override void Initalize(Character charData)
     {
         this.charData = charData;
         this.charData.CurrentMana = 0;
         base.Initalize(charData);
+        animationDamageDelay = attackAnimationClip.length;
     }
 
     public override void Attack()
@@ -52,20 +56,20 @@ public class Battle_Heros : Units
                 PlayGetHitAniamtion();
         }
     }
-    public override void Dead()
-    {
-        base.Dead();
-        var h = charData as Hero;
-        h.isDead = true;
+    public override void Dead()
+    {
+        base.Dead();
+        var h = charData as Hero;
+        h.isDead = true;
     }
 
-    public void ReduceHunger(int amount)
-    {
-        charData.CurHunger -= amount;
-        if(charData.CurHunger < 0)
-        {
-            charData.CurHunger = 0;
-        }
+    public void ReduceHunger(int amount)
+    {
+        charData.CurHunger -= amount;
+        if(charData.CurHunger < 0)
+        {
+            charData.CurHunger = 0;
+        }
     }
     public override void ExecuteSkill()
     {
@@ -82,29 +86,26 @@ public class Battle_Heros : Units
 
     IEnumerator CouroutineAttack()
     {
-        yield return new WaitForSeconds(0.01f);
 
-        float t = GetCurrentAnimationTime();
-
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(animationDamageDelay);
 
         if (isCloseAttackUnit)
         {
             attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
         }
         else
-        {
-            if (isFilped)
-            {
-                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
-                rot = new Vector3(rot.x, 180f, rot.z);
-                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
-            }
-            else
-            {
-                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
-                rot = new Vector3(rot.x, 0f, rot.z);
-                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+        {
+            if (isFilped)
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 180f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+            }
+            else
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, 0f, rot.z);
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
             }
 
             Vector2 dir = attackTarget.transform.position - transform.position;

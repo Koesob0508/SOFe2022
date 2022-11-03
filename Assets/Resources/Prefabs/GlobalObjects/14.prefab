@@ -237,5 +237,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: f4ec1ec0256f1be4083d22bd8a29714f, type: 2}
   AttackRange: {fileID: 281881010403568769}
   attackList: []

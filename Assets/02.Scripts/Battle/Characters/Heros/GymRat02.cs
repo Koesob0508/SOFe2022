@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GymRat02 : Battle_Heros
 {
+    public AnimationClip skillAnimationClip;
 
     protected override void Start()
     {
@@ -15,7 +16,6 @@ public class GymRat02 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
-
 
         StartCoroutine("SkillEffect");
     }
@@ -35,11 +35,7 @@ public class GymRat02 : Battle_Heros
             projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
         }
 
-        yield return new WaitForSeconds(0.05f);
-
-        float t = GetCurrentAnimationTime();
-
-        yield return new WaitForSeconds(t-0.05f);
+        yield return new WaitForSeconds(skillAnimationClip .length- 0.05f);
 
         GameObject projectile1 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.identity);
 
