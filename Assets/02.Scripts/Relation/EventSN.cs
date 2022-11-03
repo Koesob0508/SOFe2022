@@ -6,11 +6,11 @@ public class EventSN : CustomEvent
 {
     protected override void Apply()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("S와 N 간 이벤트 발생");
     }
 
     protected override bool Condition(LogInfo _logInfo)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }

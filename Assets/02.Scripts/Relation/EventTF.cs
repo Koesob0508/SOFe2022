@@ -6,11 +6,11 @@ public class EventTF : CustomEvent
 {
     protected override void Apply()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("T와 F 간 이벤트 발생");
     }
 
     protected override bool Condition(LogInfo _logInfo)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }

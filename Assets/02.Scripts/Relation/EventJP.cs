@@ -6,11 +6,11 @@ public class EventJP : CustomEvent
 {
     protected override void Apply()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("J와 P 간 이벤트 발생");
     }
 
     protected override bool Condition(LogInfo _logInfo)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }

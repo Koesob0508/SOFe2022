@@ -11,14 +11,17 @@ public class EventEI : CustomEvent
 
     protected override bool Condition(LogInfo _logInfo)
     {
+        Debug.Log(_logInfo.Subjective.GetType());
         // 일단 subject가 Hero여야 실행
         if (_logInfo.Subjective is Hero && _logInfo.Objective is Enemy)
         {
+            Debug.Log("일단 condition은 통과");
             postHero = (Hero)_logInfo.Subjective;
-            postEnemy = (Enemy)_logInfo.Objective;
+            postEnemy = (Enemy)_logInfo.Objective;  
 
             if(preHero != null && preEnemy != null)
             {
+                Debug.Log("Pre Hero 존재, Pre Enemy 존재");
                 if(preHero.Name != postHero.Name && object.ReferenceEquals(preEnemy, postEnemy))
                 {
                     Debug.Log("서로 다른 히어로 같은 적 공격");
@@ -32,6 +35,7 @@ public class EventEI : CustomEvent
 
     protected override void Apply()
     {
+        Debug.Log("E와 I 간 Event 발생");
         switch(preHero.MBTI)
         {
             case GameManager.MbtiType.INFP:
