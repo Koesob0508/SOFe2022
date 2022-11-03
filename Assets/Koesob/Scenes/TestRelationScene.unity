@@ -813,6 +813,7 @@ MonoBehaviour:
     isDead: 0
     IsActive: 0
     Items: []
+  preValue: 
   postHero:
     GUID: 0
     Name: 
@@ -832,6 +833,7 @@ MonoBehaviour:
     isDead: 0
     IsActive: 0
     Items: []
+  postValue: 
   preEnemy:
     GUID: 0
     Name: 
@@ -1089,9 +1091,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341b7e92f5bbd545ab036693cad018c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relation: {fileID: 1173250998}
+  _relation: {fileID: 1173250998}
   log: {fileID: 612640526}
   eventLog: {fileID: 1768068636}
+  heroA:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
+    MBTI: 0
+    Cost: 1000
+    isDead: 0
+    IsActive: 0
+    Items: []
+  heroB:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
+    MBTI: 0
+    Cost: 1000
+    isDead: 0
+    IsActive: 0
+    Items: []
+  enemyA:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
+    Position: {x: 0, y: 0}
+  enemyB:
+    GUID: 0
+    Name: 
+    Type: 0
+    MaxHP: 0
+    CurrentHP: 0
+    CurHunger: 0
+    MaxMana: 0
+    CurrentMana: 0
+    MoveSpeed: 0
+    AttackDamage: 0
+    AttackRange: 0
+    AttackSpeed: 0
+    DefensePoint: 0
+    Position: {x: 0, y: 0}
 --- !u!1 &1768068634
 GameObject:
   m_ObjectHideFlags: 0
