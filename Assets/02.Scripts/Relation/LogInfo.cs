@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UnitType { Hero, Enemy }
 public enum Verb { Attack, Kill, Buff, Debuff }
 
 /// <summary>
@@ -10,11 +9,11 @@ public enum Verb { Attack, Kill, Buff, Debuff }
 /// </summary>
 public struct LogInfo
 {
-    private UnitType subjective;
-    private UnitType objective;
+    private Character subjective;
+    private Character objective;
     private Verb verb;
 
-    public UnitType Subjective { get => subjective; set => subjective = value; }
-    public UnitType Objective { get => objective; set => objective = value; }
+    public Character Subjective { get => subjective; set => subjective = value; }
+    public Character Objective { get => objective; set => objective = value; }
     public Verb Verb { get => verb; set => verb = value; }
 }

@@ -82,7 +82,7 @@ public partial class RelationshipManager : MonoBehaviour
     public void SetChangeRelationship(Hero A_Hero, Hero B_Hero, sbyte var)
     {
         MBTIScore[(int)A_Hero.GUID, (int)B_Hero.GUID] += var;
-        MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
+        // MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
     }
 
     /// <summary>
