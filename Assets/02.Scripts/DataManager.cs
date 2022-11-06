@@ -224,4 +224,18 @@ public class DataManager
             ObjectCodex.Add(h.GUID, h);
         }
     }
+
+    public void Delete()
+    {
+        if(IsExistSaveData())
+        {
+            string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
+
+            System.IO.File.Delete(path);
+
+            Debug.Log(IsExistSaveData());
+        }
+
+        ObjectCodex.Clear();
+    }
 }
