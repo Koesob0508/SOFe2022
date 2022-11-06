@@ -17,4 +17,9 @@ public class Choice : MonoBehaviour
         string str = this.transform.name;
         choice.ChoiceMode = Int32.Parse(str.Substring(str.Length - 1));
     }
+
+    public List<GameManager.MbtiType> GetTargetMbti()
+    {
+        return TargetMbti;
+    }
 }

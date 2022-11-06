@@ -47,6 +47,7 @@ namespace Koesob
             }
         }
 
+        // Event scene에서 Guild창
         public void ShowHeroShop()
         {
             GameObject HeroShop = GameObject.Find("GuildUI(Clone)");
@@ -59,6 +60,22 @@ namespace Koesob
             {
                 HeroShop = Resources.Load<GameObject>("Prefabs/UI/GuildUI");
                 Instantiate(HeroShop);
+            }
+        }
+
+        // Event scene에서 Hotel창
+        public void ShowHotel()
+        {
+            GameObject Hotel = GameObject.Find("HotelUI(Clone)");
+
+            if (Hotel != null)
+            {
+                Destroy(Hotel);
+            }
+            else
+            {
+                Hotel = Resources.Load<GameObject>("Prefabs/UI/HotelUI");
+                Instantiate(Hotel);
             }
         }
 

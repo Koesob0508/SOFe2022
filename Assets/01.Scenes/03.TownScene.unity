@@ -623,6 +623,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cycle
       objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 387735701}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowHotel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Koesob.ButtonDelegator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746536072264666, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3240289629080770763, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
       propertyPath: m_Maskable
       value: 1
@@ -879,7 +907,7 @@ MonoBehaviour:
   m_text: "\uC6A9\uBCD1 \uBAA8\uC9D1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
-  m_sharedMaterial: {fileID: 4733943525457378940, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
+  m_sharedMaterial: {fileID: -2292550290053012602, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
