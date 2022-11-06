@@ -38,9 +38,8 @@ public class SetRandomObject : MonoBehaviour
                         ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
                         ObjectUI.transform.SetParent(transform);
                         ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
-
-                        SetStatus();
                     }
+                    SetStatus();
                     break;
                 }
             case GameManager.ObjectType.Item:

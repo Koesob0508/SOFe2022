@@ -14,9 +14,17 @@ public class BattleSceneManager : MonoBehaviour
 
     private List<Hero> hDataList = new List<Hero>();
     private List<Hero> hDataList_Original = new List<Hero>();
+
     private List<Enemy> EnemyList = new List<Enemy>();
 
+
+    /// <summary>
+    /// Heros in scene
+    /// </summary>
     public List<GameObject> heroObjects = new List<GameObject>();
+    /// <summary>
+    /// Heros in either scene and battle
+    /// </summary>
     public List<GameObject> enemyObjects = new List<GameObject>();
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
@@ -64,7 +72,6 @@ public class BattleSceneManager : MonoBehaviour
 
         //Init Hero
         hInvenPanel.Initalize(Heros);
-
         //Setup Start Btn
         startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
         startBtn.onClick.AddListener(delegate { StartBattle(); });
