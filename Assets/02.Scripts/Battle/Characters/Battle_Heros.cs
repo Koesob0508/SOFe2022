@@ -6,32 +6,38 @@ public class Battle_Heros : Units
 {
 
     public AnimationClip attackAnimationClip;
-    protected float animationDamageDelay;
-
+    protected float animationDamageDelay;    protected float attackSpeed;
     public override void Initalize(Character charData)
     {
         this.charData = charData;
         this.charData.CurrentMana = 0;
         base.Initalize(charData);
-        animationDamageDelay = attackAnimationClip.length;
+
+        // animationDamageDelay = attackAnimationClip.length;
+        animationDamageDelay = this.charData.AttackSpeed;
+
     }
 
     public override void Attack()
     {
-        //if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
-        //{
-        //    ExecuteSkill();
-        //}
-        //else
-        //{
-        //    base.Attack();
-        //    StartCoroutine("CouroutineAttack");
-        //    charData.CurrentMana += 100;
-        //}
+        // if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
+        // {
+        //     ExecuteSkill();
+        // }
+        // else
+        // {
+        //     base.Attack();
+        //     StartCoroutine("CouroutineAttack");
+        //     charData.CurrentMana += 100;
+        // }
 
         base.Attack();
+
+        attackSpeed = charData.AttackSpeed / attackAnimationClip.length;
+        animator.SetFloat("AttackSpeed", attackSpeed);
+
         StartCoroutine("CouroutineAttack");
-        charData.CurrentMana += 100;
+        charData.CurrentMana += 20;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
@@ -41,7 +47,6 @@ public class Battle_Heros : Units
     
     public override void Hit(float damage)
     {
-        // ������ ó�� = ( 100 / ���� + 100 ) * ������
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
 
@@ -115,4 +120,19 @@ public class Battle_Heros : Units
 
         }
     }
+
+    public void Buff(string type, float value)
+    {
+        switch (type)
+        {
+            case "Attack":
+                charData.AttackDamage += value;
+                break;
+
+            case "AttackSpeed":
+                charData.AttackSpeed += value;
+                break;
+        }    
+    }
+
 }
