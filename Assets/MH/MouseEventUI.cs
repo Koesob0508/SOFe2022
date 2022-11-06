@@ -94,6 +94,7 @@ public class MouseEventUI : MonoBehaviour
         }
 
         GameObject Sleep = GameObject.Find("SleepImage");
+        Sleep.GetComponent<Image>().color = Color.white;
         Sleep.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(heroGUID);
 
         // Hotel에 Hero 등록 애니메이션
