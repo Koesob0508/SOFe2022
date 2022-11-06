@@ -21,11 +21,24 @@ public class EventEI : CustomEvent
             postHero = (Hero)_logInfo.Subjective;
             postEnemy = (Enemy)_logInfo.Objective;
 
-            if (preHero.Name != postHero.Name && object.ReferenceEquals(preEnemy, postEnemy))
-            {
-                Debug.Log("서로 다른 히어로, 같은 적 공격");
-                return true;
-            }
+
+            //if (prehero.name != posthero.name && object.referenceequals(preenemy, postenemy))
+            //{
+            //    debug.log("서로 다른 히어로, 같은 적 공격");
+
+            //    testgamemanager.instance.eventlog.text = "e&i event 발생 : 서로 다른 히어로, 같은 적 공격";
+            //    return true;
+            //}
+            //else
+            //{
+            //    testgamemanager.instance.eventlog.text = "e&i event 발생 조건 x";
+            //}
+
+
+        }
+        else
+        {
+            ///TestGameManager.Instance.eventLog.text = "E&I event 발생 조건 X";
         }
 
         return false;
@@ -34,108 +47,27 @@ public class EventEI : CustomEvent
     protected override void Apply()
     {
         Debug.Log("E와 I 간 Event 발생");
-        switch(preHero.MBTI)
-        {
-            case GameManager.MbtiType.INFP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENFP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INFJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENFJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INTJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENTJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INTP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENTP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISFP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESFP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISTP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESTP:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISFJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESFJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISTJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESTJ:
-                TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-        }
 
-        switch (postHero.MBTI)
-        {
-            case GameManager.MbtiType.INFP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENFP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INFJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENFJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INTJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENTJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INTP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENTP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISFP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESFP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISTP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESTP:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISFJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESFJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISTJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESTJ:
-                TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-        }
+        //if(TestGameManager.Relation.IsI(preHero))
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
+        //    TestGameManager.Instance.heroALog.text = "Hero A : 아직 어사인데...(-10)";
+        //}
+        //else // I가 아니면 E이기 때문에...
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
+        //    TestGameManager.Instance.heroALog.text = "Hero A : 이건... 인연?(+10)";
+        //}
+
+        //if (TestGameManager.Relation.IsI(postHero))
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
+        //    TestGameManager.Instance.heroBLog.text = "Hero B : 아직 어사인데...(-10)";
+        //}
+        //else // I가 아니면 E이기 때문에...
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
+        //    TestGameManager.Instance.heroBLog.text = "Hero B : 이건... 인연?(+10)";
+        //}
     }
 }

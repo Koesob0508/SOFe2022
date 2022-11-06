@@ -14,6 +14,10 @@ public class TestGameManager : MonoBehaviour
     public Hero heroB;
     public Enemy enemyA;
     public Enemy enemyB;
+    public TextMeshProUGUI heroALog;
+    public TextMeshProUGUI heroBLog;
+    public GameManager.MbtiType heroAMBTI;
+    public GameManager.MbtiType heroBMBTI;
 
     private static TestGameManager instance;
 
@@ -53,8 +57,10 @@ public class TestGameManager : MonoBehaviour
 
         heroA = new Hero();
         heroA.Name = "A";
+        heroA.MBTI = heroAMBTI;
         heroB = new Hero();
         heroB.Name = "B";
+        heroB.MBTI = heroBMBTI;
         enemyA = new Enemy();
         enemyA.Name = "C";
         enemyB = new Enemy();
