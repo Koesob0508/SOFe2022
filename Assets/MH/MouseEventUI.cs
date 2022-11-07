@@ -7,17 +7,17 @@ using TMPro;
 public class MouseEventUI : MonoBehaviour
 {
 
-    private GameObject HeroImage;
+    private GameObject InfoUI;
     private bool CanBuy = true;
 
     public void LongMouseClick()
     {
         uint heroGUID;
         
-        HeroImage = Resources.Load<GameObject>("Prefabs/UI/ItemInfoUI");
+        InfoUI = Resources.Load<GameObject>("Prefabs/UI/ItemInfoUI");
         Vector3 UIPosition =  new Vector3(Input.mousePosition.x + 180, Input.mousePosition.y, Input.mousePosition.z);
-        HeroImage = Instantiate(HeroImage, UIPosition, Quaternion.identity);
-        HeroImage.transform.SetParent(this.transform);
+        InfoUI = Instantiate(InfoUI, UIPosition, Quaternion.identity);
+        InfoUI.transform.SetParent(this.transform);
 
         GameObject Hero = this.transform.parent.parent.parent.parent.gameObject;
         GameObject HeroUIContent = this.transform.parent.parent.parent.parent.parent.gameObject;
@@ -25,7 +25,7 @@ public class MouseEventUI : MonoBehaviour
         heroGUID = HeroUIContent.GetComponent<GetHeroInfo>().GetHeroUIOrder(Hero);
         // heroGUID = HeroUIContent.GetComponent<Hero>().GUID;
         // Debug.Log(UIItemInfo.transform.GetChild(0).GetChild(0).gameObject.name);
-        HeroImage.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(GameManager.Hero.GetHero(heroGUID).Name);
+        InfoUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(GameManager.Hero.GetHero(heroGUID).Name);
 
     }
 
@@ -62,16 +62,49 @@ public class MouseEventUI : MonoBehaviour
             LeanTween.scale(Hero.transform.GetChild(1).gameObject, new Vector3(1.47f, 1f, 1f), .3f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
 
             // Hero 등록 애니메이션
-            HeroImage = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
-            HeroImage = Instantiate(HeroImage, new Vector3(0, 0, -2), Quaternion.identity);
-            HeroImage.GetComponent<SpriteRenderer>().sprite = GameManager.Data.LoadSprite(heroGUID);
-            LeanTween.moveLocal(HeroImage, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
-            LeanTween.scale(HeroImage, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
-            Destroy(HeroImage, 3f);
+            InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
+            InfoUI = Instantiate(InfoUI, new Vector3(0, 0, -2), Quaternion.identity);
+            InfoUI.GetComponent<SpriteRenderer>().sprite = GameManager.Data.LoadSprite(heroGUID);
+            LeanTween.moveLocal(InfoUI, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(InfoUI, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+            Destroy(InfoUI, 3f);
 
             CanBuy = false;
 
         }
+    }
+
+    // Hotel에서 Hero를 등록한다.
+    public void OnButtonClick_Hotel()
+    {
+
+        GameObject Hero = this.transform.parent.gameObject;
+        GameObject HeroUIContent = Hero.transform.parent.gameObject;
+        Debug.Log(HeroUIContent.name);
+        uint heroGUID = HeroUIContent.GetComponent<Town_Hotel>().GetHeroUIOrder(Hero);
+        GameManager.Hero.EnrollHero(heroGUID);
+
+        foreach (Hero _hero in GameManager.Hero.ShopHeroList)
+        {
+            if (_hero.GUID == heroGUID)
+            {
+                GameManager.Hero.ShopHeroList.Remove(_hero);
+                break;
+            }
+        }
+
+        GameObject Sleep = GameObject.Find("SleepImage");
+        Sleep.GetComponent<Image>().color = Color.white;
+        Sleep.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(heroGUID);
+
+        // Hotel에 Hero 등록 애니메이션
+        InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
+        InfoUI = Instantiate(InfoUI, new Vector3(235, -8, 0), Quaternion.identity);
+        //InfoUI.GetComponent<SpriteRenderer>().sprite = GameManager.Data.LoadSprite(heroGUID);
+        //LeanTween.moveLocal(InfoUI, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
+        //LeanTween.scale(InfoUI, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+        //Destroy(InfoUI, 3f);
+
     }
 
     public void OnMouseOver()
@@ -99,6 +132,6 @@ public class MouseEventUI : MonoBehaviour
 
     public void LongMouseClickExit()
     {
-        Destroy(HeroImage);
+        Destroy(InfoUI);
     }
 }
