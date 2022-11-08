@@ -39,7 +39,7 @@ public class WaterPriestess14 : Battle_Heros
 
         for (int i = 0; i < attackList.Count; i++)
         {
-            attackList[i].GetComponent<Units>().Hit(charData.AttackDamage * 0.7f);
+            attackList[i].GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.7f);
         }
 
         charData.CurrentMana = 0;

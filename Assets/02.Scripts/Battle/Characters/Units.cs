@@ -104,7 +104,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         PlayAttackAnimation();
     }
-    public virtual void Hit(float damage)
+    public virtual void Hit(Character Causer, float damage)
     {
     }
     public virtual void ExecuteSkill()

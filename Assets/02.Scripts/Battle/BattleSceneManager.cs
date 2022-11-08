@@ -136,9 +136,6 @@ public class BattleSceneManager : MonoBehaviour
         var ob = new Observer_Battle();
         ob.Init();
         Observers.Add(ob);
-
-        
-
     }
 
     #endregion
@@ -173,13 +170,13 @@ public class BattleSceneManager : MonoBehaviour
         foreach (var obj in Observers)
             obj.onNotify(ObserverBase.EventType.R_Dismiss, new UnityEngine.Object[] { Hero });
     }
-    public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
+    public void GenerateHitEvent(GameObject Causer, GameObject Target, float Dmg)
     {
         var targetUnitComp = Target.GetComponent<Units>();
         var causerUnitComp = Causer.GetComponent<Units>();
 
         // 얘네도 피격 시점으로 수정 해줘야 함
-        bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
+        // bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
         MakeDamagePopup(Target.transform.position, Dmg);
     }
     public GameObject CreateHero(Hero heroData)
@@ -191,17 +188,23 @@ public class BattleSceneManager : MonoBehaviour
         hObj.SetActive(false);
         return hObj;
     }
-    public void DeadProcess(GameManager.ObjectType type, GameObject obj)
+    public void DeadProcess(GameManager.ObjectType type, GameObject target, Character causer)
     {
-        spriteRenderers.Remove(obj.GetComponent<SpriteRenderer>());
+        spriteRenderers.Remove(target.GetComponent<SpriteRenderer>());
         switch (type)
         {
             case GameManager.ObjectType.Hero:
-                hCount -= 1;
-                break;
+                {
+                    bLogPanel.AddLog(new BattleLogPanel.Log(causer, target.GetComponent<Units>().charData, BattleLogPanel.LogType.Kill));
+                    hCount -= 1;
+                    break;
+                }
             case GameManager.ObjectType.Enemy:
-                eCount -= 1;
-                break;
+                {
+                    bLogPanel.AddLog(new BattleLogPanel.Log(causer, target.GetComponent<Units>().charData, BattleLogPanel.LogType.Dead));
+                    eCount -= 1;
+                    break;
+                }
             default:
                 break;
         }

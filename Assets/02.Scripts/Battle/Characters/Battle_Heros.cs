@@ -45,7 +45,7 @@ public class Battle_Heros : Units
         }
     }
     
-    public override void Hit(float damage)
+    public override void Hit(Character Causer, float damage)
     {
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
@@ -53,7 +53,7 @@ public class Battle_Heros : Units
         if (charData.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
         {
             btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData.Type, gameObject);
+            GameManager.Battle.DeadProcess(charData.Type, gameObject, Causer);
         }
         else
         {
@@ -96,7 +96,7 @@ public class Battle_Heros : Units
 
         if (isCloseAttackUnit)
         {
-            attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
+            attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage);
         }
         else
         {
@@ -116,7 +116,7 @@ public class Battle_Heros : Units
             Vector2 dir = attackTarget.transform.position - transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
-            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage, 500f);
+            projectile.GetComponent<Projectile>().Initialize(charData, attackTarget.transform.position, charData.AttackDamage, 500f);
 
         }
     }

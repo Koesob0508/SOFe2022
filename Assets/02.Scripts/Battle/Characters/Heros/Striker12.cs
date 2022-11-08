@@ -25,7 +25,7 @@ public class Striker12 : Battle_Heros
     {
         yield return new WaitForSeconds(animationDamageDelay/2);
 
-        attackTarget.GetComponent<Units>().Hit(charData.AttackDamage * 1.3f);
+        attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage * 1.3f);
 
         yield return new WaitForSeconds(animationDamageDelay/2);
 
@@ -46,7 +46,7 @@ public class Striker12 : Battle_Heros
 
         for (int j = 0; j < attackList.Count; j++)
         {
-            attackList[j].GetComponent<Units>().Hit(charData.AttackDamage * 0.7f);
+            attackList[j].GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.7f);
         }
 
         yield return new WaitForSeconds(0.3f);

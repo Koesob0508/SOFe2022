@@ -22,7 +22,7 @@ public class Warrior00: Battle_Heros
             if (!hitUnits[i].CompareTag("Enemy"))
                 continue;
 
-            hitUnits[i].GetComponent<Units>().Hit(charData.AttackDamage * 2f);
+            hitUnits[i].GetComponent<Units>().Hit(charData, charData.AttackDamage * 2f);
         }
     }
 

@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
       
     Rigidbody2D rigid;
-
+    Character owner;
     float damage;
     bool isPenetration;
     
@@ -19,11 +19,11 @@ public class Projectile : MonoBehaviour
     /// </summary>
     /// <param name="target">유도 타겟</param>
     /// <param name="d">데미지</param>
-    public void Initialize(Vector3 targetVector, float d, float speed)
+    public void Initialize(Character Owner, Vector3 targetVector, float d, float speed)
     {
         damage = d;
         isPenetration = false;
-
+        owner = Owner;
 
         Vector2 dir = (targetVector - transform.position).normalized;
         Debug.Log("dir:"+dir);
@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
         
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Units>().Hit(damage);
+            collision.GetComponent<Units>().Hit(owner,damage);
             if(!isPenetration)
                 Destroy(gameObject);
         }

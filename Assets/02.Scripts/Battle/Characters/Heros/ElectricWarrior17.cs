@@ -29,14 +29,14 @@ public class ElectricWarrior17 : Battle_Heros
 
         yield return new WaitForSeconds(attackAnimationClip.length);
 
-        attackTarget.GetComponent<Units>().Hit(charData.AttackDamage * 0.8f);
+        attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.8f);
 
         yield return new WaitForSeconds(skill2AnimationClip.length - 0.1f);
 
-        attackTarget.GetComponent<Units>().Hit(charData.AttackDamage * 0.8f);
+        attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.8f);
 
         yield return new WaitForSeconds(skill3AnimationClip.length - 0.1f);
 
-        attackTarget.GetComponent<Units>().Hit(charData.AttackDamage * 0.8f);
+        attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.8f);
     }
 }
