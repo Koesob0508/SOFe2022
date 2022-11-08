@@ -76,6 +76,13 @@ public partial class StageManager : MonoBehaviour
         }
     }
 
+    public void Clear()
+    {
+        saveData = null;
+
+        Destroy(canvas);
+    }
+
     private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices)
     {
         Debug.Log("Stage Node Instantiate");
@@ -98,8 +105,8 @@ public partial class StageManager : MonoBehaviour
 
     private void LoadStageMap(string _saveData)
     {
+        Debug.Log("Stage Map Loaded : " + _saveData);
         stageMap = DeserializeStageMap(_saveData);
-        Debug.Log(_saveData);
         ReconstructStageNodes(stageMap);
         ReconstructLane(laneObject, stageMap);
     }
@@ -403,6 +410,7 @@ public partial class StageManager : MonoBehaviour
 
     private void ReconstructStageNodes(StageMap _stageMap)
     {
+        Debug.Log("Stage Node Reconstruct");
         foreach (Step step in _stageMap.stages)
         {
             foreach (SerializedNode node in step.serializeNodes)
