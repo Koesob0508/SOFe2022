@@ -24,7 +24,8 @@ public class DataManager
     public void Init()
     {
         LoadInitalEnemyData();
-        if(IsExistSaveData())
+        LoadInitalItemData();
+        if (IsExistSaveData())
         {
             Load();
         }
@@ -96,6 +97,36 @@ public class DataManager
             ObjectCodex.Add(enemy.GUID, enemy);
         }
     }
+    void LoadInitalItemData()
+    {
+        CSVImporter csvImp2 = new CSVImporter();
+        csvImp2.OpenFile("Data/Items_values");
+        csvImp2.ReadHeader();
+        string line2 = csvImp2.Readline();
+
+        while (line2 != null)
+        {
+            string[] elems = line2.Split(',');
+
+            if (elems.Length < 2) // ?빈 줄이 하나 더 들어감?
+                break;
+
+            Item item = new Item();
+            item.GUID = uint.Parse(elems[0]);
+            item.Name = elems[1];
+            item.Type = (GameManager.ObjectType)Int32.Parse(elems[2]);
+            item.Star = uint.Parse(elems[3]);
+            item.BasicType = (GameManager.ItemType)Int32.Parse(elems[4]);
+            item.BasicNum = float.Parse(elems[5]);
+            // item.SpecialType = (GameManager.ItemTyoe)Int32.Parse(elems[6]);
+            item.SpeicalNum = float.Parse(elems[7]);
+            item.Info = elems[7];
+            item.Type = GameManager.ObjectType.Item;
+            line2 = csvImp2.Readline();
+
+            ObjectCodex.Add(item.GUID, item);
+        }
+    }
     public GlobalObject LoadObject(uint guid, GameManager.ObjectType type)
     {
         GlobalObject obj = ObjectCodex[guid];
@@ -154,6 +185,7 @@ public class DataManager
                     pathByType = "/Sprites/MonsterUI/";
                     break;
                 case GameManager.ObjectType.Item:
+                    pathByType = "/Sprites/ItemUI/";
                     break;
             }
             byte[] bytes = LoadFile(pathByType + guid + "_UI.png");

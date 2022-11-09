@@ -11,7 +11,8 @@ public class GetHeroInfo : MonoBehaviour
     public Dictionary<uint, GameObject> HeroUIList = new Dictionary<uint, GameObject>();
 
     public GameObject HeroUIObject;
-    GameObject HeroUI;
+    public GameObject ItmeUIObject;
+    GameObject HeroUI, ItemUI;
 
     // Status
     public Gradient gradient;
@@ -26,12 +27,14 @@ public class GetHeroInfo : MonoBehaviour
     {
         HeroList = GameManager.Hero.GetHeroList();
         int HeroNUM = HeroList.Count;
-
         for (int i = 0; i < HeroNUM; i++)
         {
-            HeroUI = Instantiate(HeroUIObject, transform.position, Quaternion.identity);
-            HeroUI.transform.SetParent(transform);
-            HeroUIList.Add(HeroList[i].GUID, HeroUI);
+            if (HeroUIList.ContainsKey(HeroList[i].GUID) == false)
+            {
+                HeroUI = Instantiate(HeroUIObject, transform.position, Quaternion.identity);
+                HeroUI.transform.SetParent(transform);
+                HeroUIList.Add(HeroList[i].GUID, HeroUI);
+            }
         }
 
         SetStatus();
@@ -54,9 +57,9 @@ public class GetHeroInfo : MonoBehaviour
     private void SetStatus()
     {
         // Status
-        Image HeroImage;
+        Image HeroImage, Item;
         TextMeshProUGUI HeroName, HeroMbti;
-        GameObject HeroInfo, AbilityInfo, HealthBar, HungerBar;
+        GameObject HeroInfo, AbilityInfo, Items, HealthBar, HungerBar;
         Slider HealthSlider, HungerSlider;
         Image fill;
 
@@ -115,13 +118,56 @@ public class GetHeroInfo : MonoBehaviour
                 // AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("½ºÅ³ : " + hero.);
 
                 // Items °ª
+                Items = GetChildWithName(HeroUI, "Items").transform.gameObject;
+                for (int i = 0; i < hero.Items.Count(); i++)
+                {
+                    ItemUI = Instantiate(ItmeUIObject, transform.position, Quaternion.identity);
+                    ItemUI.transform.SetParent(Items.transform.GetChild(i));
+                    ItemUI.transform.localPosition = new Vector3(0, 0, 0);
+
+                    Item = ItemUI.GetComponent<Image>();
+                    Item.sprite = GameManager.Data.LoadSprite(hero.Items[i].GUID);
+                    Item.GetComponent<GetItemInfo>().SetItem(hero.GUID, hero.Items[i].GUID);
+                }
             }
         }
     }    
+
+    public void UpdateItems()
+    {
+        foreach (KeyValuePair<uint, GameObject> _Hero in HeroUIList)
+        {
+            uint HeroGuid = _Hero.Key;
+            GameObject HeroUI = _Hero.Value;
+            Hero hero = null;
+
+            foreach (Hero _hero in HeroList)
+            {
+                if (_hero.GUID == HeroGuid)
+                {
+                    hero = _hero;
+                    break;
+                }
+            }
+
+            if (hero != null && hero.Items.Count() > 0)
+            {
+                GameObject Items = GetChildWithName(HeroUI, "Items").transform.gameObject;
+                for (int i = 0; i < hero.Items.Count(); i++)
+                {
+                    Items.transform.GetChild(i).GetChild(0).GetComponent<GetItemInfo>().SetItem(hero.GUID, hero.Items[i].GUID);
+                    //ItemUI = Instantiate(ItmeUIObject, transform.position, Quaternion.identity);
+                    //ItemUI.transform.SetParent(Items.transform.GetChild(i));
+                    //ItemUI.transform.localPosition = new Vector3(0, 0, 0);
+
+                }
+            }
+        }
+    }
     
     // Update is called once per frame
     void Update()
     {
-        
+   
     }
 }
