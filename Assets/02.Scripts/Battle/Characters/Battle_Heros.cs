@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Heros : Units
-{
-
-    public AnimationClip attackAnimationClip;
-    protected float animationDamageDelay;    protected float attackSpeed;
+{
     public override void Initalize(Character charData)
     {
         this.charData = charData;
@@ -31,18 +28,23 @@ public class Battle_Heros : Units
         //     charData.CurrentMana += 100;
         // }
 
+        if (isSkillPlaying || unitCC.faint)
+            return;
+
         base.Attack();
 
         attackSpeed = charData.AttackSpeed / attackAnimationClip.length;
         animator.SetFloat("AttackSpeed", attackSpeed);
 
         StartCoroutine("CouroutineAttack");
+
         charData.CurrentMana += 20;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
+
     }
     
     public override void Hit(Character Causer, float damage)
@@ -92,7 +94,7 @@ public class Battle_Heros : Units
     IEnumerator CouroutineAttack()
     {
 
-        yield return new WaitForSeconds(animationDamageDelay);
+        yield return new WaitForSeconds(animationDamageDelay / 2);
 
         if (isCloseAttackUnit)
         {

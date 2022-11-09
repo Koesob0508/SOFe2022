@@ -23,6 +23,7 @@ public class FireNight09 : Battle_Heros
                 continue;
 
             hitUnits[i].GetComponent<Units>().Hit(charData, charData.AttackDamage * 1.5f);
+            hitUnits[i].GetComponent<Units>().GetCC("burn", 5.0f, charData);
         }
     }
 

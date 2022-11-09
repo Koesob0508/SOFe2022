@@ -13,7 +13,9 @@ public class HeroManager : MonoBehaviour
         EnrollHero(0);
         EnrollHero(1);
         EnrollHero(2);
-        EnrollHero(11);
+        EnrollHero(9);
+        EnrollHero(14);
+        EnrollHero(18);
         EnrollHero(19);
 
         GameManager.Relation.GetTeamScore();
