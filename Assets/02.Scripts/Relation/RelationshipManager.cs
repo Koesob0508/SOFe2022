@@ -6,7 +6,7 @@ public partial class RelationshipManager : MonoBehaviour
 {
     public List<Hero> HeroList = new List<Hero>();
     public sbyte RelationScore;
-    [SerializeField] private List<CustomEvent> events;
+    [SerializeField] private List<CustomSignal> signals;
 
     public void Init()
     {
@@ -96,11 +96,11 @@ public partial class RelationshipManager : MonoBehaviour
     #region 로그 읽어들이는 부분 구현
     private void ReadEvents(LogInfo _logInfo)
     {
-        foreach(CustomEvent customEvent in events)
+        foreach(CustomSignal customSignal in signals)
         {
             // customEvent에 log 정보를 뿌립니다. 그게 끝
             // 그러면 customEvent는 받은 log를 바탕으로 조건을 판단하고 발동해야한다면 어련히 발동시킵니다.
-            customEvent.Judge(_logInfo);
+            customSignal.Judge(_logInfo);
         }
     }
     #endregion
