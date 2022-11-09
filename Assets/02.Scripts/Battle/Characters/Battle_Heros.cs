@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Heros : Units
-{
+{
     public override void Initalize(Character charData)
     {
         this.charData = charData;
@@ -34,6 +34,7 @@ public class Battle_Heros : Units
         base.Attack();
 
         attackSpeed = charData.AttackSpeed / attackAnimationClip.length;
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
         animator.SetFloat("AttackSpeed", attackSpeed);
 
         StartCoroutine("CouroutineAttack");

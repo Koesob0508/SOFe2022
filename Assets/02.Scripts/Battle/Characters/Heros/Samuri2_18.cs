@@ -44,6 +44,7 @@ public class Samuri2_18 : Battle_Heros
 
         alter.GetComponent<Battle_Heros>().Initalize(tmpCharData);
         alter.GetComponent<Battle_Heros>().bHasSkill = false;
+        alter.GetComponent<Units>().StartBattle();
 
         
     }
