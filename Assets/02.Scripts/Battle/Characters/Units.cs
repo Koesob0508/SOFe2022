@@ -33,7 +33,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public System.Action skillFinished;
 
-    HeroInvenItem invenItemUI;
+    //HeroInvenItem invenItemUI;
 
     public GameObject projectileObject;
     public GameObject projectileSpawnPoint;
@@ -72,6 +72,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
+        UnitUI.GetComponent<Canvas>().sortingLayerID = SortingLayer.NameToID("Char");
+        UnitUI.GetComponent<Canvas>().sortingOrder = -99;
         UnitUI.transform.parent = transform;
         UnitUI.transform.position += uiOffset;
         hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
@@ -93,7 +95,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void SetItemUI(HeroInvenItem itemUI)
     {
-        this.invenItemUI = itemUI;
+        //this.invenItemUI = itemUI;
     }
     public void StartBattle()
     {
@@ -189,13 +191,11 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
         UpdateUI();
         Vector2 screenPos = eventData.position;
-        if (screenPos.x > Screen.width / 2)
-        {
-            screenPos.x = Screen.width / 2;
-        }
-
+        
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
         WorldPos.z = 0;
         transform.position = WorldPos;
@@ -205,15 +205,58 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
-
+        Vector2 screenPos = eventData.position;
         if (hit.collider != null)
         {
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == invenItemUI)
+            if(item != null)
+                item.ReturnToInven(gameObject);
+            //if (item == invenItemUI)
+            //{
+            //    invenItemUI.ReturnToInven();
+            //}
+            else
             {
-                invenItemUI.ReturnToInven();
+                if (screenPos.x > Screen.width / 2)
+                {
+                    screenPos.x = Screen.width / 2;
+                }
+                if (screenPos.x < Screen.width * 0.1)
+                {
+                    screenPos.x = Screen.width * 0.1f;
+                }
+                if (screenPos.y > Screen.height / 2)
+                {
+                    screenPos.y = Screen.height / 2;
+                }
+                if (screenPos.y < 0)
+                {
+                    screenPos.y = 0;
+                }
             }
         }
+        else
+        {
+            if (screenPos.x > Screen.width / 2)
+            {
+                screenPos.x = Screen.width / 2;
+            }
+            if (screenPos.x < Screen.width * 0.1)
+            {
+                screenPos.x = Screen.width * 0.1f;
+            }
+            if (screenPos.y > Screen.height / 2)
+            {
+                screenPos.y = Screen.height / 2;
+            }
+            if (screenPos.y < 0)
+            {
+                screenPos.y = 0;
+            }
+        }
+        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        WorldPos.z = 0;
+        transform.position = WorldPos;
     }
     public void SetSpeed(float Speed)
     {

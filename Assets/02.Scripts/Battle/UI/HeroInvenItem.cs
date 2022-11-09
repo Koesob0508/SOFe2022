@@ -35,15 +35,18 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     private void SetHeroObj(GameObject HeroObj)
     {
         HeroObject = HeroObj;
-        HeroObject.GetComponent<Units>().SetItemUI(this);
+        //HeroObject.GetComponent<Units>().SetItemUI(this);
     }
 
-    public void ReturnToInven()
+    public void ReturnToInven(GameObject Hero)
     {
         isHeroInInven = true;
-        HeroObject.SetActive(false);
-        GameManager.Battle.DeleteHeroOnBattle(HeroObject);
-        HeroImage.sprite = GameManager.Data.LoadSprite(HeroObject.GetComponent<Units>().charData.GUID);
+        HeroImage.gameObject.SetActive(true);
+        Hero.SetActive(false);
+        GameManager.Battle.DeleteHeroOnBattle(Hero);
+        HeroImage.sprite = GameManager.Data.LoadSprite(Hero.GetComponent<Units>().charData.GUID);
+        HeroObject = Hero;
+        SetPopUpData((Hero)HeroObject.GetComponent<Units>().charData);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -55,7 +58,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
                 infoPopUp.gameObject.SetActive(isPopUpOpened);
             }
             isHeroInInven = false;
-            HeroImage.sprite = null;
+            HeroImage.gameObject.SetActive(false);
             HeroObject.SetActive(true);
             Vector3 WorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
             WorldPos.z = 0;
@@ -86,20 +89,59 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
         {
             parentPanel.EndDragging();
             GameManager.Battle.SetHeroOnBattle(HeroObject);
-
             int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero, Mathf.Infinity, layerMask);
+            Vector2 screenPos = eventData.position;
 
             if (hit.collider != null)
             {
                 HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
                 if (item == this)
                 {
-                    Debug.Log("here2");
-
-                    ReturnToInven();
+                    ReturnToInven(HeroObject);
+                }
+                else
+                {
+                    if (screenPos.x > Screen.width / 2)
+                    {
+                        screenPos.x = Screen.width / 2;
+                    }
+                    if (screenPos.x < Screen.width * 0.1)
+                    {
+                        screenPos.x = Screen.width * 0.1f;
+                    }
+                    if (screenPos.y > Screen.height / 2)
+                    {
+                        screenPos.y = Screen.height / 2;
+                    }
+                    if (screenPos.y < 0)
+                    {
+                        screenPos.y = 0;
+                    }
                 }
             }
+            else
+            {
+                if (screenPos.x > Screen.width / 2)
+                {
+                    screenPos.x = Screen.width / 2;
+                }
+                if (screenPos.x < Screen.width * 0.1)
+                {
+                    screenPos.x = Screen.width * 0.1f;
+                }
+                if (screenPos.y > Screen.height / 2)
+                {
+                    screenPos.y = Screen.height / 2;
+                }
+                if (screenPos.y < 0)
+                {
+                    screenPos.y = 0;
+                }
+            }
+            Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+            WorldPos.z = 0;
+            HeroObject.transform.position = WorldPos;
         }
     }
     public void OnPointerClick(PointerEventData eventData)
@@ -120,7 +162,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     public void Initalize(Hero hero)
     {
         parentPanel = GetComponentInParent<HeroInvenPanel>();
-        HeroImage = GetComponent<Image>();
+        HeroImage = GetComponentsInChildren<Image>()[1];
         infoPopUp = parentPanel.GetComponentInChildren<HeroInfo_PopUp>();
         infoPopUp.gameObject.SetActive(false);
 

@@ -61,14 +61,23 @@ public class BattleSceneManager : MonoBehaviour
         Debug.Log("BattleManager Initalized");
 
         // Get UI Elements
-        BattleCanvas = FindObjectOfType<Canvas>();
+        BattleCanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<Canvas>();
         bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
         bEndPanel = BattleCanvas.GetComponentInChildren<BattleEndUI>();
         synergyPanel = BattleCanvas.GetComponentInChildren<SynergyPanel>();
-
-        bEndPanel.gameObject.SetActive(false);
-        bLogPanel.gameObject.SetActive(false);
+        if (bEndPanel != null)
+        {
+            bEndPanel.gameObject.SetActive(false);
+        }
+        else
+            Debug.Log("EndPanel Doesnt Initalized");
+        if(bLogPanel != null)
+        {
+            bLogPanel.gameObject.SetActive(false);
+        }
+        else
+            Debug.Log("LogPanel Doesnt Initalized");
 
         //Init Hero
         hInvenPanel.Initalize(Heros);
@@ -210,11 +219,11 @@ public class BattleSceneManager : MonoBehaviour
         }
         if (hCount == 0)
         {
-            ActivateBattleEndUI(false);
+            StartCoroutine("ActivateBattleEndUI", false);
         }
         if (eCount == 0)
         {
-            ActivateBattleEndUI(true);
+            StartCoroutine("ActivateBattleEndUI", true);
         }
     }
     public void FinishBattle(bool bIsWin)
@@ -322,7 +331,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             case GameManager.MapType.Boss:
                 {
-                    mapName = "Forest_Dark.png";
+                    mapName = "Dessert_Pale.png";
                     break;
                 }
             case GameManager.MapType.Dessert:
@@ -332,7 +341,7 @@ public class BattleSceneManager : MonoBehaviour
                 }
             case GameManager.MapType.Jungle:
                 {
-                    mapName = "Forest_Bright.png";
+                    mapName = "BigTreeForest_Pale.png";
                     break;
                 }
             default:
@@ -361,12 +370,6 @@ public class BattleSceneManager : MonoBehaviour
     }
 
 
-    void ActivateBattleEndUI(bool bIsWin)
-    {
-        bEndPanel.gameObject.SetActive(true);
-        bEndPanel.Initalize(bIsWin);
-    }
-
   
     void Update()
     {
@@ -375,6 +378,16 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
     #region Coroutine
+    IEnumerator ActivateBattleEndUI(bool bIsWin)
+    {
+        Debug.Log("Started");
+        Time.timeScale = 0.3f;
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 1f;
+        bEndPanel.gameObject.SetActive(true);
+        bEndPanel.Initalize(bIsWin);
+        yield break;
+    }
     IEnumerator FadeInTransition(Color col)
     {
         Material mat = transition.material;
