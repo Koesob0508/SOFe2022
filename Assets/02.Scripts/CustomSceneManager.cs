@@ -82,6 +82,7 @@ public class CustomSceneManager
                 hlist.Add(h18);
                 hlist.Add(h19);
                 hlist.Add(h20);
+
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
                 GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
                 break;

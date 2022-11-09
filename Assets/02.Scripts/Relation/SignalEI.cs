@@ -4,30 +4,41 @@ using UnityEngine;
 
 public class SignalEI : CustomSignal
 {
-    [SerializeField] private Hero preHero;
-    [SerializeField] private Hero postHero;
-    [SerializeField] private Enemy preEnemy;
-    [SerializeField] private Enemy postEnemy;
+    [SerializeField] private Hero preHero = null;
+    [SerializeField] private string preValue;
+    [SerializeField] private Hero postHero = null;
+    [SerializeField] private string postValue;
+    [SerializeField] private Enemy preEnemy = null;
+    [SerializeField] private Enemy postEnemy = null;
 
     protected override bool Condition(LogInfo _logInfo)
     {
-        Debug.Log(_logInfo.Subjective.GetType());
         // 일단 subject가 Hero여야 실행
         if (_logInfo.Subjective is Hero && _logInfo.Objective is Enemy)
         {
-            Debug.Log("일단 condition은 통과");
+            preHero = postHero;
+            preEnemy = postEnemy;
             postHero = (Hero)_logInfo.Subjective;
-            postEnemy = (Enemy)_logInfo.Objective;  
+            postEnemy = (Enemy)_logInfo.Objective;
 
-            if(preHero != null && preEnemy != null)
-            {
-                Debug.Log("Pre Hero 존재, Pre Enemy 존재");
-                if(preHero.Name != postHero.Name && object.ReferenceEquals(preEnemy, postEnemy))
-                {
-                    Debug.Log("서로 다른 히어로 같은 적 공격");
-                    return true;
-                }
-            }
+
+            //if (prehero.name != posthero.name && object.referenceequals(preenemy, postenemy))
+            //{
+            //    debug.log("서로 다른 히어로, 같은 적 공격");
+
+            //    testgamemanager.instance.eventlog.text = "e&i event 발생 : 서로 다른 히어로, 같은 적 공격";
+            //    return true;
+            //}
+            //else
+            //{
+            //    testgamemanager.instance.eventlog.text = "e&i event 발생 조건 x";
+            //}
+
+
+        }
+        else
+        {
+            ///TestGameManager.Instance.eventLog.text = "E&I event 발생 조건 X";
         }
 
         return false;
@@ -36,108 +47,27 @@ public class SignalEI : CustomSignal
     protected override void Apply()
     {
         Debug.Log("E와 I 간 Event 발생");
-        switch(preHero.MBTI)
-        {
-            case GameManager.MbtiType.INFP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENFP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INFJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENFJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INTJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENTJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.INTP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ENTP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISFP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESFP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISTP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESTP:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISFJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESFJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-            case GameManager.MbtiType.ISTJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
-                break;
-            case GameManager.MbtiType.ESTJ:
-                GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
-                break;
-        }
 
-        switch (postHero.MBTI)
-        {
-            case GameManager.MbtiType.INFP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENFP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INFJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENFJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INTJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENTJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.INTP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ENTP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISFP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESFP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISTP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESTP:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISFJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESFJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-            case GameManager.MbtiType.ISTJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
-                break;
-            case GameManager.MbtiType.ESTJ:
-                GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
-                break;
-        }
+        //if(TestGameManager.Relation.IsI(preHero))
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
+        //    TestGameManager.Instance.heroALog.text = "Hero A : 아직 어사인데...(-10)";
+        //}
+        //else // I가 아니면 E이기 때문에...
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
+        //    TestGameManager.Instance.heroALog.text = "Hero A : 이건... 인연?(+10)";
+        //}
+
+        //if (TestGameManager.Relation.IsI(postHero))
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
+        //    TestGameManager.Instance.heroBLog.text = "Hero B : 아직 어사인데...(-10)";
+        //}
+        //else // I가 아니면 E이기 때문에...
+        //{
+        //    TestGameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
+        //    TestGameManager.Instance.heroBLog.text = "Hero B : 이건... 인연?(+10)";
+        //}
     }
 }

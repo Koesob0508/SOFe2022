@@ -14,7 +14,7 @@ AnimatorStateMachine:
     m_Position: {x: 500, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8755382965784161563}
-    m_Position: {x: 300, y: -50, z: 0}
+    m_Position: {x: 360, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5655200615241025056}
     m_Position: {x: 20, y: -130, z: 0}
@@ -26,7 +26,7 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: -400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1865356419908413709}
-    m_Position: {x: 510, y: -110, z: 0}
+    m_Position: {x: 590, y: -230, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -273775863654373652}
@@ -338,6 +338,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: Skill
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: AttackSpeed
+    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -665,13 +671,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 51216713ea2de164995a932977af3dd4, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

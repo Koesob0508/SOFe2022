@@ -85,6 +85,60 @@ public partial class RelationshipManager : MonoBehaviour
         // MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
     }
 
+    public bool IsI(Hero _hero)
+    {
+        switch (_hero.MBTI)
+        {
+            case GameManager.MbtiType.INFJ:
+                return true;
+            case GameManager.MbtiType.INFP:
+                return true;
+            case GameManager.MbtiType.INTP:
+                return true;
+            case GameManager.MbtiType.INTJ:
+                return true;
+            case GameManager.MbtiType.ISFJ:
+                return true;
+            case GameManager.MbtiType.ISFP:
+                return true;
+            case GameManager.MbtiType.ISTJ:
+                return true;
+            case GameManager.MbtiType.ISTP:
+                return true;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
+    public bool IsE(Hero _hero)
+    {
+        switch (_hero.MBTI)
+        {
+            case GameManager.MbtiType.ENFJ:
+                return true;
+            case GameManager.MbtiType.ENFP:
+                return true;
+            case GameManager.MbtiType.ENTJ:
+                return true;
+            case GameManager.MbtiType.ENTP:
+                return true;
+            case GameManager.MbtiType.ESFJ:
+                return true;
+            case GameManager.MbtiType.ESFP:
+                return true;
+            case GameManager.MbtiType.ESTJ:
+                return true;
+            case GameManager.MbtiType.ESTP:
+                return true;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// 로그를 받아들이는 부분. 어떻게 처리할지는 이후 구현
     /// </summary>

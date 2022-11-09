@@ -33,12 +33,15 @@ public class EventManager : MonoBehaviour
     public string ResultNum;
     public string ResultSign;
     public List<Hero> ResultTarget = new List<Hero>();
+    // Q&A event 관련 변수
+    GameObject choice;
+    public List<GameManager.MbtiType> TargetMBTI = new List<GameManager.MbtiType>();
 
     void Start()
     {
         ChoiceMode = 0;
-        Type = (EventType)0;
-        //Type = (EventType)UnityEngine.Random.Range(0, 5);
+        Type = (EventType)5;
+        //Type = (EventType)UnityEngine.Random.Range(0, 6);
         ResultTarget.Clear();
 
 
@@ -121,6 +124,7 @@ public class EventManager : MonoBehaviour
 
     public void Result()
     {
+        // 이벤트에 따른 결과창을 띄웁니다.
         EventPanel = Instantiate(ResultBox, new Vector3(1200, 540, 0), Quaternion.identity);
         EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
 
@@ -136,7 +140,6 @@ public class EventManager : MonoBehaviour
             HeroImage.transform.SetParent(EventPanel.transform.GetChild(2).GetChild(0).transform);
             HeroImage.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(_hero.GUID);
         }
-
     }
 
 
@@ -231,13 +234,14 @@ public class EventManager : MonoBehaviour
         if (mode == 1)
         {
             Hero _hero = GameManager.Hero.GetHeroList()[UnityEngine.Random.Range(0, GameManager.Hero.HeroList.Count())];
+            GameManager.MbtiType temp = _hero.MBTI;
             _hero.MBTI = (GameManager.MbtiType)UnityEngine.Random.Range(0, 16);
             ResultTarget.Add(_hero);
 
             ResultMent = "한 용병에게 진실을 요구했습니다";
-            ResultType = "MBTI";
-            ResultNum = " ??? ";
-            ResultSign = " ??? ";
+            ResultType = "" + temp;
+            ResultNum = "->";
+            ResultSign = "" + _hero.MBTI;
         }
         else if (mode == 2)
         {
@@ -258,7 +262,24 @@ public class EventManager : MonoBehaviour
         Debug.Log("Merchant " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 1)
+        {
+
+            ResultMent = "일반 장비 ???를 획득합니다";
+            ResultType = "";
+            ResultNum = "";
+            ResultSign = "";
+        }
+        else if (mode == 2)
+        {
+            ResultMent = "특수 장비 ???를 획득합니다";
+            ResultType = " ";
+            ResultNum = " ";
+            ResultSign = " ";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
 
         ChoiceMode = 0;
     }
@@ -268,7 +289,39 @@ public class EventManager : MonoBehaviour
         Debug.Log("Villain " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        if (mode == 1)
+        {
+            ResultTarget = GameManager.Hero.GetHeroList();
+            foreach (Hero _hero in ResultTarget)
+            {
+                // 모든 용병의 허기 10씩 감소
+                _hero.CurHunger -= 10;
+
+            }
+
+            ResultMent = "도망에 성공했습니다!\n그러나 용병들이 조금 지쳐보이는군요 ..";
+            ResultType = "허기";
+            ResultNum = "10";
+            ResultSign = "-";
+        }
+        else if (mode == 2)
+        {
+            ResultTarget = GameManager.Hero.GetHeroList();
+            foreach (Hero _hero in ResultTarget)
+            {
+                // 체력을 용병의 최대 체력의 10%씩 회복.
+                _hero.CurrentHP -= _hero.MaxHP * (float)0.1;
+            }
+
+            ResultMent = "용병들은 힘을 모아 악당을 물리치는데 성공했습니다!\n하지만 모든 용병이 부상을 입고 말았습니다";
+            ResultType = "체력";
+            ResultNum = "10%";
+            ResultSign = "-";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
+
         ChoiceMode = 0;
     }
 
@@ -278,14 +331,86 @@ public class EventManager : MonoBehaviour
         Debug.Log("QnA " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
+        // 결과에 따라 영향받는 MBTI 용병
+        TargetMBTI = choice.GetComponent<Choice>().GetTargetMbti();
+        foreach (Hero hero in GameManager.Hero.GetHeroList())
+        {
+            if (TargetMBTI.Contains(hero.MBTI))
+            {
+                ResultTarget.Add(hero);
+            }
+        }
+
+        // 해당 용병에게 미칠 영향
+        string Type = " ";
+        int num = UnityEngine.Random.Range(5, 11);
+        int how = UnityEngine.Random.Range(0, 2);
+
+        switch (UnityEngine.Random.Range(0, 3))
+        {
+            case 0:
+                {
+                    Type = "공격력";
+                    foreach (Hero _hero in ResultTarget)
+                    {
+                        // 해당하는 MBTI를 가진 용병의 공격력이 랜덤으로 5~10% 증가/감소
+                        if (how == 0)
+                            _hero.AttackDamage += _hero.AttackDamage * (float)(num / 10);
+                        else
+                            _hero.AttackDamage -= _hero.AttackDamage * (float)(num / 10);
+                    }
+                    break;
+                }
+            case 1:
+                {
+                    Type = "체력";
+                    foreach (Hero _hero in ResultTarget)
+                    {
+                        // 해당하는 MBTI를 가진 용병의 체력이 랜덤으로 5~10% 증가/감소
+                        if (how == 0)
+                            _hero.CurrentHP += _hero.CurrentHP * (float)(num / 10);
+                        else
+                            _hero.CurrentHP -= _hero.CurrentHP * (float)(num / 10);
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    Type = "방어력";
+                    foreach (Hero _hero in ResultTarget)
+                    {
+                        // 해당하는 MBTI를 가진 용병의 방어력이 랜덤으로 5~10% 증가/감소
+                        if (how == 0)
+                            _hero.DefensePoint += _hero.DefensePoint * (float)(num / 10);
+                        else
+                            _hero.DefensePoint -= _hero.DefensePoint * (float)(num / 10);
+                    }
+                    break;
+                }
+        }
+
+        ResultType = Type;
+        ResultNum = "" + num;
+        if (how == 0)
+        {
+            ResultMent = "이에 공감한 용병의 전의가 올라가고 있습니다!";
+            ResultSign = "+";
+        }
+        else
+        {
+            ResultMent = "일부 용병들은 당신의 대답을 썩 달가워하지 않는군요..";
+            ResultSign = "-";
+        }
+
         // 선택에 따른 결과를 띄워준다
+        Result();
+
         ChoiceMode = 0;
     }
 
     private void SetQnA()
     {
-        //int num = UnityEngine.Random.Range(1, 6);
-        int num = 1;
+        int num = UnityEngine.Random.Range(1, 6);
 
         EventPanel = Instantiate(Resources.Load("Prefabs/Event_QnA/MBTI_Q" + num) as GameObject, new Vector3(1200, 540, 0), Quaternion.identity);
         EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
@@ -298,7 +423,7 @@ public class EventManager : MonoBehaviour
         for (int i = 0; i < EventPanel.GetComponent<ChoiceController>().choiceNum; i++)
         {
             // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-            GameObject choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
+            choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
             choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
         }
     }

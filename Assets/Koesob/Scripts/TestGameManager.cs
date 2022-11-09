@@ -6,25 +6,65 @@ using UnityEngine.UI;
 
 public class TestGameManager : MonoBehaviour
 {
-    public RelationshipManager relation;
+    [SerializeField] private RelationshipManager _relation;
+    public static RelationshipManager Relation => Instance._relation;
     public TextMeshProUGUI log;
     public TextMeshProUGUI eventLog;
     public Hero heroA;
     public Hero heroB;
     public Enemy enemyA;
     public Enemy enemyB;
+    public TextMeshProUGUI heroALog;
+    public TextMeshProUGUI heroBLog;
+    public GameManager.MbtiType heroAMBTI;
+    public GameManager.MbtiType heroBMBTI;
+
+    private static TestGameManager instance;
+
+    public static TestGameManager Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                return null;
+            }
+
+            return instance;
+        }
+    }
 
 
     private void Start()
     {
+        if(instance == null)
+        {
+            GameObject obj = GameObject.Find("TestGameManager");
+
+            if(obj == null)
+            {
+                obj = new GameObject { name = "TestGameManager" };
+                obj.AddComponent<TestGameManager>();
+            }
+
+            DontDestroyOnLoad(obj);
+            instance = obj.GetComponent<TestGameManager>();
+        }
+
         Debug.Log("Test Game Manager Start");
 
-        relation.Init();
+        Relation.Init();
 
         heroA = new Hero();
+        heroA.Name = "A";
+        heroA.MBTI = heroAMBTI;
         heroB = new Hero();
+        heroB.Name = "B";
+        heroB.MBTI = heroBMBTI;
         enemyA = new Enemy();
+        enemyA.Name = "C";
         enemyB = new Enemy();
+        enemyB.Name = "D";
     }
 
     private void Update()
@@ -39,7 +79,7 @@ public class TestGameManager : MonoBehaviour
             logInfo.Objective = enemyA;
             logInfo.Verb = Verb.Attack;
 
-            relation.ApplyLog(logInfo);
+            Relation.ApplyLog(logInfo);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -50,7 +90,7 @@ public class TestGameManager : MonoBehaviour
             logInfo.Objective = enemyB;
             logInfo.Verb = Verb.Attack;
 
-            relation.ApplyLog(logInfo);
+            Relation.ApplyLog(logInfo);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -61,7 +101,7 @@ public class TestGameManager : MonoBehaviour
             logInfo.Objective = enemyA;
             logInfo.Verb = Verb.Attack;
 
-            relation.ApplyLog(logInfo);
+            Relation.ApplyLog(logInfo);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -72,7 +112,7 @@ public class TestGameManager : MonoBehaviour
             logInfo.Objective = enemyB;
             logInfo.Verb = Verb.Attack;
 
-            relation.ApplyLog(logInfo);
+            Relation.ApplyLog(logInfo);
         }
 
     }
