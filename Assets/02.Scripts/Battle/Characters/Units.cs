@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+public class CC
+{
+    public bool burn = false;
+    public bool faint = false;
+    public bool hide = false;
+}
+
 public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+
     bool isUpdating = false;
     protected bool isSkillPlaying = false;
     protected bool isCloseAttackUnit; // 근접 유닛
-    
+
     public Animator animator;
     public bool bHasSkill;
     float localScaleX;
@@ -18,7 +26,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     public float attackTimer = 0.0f;
 
     public GameObject UnitUIObject;
-    
+
     GameObject UnitUI;
     protected Slider hpBar;
     protected Slider spBar;
@@ -54,20 +62,34 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected SpriteRenderer spr;
 
+    public AnimationClip attackAnimationClip;
+
+    protected float animationDamageDelay;
+    protected float attackSpeed;
+
+    public CC unitCC;
+    private Character burnCauser; // 화상을 건 적
+
+    GameObject burnEffectObject;
+    GameObject faintEffectObject;
+
     protected virtual void Start()
     {
         isCloseAttackUnit = true;
-       
+
+        burnEffectObject = Resources.Load<GameObject>("Prefabs/Effects/burnEffect");
+        faintEffectObject = Resources.Load<GameObject>("Prefabs/Effects/faintEffect");
+
     }
 
     protected virtual void Update()
     {
         UpdateUI();
 
-        if (bCanMove)
+        if (bCanMove && !unitCC.faint)
             Move();
     }
-        
+
     public virtual void Initalize(Character charData)
     {
         animator = GetComponentInChildren<Animator>();
@@ -91,6 +113,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         GetComponent<Units>().SetSpeed(charData.MoveSpeed);
         spr = GetComponentInChildren<SpriteRenderer>();
+
+        unitCC = new CC();
     }
 
     public void SetItemUI(HeroInvenItem itemUI)
@@ -126,7 +150,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         float t = GetCurrentAnimationTime();
 
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(t + attackSpeed);
         skillFinished();
         isSkillPlaying = false;
     }
@@ -137,7 +161,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     }
     public void PlaySkillAnimation()
-
     {
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
@@ -319,6 +342,64 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             spr.flipX = false;
             isFilped = false;
+        }
+    }
+
+    public void GetCC(string type, float time, Character Causer = null)
+    {
+        switch (type)
+        {
+            case "burn":
+                unitCC.burn = true;
+                burnCauser = Causer;
+                StartCoroutine(BurnDamaged());
+                break;
+            case "faint":
+                unitCC.faint = true;
+
+                Vector3 effectPosition = transform.position;
+                effectPosition.z = transform.position.z - 1;
+                effectPosition.y = transform.position.y + 1;
+
+                GameObject burnEffect = Instantiate(faintEffectObject, effectPosition, Quaternion.identity);
+                Destroy(burnEffect, time);
+                break;
+            case "hide":
+                unitCC.hide = true; break;
+        }
+        StartCoroutine(CCBurnCouroutine(type, time));
+
+    }
+
+    IEnumerator CCBurnCouroutine(string type, float time)
+    {
+        yield return new WaitForSeconds(time);
+        switch (type)
+        {
+            case "burn":
+                unitCC.burn = false; break;
+            case "faint":
+                unitCC.faint = false; break;
+            case "hide":
+                unitCC.hide = false; break;
+        }
+    }
+    IEnumerator BurnDamaged()
+    {
+        while(true)
+        {
+            if (unitCC.burn == false)
+                break;
+
+            yield return new WaitForSeconds(1.0f);
+            Hit(burnCauser, 20f);
+
+            Vector3 effectPosition = transform.position;
+            effectPosition.z = transform.position.z - 1;
+            effectPosition.y = transform.position.y + 1;
+
+            GameObject burnEffect = Instantiate(burnEffectObject, effectPosition, Quaternion.identity);
+            Destroy(burnEffect, 1.0f);
         }
     }
 }

@@ -32,7 +32,7 @@ public class Guard11 : Battle_Heros
         charData.AttackDamage += 10f;
         charData.DefensePoint += 10f;
         charData.MoveSpeed += 15f;
-        charData.AttackSpeed += 0.5f;   
+        charData.AttackSpeed += 1.5f;   
 
         // effect & animation Ãß°¡
     }
@@ -42,7 +42,7 @@ public class Guard11 : Battle_Heros
         charData.AttackDamage -= 10f;
         charData.DefensePoint -= 10f;
         charData.MoveSpeed -= 15f;
-        charData.AttackSpeed -= 0.5f;
+        charData.AttackSpeed -= 1.5f;
     }
 
 

@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkill: 1
+  bHasSkill: 0
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
@@ -161,4 +161,3 @@ MonoBehaviour:
   skillEffect: {fileID: 0}
   speed: 1
   attackAnimationClip: {fileID: 7400000, guid: 15410f05a792fac4ca820e053c722024, type: 2}
-  alterGambeObject: {fileID: 2290746180817125747, guid: d2835fa0af688784e959ee585eedc224, type: 3}

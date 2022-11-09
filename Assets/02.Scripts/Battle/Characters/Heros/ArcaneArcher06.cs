@@ -23,6 +23,7 @@ public class ArcaneArcher06 : Battle_Heros
     IEnumerator SkillEffect()
     {
         yield return new WaitForSeconds(0.05f);
+        GetCC("hide", 2.0f);
 
         if (spr.flipX)
         {
@@ -35,7 +36,7 @@ public class ArcaneArcher06 : Battle_Heros
             isFilped = true;
         }
 
-        for (int i =0;i<10; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (spr.flipX)
                 transform.Translate(Vector3.left * 0.1f);
