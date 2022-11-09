@@ -10,6 +10,7 @@ public class DataManager
 {
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
+    public List<StageDataStruct> StageData = new List<StageDataStruct>();
     public uint Money = 0;
 
     [Serializable]
@@ -23,18 +24,21 @@ public class DataManager
 
     public void Init()
     {
-        LoadInitalEnemyData();
+        LoadInitialEnemyData();
+        LoadInitialStageData();
+
         if(IsExistSaveData())
         {
             Load();
         }
         else
         {
-            LoadInitalHeroData();
+            LoadInitialHeroData();
+            GameManager.Stage.SetStageData(StageData);
         }
     }
 
-    void LoadInitalHeroData()
+    void LoadInitialHeroData()
     {
         CSVImporter csvImp = new CSVImporter();
         csvImp.OpenFile("Data/Heros_values");
@@ -68,7 +72,7 @@ public class DataManager
 
        
     }
-    void LoadInitalEnemyData()
+    void LoadInitialEnemyData()
     {
         CSVImporter csvImp1 = new CSVImporter();
         csvImp1.OpenFile("Data/Monsters_values");
@@ -94,6 +98,36 @@ public class DataManager
             line1 = csvImp1.Readline();
 
             ObjectCodex.Add(enemy.GUID, enemy);
+        }
+    }
+
+    private void LoadInitialStageData()
+    {
+        CSVImporter csvStage = new CSVImporter();
+        csvStage.OpenFile("Data/Stages_values");
+        csvStage.ReadHeader();
+        string line = csvStage.Readline();
+
+        while (line != null)
+        {
+            string[] elems = line.Split(',');
+
+            if(elems[0] == "")
+            {
+                break;
+            }
+
+            var stageDataStruct = new StageDataStruct();
+           
+            stageDataStruct.stage = int.Parse(elems[0]);
+            stageDataStruct.map = (GameManager.MapType)int.Parse(elems[1]);
+            stageDataStruct.step = int.Parse(elems[2]);
+            stageDataStruct.case_ = int.Parse(elems[3]);
+            stageDataStruct.ruid = int.Parse(elems[4]);
+            stageDataStruct.count = int.Parse(elems[5]);
+            line = csvStage.Readline();
+
+            StageData.Add(stageDataStruct);
         }
     }
     public GlobalObject LoadObject(uint guid, GameManager.ObjectType type)

@@ -7,6 +7,10 @@ using UnityEngine.Events;
 
 public class StageNode : MonoBehaviour
 {
+    public int StageLevel { get; private set; }
+    public GameManager.MapType StageMapType { get; private set; }
+    public int StageStep { get; private set; }
+
     public StageManager.StageType Type { get; private set; }
     public int Step { get; private set; }
     public int Index { get; private set; }
@@ -21,6 +25,10 @@ public class StageNode : MonoBehaviour
 
     public void Init(StageManager.Seed _seed, float _scale)
     {
+        StageLevel = _seed.StageLevel;
+        StageMapType = _seed.StageMapType;
+        StageStep = _seed.StageStep;
+
         Type = _seed.Type;
         Step = _seed.Step;
         Index = _seed.Index;
@@ -30,7 +38,7 @@ public class StageNode : MonoBehaviour
         IsInteractable = false;
         NextStages = new List<int>();
 
-        name = string.Format("Step : {0} Index : {1}", Step, Index);
+        name = string.Format("Step : {0} Index : {1} StageStep : {2} MapType : {3}", Step, Index, StageStep, StageMapType);
         transform.localScale = new Vector3(_scale, _scale, 1f);
 
         if (Step == 0)

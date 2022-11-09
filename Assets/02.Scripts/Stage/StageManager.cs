@@ -27,7 +27,8 @@ public partial class StageManager : MonoBehaviour
     private float screenHeight;
     private float stageNodeScale;
 
-    private string saveData; 
+    private List<StageDataStruct> stageData;
+    private string saveData;
 
     // 현재는 GameManager에 StageManager가 할당되어 있어야 한다.
     public void Init()
@@ -66,10 +67,10 @@ public partial class StageManager : MonoBehaviour
         else
         {
             townIndices = new List<int>();
-            int step = stepCount / townCount;
-            for(int index = step; index < stepCount; index+=step)
+            int step = stepCount / (townCount+1);
+            for(int index = step; index < stepCount-1; index+=step)
             {
-                townIndices.Add(index-1);
+                townIndices.Add(index);
             }
             Debug.Log("Save data did not found, Init save data");
             InitStageMap(startCount, stepCount, townIndices);
@@ -103,6 +104,13 @@ public partial class StageManager : MonoBehaviour
         //SaveStageMap(stageMapToString);
     }
 
+    public void SetStageData(List<StageDataStruct> _stageData)
+    {
+        stageData = _stageData;
+
+        Debug.Log("Set StageData");
+    }
+
     private void LoadStageMap(string _saveData)
     {
         Debug.Log("Stage Map Loaded : " + _saveData);
@@ -133,64 +141,138 @@ public partial class StageManager : MonoBehaviour
 
     private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices)
     {
+        foreach(int testIndex in _townIndices)
+        {
+            Debug.Log(testIndex);
+        }
+        
+        int stageLevel = 1;
+        int stageStep = 1;
+
         foreach (List<Seed> stepList in _seeds)
         {
+            if(_townIndices.Contains(stepList[0].Step))
+            {
+                stageStep++;
+
+                foreach (Seed seed in stepList)
+                {
+                    seed.StageLevel = stageLevel;
+                    seed.StageStep = stageStep;
+                }
+            }
+            else
+            {
+                foreach (Seed seed in stepList)
+                {
+                    seed.StageLevel = stageLevel;
+                    seed.StageStep = stageStep;
+                }
+            }
+
+            // 보스 스테이지가 아니라면
             if (stepList[0].Step != _seeds.Count - 1)
             {
-                // 시작과 끝 사이에 있는 단계 처리
+                int townIndex = Random.Range(0, stepList.Count - 1);
+
+                // 시작 단계가 아니라면
                 if (stepList[0].Step != 0)
                 {
                     foreach (Seed seed in stepList)
                     {
                         seed.SetNextStage(seed.Index);
 
-                        if(_townIndices.Contains(seed.Step))
+                        if (_townIndices.Contains(seed.Step))
                         {
-                            seed.Type = StageType.Town;
-                        }
-                        else
-                        {
-                            int dice = Random.Range(0, 100);
-
-                            if(dice > 10)
+                            if(seed.Index == townIndex)
                             {
-                                seed.Type = StageType.Battle;
+                                seed.Type = StageType.Town;
                             }
                             else
                             {
-                                seed.Type = StageType.Event;
+                                //int toIndex = stepList[townIndex].GetResultPointer();
+                                seed.Merge(stepList[townIndex]);
+                            }
+                        }
+                        else
+                        {
+                            seed.Type = StageType.Battle;
+
+                            int dice = Random.Range(0, 100);
+
+                            if(dice > 30)
+                            {
+                                seed.StageMapType = GameManager.MapType.Jungle;
+                            }
+                            else
+                            {
+                                seed.StageMapType = GameManager.MapType.Dessert;
                             }
                         }
                     }
 
-                    int count = Random.Range(0, stepList.Count - 1);
+
+                    int count = Random.Range(1, stepList.Count - 1);
                     List<int> randomIndex = GetRandomIndex(stepList.Count - 1, count);
 
-                    foreach (int index in randomIndex)
+                    if (!_townIndices.Contains(stepList[0].Step))
                     {
-                        int toIndex = stepList[index + 1].GetResultPointer();
-                        stepList[index].Merge(stepList[toIndex]);
+                        foreach(int fromIndex in randomIndex)
+                        {
+                            int toIndex = 0;
+                            int indexDirection = Random.Range(0, 1);
+                            
+                            if(indexDirection == 0)
+                            {
+                                toIndex = fromIndex + 1;
+                                toIndex = stepList[toIndex].GetResultPointer();
+                                stepList[fromIndex].Merge(stepList[toIndex]);
+                            }
+                            else
+                            {
+                                toIndex = fromIndex - 1;
+                                toIndex = stepList[toIndex].GetResultPointer();
+                                stepList[fromIndex].Merge(stepList[toIndex]);
+                            }
+                        }
                     }
                 }
                 // 시작 단계 처리
                 else
-                {
+                {   
+                    int startIndex = Random.Range(0, stepList.Count - 1);
+
                     foreach (Seed seed in stepList)
                     {
                         seed.SetNextStage(seed.Index);
+
+                        if (seed.Index == startIndex)
+                        {
+                            seed.Type = StageType.Battle;
+                        }
+                        else
+                        {
+                            seed.Merge(stepList[startIndex]);
+                        }
                     }
                 }
             }
             // 마지막 단계 = 보스 스테이지 처리
             else
             {
-                int count = stepList.Count - 1;
-                List<int> randomIndex = GetRandomIndex(stepList.Count - 1, count);
+                int startIndex = Random.Range(0, stepList.Count - 1);
 
-                foreach (int index in randomIndex)
+                foreach (Seed seed in stepList)
                 {
-                    int toIndex = stepList[index + 1].GetResultPointer();
-                    stepList[index].Merge(stepList[toIndex]);
+                    if (seed.Index == startIndex)
+                    {
+                        seed.Type = StageType.Battle;
+                        seed.StageMapType = GameManager.MapType.Boss;
+                    }
+                    else
+                    {
+                        seed.Merge(stepList[startIndex]);
+                    }
                 }
             }
         }
