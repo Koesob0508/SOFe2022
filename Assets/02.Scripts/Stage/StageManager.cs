@@ -27,7 +27,9 @@ public partial class StageManager : MonoBehaviour
     private float screenHeight;
     private float stageNodeScale;
 
-    private List<StageDataStruct> stageData;
+    private List<StageData> stageData;
+    private List<StageLevel> loadedStageData;
+
     private string saveData;
 
     // 현재는 GameManager에 StageManager가 할당되어 있어야 한다.
@@ -58,7 +60,7 @@ public partial class StageManager : MonoBehaviour
         canvas.transform.position = stageManagerPosition;
         canvas.SetActive(false);
 
-        if(saveData != null)
+        if (saveData != null)
         {
             Debug.Log("Save data is found, Load save data");
             LoadStageMap(saveData);
@@ -67,12 +69,14 @@ public partial class StageManager : MonoBehaviour
         else
         {
             townIndices = new List<int>();
-            int step = stepCount / (townCount+1);
-            for(int index = step; index < stepCount-1; index+=step)
+            int step = stepCount / (townCount + 1);
+            for (int index = step; index < stepCount - 1; index += step)
             {
                 townIndices.Add(index);
             }
             Debug.Log("Save data did not found, Init save data");
+            loadedStageData = new List<StageLevel>();
+            LoadStageData(stageData);
             InitStageMap(startCount, stepCount, townIndices);
         }
     }
@@ -82,6 +86,107 @@ public partial class StageManager : MonoBehaviour
         saveData = null;
 
         Destroy(canvas);
+    }
+
+    private void LoadStageData(List<StageData> _stageData)
+    {
+        foreach (StageData stageData in _stageData)
+        {
+            StageEnemy stageEnemy = new StageEnemy();
+            stageEnemy.ruid = stageData.ruid;
+            stageEnemy.count = stageData.count;
+
+            // 리팩토링 필수...
+            if (loadedStageData.Count
+                < stageData.stage + 1)
+            {
+                StageLevel stageLevel = new StageLevel();
+                loadedStageData.Add(stageLevel);
+            }
+
+            if (loadedStageData[stageData.stage].mapTypes.Count
+                < (int)stageData.map + 1)
+            {
+                StageMapType stageMap = new StageMapType();
+                loadedStageData[stageData.stage].mapTypes.Add(stageMap);
+            }
+
+            if (loadedStageData[stageData.stage].mapTypes[(int)stageData.map].steps.Count
+                < stageData.step + 1)
+            {
+                StageStep stageStep = new StageStep();
+                loadedStageData[stageData.stage].mapTypes[(int)stageData.map].steps.Add(stageStep);
+            }
+
+            if (loadedStageData[stageData.stage].mapTypes[(int)stageData.map].steps[stageData.step].cases.Count
+                < stageData.case_ + 1)
+            {
+                StageCase stageCase = new StageCase();
+                loadedStageData[stageData.stage].mapTypes[(int)stageData.map].steps[stageData.step].cases.Add(stageCase);
+            }
+
+            loadedStageData[stageData.stage].mapTypes[(int)stageData.map].steps[stageData.step].cases[stageData.case_].enemies.Add(stageEnemy);
+        }
+
+        string test = "";
+        int level = 0;
+        foreach (StageLevel stagelevel in loadedStageData)
+        {
+            test += string.Format("Stage {0}", level);
+            int mapLevel = 0;
+            foreach (StageMapType map in loadedStageData[level].mapTypes)
+            {
+                test += string.Format(" Map {0}", mapLevel);
+                int stepLevel = 0;
+                foreach (StageStep step in loadedStageData[level].mapTypes[mapLevel].steps)
+                {
+                    test += string.Format(" Step {0}", stepLevel);
+                    int caseLevel = 0;
+                    foreach (StageCase cases in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases)
+                    {
+                        test += string.Format(" Case {0}", caseLevel);
+                        foreach(StageEnemy eneimies in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases[caseLevel].enemies)
+                        {
+                            test += string.Format(" RUID {0} Count {1}", eneimies.ruid, eneimies.count);
+                        }
+                        test += ";";
+                        caseLevel++;
+                    }
+                    stepLevel++;
+                }
+                mapLevel++;
+            }
+            level++;
+        }
+        Debug.Log(test);
+    }
+
+    public List<StageEnemy> GetStageEnemy(int _stage, int _map, int _step)
+    {
+        if (loadedStageData.Count < _stage + 1)
+        {
+            Debug.LogError(string.Format("Stage Over, Stage {0} Map {1} Step{2}", _stage, _map, _step));
+            return null;
+        }
+        else if (loadedStageData[_stage].mapTypes.Count < _map + 1)
+        {
+            Debug.LogError(string.Format("Map Over, Stage {0} Map {1} Step{2}", _stage, _map, _step));
+            return null;
+        }
+        else if (loadedStageData[_stage].mapTypes[_map].steps.Count < _step + 1)
+        {
+            Debug.LogError(string.Format("Step Over, Stage {0} Map {1} Step{2}", _stage, _map, _step));
+            return null;
+        }
+
+        int randomCase = Random.Range(0, loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
+
+        if(loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count < randomCase + 1)
+        {
+            Debug.LogError("Case Count : " + loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
+        }
+
+        return loadedStageData[_stage].mapTypes[_map].steps[_step].cases[randomCase].enemies;
     }
 
     private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices)
@@ -104,7 +209,7 @@ public partial class StageManager : MonoBehaviour
         //SaveStageMap(stageMapToString);
     }
 
-    public void SetStageData(List<StageDataStruct> _stageData)
+    public void SetStageData(List<StageData> _stageData)
     {
         stageData = _stageData;
 
@@ -141,17 +246,12 @@ public partial class StageManager : MonoBehaviour
 
     private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices)
     {
-        foreach(int testIndex in _townIndices)
-        {
-            Debug.Log(testIndex);
-        }
-        
-        int stageLevel = 1;
-        int stageStep = 1;
+        int stageLevel = 0;
+        int stageStep = 0;
 
         foreach (List<Seed> stepList in _seeds)
         {
-            if(_townIndices.Contains(stepList[0].Step))
+            if (_townIndices.Contains(stepList[0].Step))
             {
                 stageStep++;
 
@@ -184,7 +284,7 @@ public partial class StageManager : MonoBehaviour
 
                         if (_townIndices.Contains(seed.Step))
                         {
-                            if(seed.Index == townIndex)
+                            if (seed.Index == townIndex)
                             {
                                 seed.Type = StageType.Town;
                             }
@@ -200,7 +300,7 @@ public partial class StageManager : MonoBehaviour
 
                             int dice = Random.Range(0, 100);
 
-                            if(dice > 30)
+                            if (dice > 30)
                             {
                                 seed.StageMapType = GameManager.MapType.Jungle;
                             }
@@ -217,12 +317,12 @@ public partial class StageManager : MonoBehaviour
 
                     if (!_townIndices.Contains(stepList[0].Step))
                     {
-                        foreach(int fromIndex in randomIndex)
+                        foreach (int fromIndex in randomIndex)
                         {
                             int toIndex = 0;
                             int indexDirection = Random.Range(0, 1);
-                            
-                            if(indexDirection == 0)
+
+                            if (indexDirection == 0)
                             {
                                 toIndex = fromIndex + 1;
                                 toIndex = stepList[toIndex].GetResultPointer();
@@ -239,7 +339,7 @@ public partial class StageManager : MonoBehaviour
                 }
                 // 시작 단계 처리
                 else
-                {   
+                {
                     int startIndex = Random.Range(0, stepList.Count - 1);
 
                     foreach (Seed seed in stepList)
@@ -268,6 +368,7 @@ public partial class StageManager : MonoBehaviour
                     {
                         seed.Type = StageType.Battle;
                         seed.StageMapType = GameManager.MapType.Boss;
+                        seed.StageStep = 0;
                     }
                     else
                     {
@@ -336,11 +437,11 @@ public partial class StageManager : MonoBehaviour
     {
         List<Step> resultList = new List<Step>();
 
-        foreach(List<Seed> steps in _seeds)
+        foreach (List<Seed> steps in _seeds)
         {
             Step stageSteps = new Step();
 
-            foreach(Seed seed in steps)
+            foreach (Seed seed in steps)
             {
                 Vector2 position = seed.Position + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
 
@@ -374,17 +475,17 @@ public partial class StageManager : MonoBehaviour
 
     private List<Step> SetPath(List<Step> _stages, List<List<Seed>> _seeds)
     {
-        foreach(List<Seed> steps in _seeds)
+        foreach (List<Seed> steps in _seeds)
         {
-            foreach(Seed seed in steps)
+            foreach (Seed seed in steps)
             {
-                if(!seed.IsMerged)
+                if (!seed.IsMerged)
                 {
                     int currentStep = seed.Step;
                     int currentIndex = seed.Index;
                     int nextStep = currentStep + 1;
 
-                    foreach(int nextIndex in seed.NextStages)
+                    foreach (int nextIndex in seed.NextStages)
                     {
                         int resultIndex = seeds[nextStep][nextIndex].GetResultPointer();
 
@@ -405,11 +506,11 @@ public partial class StageManager : MonoBehaviour
 
     private void InitLane(GameObject _lanePrefab, List<Step> _stages)
     {
-        foreach(Step step in stages)
+        foreach (Step step in stages)
         {
             foreach (StageNode node in step.GetStageNodes())
             {
-                if(!node.IsMerged)
+                if (!node.IsMerged)
                 {
                     node.GenerateLane(_lanePrefab, _stages);
                 }
@@ -436,6 +537,11 @@ public partial class StageManager : MonoBehaviour
 
         Debug.Log("This Stage is not Battle Stage");
         return null;
+    }
+
+    public GameManager.MapType GetMapType()
+    {
+        return currentStageNode.StageMapType;
     }
 
     public void CompleteStage()
@@ -499,7 +605,7 @@ public partial class StageManager : MonoBehaviour
             {
                 Vector2 position = node.position;
                 StageNode stageNode = null;
-                
+
                 switch (node.type)
                 {
                     case StageType.Battle:
@@ -524,15 +630,15 @@ public partial class StageManager : MonoBehaviour
 
     private void ReconstructLane(GameObject _lanePrefab, StageMap _stageMap)
     {
-        foreach(Step step in _stageMap.stages)
+        foreach (Step step in _stageMap.stages)
         {
-            foreach(StageNode node in step.GetStageNodes())
+            foreach (StageNode node in step.GetStageNodes())
             {
-                if(!node.IsMerged)
+                if (!node.IsMerged)
                 {
                     node.GenerateLane(_lanePrefab, _stageMap.stages);
                 }
             }
-        }    
+        }
     }
 }

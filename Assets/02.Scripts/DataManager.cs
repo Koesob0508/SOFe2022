@@ -10,7 +10,7 @@ public class DataManager
 {
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
-    public List<StageDataStruct> StageData = new List<StageDataStruct>();
+    public List<StageData> StageData = new List<StageData>();
     public uint Money = 0;
 
     [Serializable]
@@ -117,17 +117,17 @@ public class DataManager
                 break;
             }
 
-            var stageDataStruct = new StageDataStruct();
+            var stageData = new StageData();
            
-            stageDataStruct.stage = int.Parse(elems[0]);
-            stageDataStruct.map = (GameManager.MapType)int.Parse(elems[1]);
-            stageDataStruct.step = int.Parse(elems[2]);
-            stageDataStruct.case_ = int.Parse(elems[3]);
-            stageDataStruct.ruid = int.Parse(elems[4]);
-            stageDataStruct.count = int.Parse(elems[5]);
+            stageData.stage = int.Parse(elems[0]);
+            stageData.map = (GameManager.MapType)int.Parse(elems[1]);
+            stageData.step = int.Parse(elems[2]);
+            stageData.case_ = int.Parse(elems[3]);
+            stageData.ruid = int.Parse(elems[4]);
+            stageData.count = int.Parse(elems[5]);
             line = csvStage.Readline();
 
-            StageData.Add(stageDataStruct);
+            StageData.Add(stageData);
         }
     }
     public GlobalObject LoadObject(uint guid, GameManager.ObjectType type)
@@ -271,5 +271,7 @@ public class DataManager
         }
 
         ObjectCodex.Clear();
+        StageData.Clear();
+        GameManager.Stage.SetStageData(StageData);
     }
 }
