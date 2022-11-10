@@ -158,7 +158,7 @@ public partial class StageManager : MonoBehaviour
             }
             level++;
         }
-        Debug.Log(test);
+        // Debug.Log(test);
     }
 
     public List<StageEnemy> GetStageEnemy(int _stage, int _map, int _step)
@@ -218,7 +218,7 @@ public partial class StageManager : MonoBehaviour
 
     private void LoadStageMap(string _saveData)
     {
-        Debug.Log("Stage Map Loaded : " + _saveData);
+        // Debug.Log("Stage Map Loaded : " + _saveData);
         stageMap = DeserializeStageMap(_saveData);
         ReconstructStageNodes(stageMap);
         ReconstructLane(laneObject, stageMap);

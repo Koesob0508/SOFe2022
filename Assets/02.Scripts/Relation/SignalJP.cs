@@ -9,7 +9,7 @@ public class SignalJP : CustomSignal
         Debug.Log("J와 P 간 이벤트 발생");
     }
 
-    protected override bool Condition(LogInfo _logInfo)
+    protected override bool Condition(BattleLogPanel.Log _log)
     {
         return false;
     }
