@@ -31,7 +31,7 @@ namespace BT
             owner_comp.gameObject.GetComponent<Units>().attackTarget = targetObj.gameObject;
             owner_comp.gameObject.GetComponent<Units>().Attack();
 
-            GameManager.Battle.GenerateHit(owner_comp.gameObject, targetObj.gameObject, dmg);
+            GameManager.Battle.GenerateHitEvent(owner_comp.gameObject, targetObj.gameObject, dmg);
             return State.Succeeded;
         }
     }

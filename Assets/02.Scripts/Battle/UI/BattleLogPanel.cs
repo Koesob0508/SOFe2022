@@ -6,6 +6,29 @@ using UnityEngine.UI;
 using UnityEngine.Pool;
 public class BattleLogPanel : MonoBehaviour
 {
+
+    public enum LogType
+    {
+        Kill,
+        Dead,
+        Skill,
+        Event,
+        Buff
+    }
+
+    public struct Log
+    {
+        public Character Causer;
+        public Character Target;
+        public LogType Type;
+        public Log(Character Causer, Character Target, LogType type)
+        {
+            this.Causer = Causer;
+            this.Target = Target;
+            Type = type;
+        }
+    }
+
     public uint curLogCount = 0;
     public uint maxLogCount = 5;
 
@@ -15,7 +38,7 @@ public class BattleLogPanel : MonoBehaviour
     public GameObject logPrefab;
     float ancBetween = 0.0f;
 
-    Queue<Tuple<Character, float, Character>> logQueue = new Queue<Tuple<Character, float, Character>>();
+    Queue<Log> logQueue = new Queue<Log>();
     /// <summary>
     /// Save the anchor vector to according index (ancMin.y to x, ancMax.y to y)
     /// </summary>
@@ -64,7 +87,7 @@ public class BattleLogPanel : MonoBehaviour
     /// Add Log to Panel
     /// </summary>
     /// <param name="logData"> 1. Causer, 2. Damage 3. Target </param>
-    public void AddLog(Tuple<Character, float, Character> log)
+    public void AddLog(Log log)
     {
         logQueue.Enqueue(log);
     }

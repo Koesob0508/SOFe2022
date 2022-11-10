@@ -38,7 +38,7 @@ public class WindAssassin15 : Battle_Heros
 
         }
         yield return new WaitForSeconds(0.65f);
-        target.Hit(charData.AttackDamage * 1.5f);
+        target.Hit(charData, charData.AttackDamage * 1.5f);
         Vector2 targetPos = new Vector2(target.transform.position.x + 1f, target.transform.position.y);
         transform.Translate(targetPos);
     }

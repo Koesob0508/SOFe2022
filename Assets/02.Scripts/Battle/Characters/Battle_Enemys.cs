@@ -38,6 +38,9 @@ public class Battle_Enemys : Units
 
     public override void Attack()
     {
+        if (unitCC.faint)
+            return;
+
         base.Attack();
         if (isCloseAttackUnit)
             StartCoroutine("CouroutineCloseAttack");
@@ -49,7 +52,7 @@ public class Battle_Enemys : Units
         }
     }
 
-    public override void Hit(float damage)
+    public override void Hit(Character Causer, float damage)
     {
         // ������ ó�� = ( 100 / ���� + 100 ) * ������
         state.CurrentHP -= (100 / (state.DefensePoint + 100)) * damage;
@@ -57,7 +60,7 @@ public class Battle_Enemys : Units
         if (state.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
         {
             btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData.Type,gameObject);
+            GameManager.Battle.DeadProcess(charData.Type,gameObject,Causer);
         }
         else
         {
@@ -88,6 +91,6 @@ public class Battle_Enemys : Units
         yield return new WaitForSeconds(t);
 
         //������ ���
-        attackTarget.GetComponent<Units>().Hit(state.AttackDamage);
+        attackTarget.GetComponent<Units>().Hit(charData,state.AttackDamage);
     }
 }

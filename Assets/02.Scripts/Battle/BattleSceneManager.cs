@@ -61,14 +61,23 @@ public class BattleSceneManager : MonoBehaviour
         Debug.Log("BattleManager Initalized");
 
         // Get UI Elements
-        BattleCanvas = FindObjectOfType<Canvas>();
+        BattleCanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<Canvas>();
         bLogPanel = BattleCanvas.GetComponentInChildren<BattleLogPanel>();
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
         bEndPanel = BattleCanvas.GetComponentInChildren<BattleEndUI>();
         synergyPanel = BattleCanvas.GetComponentInChildren<SynergyPanel>();
-
-        bEndPanel.gameObject.SetActive(false);
-        bLogPanel.gameObject.SetActive(false);
+        if (bEndPanel != null)
+        {
+            bEndPanel.gameObject.SetActive(false);
+        }
+        else
+            Debug.Log("EndPanel Doesnt Initalized");
+        if(bLogPanel != null)
+        {
+            bLogPanel.gameObject.SetActive(false);
+        }
+        else
+            Debug.Log("LogPanel Doesnt Initalized");
 
         //Init Hero
         hInvenPanel.Initalize(Heros);
@@ -96,12 +105,11 @@ public class BattleSceneManager : MonoBehaviour
 
         eCount = (uint)EnemyList.Count;
 
-
         //Init Enemy
         for (int i = 0; i < eCount; i++)
         {
             GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
-            GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
+            GameObject eTemp = Instantiate(e, EnemyList[i].Position, new Quaternion());
             Units tempU = eTemp.GetComponent<Units>();
             tempU.Initalize(EnemyList[i]);
             enemyObjects.Add(eTemp);
@@ -136,9 +144,6 @@ public class BattleSceneManager : MonoBehaviour
         var ob = new Observer_Battle();
         ob.Init();
         Observers.Add(ob);
-
-        
-
     }
 
     #endregion
@@ -173,13 +178,13 @@ public class BattleSceneManager : MonoBehaviour
         foreach (var obj in Observers)
             obj.onNotify(ObserverBase.EventType.R_Dismiss, new UnityEngine.Object[] { Hero });
     }
-    public void GenerateHit(GameObject Causer, GameObject Target, float Dmg)
+    public void GenerateHitEvent(GameObject Causer, GameObject Target, float Dmg)
     {
         var targetUnitComp = Target.GetComponent<Units>();
         var causerUnitComp = Causer.GetComponent<Units>();
 
         // 얘네도 피격 시점으로 수정 해줘야 함
-        bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
+        // bLogPanel.AddLog(new System.Tuple<Character, float, Character>(causerUnitComp.charData, Dmg, targetUnitComp.charData));
         MakeDamagePopup(Target.transform.position, Dmg);
     }
     public GameObject CreateHero(Hero heroData)
@@ -191,27 +196,33 @@ public class BattleSceneManager : MonoBehaviour
         hObj.SetActive(false);
         return hObj;
     }
-    public void DeadProcess(GameManager.ObjectType type, GameObject obj)
+    public void DeadProcess(GameManager.ObjectType type, GameObject target, Character causer)
     {
-        spriteRenderers.Remove(obj.GetComponent<SpriteRenderer>());
+        spriteRenderers.Remove(target.GetComponent<SpriteRenderer>());
         switch (type)
         {
             case GameManager.ObjectType.Hero:
-                hCount -= 1;
-                break;
+                {
+                    bLogPanel.AddLog(new BattleLogPanel.Log(causer, target.GetComponent<Units>().charData, BattleLogPanel.LogType.Kill));
+                    hCount -= 1;
+                    break;
+                }
             case GameManager.ObjectType.Enemy:
-                eCount -= 1;
-                break;
+                {
+                    bLogPanel.AddLog(new BattleLogPanel.Log(causer, target.GetComponent<Units>().charData, BattleLogPanel.LogType.Dead));
+                    eCount -= 1;
+                    break;
+                }
             default:
                 break;
         }
         if (hCount == 0)
         {
-            ActivateBattleEndUI(false);
+            StartCoroutine("ActivateBattleEndUI", false);
         }
         if (eCount == 0)
         {
-            ActivateBattleEndUI(true);
+            StartCoroutine("ActivateBattleEndUI", true);
         }
     }
     public void FinishBattle(bool bIsWin)
@@ -319,7 +330,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             case GameManager.MapType.Boss:
                 {
-                    mapName = "Forest_Dark.png";
+                    mapName = "Dessert_Pale.png";
                     break;
                 }
             case GameManager.MapType.Dessert:
@@ -329,7 +340,7 @@ public class BattleSceneManager : MonoBehaviour
                 }
             case GameManager.MapType.Jungle:
                 {
-                    mapName = "Forest_Bright.png";
+                    mapName = "BigTreeForest_Pale.png";
                     break;
                 }
             default:
@@ -358,12 +369,6 @@ public class BattleSceneManager : MonoBehaviour
     }
 
 
-    void ActivateBattleEndUI(bool bIsWin)
-    {
-        bEndPanel.gameObject.SetActive(true);
-        bEndPanel.Initalize(bIsWin);
-    }
-
   
     void Update()
     {
@@ -372,6 +377,16 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
     #region Coroutine
+    IEnumerator ActivateBattleEndUI(bool bIsWin)
+    {
+        Debug.Log("Started");
+        Time.timeScale = 0.3f;
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 1f;
+        bEndPanel.gameObject.SetActive(true);
+        bEndPanel.Initalize(bIsWin);
+        yield break;
+    }
     IEnumerator FadeInTransition(Color col)
     {
         Material mat = transition.material;

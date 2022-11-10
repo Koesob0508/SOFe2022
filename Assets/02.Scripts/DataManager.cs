@@ -10,6 +10,7 @@ public class DataManager
 {
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
+    public List<StageData> StageData = new List<StageData>();
     public uint Money = 0;
 
     [Serializable]
@@ -23,19 +24,21 @@ public class DataManager
 
     public void Init()
     {
-        LoadInitalEnemyData();
-        LoadInitalItemData();
-        if (IsExistSaveData())
+        LoadInitialEnemyData();
+        LoadInitialStageData();
+
+        if(IsExistSaveData())
         {
             Load();
         }
         else
         {
-            LoadInitalHeroData();
+            LoadInitialHeroData();
+            GameManager.Stage.SetStageData(StageData);
         }
     }
 
-    void LoadInitalHeroData()
+    void LoadInitialHeroData()
     {
         CSVImporter csvImp = new CSVImporter();
         csvImp.OpenFile("Data/Heros_values");
@@ -69,7 +72,7 @@ public class DataManager
 
        
     }
-    void LoadInitalEnemyData()
+    void LoadInitialEnemyData()
     {
         CSVImporter csvImp1 = new CSVImporter();
         csvImp1.OpenFile("Data/Monsters_values");
@@ -108,7 +111,7 @@ public class DataManager
         {
             string[] elems = line2.Split(',');
 
-            if (elems.Length < 2) // ?ºó ÁÙÀÌ ÇÏ³ª ´õ µé¾î°¨?
+            if (elems.Length < 2) // ?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ ï¿½ï¿½î°¨?
                 break;
 
             Item item = new Item();
@@ -125,6 +128,34 @@ public class DataManager
             line2 = csvImp2.Readline();
 
             ObjectCodex.Add(item.GUID, item);
+
+    private void LoadInitialStageData()
+    {
+        CSVImporter csvStage = new CSVImporter();
+        csvStage.OpenFile("Data/Stages_values");
+        csvStage.ReadHeader();
+        string line = csvStage.Readline();
+
+        while (line != null)
+        {
+            string[] elems = line.Split(',');
+
+            if(elems[0] == "")
+            {
+                break;
+            }
+
+            var stageData = new StageData();
+           
+            stageData.stage = int.Parse(elems[0]);
+            stageData.map = (GameManager.MapType)int.Parse(elems[1]);
+            stageData.step = int.Parse(elems[2]);
+            stageData.case_ = int.Parse(elems[3]);
+            stageData.ruid = int.Parse(elems[4]);
+            stageData.count = int.Parse(elems[5]);
+            line = csvStage.Readline();
+
+            StageData.Add(stageData);
         }
     }
     public GlobalObject LoadObject(uint guid, GameManager.ObjectType type)
@@ -269,5 +300,7 @@ public class DataManager
         }
 
         ObjectCodex.Clear();
+        StageData.Clear();
+        GameManager.Stage.SetStageData(StageData);
     }
 }

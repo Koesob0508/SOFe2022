@@ -24,17 +24,17 @@ public class Archer01 : Battle_Heros
 
         Vector3 targetPosition = attackTarget.transform.position;
 
-        projectile1.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
+        projectile1.GetComponent<Projectile>().Initialize(charData,targetPosition, charData.AttackDamage, 500f);
         
         angle += 20f;
         GameObject projectile2 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
         targetPosition.y += 1.0f;
-        projectile2.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
+        projectile2.GetComponent<Projectile>().Initialize(charData, targetPosition, charData.AttackDamage, 500f);
 
         angle -= 40f;
         targetPosition.y -= 2.0f;
         GameObject projectile3 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
-        projectile3.GetComponent<Projectile>().Initialize(targetPosition, charData.AttackDamage, 500f);
+        projectile3.GetComponent<Projectile>().Initialize(charData, targetPosition, charData.AttackDamage, 500f);
 
     }
 

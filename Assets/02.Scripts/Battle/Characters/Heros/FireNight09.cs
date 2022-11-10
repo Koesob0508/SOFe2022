@@ -22,7 +22,8 @@ public class FireNight09 : Battle_Heros
             if (!hitUnits[i].CompareTag("Enemy"))
                 continue;
 
-            hitUnits[i].GetComponent<Units>().Hit(charData.AttackDamage * 1.5f);
+            hitUnits[i].GetComponent<Units>().Hit(charData, charData.AttackDamage * 1.5f);
+            hitUnits[i].GetComponent<Units>().GetCC("burn", 5.0f, charData);
         }
     }
 

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle_Heros : Units
-{
-
-    public AnimationClip attackAnimationClip;
-    protected float animationDamageDelay;    protected float attackSpeed;
+{
     public override void Initalize(Character charData)
     {
         this.charData = charData;
@@ -31,21 +28,27 @@ public class Battle_Heros : Units
         //     charData.CurrentMana += 100;
         // }
 
+        if (isSkillPlaying || unitCC.faint)
+            return;
+
         base.Attack();
 
         attackSpeed = charData.AttackSpeed / attackAnimationClip.length;
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
         animator.SetFloat("AttackSpeed", attackSpeed);
 
         StartCoroutine("CouroutineAttack");
+
         charData.CurrentMana += 20;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
         }
+
     }
     
-    public override void Hit(float damage)
+    public override void Hit(Character Causer, float damage)
     {
         charData.CurrentHP -= (100 / (charData.DefensePoint + 100)) * damage;
         // charData.CurrentHP -= 10f;
@@ -53,7 +56,7 @@ public class Battle_Heros : Units
         if (charData.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
         {
             btComp.TreeObject.bBoard.SetValueAsBool("IsDead", true);
-            GameManager.Battle.DeadProcess(charData.Type, gameObject);
+            GameManager.Battle.DeadProcess(charData.Type, gameObject, Causer);
         }
         else
         {
@@ -92,11 +95,11 @@ public class Battle_Heros : Units
     IEnumerator CouroutineAttack()
     {
 
-        yield return new WaitForSeconds(animationDamageDelay);
+        yield return new WaitForSeconds(animationDamageDelay / 2);
 
         if (isCloseAttackUnit)
         {
-            attackTarget.GetComponent<Units>().Hit(charData.AttackDamage);
+            attackTarget.GetComponent<Units>().Hit(charData, charData.AttackDamage);
         }
         else
         {
@@ -116,7 +119,7 @@ public class Battle_Heros : Units
             Vector2 dir = attackTarget.transform.position - transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward) );
-            projectile.GetComponent<Projectile>().Initialize(attackTarget.transform.position, charData.AttackDamage, 500f);
+            projectile.GetComponent<Projectile>().Initialize(charData, attackTarget.transform.position, charData.AttackDamage, 500f);
 
         }
     }

@@ -84,7 +84,8 @@ public class CustomSceneManager
                 hlist.Add(h20);
 
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
-                GameManager.Battle.Init(hlist, elist, GameManager.MapType.Boss);
+                GameManager.MapType mapType = GameManager.Stage.GetMapType();
+                GameManager.Battle.Init(hlist, elist, mapType);
                 break;
 
             case "03.TownScene":

@@ -63,7 +63,7 @@ public class BlueWitch08 : Battle_Heros
 
         for(int i = 0; i<attackList.Count; i++)
         {
-            attackList[i].GetComponent<Units>().Hit(charData.AttackDamage * 1.5f);
+            attackList[i].GetComponent<Units>().Hit(charData, charData.AttackDamage * 1.5f);
         }
 
         charData.CurrentMana = 0;

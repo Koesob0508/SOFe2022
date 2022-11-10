@@ -6,6 +6,12 @@ public partial class StageManager
     [System.Serializable]
     public class SerializedNode
     {
+        #region StageData
+        public int stageLevel;
+        public GameManager.MapType stageMapType;
+        public int stageStep;
+        #endregion
+
         public StageManager.StageType type;
         public int step;
         public int index;
@@ -69,6 +75,10 @@ public partial class StageManager
             foreach (StageNode stage in stageNodes)
             {
                 SerializedNode node = new SerializedNode();
+
+                node.stageLevel = stage.StageLevel;
+                node.stageMapType = stage.StageMapType;
+                node.stageStep = stage.StageStep;
 
                 node.type = stage.Type;
                 node.step = stage.Step;

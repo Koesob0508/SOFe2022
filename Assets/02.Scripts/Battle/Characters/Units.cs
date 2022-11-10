@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+public class CC
+{
+    public bool burn = false;
+    public bool faint = false;
+    public bool hide = false;
+}
+
 public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+
     bool isUpdating = false;
     protected bool isSkillPlaying = false;
     protected bool isCloseAttackUnit; // 근접 유닛
-    
+
     public Animator animator;
     public bool bHasSkill;
     float localScaleX;
@@ -18,7 +26,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     public float attackTimer = 0.0f;
 
     public GameObject UnitUIObject;
-    
+
     GameObject UnitUI;
     protected Slider hpBar;
     protected Slider spBar;
@@ -33,7 +41,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public System.Action skillFinished;
 
-    HeroInvenItem invenItemUI;
+    //HeroInvenItem invenItemUI;
 
     public GameObject projectileObject;
     public GameObject projectileSpawnPoint;
@@ -54,24 +62,40 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     protected SpriteRenderer spr;
 
+    public AnimationClip attackAnimationClip;
+
+    protected float animationDamageDelay;
+    protected float attackSpeed;
+
+    public CC unitCC;
+    private Character burnCauser; // 화상을 건 적
+
+    GameObject burnEffectObject;
+    GameObject faintEffectObject;
+
     protected virtual void Start()
     {
         isCloseAttackUnit = true;
-       
+
+        burnEffectObject = Resources.Load<GameObject>("Prefabs/Effects/burnEffect");
+        faintEffectObject = Resources.Load<GameObject>("Prefabs/Effects/faintEffect");
+
     }
 
     protected virtual void Update()
     {
         UpdateUI();
 
-        if (bCanMove)
+        if (bCanMove && !unitCC.faint)
             Move();
     }
-        
+
     public virtual void Initalize(Character charData)
     {
         animator = GetComponentInChildren<Animator>();
         UnitUI = Instantiate(UnitUIObject, transform.position, Quaternion.identity);
+        UnitUI.GetComponent<Canvas>().sortingLayerID = SortingLayer.NameToID("Char");
+        UnitUI.GetComponent<Canvas>().sortingOrder = -99;
         UnitUI.transform.parent = transform;
         UnitUI.transform.position += uiOffset;
         hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
@@ -89,11 +113,13 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         GetComponent<Units>().SetSpeed(charData.MoveSpeed);
         spr = GetComponentInChildren<SpriteRenderer>();
+
+        unitCC = new CC();
     }
 
     public void SetItemUI(HeroInvenItem itemUI)
     {
-        this.invenItemUI = itemUI;
+        //this.invenItemUI = itemUI;
     }
     public void StartBattle()
     {
@@ -104,7 +130,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         PlayAttackAnimation();
     }
-    public virtual void Hit(float damage)
+    public virtual void Hit(Character Causer, float damage)
     {
     }
     public virtual void ExecuteSkill()
@@ -124,7 +150,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         float t = GetCurrentAnimationTime();
 
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(t + attackSpeed);
         skillFinished();
         isSkillPlaying = false;
     }
@@ -135,7 +161,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     }
     public void PlaySkillAnimation()
-
     {
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
@@ -189,13 +214,11 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
         UpdateUI();
         Vector2 screenPos = eventData.position;
-        if (screenPos.x > Screen.width / 2)
-        {
-            screenPos.x = Screen.width / 2;
-        }
-
+        
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
         WorldPos.z = 0;
         transform.position = WorldPos;
@@ -205,15 +228,58 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
-
+        Vector2 screenPos = eventData.position;
         if (hit.collider != null)
         {
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if (item == invenItemUI)
+            if(item != null)
+                item.ReturnToInven(gameObject);
+            //if (item == invenItemUI)
+            //{
+            //    invenItemUI.ReturnToInven();
+            //}
+            else
             {
-                invenItemUI.ReturnToInven();
+                if (screenPos.x > Screen.width / 2)
+                {
+                    screenPos.x = Screen.width / 2;
+                }
+                if (screenPos.x < Screen.width * 0.1)
+                {
+                    screenPos.x = Screen.width * 0.1f;
+                }
+                if (screenPos.y > Screen.height / 2)
+                {
+                    screenPos.y = Screen.height / 2;
+                }
+                if (screenPos.y < 0)
+                {
+                    screenPos.y = 0;
+                }
             }
         }
+        else
+        {
+            if (screenPos.x > Screen.width / 2)
+            {
+                screenPos.x = Screen.width / 2;
+            }
+            if (screenPos.x < Screen.width * 0.1)
+            {
+                screenPos.x = Screen.width * 0.1f;
+            }
+            if (screenPos.y > Screen.height / 2)
+            {
+                screenPos.y = Screen.height / 2;
+            }
+            if (screenPos.y < 0)
+            {
+                screenPos.y = 0;
+            }
+        }
+        Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        WorldPos.z = 0;
+        transform.position = WorldPos;
     }
     public void SetSpeed(float Speed)
     {
@@ -276,6 +342,64 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             spr.flipX = false;
             isFilped = false;
+        }
+    }
+
+    public void GetCC(string type, float time, Character Causer = null)
+    {
+        switch (type)
+        {
+            case "burn":
+                unitCC.burn = true;
+                burnCauser = Causer;
+                StartCoroutine(BurnDamaged());
+                break;
+            case "faint":
+                unitCC.faint = true;
+
+                Vector3 effectPosition = transform.position;
+                effectPosition.z = transform.position.z - 1;
+                effectPosition.y = transform.position.y + 1;
+
+                GameObject burnEffect = Instantiate(faintEffectObject, effectPosition, Quaternion.identity);
+                Destroy(burnEffect, time);
+                break;
+            case "hide":
+                unitCC.hide = true; break;
+        }
+        StartCoroutine(CCBurnCouroutine(type, time));
+
+    }
+
+    IEnumerator CCBurnCouroutine(string type, float time)
+    {
+        yield return new WaitForSeconds(time);
+        switch (type)
+        {
+            case "burn":
+                unitCC.burn = false; break;
+            case "faint":
+                unitCC.faint = false; break;
+            case "hide":
+                unitCC.hide = false; break;
+        }
+    }
+    IEnumerator BurnDamaged()
+    {
+        while(true)
+        {
+            if (unitCC.burn == false)
+                break;
+
+            yield return new WaitForSeconds(1.0f);
+            Hit(burnCauser, 20f);
+
+            Vector3 effectPosition = transform.position;
+            effectPosition.z = transform.position.z - 1;
+            effectPosition.y = transform.position.y + 1;
+
+            GameObject burnEffect = Instantiate(burnEffectObject, effectPosition, Quaternion.identity);
+            Destroy(burnEffect, 1.0f);
         }
     }
 }

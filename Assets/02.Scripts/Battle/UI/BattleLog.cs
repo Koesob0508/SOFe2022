@@ -47,7 +47,7 @@ public class BattleLog : MonoBehaviour
     {
         ancOffset = val;
     }
-    public void ConstructWithInfo(Tuple<Character, float, Character> log)
+    public void ConstructWithInfo(BattleLogPanel.Log log)
     {
         if(UIGroup == null)
             UIGroup = GetComponent<CanvasGroup>();
@@ -55,9 +55,28 @@ public class BattleLog : MonoBehaviour
         CauserImg = transform.GetChild(0).GetComponent<Image>();
         ContentTxt = transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
         TargetImg = transform.GetChild(2).GetComponent<Image>();
-        CauserImg.sprite = GameManager.Data.LoadSprite(log.Item1.GUID);
-        ContentTxt.SetText(log.Item1.Name + " 가(아) " + log.Item3.Name + " 에게 " + log.Item2 + " 의 데미지!");
-        TargetImg.sprite = GameManager.Data.LoadSprite(log.Item3.GUID);
+        CauserImg.sprite = GameManager.Data.LoadSprite(log.Causer.GUID);
+        TargetImg.sprite = GameManager.Data.LoadSprite(log.Target.GUID);
+        string by="";
+        string LastString="";
+        switch (log.Type)
+        {
+            case BattleLogPanel.LogType.Kill:
+                by = " 을(를) ";
+                LastString = " 처치하였습니다";
+                break;
+            case BattleLogPanel.LogType.Dead:
+                by = " 에게 ";
+                LastString = " 사망하였습니다";
+                break;
+            case BattleLogPanel.LogType.Skill:
+                break;
+            case BattleLogPanel.LogType.Event:
+                break;
+            case BattleLogPanel.LogType.Buff:
+                break;
+        }
+        ContentTxt.SetText(log.Causer.Name + " 가(아) " + log.Target.Name + by + LastString);
 
         RectTransform logRectT = gameObject.GetComponent<RectTransform>();
         logRectT.anchorMin = new Vector2(0, 0);

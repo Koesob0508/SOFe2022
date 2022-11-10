@@ -3,7 +3,15 @@ guid: c02e042f4787f014e8658a5636c49d37
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - animator: {instanceID: 0}
+  - UnitUIObject: {instanceID: 0}
+  - attackTarget: {instanceID: 0}
+  - projectileObject: {instanceID: 0}
+  - projectileSpawnPoint: {instanceID: 0}
+  - skillEffect: {instanceID: 0}
+  - attackAnimationClip: {instanceID: 0}
+  - fireEffectObject: {fileID: 649265041743620363, guid: d4173bb6ecb03604e82adc65dfd13c20, type: 3}
   executionOrder: 3
   icon: {instanceID: 0}
   userData: 
