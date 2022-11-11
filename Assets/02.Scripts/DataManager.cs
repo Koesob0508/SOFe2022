@@ -25,6 +25,7 @@ public class DataManager
     public void Init()
     {
         LoadInitialEnemyData();
+        LoadInitalItemData();
         LoadInitialStageData();
 
         if(IsExistSaveData())
@@ -128,6 +129,8 @@ public class DataManager
             line2 = csvImp2.Readline();
 
             ObjectCodex.Add(item.GUID, item);
+        }
+    }
 
     private void LoadInitialStageData()
     {

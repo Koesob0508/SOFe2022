@@ -53,7 +53,7 @@ public class Town_Hotel : MonoBehaviour
         // Status
         Image HeroImage;
         TextMeshProUGUI HeroName, HeroMbti;
-        GameObject HeroInfo, AbilityInfo, HealthBar, HungerBar;
+        GameObject HeroInfo, HealthBar, HungerBar;
         Slider HealthSlider, HungerSlider;
         Image fill;
 

@@ -18,8 +18,8 @@ public class HeroManager : MonoBehaviour
         EnrollHero(18);
         EnrollHero(19);
 
-        AddHeroItem(0, 200);
-        AddHeroItem(0, 205);
+        AddHeroItem(0, 200, 0);
+        AddHeroItem(0, 205, 1);
 
         GameManager.Relation.GetTeamScore();
     }
@@ -87,9 +87,24 @@ public class HeroManager : MonoBehaviour
         return HeroList;
     }
 
-    public List<Item> GetHeroItemList(uint guid)
+    public Item GetHeroItem(uint HeroGuid, uint ItemGuid)
     {
-        List<Item> Items = HeroList.Find(
+        if (GetHero(HeroGuid).ItemNum > 0)
+        {
+            foreach (Item i in GetHeroItemList(HeroGuid))
+            {
+                if (i != null && i.GUID == ItemGuid)
+                {
+                        return i;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Item[] GetHeroItemList(uint guid)
+    {
+        Item[] Items = HeroList.Find(
             delegate (Hero _hero)
             {
                 return _hero == GetHero(guid);
@@ -107,11 +122,11 @@ public class HeroManager : MonoBehaviour
         }
     }
 
-    public void AddHeroItem(uint HeroGUID, uint ItemGUID)
+    public void AddHeroItem(uint HeroGUID, uint ItemGUID, uint order)
     {
-        List<Item> Items = GetHeroItemList(HeroGUID);
-
-        if (Items.Count < 3)
+        Item[] Items = GetHeroItemList(HeroGUID);
+        
+        if (GetHero(HeroGUID).ItemNum < 3)
         {
             foreach (GlobalObject g in GameManager.Data.ObjectCodex.Values)
             {
@@ -119,8 +134,28 @@ public class HeroManager : MonoBehaviour
                 
                 if (item != null && item.GUID == ItemGUID)
                 {
+                    // 해당 아이템을 중복해서 갖는지 확인한다
+                    Item HeroItem = GetHeroItem(HeroGUID, ItemGUID);
+
+                    // 그렇지 않다면 저장함
+                    if (HeroItem == null)
+                    {
+                        Items[order] = item;
+                    }
+                    // 이미 저장된 Item이라면
+                    else if (HeroItem.InventoryOrder == order)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Items[order] = item;
+                    }
+
+                    GetHero(HeroGUID).ItemNum += 1;
                     item.OwnHeroGUID = HeroGUID;
-                    Items.Add(item);
+                    item.InventoryOrder = order;
+
                     ADDItemBasicEffect(GetHero(HeroGUID), item);
                 }
             }
@@ -132,12 +167,14 @@ public class HeroManager : MonoBehaviour
         }
     }
 
-    public void RemoveHeroItem(uint HeroGUID, uint ItemGUID, int order)
+    public void RemoveHeroItem(uint HeroGUID, uint ItemGUID, uint order)
     {
-        List<Item> Items = GetHeroItemList(HeroGUID);
+        Item[] Items = GetHeroItemList(HeroGUID);
         if (Items[order].GUID == ItemGUID)
         {
-            Items.RemoveAt(order);
+            SUBItemBasicEffect(GetHero(HeroGUID), Items[order]);
+            Items[order] = new Item();
+            GetHero(HeroGUID).ItemNum-=1;
         }
     }
 
@@ -214,9 +251,32 @@ public class HeroManager : MonoBehaviour
     }
 
     // 아이템의 기본 효과가 용병에게서 사라짐
-    public void SUBItemBasicEffect(uint HeroGuid, uint ItemGuid)
+    public void SUBItemBasicEffect(Hero hero, Item item)
     {
+        switch (item.BasicType)
+        {
+            case GameManager.ItemType.AttackDamage:
+                {
+                    hero.AttackDamage -= item.BasicNum;
+                    break;
+                }
+            case GameManager.ItemType.MoveSpeed:
+                {
+                    hero.MoveSpeed -= item.BasicNum;
+                    break;
+                }
+            case GameManager.ItemType.DefensePoint:
+                {
+                    hero.DefensePoint -= item.BasicNum;
+                    break;
+                }
+            case GameManager.ItemType.MaxHP:
+                {
+                    hero.MaxHP -= item.BasicNum;
+                    break;
+                }
 
+        }
     }
 
 

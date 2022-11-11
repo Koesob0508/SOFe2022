@@ -30,6 +30,11 @@ namespace Koesob
         {
             GameManager.Scene.ToEventScene();
         }
+        public void ToItem()
+        {
+            // Stage Select Scene에서 Item 합성 가능한 창을 띄움
+
+        }
 
         public void ShowHeroInfo()
         {

@@ -7,41 +7,23 @@ using UnityEngine;
 
 public class GetItemInfo : MonoBehaviour
 {
-    public uint GUID;
-    public uint OwnerGUID; // 해당 아이템을 소유한 용병
-    public int InventoryOrder; // 해당 아이템의 인벤토리에서의 위치 0-2
+    public Item item;
 
-    public void SetItem(uint heroGuid, uint guid)
+    public void SetInfo(Item _item)
     {
-        GUID = guid;
-        OwnerGUID = heroGuid;
-
-        if (transform.parent.name == "Inventory(1)")
-        {
-            InventoryOrder = 0;
-        }
-        else if (transform.parent.name == "Inventory(2)")
-        {
-            InventoryOrder = 1;
-        }
-        else if (transform.parent.name == "Inventory(2)")
-        {
-            InventoryOrder = 2;
-        }
+        item = _item;
     }
     public uint GetUIItemGuid()
     {
-        return GUID;
+        return item.GUID;
     }
     public uint GetItemOwnerGuid()
     {
-        return OwnerGUID;
+        return item.OwnHeroGUID;
     }
-    public void CleanSlot()
+    public uint GetItemOrder()
     {
-        GUID = 0;
-        //OwnerGUID=0;
-        //InventoryOrder=0;
+        return item.InventoryOrder;
     }
 }
 

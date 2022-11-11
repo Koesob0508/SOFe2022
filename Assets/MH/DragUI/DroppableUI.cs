@@ -36,18 +36,33 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 				return;
 			}
 
-			// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
-			GameManager.Hero.RemoveHeroItem(
-				eventData.pointerDrag.GetComponent<GetItemInfo>().OwnerGUID,
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GUID,
-				eventData.pointerDrag.GetComponent<GetItemInfo>().InventoryOrder);
-
 			GameObject NewOwner = transform.parent.parent.gameObject;
 			GameObject Contents = transform.parent.parent.parent.gameObject;
 
+			// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
+			uint InventoryOrder = 0;
+			if (transform.name == "Inventory(1)")
+			{
+				InventoryOrder = 0;
+			}
+			else if (transform.name == "Inventory(2)")
+			{
+				InventoryOrder = 1;
+			}
+			else if (transform.name == "Inventory(3)")
+			{
+				InventoryOrder = 2;
+			}
+
+			GameManager.Hero.RemoveHeroItem(
+				eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
+				eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+				eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
+
 			GameManager.Hero.AddHeroItem(
 				Contents.GetComponent<GetHeroInfo>().GetHeroUIOrder(NewOwner),
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GUID);
+				eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+				InventoryOrder);
 
 			// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
 			eventData.pointerDrag.transform.SetParent(transform);

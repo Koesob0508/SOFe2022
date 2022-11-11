@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Item : GlobalObject
 {
-    public uint OwnHeroGUID; // 해당 아이템을 소유한 용병
+    public uint OwnHeroGUID; // 해당 아이템을 소유한 용병, 기본값은 소유 용병 null
     public uint InventoryOrder; // 해당 아이템의 인벤토리에서의 위치 0-2
 
     public uint Star;
