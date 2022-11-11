@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Guard11 : Battle_Heros
 {
-
+    public GameObject GuardSkillEffect;
+    
     protected override void Start()
     {
         isCloseAttackUnit = true;
 
+        GuardSkillEffect = Resources.Load<GameObject>("Prefabs/Effects/GuardSkillEffect");
     }
 
 
@@ -32,9 +34,14 @@ public class Guard11 : Battle_Heros
         charData.AttackDamage += 10f;
         charData.DefensePoint += 10f;
         charData.MoveSpeed += 15f;
-        charData.AttackSpeed += 1.5f;   
+        charData.AttackSpeed += 1.5f;
 
         // effect & animation Ãß°¡
+        Vector3 effectPosition = transform.position;
+        effectPosition.z = transform.position.z - 1;
+
+        GameObject skillEffect = Instantiate(GuardSkillEffect, effectPosition, Quaternion.identity);
+        Destroy(skillEffect, 5.0f);
     }
 
     void UnbuffSkill()
