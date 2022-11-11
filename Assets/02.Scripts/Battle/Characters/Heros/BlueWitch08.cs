@@ -8,22 +8,33 @@ public class BlueWitch08 : Battle_Heros
     float manaCheckTime = 0;
     public List<GameObject> attackList = new List<GameObject>();
 
+    bool isMeditating;
+
     protected override void Start()
     {
         isCloseAttackUnit = false;
+
+        isMeditating = true;
+        charData.DefensePoint += 50f;
     }
 
     protected override void Update()
     {
         base.Update();
-        if (manaCheckTime > 1)
+
+        if (isUpdating)
         {
-            manaCheckTime = 0;
-            charData.CurrentMana += 30;
-            if (charData.CurrentMana >= charData.MaxMana)
-                SkillAttack();
+
+            if (manaCheckTime > 1)
+            {
+                animator.SetTrigger("StartBattle");
+                manaCheckTime = 0;
+                charData.CurrentMana += 30;
+                if (charData.CurrentMana >= charData.MaxMana)
+                    SkillAttack();
+            }
+            manaCheckTime += Time.deltaTime;
         }
-        manaCheckTime += Time.deltaTime;
     }
 
     public override void Attack()
@@ -34,7 +45,11 @@ public class BlueWitch08 : Battle_Heros
     void SkillAttack()
     {
         ExecuteSkill();
-        StartCoroutine("SkillEffect");
+
+        isMeditating = false;
+        charData.DefensePoint -= 50f;
+
+        StartCoroutine(SkillEffect());
 
     }
 
@@ -67,6 +82,8 @@ public class BlueWitch08 : Battle_Heros
         }
 
         charData.CurrentMana = 0;
+        isMeditating = true;
+        charData.DefensePoint += 50f;
 
     }
 }

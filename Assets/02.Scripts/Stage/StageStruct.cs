@@ -65,7 +65,7 @@ public partial class StageManager
 
         public void OnAfterDeserialize()
         {
-            Debug.Log("备泅窍技筷");
+            //Debug.Log("备泅窍技筷");
         }
 
         public void OnBeforeSerialize()

@@ -74,10 +74,10 @@ public class TestGameManager : MonoBehaviour
         {
             log.text = "Hero A가 Enemy A 공격";
 
-            LogInfo logInfo = new LogInfo();
-            logInfo.Subjective = heroA;
-            logInfo.Objective = enemyA;
-            logInfo.Verb = Verb.Attack;
+            BattleLogPanel.Log logInfo = new BattleLogPanel.Log();
+            logInfo.Causer = heroA;
+            logInfo.Target = enemyA;
+            logInfo.Type = BattleLogPanel.LogType.Skill;
 
             Relation.ApplyLog(logInfo);
         }
@@ -85,10 +85,10 @@ public class TestGameManager : MonoBehaviour
         {
             log.text = "Hero A가 Enemy B 공격";
 
-            LogInfo logInfo = new LogInfo();
-            logInfo.Subjective = heroA;
-            logInfo.Objective = enemyB;
-            logInfo.Verb = Verb.Attack;
+            BattleLogPanel.Log logInfo = new BattleLogPanel.Log();
+            logInfo.Causer = heroA;
+            logInfo.Target = enemyB;
+            logInfo.Type = BattleLogPanel.LogType.Skill;
 
             Relation.ApplyLog(logInfo);
         }
@@ -96,10 +96,10 @@ public class TestGameManager : MonoBehaviour
         {
             log.text = "Hero B가 Enemy A 공격";
 
-            LogInfo logInfo = new LogInfo();
-            logInfo.Subjective = heroB;
-            logInfo.Objective = enemyA;
-            logInfo.Verb = Verb.Attack;
+            BattleLogPanel.Log logInfo = new BattleLogPanel.Log();
+            logInfo.Causer = heroB;
+            logInfo.Target = enemyA;
+            logInfo.Type = BattleLogPanel.LogType.Skill;
 
             Relation.ApplyLog(logInfo);
         }
@@ -107,10 +107,10 @@ public class TestGameManager : MonoBehaviour
         {
             log.text = "Hero B가 Enemy B 공격";
 
-            LogInfo logInfo = new LogInfo();
-            logInfo.Subjective = heroB;
-            logInfo.Objective = enemyB;
-            logInfo.Verb = Verb.Attack;
+            BattleLogPanel.Log logInfo = new BattleLogPanel.Log();
+            logInfo.Causer = heroB;
+            logInfo.Target = enemyB;
+            logInfo.Type = BattleLogPanel.LogType.Skill;
 
             Relation.ApplyLog(logInfo);
         }

@@ -30,9 +30,6 @@ public class BattleSceneManager : MonoBehaviour
 
     public Path.PathManager PathMgr = null;
 
-    private List<Vector2> tmpPosEnemy = new List<Vector2>();
-
-
     public BattleLogPanel bLogPanel;
     public HeroInvenPanel hInvenPanel;
     public BattleEndUI bEndPanel;
@@ -85,9 +82,7 @@ public class BattleSceneManager : MonoBehaviour
         startBtn = GameObject.Find("StartBtn").GetComponent<Button>();
         startBtn.onClick.AddListener(delegate { StartBattle(); });
         startBtn.gameObject.SetActive(false);
-        //temp
-        tmpPosEnemy.Add(new Vector2(1.8f, 0f));
-        tmpPosEnemy.Add(new Vector2(4.5f, -2.5f));
+
 
         dmgPopupPool = new ObjectPool<GameObject>(
             Create_DmgPopup,
@@ -102,7 +97,6 @@ public class BattleSceneManager : MonoBehaviour
             hDataList_Original.Add(h.DeepCopy());
         }
         EnemyList = Enemies;
-
         eCount = (uint)EnemyList.Count;
 
         //Init Enemy

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class CustomSignal : MonoBehaviour
 {
-    public void Judge(LogInfo _logInfo)
+    public void Judge(BattleLogPanel.Log _log)
     {
-        if(Condition(_logInfo))
+        if(Condition(_log))
         {
             Apply();
         }
     }
 
-    protected abstract bool Condition(LogInfo _logInfo);
+    protected abstract bool Condition(BattleLogPanel.Log _log);
     protected abstract void Apply();
 }

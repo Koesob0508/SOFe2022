@@ -15,24 +15,95 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		// ¾ÆÀÌÅÛ ½½·ÔÀÇ »ö»óÀ» ³ë¶õ»öÀ¸·Î º¯°æ
+		// ì•„ì´í…œ ìŠ¬ë¡¯ì˜ ìƒ‰ìƒì„ ë…¸ë€ìƒ‰ìœ¼ë¡œ ë³€ê²½
 		image.color = Color.yellow;
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		// ¾ÆÀÌÅÛ ½½·ÔÀÇ »ö»óÀ» ÇÏ¾á»öÀ¸·Î º¯°æ
+		// ì•„ì´í…œ ìŠ¬ë¡¯ì˜ ìƒ‰ìƒì„ í•˜ì–€ìƒ‰ìœ¼ë¡œ ë³€ê²½
 		image.color = Color.white;
 	}
 
 	public void OnDrop(PointerEventData eventData)
 	{
-		// pointerDrag´Â ÇöÀç µå·¡±×ÇÏ°í ÀÖ´Â ´ë»ó(=¾ÆÀÌÅÛ)
+		// pointerDragëŠ” í˜„ì¬ ë“œë˜ê·¸í•˜ê³  ìˆëŠ” ëŒ€ìƒ(=ì•„ì´í…œ)
 		if (eventData.pointerDrag != null)
 		{
-			// µå·¡±×ÇÏ°í ÀÖ´Â ´ë»óÀÇ ºÎ¸ğ¸¦ ÇöÀç ¿ÀºêÁ§Æ®·Î ¼³Á¤ÇÏ°í, À§Ä¡¸¦ ÇöÀç ¿ÀºêÁ§Æ® À§Ä¡¿Í µ¿ÀÏÇÏ°Ô ¼³Á¤
-			eventData.pointerDrag.transform.SetParent(transform);
-			eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+			// í•˜ë‚˜ì˜ Slotì—ëŠ” í•˜ë‚˜ì˜ Itemë§Œì´ ì†í•œë‹¤ 
+			if (transform.childCount > 0)
+			{
+				return;
+			}
+
+			GameObject NewOwner = transform.parent.parent.gameObject;
+			GameObject Contents = transform.parent.parent.parent.gameObject;
+			uint InventoryOrder = 0;
+
+			// ì•„ì´í…œ í•©ì„±ì„ ìœ„í•´ì„œ Potë‚´ì— Dropí•œ ê²½ìš°
+			if (NewOwner.name == "BigPot")
+			{ 
+				// Hero Inventoryì˜ contents
+				GameObject HeroContents = transform.parent.parent.parent.parent.GetChild(2).GetChild(0).gameObject;
+
+				if (transform.name == "Target (1)")
+				{
+					InventoryOrder = 0;
+				}
+				else if (transform.name == "Target (2)")
+				{
+					InventoryOrder = 1;
+				}
+
+				GameManager.Hero.RemoveHeroItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
+
+				NewOwner.GetComponent<DoItemSynthesis>().AddTargetItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					InventoryOrder);
+
+				// ë“œë˜ê·¸í•˜ê³  ìˆëŠ” ëŒ€ìƒì˜ ë¶€ëª¨ë¥¼ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ë¡œ ì„¤ì •í•˜ê³ , ìœ„ì¹˜ë¥¼ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ì™€ ë™ì¼í•˜ê²Œ ì„¤ì •
+				eventData.pointerDrag.transform.SetParent(transform);
+				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+
+				// Heroê°€ ì†Œìœ í•˜ê³  ìˆëŠ” ItemInfo Update
+				HeroContents.GetComponent<GetHeroInfo>().UpdateItems();
+			}
+			else
+			{
+				// ë“œë˜ê·¸í•œ ì•„ì´í…œì„ ì†Œìœ í•˜ë˜ Heroì™€, ì†Œìœ í•  Heroì˜ Item listë¥¼ Update
+				if (transform.name == "Inventory (1)")
+				{
+					InventoryOrder = 0;
+				}
+				else if (transform.name == "Inventory (2)")
+				{
+					InventoryOrder = 1;
+				}
+				else if (transform.name == "Inventory (3)")
+				{
+					InventoryOrder = 2;
+				}
+
+				GameManager.Hero.RemoveHeroItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
+
+				GameManager.Hero.AddHeroItem(
+					Contents.GetComponent<GetHeroInfo>().GetHeroUIOrder(NewOwner),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					InventoryOrder);
+
+				// ë“œë˜ê·¸í•˜ê³  ìˆëŠ” ëŒ€ìƒì˜ ë¶€ëª¨ë¥¼ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ë¡œ ì„¤ì •í•˜ê³ , ìœ„ì¹˜ë¥¼ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ì™€ ë™ì¼í•˜ê²Œ ì„¤ì •
+				eventData.pointerDrag.transform.SetParent(transform);
+				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+
+				// ì†Œìœ í•˜ê³  ìˆëŠ” ItemInfo Update
+				Contents.GetComponent<GetHeroInfo>().UpdateItems();
+			}
 		}
 	}
 }

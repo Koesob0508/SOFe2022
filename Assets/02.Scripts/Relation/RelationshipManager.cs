@@ -142,19 +142,19 @@ public partial class RelationshipManager : MonoBehaviour
     /// <summary>
     /// 로그를 받아들이는 부분. 어떻게 처리할지는 이후 구현
     /// </summary>
-    public void ApplyLog(LogInfo _logInfo)
+    public void ApplyLog(BattleLogPanel.Log _log)
     {
-        ReadEvents(_logInfo);
+        ReadEvents(_log);
     }
 
     #region 로그 읽어들이는 부분 구현
-    private void ReadEvents(LogInfo _logInfo)
+    private void ReadEvents(BattleLogPanel.Log _log)
     {
         foreach(CustomSignal customSignal in signals)
         {
             // customEvent에 log 정보를 뿌립니다. 그게 끝
             // 그러면 customEvent는 받은 log를 바탕으로 조건을 판단하고 발동해야한다면 어련히 발동시킵니다.
-            customSignal.Judge(_logInfo);
+            customSignal.Judge(_log);
         }
     }
     #endregion
