@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventEI : CustomEvent
+public class SignalEI : CustomSignal
 {
     [SerializeField] private Hero preHero = null;
     [SerializeField] private string preValue;

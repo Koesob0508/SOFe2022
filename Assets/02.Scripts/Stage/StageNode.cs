@@ -7,6 +7,11 @@ using UnityEngine.Events;
 
 public class StageNode : MonoBehaviour
 {
+    public int StageLevel { get; private set; }
+    public GameManager.MapType StageMapType { get; private set; }
+    public int StageStep { get; private set; }
+    public int StageCase { get; private set; }
+
     public StageManager.StageType Type { get; private set; }
     public int Step { get; private set; }
     public int Index { get; private set; }
@@ -21,6 +26,10 @@ public class StageNode : MonoBehaviour
 
     public void Init(StageManager.Seed _seed, float _scale)
     {
+        StageLevel = _seed.StageLevel;
+        StageMapType = _seed.StageMapType;
+        StageStep = _seed.StageStep;
+
         Type = _seed.Type;
         Step = _seed.Step;
         Index = _seed.Index;
@@ -30,7 +39,7 @@ public class StageNode : MonoBehaviour
         IsInteractable = false;
         NextStages = new List<int>();
 
-        name = string.Format("Step : {0} Index : {1}", Step, Index);
+        name = string.Format("Step : {0} Index : {1} StageStep : {2} MapType : {3}", Step, Index, StageStep, StageMapType);
         transform.localScale = new Vector3(_scale, _scale, 1f);
 
         if (Step == 0)
@@ -47,18 +56,22 @@ public class StageNode : MonoBehaviour
         if(_seed.Type == StageManager.StageType.Battle)
         {
             Enemies = new List<Enemy>();
+            List<StageEnemy> enemyPool = new List<StageEnemy>();
 
-            Enemy enemy1 = (Enemy)GameManager.Data.ObjectCodex[100];
-            Enemy enemy2 = (Enemy)GameManager.Data.ObjectCodex[100];
-            Enemy enemy3 = (Enemy)GameManager.Data.ObjectCodex[100];
+            enemyPool = GameManager.Stage.GetStageEnemy(_seed.StageLevel, (int)_seed.StageMapType, _seed.StageStep);
 
-            enemy1.Position = new Vector2(3, 5);
-            enemy2.Position = new Vector2(0, 8);
-            enemy3.Position = new Vector2(3, -5);
+            for(int number = 0; number < enemyPool.Count; number++)
+            {
+                for (int count = 0; count < enemyPool[number].count; count++)
+                {
+                    Enemy enemy = (Enemy)GameManager.Data.ObjectCodex[(uint)enemyPool[number].ruid];
+                    enemy.Position = new Vector2(1 + number, 0 - count * 1);
+                    //Debug.LogError(name + " number : " + number + " Count " + count + enemy.Position);
+                    Enemies.Add(enemy);
+                }
+            }
 
-            Enemies.Add(enemy1);
-            Enemies.Add(enemy2);
-            //Enemies.Add(enemy3);
+            //Debug.LogError(name + string.Format(" Enemy Type Count {0} Total Count : {1}", enemyPool.Count, Enemies.Count));
         }
 
         button.onClick.AddListener(() => RegistStageNode(this));

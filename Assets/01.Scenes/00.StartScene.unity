@@ -278,8 +278,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC0C8 \uAC8C\uC784"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
-  m_sharedMaterial: {fileID: -2292550290053012602, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -593,8 +593,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC774\uC5B4\uD558\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
-  m_sharedMaterial: {fileID: -2292550290053012602, guid: 0a3767a51289ba54f919dfc3b33239d3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -858,6 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HeroList: []
   RelationScore: 0
+  signals: []
 --- !u!4 &1651774851
 Transform:
   m_ObjectHideFlags: 0
@@ -1118,7 +1119,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
       propertyPath: stepCount
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
       propertyPath: townCount

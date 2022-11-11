@@ -105,12 +105,11 @@ public class BattleSceneManager : MonoBehaviour
 
         eCount = (uint)EnemyList.Count;
 
-
         //Init Enemy
         for (int i = 0; i < eCount; i++)
         {
             GameObject e = Resources.Load<GameObject>("Prefabs/GlobalObjects/" + EnemyList[i].GUID);
-            GameObject eTemp = Instantiate(e, tmpPosEnemy[i], new Quaternion());
+            GameObject eTemp = Instantiate(e, EnemyList[i].Position, new Quaternion());
             Units tempU = eTemp.GetComponent<Units>();
             tempU.Initalize(EnemyList[i]);
             enemyObjects.Add(eTemp);

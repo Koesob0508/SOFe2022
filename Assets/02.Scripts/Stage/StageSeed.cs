@@ -13,6 +13,10 @@ public partial class StageManager
 
     public class Seed
     {
+        public int StageLevel { get; set; }
+        public GameManager.MapType StageMapType { get; set; }
+        public int StageStep { get; set; }
+
         public StageManager.StageType Type { get; set; }
         public int Index { get; private set; }
         public int Step { get; private set; }
@@ -34,13 +38,17 @@ public partial class StageManager
             }
         }
 
+        public Seed()
+        {
+
+        }
+
         public Seed(int _index, int _step)
         {
             Type = StageManager.StageType.Battle; // 임시로 Battle로 고정
             Index = _index;
             this.Step = _step;
             this.NextStages = new List<int>();
-
         }
 
         public string ToLog()

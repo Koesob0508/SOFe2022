@@ -38,6 +38,9 @@ public class Battle_Enemys : Units
 
     public override void Attack()
     {
+        if (unitCC.faint)
+            return;
+
         base.Attack();
         if (isCloseAttackUnit)
             StartCoroutine("CouroutineCloseAttack");

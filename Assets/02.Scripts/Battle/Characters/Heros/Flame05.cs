@@ -44,6 +44,14 @@ public class Flame05 : Battle_Heros
                 attackList[j].GetComponent<Units>().Hit(charData, charData.AttackDamage * 0.5f);
             }
 
+            if(i == 2)
+            {
+                for (int j = 0; j < attackList.Count; j++)
+                {
+                    attackList[j].GetComponent<Units>().GetCC("burn", 5.0f, charData);
+                }
+            }    
+
             yield return new WaitForSeconds(0.3f);
         }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CustomEvent : MonoBehaviour
+public abstract class CustomSignal : MonoBehaviour
 {
     public void Judge(LogInfo _logInfo)
     {
