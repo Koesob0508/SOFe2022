@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HeroList: []
   HeroUIObject: {fileID: 3534543972837446805, guid: 706bec82022e8bf4396548bf7bada913, type: 3}
+  ItemUIObject: {fileID: 9148229809311707872, guid: fecf5c9a8f7c3fc4dbe423162ceb0dab, type: 3}
   gradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.10849059, b: 0.10849059, a: 1}

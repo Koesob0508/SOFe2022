@@ -37,7 +37,10 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
         HeroObject = HeroObj;
         //HeroObject.GetComponent<Units>().SetItemUI(this);
     }
-
+    public bool GetIsHeroInInven()
+    {
+        return isHeroInInven;
+    }
     public void ReturnToInven(GameObject Hero)
     {
         isHeroInInven = true;

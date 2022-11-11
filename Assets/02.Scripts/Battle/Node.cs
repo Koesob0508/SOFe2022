@@ -30,6 +30,10 @@ namespace Path
         {
             bIsObstacle = true;
         }
+        public void ReleaseObstacle()
+        {
+            bIsObstacle = false;
+        }
 
         public bool GetObstacle()
         {

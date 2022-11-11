@@ -5,9 +5,13 @@ using UnityEngine;
 public class Hunter03 : Battle_Heros
 {
 
+
+    public GameObject hunterSkillEffect;
+
     protected override void Start()
     {
         isCloseAttackUnit = false;
+        hunterSkillEffect = Resources.Load<GameObject>("Prefabs/Effects/hunterSkillEffect");
 
     }
 
@@ -25,6 +29,13 @@ public class Hunter03 : Battle_Heros
         charData.AttackSpeed *= 2;
         charData.AttackDamage *= 1.2f;
         charData.AttackRange = 1;
+
+        Vector3 effectPosition = transform.position;
+        effectPosition.z = transform.position.z - 1;
+        effectPosition.y = transform.position.y - 0.7f;
+
+        GameObject burnEffect = Instantiate(hunterSkillEffect, effectPosition, Quaternion.identity);
+        Destroy(burnEffect, 2.0f);
 
     }
 }

@@ -153,6 +153,10 @@ public class BattleSceneManager : MonoBehaviour
         hDataToChange.MaxHP = hData.MaxHP;
         hDataToChange.CurrentHP = hData.CurrentHP;
     }
+    public GameObject GetHeroGameObject(Character Hero)
+    {
+        return heroObjects.Find((h) => { return h.GetComponent<Units>().charData.GUID == Hero.GUID; });
+    }
     public void SetHeroOnBattle(GameObject Hero)
     {
         hCount++;
@@ -350,6 +354,14 @@ public class BattleSceneManager : MonoBehaviour
            
             spriteRenderers.Add(hero.GetComponent<SpriteRenderer>());
             hero.GetComponent<Units>().StartBattle();
+            for (int i = 0; i < hero.transform.childCount; i++)
+            {
+                Transform tempG = hero.transform.GetChild(i);
+                if (tempG != null & tempG.gameObject.CompareTag("CharOffset"))
+                {
+                    GameManager.Battle.PathMgr.AddObstacle(tempG.gameObject.GetComponent<Collider2D>());
+                }
+            }
         }
         foreach (var enemy in enemyObjects)
         {

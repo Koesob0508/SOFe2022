@@ -7,12 +7,16 @@ using TMPro;
 
 public class Town_Hotel : MonoBehaviour
 {
-
+    public GameObject TargetUI;
     public GameObject EnrollHeroUI;
     GameObject ObjectUI;
+    
 
     public List<Hero> EnrollList = new List<Hero>();
     public Dictionary<uint, GameObject> ObjectUIList = new Dictionary<uint, GameObject>();
+
+    int SleepTarget = -1;
+    int Time = 0; //한 숙소에 한 명의 Hero만 쉴 수 있음 
 
     // Status
     public Gradient gradient;
@@ -22,6 +26,39 @@ public class Town_Hotel : MonoBehaviour
         uint guid = ObjectUIList.FirstOrDefault(x => x.Value == _hero).Key;
         return guid;
     }
+    
+    public void SetSleep(uint guid)
+    {
+        SleepTarget = (int)guid;
+    }
+
+    public void GetSleep()
+    {
+        if (SleepTarget >= 0 && Time == 0)
+        {
+            Hero hero = GameManager.Hero.GetHero((uint)SleepTarget);
+
+            GameObject.Find("Bed").GetComponent<Image>().color = new Color(133/255f, 133/255f, 133/255f);
+
+            LeanTween.scale(TargetUI, new Vector3(2.2f, 2.2f, 2.2f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
+
+            LeanTween.scale(TargetUI, new Vector3(1.6f, 1.6f, 1.6f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
+
+            LeanTween.scale(TargetUI, new Vector3(2.2f, 2.2f, 2.2f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
+
+            LeanTween.scale(TargetUI, new Vector3(1.6f, 1.6f, 1.6f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
+
+            //.Find("Bed").GetComponent<Image>().color = new Color(255, 255, 255);
+
+            hero.CurrentHP = hero.MaxHP;
+            Time = 1;
+        }
+        else
+        {
+            Debug.Log("Can't Sleep");
+        }
+    }
+
     public void SetHeroList()
     {
         EnrollList = GameManager.Hero.GetHeroList();
@@ -35,6 +72,7 @@ public class Town_Hotel : MonoBehaviour
             SetStatus();
         }
     }
+
     private GameObject GetChildWithName(GameObject obj, string name)
     {
         Transform trans = obj.transform;
@@ -48,12 +86,13 @@ public class Town_Hotel : MonoBehaviour
             return null;
         }
     }
+
     public void SetStatus()
     {
         // Status
         Image HeroImage;
         TextMeshProUGUI HeroName, HeroMbti;
-        GameObject HeroInfo, AbilityInfo, HealthBar, HungerBar;
+        GameObject HeroInfo, HealthBar, HungerBar;
         Slider HealthSlider, HungerSlider;
         Image fill;
 
@@ -110,5 +149,9 @@ public class Town_Hotel : MonoBehaviour
         SetHeroList();
     }
 
+    void Update()
+    {
+        SetStatus();
+    }
 
 }
