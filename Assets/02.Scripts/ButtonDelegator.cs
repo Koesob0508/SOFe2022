@@ -33,7 +33,16 @@ namespace Koesob
         public void ToItem()
         {
             // Stage Select Scene에서 Item 합성 가능한 창을 띄움
+            GameObject ItemUI = GameObject.Find("ItemSynthesis(Clone)");
 
+            if (ItemUI != null)
+            {
+                Destroy(ItemUI, 1f);
+            }
+            else
+            {
+                ItemUI = Instantiate(Resources.Load<GameObject>("Prefabs/UI/ItemSynthesis"));
+            }
         }
 
         public void ShowHeroInfo()

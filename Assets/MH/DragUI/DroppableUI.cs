@@ -38,38 +38,72 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 
 			GameObject NewOwner = transform.parent.parent.gameObject;
 			GameObject Contents = transform.parent.parent.parent.gameObject;
-
-			// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
 			uint InventoryOrder = 0;
-			if (transform.name == "Inventory(1)")
-			{
-				InventoryOrder = 0;
+
+			// 아이템 합성을 위해서 Pot내에 Drop한 경우
+			if (NewOwner.name == "BigPot")
+			{ 
+				// Hero Inventory의 contents
+				GameObject HeroContents = transform.parent.parent.parent.parent.GetChild(2).GetChild(0).gameObject;
+
+				if (transform.name == "Target (1)")
+				{
+					InventoryOrder = 0;
+				}
+				else if (transform.name == "Target (2)")
+				{
+					InventoryOrder = 1;
+				}
+
+				GameManager.Hero.RemoveHeroItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
+
+				NewOwner.GetComponent<DoItemSynthesis>().AddTargetItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					InventoryOrder);
+
+				// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
+				eventData.pointerDrag.transform.SetParent(transform);
+				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+
+				// Hero가 소유하고 있는 ItemInfo Update
+				HeroContents.GetComponent<GetHeroInfo>().UpdateItems();
 			}
-			else if (transform.name == "Inventory(2)")
+			else
 			{
-				InventoryOrder = 1;
+				// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
+				if (transform.name == "Inventory (1)")
+				{
+					InventoryOrder = 0;
+				}
+				else if (transform.name == "Inventory (2)")
+				{
+					InventoryOrder = 1;
+				}
+				else if (transform.name == "Inventory (3)")
+				{
+					InventoryOrder = 2;
+				}
+
+				GameManager.Hero.RemoveHeroItem(
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
+
+				GameManager.Hero.AddHeroItem(
+					Contents.GetComponent<GetHeroInfo>().GetHeroUIOrder(NewOwner),
+					eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
+					InventoryOrder);
+
+				// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
+				eventData.pointerDrag.transform.SetParent(transform);
+				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+
+				// 소유하고 있는 ItemInfo Update
+				Contents.GetComponent<GetHeroInfo>().UpdateItems();
 			}
-			else if (transform.name == "Inventory(3)")
-			{
-				InventoryOrder = 2;
-			}
-
-			GameManager.Hero.RemoveHeroItem(
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOwnerGuid(),
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GetItemOrder());
-
-			GameManager.Hero.AddHeroItem(
-				Contents.GetComponent<GetHeroInfo>().GetHeroUIOrder(NewOwner),
-				eventData.pointerDrag.GetComponent<GetItemInfo>().GetUIItemGuid(),
-				InventoryOrder);
-
-			// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
-			eventData.pointerDrag.transform.SetParent(transform);
-			eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
-
-			// 소유하고 있는 ItemInfo Update
-			Contents.GetComponent<GetHeroInfo>().UpdateItems();
 		}
 	}
 }

@@ -20,6 +20,7 @@ public class HeroManager : MonoBehaviour
 
         AddHeroItem(0, 200, 0);
         AddHeroItem(0, 205, 1);
+        AddHeroItem(0, 205, 2);
 
         GameManager.Relation.GetTeamScore();
     }
@@ -87,19 +88,21 @@ public class HeroManager : MonoBehaviour
         return HeroList;
     }
 
-    public Item GetHeroItem(uint HeroGuid, uint ItemGuid)
+    public List<Item> GetHeroItem(uint HeroGuid, uint ItemGuid)
     {
+        List<Item> SameItem = new List<Item>();
+
         if (GetHero(HeroGuid).ItemNum > 0)
         {
             foreach (Item i in GetHeroItemList(HeroGuid))
             {
                 if (i != null && i.GUID == ItemGuid)
                 {
-                        return i;
+                        SameItem.Add(i);
                 }
             }
         }
-        return null;
+        return SameItem;
     }
 
     public Item[] GetHeroItemList(uint guid)
@@ -135,27 +138,35 @@ public class HeroManager : MonoBehaviour
                 if (item != null && item.GUID == ItemGUID)
                 {
                     // 해당 아이템을 중복해서 갖는지 확인한다
-                    Item HeroItem = GetHeroItem(HeroGUID, ItemGUID);
+                    List<Item> HeroItem = GetHeroItem(HeroGUID, ItemGUID);
 
                     // 그렇지 않다면 저장함
-                    if (HeroItem == null)
+                    if (HeroItem.Count == 0)
                     {
+                        item.OwnHeroGUID = HeroGUID;
+                        item.InventoryOrder = order;
                         Items[order] = item;
-                    }
-                    // 이미 저장된 Item이라면
-                    else if (HeroItem.InventoryOrder == order)
-                    {
-                        return;
                     }
                     else
                     {
-                        Items[order] = item;
+                        foreach (Item i in HeroItem)
+                        {   
+                            // 해당 위치에 이미 저장된 동일 Item이라면
+                            if (i.InventoryOrder == order)
+                                return;
+                            // 해당 위치가 아닌, 동일 Item이 새로운 위치에 들어오는 것이라면
+                            else
+                            {
+                                item.OwnHeroGUID = HeroGUID;
+                                item.InventoryOrder = order;
+                                Items[order] = item;
+                                break;
+                            }
+                        }
                     }
 
+                    Debug.Log(order + "번째에, " + ItemGUID + " 아이템 저장");
                     GetHero(HeroGUID).ItemNum += 1;
-                    item.OwnHeroGUID = HeroGUID;
-                    item.InventoryOrder = order;
-
                     ADDItemBasicEffect(GetHero(HeroGUID), item);
                 }
             }

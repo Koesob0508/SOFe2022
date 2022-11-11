@@ -11,7 +11,7 @@ public class GetHeroInfo : MonoBehaviour
     public Dictionary<uint, GameObject> HeroUIList = new Dictionary<uint, GameObject>();
 
     public GameObject HeroUIObject;
-    public GameObject ItmeUIObject;
+    public GameObject ItemUIObject;
     GameObject HeroUI, ItemUI;
 
     // Status º¯¼ö
@@ -44,6 +44,7 @@ public class GetHeroInfo : MonoBehaviour
         }
 
         SetStatus();
+        UpdateItems();
     }
 
     private GameObject GetChildWithName(GameObject obj, string name)
@@ -122,7 +123,7 @@ public class GetHeroInfo : MonoBehaviour
                 {
                     if (hero.Items[i] != null && hero.Items[i].GUID != 0)
                     {
-                        ItemUI = Instantiate(ItmeUIObject, transform.position, Quaternion.identity);
+                        ItemUI = Instantiate(ItemUIObject, transform.position, Quaternion.identity);
                         ItemUI.transform.SetParent(Items.transform.GetChild(i));
                         ItemUI.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -183,7 +184,10 @@ public class GetHeroInfo : MonoBehaviour
                 for (int i = 0; i < 3; i++)
                 {
                     if (hero.Items[i] != null && hero.Items[i].GUID != 0)
+                    {
+                        hero.Items[i].InventoryOrder = (uint)i;
                         Items.transform.GetChild(i).GetChild(0).GetComponent<GetItemInfo>().SetInfo(hero.Items[i]);
+                    }
                 }
             }
         }
