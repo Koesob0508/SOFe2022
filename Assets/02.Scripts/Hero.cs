@@ -11,7 +11,9 @@ public class Hero : Character
     public bool isDead = false;
     public bool IsActive = false;
 
-    public List<Item> Items = new List<Item>();
+    // public List<Item> Items = new List<Item>();
+    public Item[] Items = new Item[3];
+    public uint ItemNum = 0;
 
     public Hero DeepCopy()
     {

@@ -7,7 +7,7 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
 {
 
     [Tooltip("Hold duration in seconds")]
-    [Range(0.3f, 5f)] public float holdDuration = 0.5f;
+    [Range(0.3f, 5f)] public float holdDuration = 3f;
     public UnityEvent onLongPress;
     public UnityEvent OutLongPress;
 

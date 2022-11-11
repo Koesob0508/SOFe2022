@@ -27,9 +27,14 @@ public class HeroInfo_PopUp : MonoBehaviour
         HealthBar.fillAmount = hero.CurrentHP / (float)hero.MaxHP;
         HungerBar.fillAmount = hero.CurHunger / 100.0f;
         Image[] m_ItemImages =ItemPanel.GetComponentsInChildren<Image>();
-        for(int i = 0; i < hero.Items.Count; i++)
+        //for(int i = 0; i < hero.Items.Count; i++)
+        //{
+        //    m_ItemImages[i].sprite = GameManager.Data.LoadSprite(hero.Items[i].GUID);
+        //}
+        for (int i = 0; i < 3; i++)
         {
-            m_ItemImages[i].sprite = GameManager.Data.LoadSprite(hero.Items[i].GUID);
+            if (hero.Items[i] != null)
+                m_ItemImages[i].sprite = GameManager.Data.LoadSprite(hero.Items[i].GUID);
         }
     }
 

@@ -40,6 +40,14 @@ public class GameManager : MonoBehaviour
         Enemy,
         Item
     }
+
+    public enum ItemType
+    {
+        AttackDamage,
+        MoveSpeed,
+        DefensePoint,
+        MaxHP
+    }
     #endregion
 
     private static GameManager instance;

@@ -74,15 +74,13 @@ public class MouseEventUI : MonoBehaviour
         }
     }
 
-    // Hotel에서 Hero를 등록한다.
-    public void OnButtonClick_Hotel()
+    // Hotel에서 Hero List 중 하나를 선택함
+    public void OnSelectButton_Hotel()
     {
-
         GameObject Hero = this.transform.parent.gameObject;
         GameObject HeroUIContent = Hero.transform.parent.gameObject;
-        Debug.Log(HeroUIContent.name);
+
         uint heroGUID = HeroUIContent.GetComponent<Town_Hotel>().GetHeroUIOrder(Hero);
-        GameManager.Hero.EnrollHero(heroGUID);
 
         foreach (Hero _hero in GameManager.Hero.ShopHeroList)
         {
@@ -93,17 +91,15 @@ public class MouseEventUI : MonoBehaviour
             }
         }
 
-        GameObject Sleep = GameObject.Find("SleepImage");
+        GameObject.Find("Content").GetComponent<Town_Hotel>().SetSleep(heroGUID);
+
+        GameObject Sleep = GameObject.Find("Sleep");
         Sleep.GetComponent<Image>().color = Color.white;
         Sleep.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(heroGUID);
 
-        // Hotel에 Hero 등록 애니메이션
+        // Hotel에 Hero 등록
         InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
         InfoUI = Instantiate(InfoUI, new Vector3(235, -8, 0), Quaternion.identity);
-        //InfoUI.GetComponent<SpriteRenderer>().sprite = GameManager.Data.LoadSprite(heroGUID);
-        //LeanTween.moveLocal(InfoUI, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
-        //LeanTween.scale(InfoUI, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
-        //Destroy(InfoUI, 3f);
 
     }
 
