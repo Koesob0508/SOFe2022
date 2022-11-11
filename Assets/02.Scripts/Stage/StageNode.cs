@@ -66,6 +66,7 @@ public class StageNode : MonoBehaviour
                 {
                     Enemy enemy = (Enemy)GameManager.Data.ObjectCodex[(uint)enemyPool[number].ruid];
                     enemy.Position = new Vector2(1 + number, 0 - count * 1);
+                    enemy = enemy.DeepCopy(enemy);
                     //Debug.LogError(name + " number : " + number + " Count " + count + enemy.Position);
                     Enemies.Add(enemy);
                 }
