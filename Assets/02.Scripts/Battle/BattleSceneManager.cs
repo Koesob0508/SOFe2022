@@ -360,6 +360,14 @@ public class BattleSceneManager : MonoBehaviour
            
             spriteRenderers.Add(hero.GetComponent<SpriteRenderer>());
             hero.GetComponent<Units>().StartBattle();
+            for (int i = 0; i < hero.transform.childCount; i++)
+            {
+                Transform tempG = hero.transform.GetChild(i);
+                if (tempG != null & tempG.gameObject.CompareTag("CharOffset"))
+                {
+                    GameManager.Battle.PathMgr.AddObstacle(tempG.gameObject.GetComponent<Collider2D>());
+                }
+            }
         }
         foreach (var enemy in enemyObjects)
         {

@@ -65,7 +65,23 @@ namespace Path
        
         }
 
+        public void AddObstacle(Collider2D coll)
+        {
+            Obstacles.Add(coll);
+        }
 
+
+        int mFrameCount = 0;
+        private void Update()
+        {
+            if (mFrameCount >= 10)
+            {
+                RefreshObstacles();
+                mFrameCount = 0;
+            }
+            else
+                mFrameCount++;
+        }
         void StrechImageToScreenSize(SpriteRenderer Image)
         {
             float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
@@ -79,17 +95,28 @@ namespace Path
         }
         void RefreshObstacles()
         {
-            foreach (var obj in Obstacles_Parent.GetComponentsInChildren<Collider2D>())
-            {
-                Obstacles.Clear();
-                Obstacles.Add(obj);
-                foreach(Node node in nodes)
-                {
-                    if(obj.OverlapPoint(node.pos))
-                    {
-                        node.SetObstacle();
+            //foreach (var obj in Obstacles_Parent.GetComponentsInChildren<Collider2D>())
+            //{
+            //    Obstacles.Clear();
+            //    Obstacles.Add(obj);
+            //    foreach(Node node in nodes)
+            //    {
+            //        if(obj.OverlapPoint(node.pos))
+            //        {
+            //            node.SetObstacle();
 
-                    }
+            //        }
+            //    }
+            //}
+
+            foreach (var obstacle in Obstacles)
+            {
+                foreach(Node n in nodes)
+                {
+                    if (obstacle.OverlapPoint(n.pos))
+                        n.SetObstacle();
+                    else
+                        n.ReleaseObstacle();
                 }
             }
         }
