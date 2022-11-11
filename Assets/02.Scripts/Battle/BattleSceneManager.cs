@@ -159,6 +159,10 @@ public class BattleSceneManager : MonoBehaviour
         hDataToChange.MaxHP = hData.MaxHP;
         hDataToChange.CurrentHP = hData.CurrentHP;
     }
+    public GameObject GetHeroGameObject(Character Hero)
+    {
+        return heroObjects.Find((h) => { return h.GetComponent<Units>().charData.GUID == Hero.GUID; });
+    }
     public void SetHeroOnBattle(GameObject Hero)
     {
         hCount++;
