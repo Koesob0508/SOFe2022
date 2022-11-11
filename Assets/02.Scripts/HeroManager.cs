@@ -12,9 +12,22 @@ public class HeroManager : MonoBehaviour
         Debug.Log("Test를 위해 Hero 임시로 등록합니다");
         EnrollHero(0);
         EnrollHero(1);
-        EnrollHero(11);
+        EnrollHero(2);
+        EnrollHero(3);
+        EnrollHero(4);
+        EnrollHero(5);
+        EnrollHero(6);
+        EnrollHero(7);
+        EnrollHero(8);
         EnrollHero(9);
+        EnrollHero(10);
+        EnrollHero(11);
+        EnrollHero(12);
+        EnrollHero(13);
         EnrollHero(14);
+        EnrollHero(15);
+        EnrollHero(16);
+        EnrollHero(17);
         EnrollHero(18);
         EnrollHero(19);
 

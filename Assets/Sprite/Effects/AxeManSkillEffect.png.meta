@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40714a09dc9eb1445ac22c6d7932dbce
+guid: 07f1c09d79b69c84ab28cfa8f7d3db9e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,85 +116,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Faint_0
+      name: AxeManSkillEffect_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84b18966c0cc10b45acf9731b4faa88a
-      internalID: -491903242
+      spriteID: 64621d46f6399094f846336caf72b4eb
+      internalID: -493080832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faint_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b01bd6b9a374984a8b7425c6f39b78a
-      internalID: -247288229
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Faint_2
+      name: AxeManSkillEffect_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61d17ad7cbe83714eac146ab70b14745
-      internalID: -422269309
+      spriteID: aed4f4272ef6be2468c6e43a9161e182
+      internalID: 845887959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faint_3
+      name: AxeManSkillEffect_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8def66d299760bc428be78c0f7dec3fa
-      internalID: 595791324
+      spriteID: ff4356d2ced090047902ecabb70c32ab
+      internalID: -1135110577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AxeManSkillEffect_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a2f253d044e4241bf81dadf947558d
+      internalID: 2069620267
       vertices: []
       indices: 
       edges: []
@@ -210,10 +210,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Faint_1: -247288229
-      Faint_3: 595791324
-      Faint_0: -491903242
-      Faint_2: -422269309
+      AxeManSkillEffect_3: 2069620267
+      AxeManSkillEffect_2: -1135110577
+      AxeManSkillEffect_0: -493080832
+      AxeManSkillEffect_1: 845887959
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

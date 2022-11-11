@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40714a09dc9eb1445ac22c6d7932dbce
+guid: 371e592f70084834d9b740712171de83
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,85 +116,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Faint_0
+      name: IronNightSkillEffect_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84b18966c0cc10b45acf9731b4faa88a
-      internalID: -491903242
+      spriteID: 2f13a614c5fb94748be294c5681d17ef
+      internalID: 276170216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faint_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b01bd6b9a374984a8b7425c6f39b78a
-      internalID: -247288229
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Faint_2
+      name: IronNightSkillEffect_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61d17ad7cbe83714eac146ab70b14745
-      internalID: -422269309
+      spriteID: 072b99ae1c50b954abf7296ed4b639b7
+      internalID: -1024674794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faint_3
+      name: IronNightSkillEffect_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8def66d299760bc428be78c0f7dec3fa
-      internalID: 595791324
+      spriteID: 66aa7384645a0c64d8ff21857023862d
+      internalID: -1016072058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IronNightSkillEffect_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9800b5e8ec2f7324c9c1678093d6c02f
+      internalID: -962298434
       vertices: []
       indices: 
       edges: []
@@ -210,10 +210,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Faint_1: -247288229
-      Faint_3: 595791324
-      Faint_0: -491903242
-      Faint_2: -422269309
+      IronNightSkillEffect_0: 276170216
+      IronNightSkillEffect_2: -1016072058
+      IronNightSkillEffect_3: -962298434
+      IronNightSkillEffect_1: -1024674794
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

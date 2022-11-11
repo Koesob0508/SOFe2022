@@ -8,13 +8,22 @@ public class Flame05 : Battle_Heros
     public GameObject AttackRange;
     public List<GameObject> attackList = new List<GameObject>();
 
+    bool isAttacking;
+
     protected override void Start()
     {
         isCloseAttackUnit = true;
-
+        isAttacking = false;
     }
     public override void Attack()
     {
+        if (unitCC.faint || isAttacking)
+            return;
+
+
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1);
+        animator.SetFloat("AttackSpeed", 1);
+
         PlayAttackAnimation();
 
         StartCoroutine("CouroutineAttack");
@@ -22,7 +31,8 @@ public class Flame05 : Battle_Heros
 
     IEnumerator CouroutineAttack()
     {
-        for(int i = 0; i<3; i++)
+        isAttacking = true;
+        for (int i = 0; i<3; i++)
         {
             if (isFilped)
             {
@@ -55,6 +65,6 @@ public class Flame05 : Battle_Heros
             yield return new WaitForSeconds(0.3f);
         }
 
-
+        isAttacking = false;
     }
 }

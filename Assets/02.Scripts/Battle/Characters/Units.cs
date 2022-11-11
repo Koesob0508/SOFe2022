@@ -14,7 +14,7 @@ public class CC
 public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 {
 
-    bool isUpdating = false;
+    protected bool isUpdating = false;
     protected bool isSkillPlaying = false;
     protected bool isCloseAttackUnit; // 근접 유닛
 
@@ -50,7 +50,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     [SerializeField] private float speed = 1;
 
-    bool bCanMove = false;
+    protected bool bCanMove = false;
 
     int curIdx = 0;
     int maxIdx = 0;
@@ -88,6 +88,9 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
         if (bCanMove && !unitCC.faint)
             Move();
+
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y); // 앞 유닛이 앞에 보이게
     }
 
     public virtual void Initalize(Character charData)
@@ -313,6 +316,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         animator.SetBool("Run", true);
 
+
         CheckForFlipping();
     }
     public void StopMovement()
@@ -396,7 +400,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
             Vector3 effectPosition = transform.position;
             effectPosition.z = transform.position.z - 1;
-            effectPosition.y = transform.position.y + 1;
 
             GameObject burnEffect = Instantiate(burnEffectObject, effectPosition, Quaternion.identity);
             Destroy(burnEffect, 1.0f);

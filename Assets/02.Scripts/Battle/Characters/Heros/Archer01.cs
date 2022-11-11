@@ -16,16 +16,24 @@ public class Archer01 : Battle_Heros
     {
         base.ExecuteSkill();
 
+        StartCoroutine(CouroutineSkill());
+    }
 
-        Vector2 dir = attackTarget.transform.position - transform.position;
+    IEnumerator CouroutineSkill()
+    {
+
+        yield return new WaitForSeconds(animationDamageDelay / 2);
+
+
+        Vector3 dir = attackTarget.transform.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         GameObject projectile1 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
 
 
         Vector3 targetPosition = attackTarget.transform.position;
 
-        projectile1.GetComponent<Projectile>().Initialize(charData,targetPosition, charData.AttackDamage, 500f);
-        
+        projectile1.GetComponent<Projectile>().Initialize(charData, targetPosition, charData.AttackDamage, 500f);
+
         angle += 20f;
         GameObject projectile2 = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
         targetPosition.y += 1.0f;
@@ -37,5 +45,4 @@ public class Archer01 : Battle_Heros
         projectile3.GetComponent<Projectile>().Initialize(charData, targetPosition, charData.AttackDamage, 500f);
 
     }
-
 }
