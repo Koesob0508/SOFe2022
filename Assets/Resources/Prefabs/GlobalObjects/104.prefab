@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
@@ -176,3 +176,4 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 0}

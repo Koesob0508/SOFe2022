@@ -180,7 +180,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
     public void PlayGetHitAniamtion()
-
     {
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
@@ -235,12 +234,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         if (hit.collider != null)
         {
             HeroInvenItem item = hit.collider.gameObject.GetComponent<HeroInvenItem>();
-            if(item != null)
+            if(item != null && !item.GetIsHeroInInven())
                 item.ReturnToInven(gameObject);
-            //if (item == invenItemUI)
-            //{
-            //    invenItemUI.ReturnToInven();
-            //}
             else
             {
                 if (screenPos.x > Screen.width / 2)

@@ -38,7 +38,7 @@ namespace BT
                 default:
                     break;
             }
-            if (Vector2.Distance(new Vector2(owner_comp.gameObject.transform.position.x, owner_comp.gameObject.transform.position.y), movePos) <= Path.PathManager.cellSizeX)
+            if (Vector2.Distance(new Vector2(owner_comp.gameObject.transform.position.x, owner_comp.gameObject.transform.position.y), movePos) <= (Path.PathManager.cellSizeX  * 0.1f))
             {
                 return State.Succeeded;
             }
