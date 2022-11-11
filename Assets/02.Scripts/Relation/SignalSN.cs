@@ -9,7 +9,7 @@ public class SignalSN : CustomSignal
         Debug.Log("S와 N 간 이벤트 발생");
     }
 
-    protected override bool Condition(LogInfo _logInfo)
+    protected override bool Condition(BattleLogPanel.Log _log)
     {
         return false;
     }

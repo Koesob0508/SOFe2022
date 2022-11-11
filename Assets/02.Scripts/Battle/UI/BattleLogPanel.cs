@@ -90,6 +90,7 @@ public class BattleLogPanel : MonoBehaviour
     public void AddLog(Log log)
     {
         logQueue.Enqueue(log);
+        GameManager.Relation.ApplyLog(log);
     }
 
     BattleLog CreateLog()

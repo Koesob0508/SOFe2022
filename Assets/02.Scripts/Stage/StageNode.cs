@@ -70,7 +70,6 @@ public class StageNode : MonoBehaviour
                     Enemies.Add(enemy);
                 }
             }
-
             //Debug.LogError(name + string.Format(" Enemy Type Count {0} Total Count : {1}", enemyPool.Count, Enemies.Count));
         }
 
@@ -94,7 +93,6 @@ public class StageNode : MonoBehaviour
 
     public void LoadInit(StageManager.SerializedNode _saved, float _scale)
     {
-        Debug.Log("Load한 결과 Init 중");
         Type = _saved.type;
         Step = _saved.step;
         Index = _saved.index;
