@@ -10,6 +10,7 @@ TagManager:
   - Units
   - Enemy
   - Enemys
+  - CharOffset
   layers:
   - Default
   - TransparentFX
