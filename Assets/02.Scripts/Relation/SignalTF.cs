@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SignalTF : CustomSignal
 {
+    public override void Init()
+    {
+    }
+
     protected override void Apply()
     {
         Debug.Log("T와 F 간 이벤트 발생");
