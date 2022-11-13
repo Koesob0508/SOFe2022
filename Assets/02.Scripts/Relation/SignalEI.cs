@@ -16,10 +16,12 @@ public class SignalEI : CustomSignal
 
     public override void Init()
     {
-        preHero = null;
-        postHero = null;
-        preCharacter = null;
-        postCharacter = null;
+        signalTitle = "둘이서 한 마음?!";
+        signalExplain = "두 히어로가 한 대상에 대해 행동";
+        preHero = new Hero();
+        postHero = new Hero();
+        preCharacter = new Character();
+        postCharacter = new Character();
     }
 
     protected override bool Condition(BattleLogPanel.Log _log)
@@ -27,25 +29,24 @@ public class SignalEI : CustomSignal
         // 일단 subject가 Hero여야 실행
         if (_log.Causer is Hero)
         {
-            preHero = postHero;
-            preCharacter = postCharacter;
+            preHero = postHero.DeepCopy();
+            preCharacter = postCharacter.DeepCopy();
             postHero = (Hero)_log.Causer;
             postCharacter = _log.Target;
-
-            //if (preHero.Name != postHero.Name && object.ReferenceEquals(preCharacter, postCharacter))
-            //{
-            //    Debug.Log("서로 다른 히어로, 같은 대상에 대해 행동");
-            //    return true;
-            //}
-
-            if (preHero == null)
+            
+            if(preHero.IsActive == false)
             {
+                Debug.LogWarning("PreHero가 아직 없음");
                 return false;
             }
 
+            if ((preHero.Name != "" && postHero.Name != "") && preHero.Name != postHero.Name)
+            {
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 
     protected override void Apply()
