@@ -46,11 +46,11 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 				// Hero Inventory의 contents
 				GameObject HeroContents = transform.parent.parent.parent.parent.GetChild(2).GetChild(0).gameObject;
 
-				if (transform.name == "Target (1)")
+				if (transform.name == "Target(1)")
 				{
 					InventoryOrder = 0;
 				}
-				else if (transform.name == "Target (2)")
+				else if (transform.name == "Target(2)")
 				{
 					InventoryOrder = 1;
 				}
@@ -74,15 +74,15 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 			else
 			{
 				// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
-				if (transform.name == "Inventory (1)")
+				if (transform.name == "Inventory(1)")
 				{
 					InventoryOrder = 0;
 				}
-				else if (transform.name == "Inventory (2)")
+				else if (transform.name == "Inventory(2)")
 				{
 					InventoryOrder = 1;
 				}
-				else if (transform.name == "Inventory (3)")
+				else if (transform.name == "Inventory(3)")
 				{
 					InventoryOrder = 2;
 				}

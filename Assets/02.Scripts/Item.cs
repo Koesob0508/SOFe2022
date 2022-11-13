@@ -15,4 +15,8 @@ public class Item : GlobalObject
     public float SpeicalNum; // 특수 효과 수치
     public string Info; // 아이템 설명
 
+    public object ShallowCopy()
+    {
+        return this.MemberwiseClone();
+    }
 }

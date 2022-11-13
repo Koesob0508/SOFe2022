@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,8 +27,8 @@ public class HeroManager : MonoBehaviour
         EnrollHero(13);
         EnrollHero(14);
         EnrollHero(15);
-        EnrollHero(16);
-        EnrollHero(17);
+        //EnrollHero(16);
+        //EnrollHero(17);
         //EnrollHero(18);
         //EnrollHero(19);
 
@@ -163,16 +164,19 @@ public class HeroManager : MonoBehaviour
                     else
                     {
                         foreach (Item i in HeroItem)
-                        {   
+                        {
                             // 해당 위치에 이미 저장된 동일 Item이라면
                             if (i.InventoryOrder == order)
+                            {
                                 return;
+                            }
                             // 해당 위치가 아닌, 동일 Item이 새로운 위치에 들어오는 것이라면
                             else
                             {
-                                item.OwnHeroGUID = HeroGUID;
-                                item.InventoryOrder = order;
-                                Items[order] = item;
+                                Item item2 = (Item)i.ShallowCopy();
+                                item2.OwnHeroGUID = HeroGUID;
+                                item2.InventoryOrder = order;
+                                Items[order] = item2;
                                 break;
                             }
                         }
@@ -223,6 +227,15 @@ public class HeroManager : MonoBehaviour
             bool CanActive = true;
 
             foreach (Hero hero in GameManager.Hero.GetHeroList())
+            {
+                if (hero.GUID == guid)
+                {
+                    CanActive = false;
+                    break;
+                }
+            }
+
+            foreach (Hero hero in GameManager.Hero.GetShopHeroList())
             {
                 if (hero.GUID == guid)
                 {
