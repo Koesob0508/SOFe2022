@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/01.Scenes/00.StartScene.unity
     guid: 2b92295b03a8cd44cb8548ac810f3af3
   - enabled: 1
-    path: Assets/01.Scenes/02.BattleSelectScene.unity
-    guid: df8ac1e118bffa648af3430b4173e79d
-  - enabled: 1
     path: Assets/01.Scenes/01.StageSelectScene.unity
     guid: 0870ebb6399f76e408bc8ec337da5634
+  - enabled: 1
+    path: Assets/01.Scenes/02.BattleSelectScene.unity
+    guid: df8ac1e118bffa648af3430b4173e79d
   - enabled: 1
     path: Assets/01.Scenes/03.TownScene.unity
     guid: bed3e8683d752864eb25aa459d6d557f
