@@ -40,8 +40,8 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         ChoiceMode = 0;
-        Type = (EventType)5;
-        //Type = (EventType)UnityEngine.Random.Range(0, 6);
+        //Type = (EventType)5;
+        Type = (EventType)UnityEngine.Random.Range(0, 6);
         ResultTarget.Clear();
 
 
@@ -50,10 +50,10 @@ public class EventManager : MonoBehaviour
             EventPanel = Instantiate(QuestionBox, new Vector3(1200, 540, 0), Quaternion.identity);
             EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
 
-            Name = EventPanel.transform.GetChild(0).gameObject;
-            Ask = EventPanel.transform.GetChild(1).gameObject;
-            choiceA = EventPanel.transform.GetChild(2).gameObject;
-            choiceB = EventPanel.transform.GetChild(3).gameObject;
+            Name = EventPanel.transform.GetChild(1).gameObject;
+            Ask = EventPanel.transform.GetChild(2).gameObject;
+            choiceA = EventPanel.transform.GetChild(3).gameObject;
+            choiceB = EventPanel.transform.GetChild(4).gameObject;
             choiceA.GetComponent<Button>().onClick.AddListener(ChoiceOption);
             choiceB.GetComponent<Button>().onClick.AddListener(ChoiceOption);
 
@@ -415,15 +415,15 @@ public class EventManager : MonoBehaviour
         EventPanel = Instantiate(Resources.Load("Prefabs/Event_QnA/MBTI_Q" + num) as GameObject, new Vector3(1200, 540, 0), Quaternion.identity);
         EventPanel.transform.SetParent(GameObject.FindWithTag("UI").transform);
 
-        Name = EventPanel.transform.GetChild(0).gameObject;
-        Ask = EventPanel.transform.GetChild(1).gameObject;
+        Name = EventPanel.transform.GetChild(1).gameObject;
+        Ask = EventPanel.transform.GetChild(2).gameObject;
         Name.GetComponent<TextMeshProUGUI>().text = "Q n A";
         Ask.GetComponent<TextMeshProUGUI>().text = EventPanel.GetComponent<ChoiceController>().Ask;
 
         for (int i = 0; i < EventPanel.GetComponent<ChoiceController>().choiceNum; i++)
         {
             // EventPanel.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-            choice = EventPanel.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
+            choice = EventPanel.transform.GetChild(3).GetChild(0).GetChild(i).gameObject;
             choice.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = choice.GetComponent<Choice>().text;
         }
     }
