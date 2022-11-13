@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public partial class RelationshipManager : MonoBehaviour
 {
     public List<Hero> HeroList = new List<Hero>();
     public sbyte RelationScore;
     [SerializeField] private List<CustomSignal> signals;
+    [SerializeField] private GameObject noticeBallon;
+    [SerializeField] private TMP_Text noticeText;
+    [SerializeField] private TMP_Text explainText;
 
     public void Init()
     {
@@ -155,13 +160,32 @@ public partial class RelationshipManager : MonoBehaviour
     #region 로그 읽어들이는 부분 구현
     private void ReadEvents(BattleLogPanel.Log _log)
     {
-        foreach(CustomSignal customSignal in signals)
+        if(noticeBallon.activeSelf == false)
         {
-            // customEvent에 log 정보를 뿌립니다. 그게 끝
-            // 그러면 customEvent는 받은 log를 바탕으로 조건을 판단하고 발동해야한다면 어련히 발동시킵니다.
-            customSignal.Judge(_log);
+            foreach (CustomSignal customSignal in signals)
+            {
+                // customEvent에 log 정보를 뿌립니다. 그게 끝
+                // 그러면 customEvent는 받은 log를 바탕으로 조건을 판단하고 발동해야한다면 어련히 발동시킵니다.
+                (string, string) noticeLog = customSignal.Judge(_log);
+
+                if (noticeLog.Item1 != null)
+                {
+                    noticeText.text = noticeLog.Item1;
+                    explainText.text = noticeLog.Item2;
+
+                    noticeBallon.SetActive(true);
+                    StartCoroutine(SetDisable(noticeBallon));
+                }
+            }
         }
     }
     #endregion
 
+
+    private IEnumerator SetDisable(GameObject _gameObject)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        _gameObject.SetActive(false);
+    }
 }
