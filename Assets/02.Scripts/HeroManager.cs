@@ -28,8 +28,8 @@ public class HeroManager : MonoBehaviour
         EnrollHero(15);
         EnrollHero(16);
         EnrollHero(17);
-        EnrollHero(18);
-        EnrollHero(19);
+        //EnrollHero(18);
+        //EnrollHero(19);
 
         AddHeroItem(0, 200, 0);
         AddHeroItem(0, 205, 1);
@@ -206,19 +206,21 @@ public class HeroManager : MonoBehaviour
     {
         ShopHeroList.Clear();
 
-        while (ShopHeroList.Count < 3)
-        {
-            uint guid = (uint)Random.Range(0, 17);
-            bool CanActive = true;
+        // 아직 등록되지 않은 Hero
+        int LeftHero = 20 - GameManager.Hero.GetHeroList().Count;
 
-            foreach (Hero hero in ShopHeroList)
-            {
-                if (hero.GUID == guid)
-                {
-                    CanActive = false;
-                    break;
-                }
-            }
+        if (LeftHero >= 3)
+        {
+            LeftHero = 3;
+        }
+
+        while (ShopHeroList.Count < LeftHero)
+        {
+            if (LeftHero == 0)
+                break;
+
+            uint guid = (uint)Random.Range(0, 20);
+            bool CanActive = true;
 
             foreach (Hero hero in GameManager.Hero.GetHeroList())
             {

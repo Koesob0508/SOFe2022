@@ -23,6 +23,7 @@ namespace Koesob
 
         public void ToTown()
         {
+            Debug.Log("Assets/01.Scenes Town으로 갑니다");
             GameManager.Scene.ToTownScene();
         }
 
@@ -92,6 +93,13 @@ namespace Koesob
                 Instantiate(Hotel);
             }
         }
+
+        // Event scene에서 Shop창
+        public void ShowItemShop()
+        {
+            
+        }
+
 
         public void StageCompleted()
         {
