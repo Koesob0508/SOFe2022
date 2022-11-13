@@ -12,6 +12,11 @@ public partial class RelationshipManager : MonoBehaviour
     {
         Debug.Log("Relationship Manager Init");
         DontDestroyOnLoad(this);
+
+        foreach (CustomSignal customSignal in signals)
+        {
+            customSignal.Init();
+        }
     }
 
     // 원래 정의된 기본 관계 점수

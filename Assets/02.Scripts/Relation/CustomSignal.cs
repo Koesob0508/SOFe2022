@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CustomSignal : MonoBehaviour
 {
+    public abstract void  Init();
     public void Judge(BattleLogPanel.Log _log)
     {
         if(Condition(_log))
