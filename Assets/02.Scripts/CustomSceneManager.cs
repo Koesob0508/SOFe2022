@@ -85,10 +85,6 @@ public class CustomSceneManager
 
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
 
-                foreach(Enemy enemy in elist)
-                {
-                    Debug.Log(enemy.GUID);
-                }
                 GameManager.MapType mapType = GameManager.Stage.GetMapType();
                 GameManager.Battle.Init(hlist, elist, mapType);
                 break;
