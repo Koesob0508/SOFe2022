@@ -51,6 +51,9 @@ TagManager:
   - name: Char
     uniqueID: 2314571135
     locked: 0
+  - name: ChatBallon
+    uniqueID: 81686601
+    locked: 0
   - name: UI
     uniqueID: 472459215
     locked: 0

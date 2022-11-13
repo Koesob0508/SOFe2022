@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SignalSN : CustomSignal
 {
+    public override void Init()
+    {
+    }
+
     protected override void Apply()
     {
         Debug.Log("S와 N 간 이벤트 발생");
