@@ -11,7 +11,7 @@ public class DataManager
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
-    public uint Money = 0;
+    public uint Money = 3000;
 
     [Serializable]
     private struct SaveFormat

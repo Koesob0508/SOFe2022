@@ -44,7 +44,11 @@ public class MouseEventUI : MonoBehaviour
             {
                 if (_hero.GUID == heroGUID)
                 {
+                    if (GameManager.Data.Money < _hero.Cost)
+                        return;
+
                     GameManager.Hero.ShopHeroList.Remove(_hero);
+                    GameManager.Data.Money -= _hero.Cost;
                     break;
                 }
             }

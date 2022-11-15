@@ -73,7 +73,7 @@ public class SetRandomObject : MonoBehaviour
         // Status
         Image HeroImage;
         TextMeshProUGUI HeroName, HeroMbti;
-        GameObject HeroInfo, AbilityInfo;
+        GameObject HeroInfo, AbilityInfo, CostInfo;
 
         foreach (KeyValuePair<uint, GameObject> _Hero in ObjectUIList)
         {
@@ -116,6 +116,9 @@ public class SetRandomObject : MonoBehaviour
                 AbilityInfo.transform.GetChild(6).transform.GetComponent<TextMeshProUGUI>().SetText("공격 범위 : " + hero.AttackRange);
                 // AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("스킬 : " + hero.);
 
+                // Cost 값
+                CostInfo = GetChildWithName(HeroUI, "Button").transform.GetChild(0).gameObject;
+                CostInfo.transform.GetComponent<TextMeshProUGUI>().SetText(hero.Cost.ToString());
             }
         }
     }

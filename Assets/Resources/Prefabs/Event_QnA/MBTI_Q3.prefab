@@ -74,10 +74,10 @@ PrefabInstance:
     - target: {fileID: 3293704680393337824, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
       propertyPath: Ask
       value: "\uB2F9\uC2E0\uC774 \uBB34\uC5B8\uAC00\uB97C \uC5F4\uC2EC\uD788 \uD574\uC11C
-        \uB6F0\uC5B4\uB09C \uC131\uACFC\uB97C \uC774\uB8E8\uC5C8\uB2E4. \\n\uADF8\uB54C
-        \uB204\uAD70\uAC00\uC758 \uD55C\uB9C8\uB514\\n\"\uC640 \uC5F4\uC2EC\uD788
-        \uC548\uD558\uC2DC\uB294 \uAC83 \uAC19\uC558\uB294\uB370, \uC81C\uC77C \uC798
-        \uD558\uC168\uB124\uC694! \uC644\uC804 \uC7AC\uB2A5 \uC788\uC73C\uC2E0\uAC00\uBD10\uC694.\""
+        \uB6F0\uC5B4\uB09C \uC131\uACFC\uB97C \uC774\uB8E8\uC5C8\uB2E4. \uADF8\uB54C
+        \uB4E4\uB824\uC624\uB294 \uB204\uAD70\uAC00\uC758 \uD55C\uB9C8\uB514 \"\uC640
+        \uC5F4\uC2EC\uD788 \uC548\uD558\uC2DC\uB294 \uAC83 \uAC19\uC558\uB294\uB370,
+        \uC81C\uC77C \uC798 \uD558\uC168\uB124\uC694! \uC644\uC804 \uC7AC\uB2A5 \uC788\uC73C\uC2E0\uAC00\uBD10\uC694.\""
       objectReference: {fileID: 0}
     - target: {fileID: 3293704680393337824, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
       propertyPath: choiceNum
@@ -142,11 +142,11 @@ PrefabInstance:
     - target: {fileID: 5639045031322541612, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 11400000, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
     - target: {fileID: 5639045031322541612, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 675438395307243782, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
     - target: {fileID: 5639045031626092737, guid: 3e1e125319f845940abcdda4b030ca7d, type: 3}
       propertyPath: m_fontAsset
       value: 

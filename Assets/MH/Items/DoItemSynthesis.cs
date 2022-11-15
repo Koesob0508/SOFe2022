@@ -62,6 +62,7 @@ public class DoItemSynthesis : MonoBehaviour
                         GameObject ItemUI = Instantiate(ItemUIObject, transform.position, Quaternion.identity);
                         ItemUI.transform.SetParent(Result.transform);
                         ItemUI.transform.localPosition = new Vector3(0, 0, 0);
+                        ItemUI.transform.localScale = new Vector3(30, 30, 30);
 
                         Image Item = ItemUI.GetComponent<Image>();
                         Item.sprite = GameManager.Data.LoadSprite(NewItem.GUID);
