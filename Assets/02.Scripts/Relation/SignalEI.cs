@@ -17,7 +17,7 @@ public class SignalEI : CustomSignal
     public override void Init()
     {
         signalTitle = "둘이서 한 마음?!";
-        signalExplain = "두 히어로가 한 대상에 대해 행동";
+        signalExplain = "두 용병이 한 대상에 대해 행동";
         preHero = new Hero();
         postHero = new Hero();
         preCharacter = new Character();
@@ -40,7 +40,10 @@ public class SignalEI : CustomSignal
                 return false;
             }
 
-            if ((preHero.Name != "" && postHero.Name != "") && preHero.Name != postHero.Name)
+            if (preHero.Name != postHero.Name && 
+                GameManager.Relation.GetBetweenScore(preHero, postHero) < 0 &&
+                GameManager.Relation.GetBetweenScore(postHero, preHero) < 0 &&
+                preCharacter.Equals(postCharacter))
             {
                 return true;
             }
@@ -55,23 +58,23 @@ public class SignalEI : CustomSignal
 
         if (GameManager.Relation.IsI(preHero))
         {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, -10);
+            GameManager.Relation.SetChangeRelationship(preHero, postHero, -1);
             UpdateLog(0, "아직... 어사인데...");
         }
         else // I가 아니면 E이기 때문에...
         {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, 10);
+            GameManager.Relation.SetChangeRelationship(preHero, postHero, 1);
             UpdateLog(0, "이것도 천생연분?!");
         }
 
         if (GameManager.Relation.IsI(postHero))
         {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, -10);
+            GameManager.Relation.SetChangeRelationship(postHero, preHero, -1);
             UpdateLog(1, "아직... 어사인데...");
         }
         else // I가 아니면 E이기 때문에...
         {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, 10);
+            GameManager.Relation.SetChangeRelationship(postHero, preHero, 1);
             UpdateLog(1, "이것도 천생연분?!");
         }
     }
