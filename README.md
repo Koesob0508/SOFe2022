@@ -6,8 +6,11 @@
 개발 언어: C# (Unity 2021.3.6f1)   
 대상 플랫폼: Android   
 
-### Poster
-![DaS_2022 sw페스티벌 전시 포스터](https://user-images.githubusercontent.com/99636089/202706444-ad42af45-a181-4e84-9f29-e99c4dc2014b.png)
+<p align="center">
+<>Poster
+</p>
+<p align="center">
+<img src="https://user-images.githubusercontent.com/99636089/202706444-ad42af45-a181-4e84-9f29-e99c4dc2014b.png" width = "50%" height="50%"></p>
 
 ### 게임 소개
 Dungeon and Signal은 점점 강해지는 적과 싸우며 강한 아군 용병들의 조합을 맞추는 게임입니다.   
