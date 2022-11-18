@@ -46,11 +46,11 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 				// Hero Inventory의 contents
 				GameObject HeroContents = transform.parent.parent.parent.parent.GetChild(2).GetChild(0).gameObject;
 
-				if (transform.name == "Target (1)")
+				if (transform.name == "Target(1)")
 				{
 					InventoryOrder = 0;
 				}
-				else if (transform.name == "Target (2)")
+				else if (transform.name == "Target(2)")
 				{
 					InventoryOrder = 1;
 				}
@@ -74,15 +74,15 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 			else
 			{
 				// 드래그한 아이템을 소유하던 Hero와, 소유할 Hero의 Item list를 Update
-				if (transform.name == "Inventory (1)")
+				if (transform.name == "Inventory(1)")
 				{
 					InventoryOrder = 0;
 				}
-				else if (transform.name == "Inventory (2)")
+				else if (transform.name == "Inventory(2)")
 				{
 					InventoryOrder = 1;
 				}
-				else if (transform.name == "Inventory (3)")
+				else if (transform.name == "Inventory(3)")
 				{
 					InventoryOrder = 2;
 				}
@@ -98,9 +98,12 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 					InventoryOrder);
 
 				// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
+				if (eventData.pointerDrag.transform.parent.name == "ResultInventory")
+					eventData.pointerDrag.GetComponent<RectTransform>().localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
 				eventData.pointerDrag.transform.SetParent(transform);
 				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
-
+				
 				// 소유하고 있는 ItemInfo Update
 				Contents.GetComponent<GetHeroInfo>().UpdateItems();
 			}

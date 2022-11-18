@@ -124,7 +124,7 @@ public class GetHeroInfo : MonoBehaviour
                     if (hero.Items[i] != null && hero.Items[i].GUID != 0)
                     {
                         ItemUI = Instantiate(ItemUIObject, transform.position, Quaternion.identity);
-                        ItemUI.transform.SetParent(Items.transform.GetChild(i));
+                        ItemUI.transform.SetParent(Items.transform.GetChild(i), false);
                         ItemUI.transform.localPosition = new Vector3(0, 0, 0);
 
                         Item = ItemUI.GetComponent<Image>();

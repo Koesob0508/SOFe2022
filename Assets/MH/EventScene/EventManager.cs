@@ -39,8 +39,8 @@ public class EventManager : MonoBehaviour
 
     void Start()
     {
-        ChoiceMode = 0;
-        //Type = (EventType)5;
+        //ChoiceMode = 0;
+        //Type = (EventType)2;
         Type = (EventType)UnityEngine.Random.Range(0, 6);
         ResultTarget.Clear();
 
