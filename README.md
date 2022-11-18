@@ -6,9 +6,9 @@
 개발 언어: C# (Unity 2021.3.6f1)   
 대상 플랫폼: Android   
 
-<p align="center">
-<>Poster
-</p>
+
+<h3> <p align="center">Poster </p></h3>
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/99636089/202706444-ad42af45-a181-4e84-9f29-e99c4dc2014b.png" width = "50%" height="50%"></p>
 
