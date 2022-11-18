@@ -84,6 +84,7 @@ public class CustomSceneManager
                 hlist.Add(h20);
 
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
+
                 GameManager.MapType mapType = GameManager.Stage.GetMapType();
                 GameManager.Battle.Init(hlist, elist, mapType);
                 break;

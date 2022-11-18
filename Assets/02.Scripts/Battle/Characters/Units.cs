@@ -154,7 +154,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t + attackSpeed);
-        skillFinished();
+        if(gameObject.activeSelf)
+            skillFinished();
         isSkillPlaying = false;
     }
 

@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
-        Test();
     }
 
     private void Init()
@@ -96,6 +95,8 @@ public class GameManager : MonoBehaviour
         game_version = Application.version;
         if (instance == null)
         {
+            Debug.LogWarning("GameManager instance is null, Initilize GameManager");
+
             #region Initialize GameManager
 
             GameObject obj = GameObject.Find("Game Manager");
@@ -115,9 +116,13 @@ public class GameManager : MonoBehaviour
             Scene.Init();
             Hero.Init();
             Relation.Init();
+
+            Test();
         }
         else
         {
+            Debug.LogWarning("GameManager instance isn't null, Destroy GameManager");
+
             Destroy(this.gameObject);
         }
     }
