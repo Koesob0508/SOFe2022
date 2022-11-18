@@ -10,27 +10,11 @@ public class HeroManager : MonoBehaviour
 
     public void Test()
     {
-        Debug.Log("Test¸¦ À§ÇØ Hero ÀÓ½Ã·Î µî·ÏÇÕ´Ï´Ù");
+        Debug.Log("Testï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Hero ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
         EnrollHero(0);
-        EnrollHero(1);
-        EnrollHero(2);
-        EnrollHero(3);
-        EnrollHero(4);
         EnrollHero(5);
-        EnrollHero(6);
         EnrollHero(7);
-        EnrollHero(8);
-        EnrollHero(9);
-        EnrollHero(10);
-        EnrollHero(11);
-        EnrollHero(12);
-        EnrollHero(13);
-        EnrollHero(14);
-        EnrollHero(15);
-        //EnrollHero(16);
-        //EnrollHero(17);
-        //EnrollHero(18);
-        //EnrollHero(19);
+        EnrollHero(2);
 
         AddHeroItem(0, 200, 0);
         AddHeroItem(0, 205, 1);
@@ -48,7 +32,7 @@ public class HeroManager : MonoBehaviour
 
     public void EnrollHero(uint guid)
     {
-        // ÀÌ¹Ì ÇØ´ç GUIDÀÇ Hero°¡ µî·ÏµÊ
+        // ï¿½Ì¹ï¿½ ï¿½Ø´ï¿½ GUIDï¿½ï¿½ Heroï¿½ï¿½ ï¿½ï¿½Ïµï¿½
         foreach (Hero hero in GameManager.Hero.HeroList)
         {
             if (hero.GUID == guid)
@@ -65,10 +49,10 @@ public class HeroManager : MonoBehaviour
                     break;
 
                 hero.IsActive = true;
-                // !! ÀÓ½Ã !!
+                // !! ï¿½Ó½ï¿½ !!
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
 
-                // Team Score¿¡ ÇØ´ç Hero¸¦ Update
+                // Team Scoreï¿½ï¿½ ï¿½Ø´ï¿½ Heroï¿½ï¿½ Update
                 GameManager.Relation.NewHeroScore(hero);
 
                 HeroList.Add(hero);
@@ -88,7 +72,7 @@ public class HeroManager : MonoBehaviour
 
         if (hero == null)
         {
-            Debug.Log("µî·ÏµÇÁö ¾ÊÀº ¿ëº´ÀÔ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ï¿½Ô´Ï´ï¿½.");
             return null;
         }
         else
@@ -130,7 +114,7 @@ public class HeroManager : MonoBehaviour
 
         if (Items == null)
         {
-            Debug.Log("µî·ÏµÇÁö ¾ÊÀº ¿ëº´ÀÔ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ï¿½Ô´Ï´ï¿½.");
             return null;
         }
         else
@@ -151,10 +135,10 @@ public class HeroManager : MonoBehaviour
                 
                 if (item != null && item.GUID == ItemGUID)
                 {
-                    // ÇØ´ç ¾ÆÀÌÅÛÀ» Áßº¹ÇØ¼­ °®´ÂÁö È®ÀÎÇÑ´Ù
+                    // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½
                     List<Item> HeroItem = GetHeroItem(HeroGUID, ItemGUID);
 
-                    // ±×·¸Áö ¾Ê´Ù¸é ÀúÀåÇÔ
+                    // ï¿½×·ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     if (HeroItem.Count == 0)
                     {
                         item.OwnHeroGUID = HeroGUID;
@@ -165,12 +149,12 @@ public class HeroManager : MonoBehaviour
                     {
                         foreach (Item i in HeroItem)
                         {
-                            // ÇØ´ç À§Ä¡¿¡ ÀÌ¹Ì ÀúÀåµÈ µ¿ÀÏ ItemÀÌ¶ó¸é
+                            // ï¿½Ø´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Itemï¿½Ì¶ï¿½ï¿½
                             if (i.InventoryOrder == order)
                             {
                                 return;
                             }
-                            // ÇØ´ç À§Ä¡°¡ ¾Æ´Ñ, µ¿ÀÏ ItemÀÌ »õ·Î¿î À§Ä¡¿¡ µé¾î¿À´Â °ÍÀÌ¶ó¸é
+                            // ï¿½Ø´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Æ´ï¿½, ï¿½ï¿½ï¿½ï¿½ Itemï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½
                             else
                             {
                                 Item item2 = (Item)i.ShallowCopy();
@@ -182,7 +166,7 @@ public class HeroManager : MonoBehaviour
                         }
                     }
 
-                    Debug.Log(order + "¹øÂ°¿¡, " + ItemGUID + " ¾ÆÀÌÅÛ ÀúÀå");
+                    Debug.Log(order + "ï¿½ï¿½Â°ï¿½ï¿½, " + ItemGUID + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                     GetHero(HeroGUID).ItemNum += 1;
                     ADDItemBasicEffect(GetHero(HeroGUID), item);
                 }
@@ -190,7 +174,7 @@ public class HeroManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("µî·Ï °¡´ÉÇÑ ¾ÆÀÌÅÛ °¹¼ö´Â ÃÖ´ë 3°³ÀÔ´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ 3ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
             return;
         }
     }
@@ -210,7 +194,7 @@ public class HeroManager : MonoBehaviour
     {
         ShopHeroList.Clear();
 
-        // ¾ÆÁ÷ µî·ÏµÇÁö ¾ÊÀº Hero
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Hero
         int LeftHero = 20 - GameManager.Hero.GetHeroList().Count;
 
         if (LeftHero >= 3)
@@ -248,7 +232,7 @@ public class HeroManager : MonoBehaviour
             {
                 Hero hero = (Hero)GameManager.Data.LoadObject(guid, GameManager.ObjectType.Hero);
 
-                // ¿ëº´ÀÇ MBTI RandomÀ¸·Î ÁöÁ¤
+                // ï¿½ëº´ï¿½ï¿½ MBTI Randomï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 hero.MBTI = (GameManager.MbtiType)Random.Range(0, 16);
                 ShopHeroList.Add(hero);
             }
@@ -260,7 +244,7 @@ public class HeroManager : MonoBehaviour
         return ShopHeroList;
     }
 
-    // ¾ÆÀÌÅÛÀÇ ±âº» È¿°ú°¡ ¿ëº´¿¡°Ô Àû¿ëµÊ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ADDItemBasicEffect(Hero hero, Item item)
     {
         switch (item.BasicType)
@@ -289,7 +273,7 @@ public class HeroManager : MonoBehaviour
         }
     }
 
-    // ¾ÆÀÌÅÛÀÇ ±âº» È¿°ú°¡ ¿ëº´¿¡°Ô¼­ »ç¶óÁü
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ëº´ï¿½ï¿½ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public void SUBItemBasicEffect(Hero hero, Item item)
     {
         switch (item.BasicType)

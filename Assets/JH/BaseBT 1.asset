@@ -15,7 +15,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 90b45f3baf8d4e843bda14aed6754329
-  position: {x: 281.18033, y: 1259.1007}
+  position: {x: 69.99997, y: 1061}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &-3420939773599312849
 MonoBehaviour:
@@ -32,7 +32,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 65e69424e09906d4ca8faaa216164387
-  position: {x: 476.80002, y: 892.8}
+  position: {x: 249.00002, y: 778}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Child: {fileID: -740961285270585551}
 --- !u!114 &-1770322382715650762
@@ -50,7 +50,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: cebb027e15ffa2c4f87fb7f9f9ed0217
-  position: {x: 71.18048, y: 1185.1007}
+  position: {x: 41.000046, y: 966}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   keyIdx: 0
   keyName: targetObj
@@ -69,7 +69,7 @@ MonoBehaviour:
   state: 1
   started: 1
   guid: e1d4627a051d74047bd959224e6b9e02
-  position: {x: 136.06084, y: -39.128235}
+  position: {x: 124, y: 119.14076}
   bBoard: {fileID: 0}
   Child: {fileID: 6710677224026444237}
 --- !u!114 &-816743086515593605
@@ -87,9 +87,10 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: b6a30bb1513060640b8034e199ee2a94
-  position: {x: 715.31506, y: 1274.4001}
+  position: {x: 504, y: 1076}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
-  WaitTime: 1
+  keyIdx: 0
+  keyName: 
 --- !u!114 &-740961285270585551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: a94f0aaaa54d040428303cd56fb6cc88
-  position: {x: 468.488, y: 1085.6001}
+  position: {x: 257.00003, y: 888.00006}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Childs:
   - {fileID: -4327829606433147457}
@@ -126,7 +127,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: e2e19b0cf494a8b4fbd738fbd068b1ab
-  position: {x: -277.128, y: 711.9827}
+  position: {x: -133.64215, y: 633.00006}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Child: {fileID: 2361024463858042853}
   condition: 1
@@ -181,7 +182,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 7a79493cd1e3cd34691e995c19ba0845
-  position: {x: -259.12796, y: 957.98267}
+  position: {x: -125.99999, y: 743.00006}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &2646510545054734986
 MonoBehaviour:
@@ -215,7 +216,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: d0a32897ae98115428c792a905c2e19f
-  position: {x: 64.79995, y: 1042.7999}
+  position: {x: 32.99995, y: 872.00006}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Child: {fileID: -1770322382715650762}
   condition: 1
@@ -238,7 +239,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0f1d04e07b9ce874d806f39639e0148e
-  position: {x: 500.91513, y: 1267.2001}
+  position: {x: 289.99997, y: 1069}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
 --- !u!114 &4771013704612239501
 MonoBehaviour:
@@ -255,7 +256,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 893dd5ffc12bb374483f124acc85d11b
-  position: {x: 71.18048, y: 884.1007}
+  position: {x: 39, y: 770}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Child: {fileID: 3564421707379742684}
 --- !u!114 &5612685087168517028
@@ -296,7 +297,7 @@ MonoBehaviour:
   state: 0
   started: 1
   guid: abc481a179aa8e647a76e11323552541
-  position: {x: 134.94078, y: 151.50232}
+  position: {x: 123.99991, y: 236.33401}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Childs:
   - {fileID: 5612685087168517028}
@@ -316,7 +317,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: a200c0cbf719aa741802863e2af419ee
-  position: {x: 194.18044, y: 711.1007}
+  position: {x: 150.00002, y: 641}
   bBoard: {fileID: 11400000, guid: 156bb5457d0a35149be29cc7894cfd6c, type: 2}
   Childs:
   - {fileID: 4771013704612239501}
