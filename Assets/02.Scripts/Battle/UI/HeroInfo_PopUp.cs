@@ -9,6 +9,8 @@ public class HeroInfo_PopUp : MonoBehaviour
     public TMPro.TextMeshProUGUI PersonalityTXT;
     public GameObject ItemPanel;
     public Image HealthBar;
+    public TMPro.TextMeshProUGUI HpValTxt;
+    public TMPro.TextMeshProUGUI HungerValTxt;
     public Image HungerBar;
     public TMPro.TextMeshProUGUI HpTXT;
     public TMPro.TextMeshProUGUI ManaTXT;
@@ -80,6 +82,19 @@ public class HeroInfo_PopUp : MonoBehaviour
 
         HealthBar.fillAmount = hero.CurrentHP / (float)hero.MaxHP;
         HungerBar.fillAmount = hero.CurHunger / 100.0f;
+
+        HpValTxt.text = hero.CurrentHP.ToString() + "(" + ((int)hero.MaxHP).ToString() + ")";
+        HungerValTxt.text = ((int)hero.CurHunger).ToString() + "(100)";
+
+        HpTXT.text = "HP : " + hero.MaxHP.ToString();
+        ManaTXT.text = "에너지 : " + hero.MaxMana.ToString();
+        AdTxt.text = "공격력 : " + hero.AttackDamage.ToString();
+        DpTxt.text = "방어력 : " + hero.AttackDamage.ToString();
+        MsTxt.text = "이동속도 : " + hero.MoveSpeed.ToString();
+        AsTxt.text = "공격속도 : " + hero.AttackSpeed.ToString();
+        ArTxt.text = "공격범위 : " + hero.AttackRange.ToString();
+        SkillTxt.text = "스킬 : ";
+
         Image[] m_ItemImages = ItemPanel.GetComponentsInChildren<Image>();
         //for(int i = 0; i < hero.Items.Count; i++)
         //{
@@ -89,12 +104,12 @@ public class HeroInfo_PopUp : MonoBehaviour
         {
             if (hero.Items[i] != null)
             {
-                m_ItemImages[i + 1].gameObject.SetActive(true);
+                m_ItemImages[i + 1].color = new Color32(255, 255, 255, 255);
                 m_ItemImages[i+1].sprite = GameManager.Data.LoadSprite(hero.Items[i].GUID);
             }
             else
             {
-                m_ItemImages[i + 1].gameObject.SetActive(false);
+                m_ItemImages[i+1].color = new Color32(0,0,0,0); 
             }
         }
     }

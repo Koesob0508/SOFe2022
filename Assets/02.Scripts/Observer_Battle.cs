@@ -230,7 +230,6 @@ public class Observer_Battle : ObserverBase
             {
                 hdata.CurrentHP *= 0.9f;
             }
-            GameManager.Battle.UpdateInfoPopUp();
         }
         else
         {
@@ -251,7 +250,6 @@ public class Observer_Battle : ObserverBase
             {
                 hdata.CurrentHP *= 0.9f;
             }
-            GameManager.Battle.UpdateInfoPopUp();
         }
         else
         {
@@ -272,7 +270,6 @@ public class Observer_Battle : ObserverBase
             {
                 hdata.CurrentHP *= 0.9f;
             }
-            GameManager.Battle.UpdateInfoPopUp();
         }
         else
         {
@@ -293,7 +290,6 @@ public class Observer_Battle : ObserverBase
             {
                 hdata.CurrentHP *= 0.9f;
             }
-            GameManager.Battle.UpdateInfoPopUp();
         }
         else
         {

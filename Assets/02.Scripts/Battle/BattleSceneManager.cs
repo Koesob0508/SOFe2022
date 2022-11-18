@@ -44,8 +44,10 @@ public class BattleSceneManager : MonoBehaviour
 
     List<ObserverBase> Observers = new List<ObserverBase>();
 
-
-
+    GameObject infoPopUp_Prefab;
+    GameObject infoPopUp_Object;
+    Hero curHeroInfoOpened;
+    bool bIsInfoOpened;
 
     #region Initalize
     /// <summary>
@@ -68,13 +70,33 @@ public class BattleSceneManager : MonoBehaviour
             bEndPanel.gameObject.SetActive(false);
         }
         else
-            Debug.Log("EndPanel Doesnt Initalized");
+            Debug.Log("EndPanel Didnt Initalized");
         if(bLogPanel != null)
         {
             bLogPanel.gameObject.SetActive(false);
         }
         else
-            Debug.Log("LogPanel Doesnt Initalized");
+            Debug.Log("LogPanel Didnt Initalized");
+
+        infoPopUp_Prefab = Resources.Load<GameObject>("Prefabs/UI/HeroInfo_PopUp");
+        if (infoPopUp_Prefab == null)
+            Debug.Log("InfoPopUp Didnt Initalized");
+        else
+        {
+            infoPopUp_Object = Instantiate(infoPopUp_Prefab);
+            infoPopUp_Object.transform.SetParent(GameObject.Find("Canvas_AboveChar").transform);
+
+
+            RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
+            rt.localScale = Vector2.one;
+            rt.anchorMin = new Vector2(0.1f, 0.7f);
+            rt.anchorMax = new Vector2(0.3f, 1f);
+            rt.offsetMax = Vector2.zero;
+            rt.offsetMin = Vector2.zero;
+
+            infoPopUp_Object.SetActive(false);
+        }
+
 
         //Init Hero
         hInvenPanel.Initalize(Heros);
@@ -142,9 +164,45 @@ public class BattleSceneManager : MonoBehaviour
 
     #endregion
     #region Publlic Methods
-    public void UpdateInfoPopUp()
+    
+    public void HeroInvenItemClicked(Hero heroData, Vector2 pos)
     {
-        hInvenPanel.UpdateInfo();
+        if(curHeroInfoOpened != heroData)
+        {
+            curHeroInfoOpened = heroData;
+            infoPopUp_Object.SetActive(true);
+            RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
+            float offset = Screen.height - pos.y - rt.rect.width / 2;
+            if (offset < 0)
+                offset = 0;
+            rt.offsetMax = new Vector2(0, -offset);
+            rt.offsetMin = new Vector2(0, -offset);
+            infoPopUp_Object.GetComponent<HeroInfo_PopUp>().SetUpData(heroData);
+            bIsInfoOpened = true;
+        }
+        else
+        {
+            if (!bIsInfoOpened)
+            {
+                curHeroInfoOpened = heroData;
+                infoPopUp_Object.SetActive(true);
+                RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
+                float offset = Screen.height - pos.y - rt.rect.width / 2;
+                rt.offsetMax = new Vector2(0, -offset);
+                rt.offsetMin = new Vector2(0, -offset);
+                infoPopUp_Object.GetComponent<HeroInfo_PopUp>().SetUpData(heroData);
+                bIsInfoOpened = true;
+            }
+            else
+            {
+                ClosePopUp();
+            }
+        }
+    }
+    public void ClosePopUp()
+    {
+        infoPopUp_Object.SetActive(false);
+        bIsInfoOpened = false;
     }
     public void RestoreHeroData(Hero hero)
     {
@@ -304,7 +362,7 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
 
-
+    
     void AlignUnitsByY()
     {
         spriteRenderers.Sort((lhs, rhs) => { return rhs.gameObject.transform.position.y.CompareTo(lhs.gameObject.transform.position.y); });
@@ -352,7 +410,7 @@ public class BattleSceneManager : MonoBehaviour
         foreach (var hero in heroObjects)
         {
            
-            spriteRenderers.Add(hero.GetComponent<SpriteRenderer>());
+            spriteRenderers.Add(hero.GetComponentInChildren<SpriteRenderer>());
             hero.GetComponent<Units>().StartBattle();
             for (int i = 0; i < hero.transform.childCount; i++)
             {
@@ -371,6 +429,9 @@ public class BattleSceneManager : MonoBehaviour
         startBtn.gameObject.SetActive(false);
         hInvenPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(true);
+
+        ClosePopUp();
+
         bBattleStarted = true;
     }
 
