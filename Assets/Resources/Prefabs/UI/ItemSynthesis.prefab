@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4267740422914703947}
   - component: {fileID: 8137824809630583154}
+  - component: {fileID: 3158289408105605258}
   m_Layer: 5
   m_Name: Result
   m_TagString: Untagged
@@ -336,6 +337,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3459152379094583828}
   m_CullTransparentMesh: 1
+--- !u!114 &3158289408105605258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459152379094583828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 120, y: 120}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &3909907412532564937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,11 +1348,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179623123598415553, guid: 0a514539ef91f434f937486aecf7821f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9179623123598415553, guid: 0a514539ef91f434f937486aecf7821f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9179623123598415553, guid: 0a514539ef91f434f937486aecf7821f, type: 3}
       propertyPath: m_AnchorMin.x
