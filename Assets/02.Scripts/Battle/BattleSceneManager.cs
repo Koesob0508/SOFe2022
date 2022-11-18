@@ -30,10 +30,10 @@ public class BattleSceneManager : MonoBehaviour
 
     public Path.PathManager PathMgr = null;
 
-    public BattleLogPanel bLogPanel;
-    public HeroInvenPanel hInvenPanel;
-    public BattleEndUI bEndPanel;
-    public SynergyPanel synergyPanel;
+    private BattleLogPanel bLogPanel;
+    private HeroInvenPanel hInvenPanel;
+    private BattleEndUI bEndPanel;
+    private SynergyPanel synergyPanel;
     private uint hCount = 0;
     private uint eCount = 0;
 
@@ -41,6 +41,7 @@ public class BattleSceneManager : MonoBehaviour
 
     bool bBattleStarted = false;
 
+    public Action<BattleLogPanel.Log> LogDelegate;
 
     List<ObserverBase> Observers = new List<ObserverBase>();
 
@@ -160,11 +161,25 @@ public class BattleSceneManager : MonoBehaviour
         var ob = new Observer_Battle();
         ob.Init();
         Observers.Add(ob);
+        LogDelegate += AddLog;
     }
 
     #endregion
     #region Publlic Methods
     
+    /// <summary>
+    /// Apply Buff to Hero
+    /// </summary>
+    /// <param name="type">Attack or AttackSpeed</param>
+    /// <param name="hero"></param>
+    /// <param name="value"></param>
+    /// <param name="remainTime"></param>
+    public void ApplyBuff(string type, Hero hero, float value, float remainTime = 0.0f)
+    {
+        GameObject g = heroObjects.Find((h) => { return h.GetComponent<Battle_Heros>().charData.GUID == hero.GUID; });
+        g.GetComponent<Battle_Heros>().Buff(type,value);
+    }
+
     public void HeroInvenItemClicked(Hero heroData, Vector2 pos)
     {
         if(curHeroInfoOpened != heroData)
@@ -362,7 +377,10 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
 
-    
+    void AddLog(BattleLogPanel.Log log)
+    {
+        bLogPanel.AddLog(log);
+    }
     void AlignUnitsByY()
     {
         spriteRenderers.Sort((lhs, rhs) => { return rhs.gameObject.transform.position.y.CompareTo(lhs.gameObject.transform.position.y); });
@@ -386,12 +404,12 @@ public class BattleSceneManager : MonoBehaviour
         {
             case GameManager.MapType.Boss:
                 {
-                    mapName = "Dessert_Pale.png";
+                    mapName = "StatueForest_Pale.png";
                     break;
                 }
             case GameManager.MapType.Dessert:
                 {
-                    mapName = "Dessert.png";
+                    mapName = "Dessert_Pale.png";
                     break;
                 }
             case GameManager.MapType.Jungle:

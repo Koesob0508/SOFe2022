@@ -35,9 +35,11 @@ public class DataManager
         else
         {
             LoadInitialHeroData();
-            Hero startingHero = ObjectCodex[0] as Hero;
-            if (startingHero != null)
-                startingHero.IsActive = true;
+            Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero };
+            for(int i = 0; i < startingHeros.Length; i++)
+            {
+                startingHeros[i].IsActive = true;
+            }
             GameManager.Stage.SetStageData(StageData);
         }
     }
