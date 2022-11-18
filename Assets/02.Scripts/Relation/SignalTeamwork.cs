@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class SignalEI : CustomSignal
+public class SignalTeamwork : CustomSignal
 {
     [SerializeField] private Hero preHero;
     [SerializeField] private Hero postHero;
@@ -16,34 +16,30 @@ public class SignalEI : CustomSignal
 
     public override void Init()
     {
-        signalTitle = "둘이서 한 마음?!";
-        signalExplain = "두 용병이 한 대상에 대해 행동";
+        signalTitle = "팀워크!";
+        signalExplain = "두 용병이 함께 적을 처치";
         preHero = new Hero();
         postHero = new Hero();
         preCharacter = new Character();
         postCharacter = new Character();
     }
-
     protected override bool Condition(BattleLogPanel.Log _log)
     {
-        // 일단 subject가 Hero여야 실행
-        if (_log.Causer is Hero)
+        if (_log.Causer is Hero && _log.Target is Enemy)
         {
             preHero = postHero.DeepCopy();
             preCharacter = postCharacter.DeepCopy();
             postHero = (Hero)_log.Causer;
             postCharacter = _log.Target;
-            
-            if(preHero.IsActive == false)
+
+            if (preHero.IsActive == false)
             {
-                Debug.LogWarning("PreHero가 아직 없음");
                 return false;
             }
 
-            if (preHero.Name != postHero.Name && 
-                GameManager.Relation.GetBetweenScore(preHero, postHero) < 0 &&
-                GameManager.Relation.GetBetweenScore(postHero, preHero) < 0 &&
-                preCharacter.Equals(postCharacter))
+            if (preHero.Name != postHero.Name &&
+               _log.Type == BattleLogPanel.LogType.Kill &&
+               preCharacter.Equals(postCharacter))
             {
                 return true;
             }
@@ -54,29 +50,12 @@ public class SignalEI : CustomSignal
 
     protected override void Apply()
     {
-        Debug.Log("E와 I 간 Event 발생");
+        Debug.Log("팀워크!");
 
-        if (GameManager.Relation.IsI(preHero))
-        {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, -1);
-            UpdateLog(0, "아직... 어사인데...");
-        }
-        else // I가 아니면 E이기 때문에...
-        {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, 1);
-            UpdateLog(0, "이것도 천생연분?!");
-        }
-
-        if (GameManager.Relation.IsI(postHero))
-        {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, -1);
-            UpdateLog(1, "아직... 어사인데...");
-        }
-        else // I가 아니면 E이기 때문에...
-        {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, 1);
-            UpdateLog(1, "이것도 천생연분?!");
-        }
+        GameManager.Relation.SetChangeRelationship(preHero, postHero, 1);
+        UpdateLog(0, "중요한 것은");
+        GameManager.Relation.SetChangeRelationship(postHero, preHero, 1);
+        UpdateLog(1, "꺾이지 않는 마음");
     }
 
     private void UpdateLog(int _index, string _string)

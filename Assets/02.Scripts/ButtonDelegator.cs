@@ -112,5 +112,25 @@ namespace Koesob
         {
             GameManager.Instance.NewGame();
         }
+
+        public void OnStageDebug()
+        {
+            GameManager.Stage.OnDebugMode();
+        }
+
+        public void OffStageDebug()
+        {
+            GameManager.Stage.OffDebugMode();
+        }
+
+        public void MoveLeft()
+        {
+            GameManager.Stage.MoveCanvasRight();
+        }
+
+        public void MoveRight()
+        {
+            GameManager.Stage.MoveCanvasLeft();
+        }
     }
 }
