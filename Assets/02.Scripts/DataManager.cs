@@ -124,7 +124,7 @@ public class DataManager
             item.BasicNum = float.Parse(elems[5]);
             // item.SpecialType = (GameManager.ItemTyoe)Int32.Parse(elems[6]);
             item.SpeicalNum = float.Parse(elems[7]);
-            item.Info = elems[7];
+            item.Info = elems[8];
             item.Type = GameManager.ObjectType.Item;
             line2 = csvImp2.Readline();
 

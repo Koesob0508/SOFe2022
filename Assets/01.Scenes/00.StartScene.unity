@@ -664,6 +664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HeroList: []
   ShopHeroList: []
+  ShopItemList: []
 --- !u!4 &842497413
 Transform:
   m_ObjectHideFlags: 0

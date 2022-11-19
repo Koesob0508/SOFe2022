@@ -7,7 +7,7 @@ using TMPro;
 
 public class SetRandomObject : MonoBehaviour
 {
-    public GameObject EnrollHeroUI;
+    public GameObject EnrollUI;
     GameObject ObjectUI;
     public GameManager.ObjectType Type;
 
@@ -35,7 +35,7 @@ public class SetRandomObject : MonoBehaviour
 
                     for (int i = 0; i < EnrollList.Count(); i++)
                     {
-                        ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
+                        ObjectUI = Instantiate(EnrollUI, transform.position, Quaternion.identity);
                         ObjectUI.transform.SetParent(transform);
                         ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
                     }
@@ -44,7 +44,15 @@ public class SetRandomObject : MonoBehaviour
                 }
             case GameManager.ObjectType.Item:
                 {
-
+                    EnrollList = GameManager.Hero.GetShopItemList();
+                    for (int i = 0; i < EnrollList.Count(); i++)
+                    {
+                        ObjectUI = Instantiate(EnrollUI, transform.position, Quaternion.identity);
+                        transform.GetChild(i).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(EnrollList[i].GUID);
+                        ObjectUI.transform.SetParent(transform.GetChild(i));
+                        ObjectUI.transform.GetComponent<GetItemInfo>().SetInfo((Item)EnrollList[i]);
+                        ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
+                    }
                     break;
                 }
             default:
@@ -134,7 +142,7 @@ public class SetRandomObject : MonoBehaviour
                 }
             case GameManager.ObjectType.Item:
                 {
-
+                    SetShopList();
                     break;
                 }
             default:

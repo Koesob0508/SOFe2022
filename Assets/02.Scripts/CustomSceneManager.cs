@@ -124,6 +124,9 @@ public class CustomSceneManager
 
         // Guild의 Random으로 3명의 Hero Set
         GameManager.Hero.SetGuildHero();
+
+        // ItemShop의 오늘의 아이템 Lisr Set
+        GameManager.Hero.SetShopItem();
     }
 
     public void ToEventScene()

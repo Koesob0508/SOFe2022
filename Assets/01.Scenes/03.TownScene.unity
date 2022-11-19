@@ -483,6 +483,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1043053908}
     m_Modifications:
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 387735701}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowItemShop
+      objectReference: {fileID: 0}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Koesob.ButtonDelegator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 408315686414790726, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 768197842868581333, guid: d6df2e0121d10664fbec62d59d828bab, type: 3}
       propertyPath: m_Name
       value: Cycle
