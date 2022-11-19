@@ -40,8 +40,9 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         //ChoiceMode = 0;
-        //Type = (EventType)2;
-        Type = (EventType)UnityEngine.Random.Range(0, 6);
+        Type = (EventType)3;
+        
+        //Type = (EventType)UnityEngine.Random.Range(0, 6);
         ResultTarget.Clear();
 
 
@@ -119,7 +120,7 @@ public class EventManager : MonoBehaviour
     public void ChoiceOption()
     {
         string choice = this.transform.name;
-        ChoiceMode = Int32.Parse(choice.Substring(choice.Length-1));
+        ChoiceMode = Int32.Parse(choice.Substring(choice.Length - 1));
     }
 
     public void Result()
@@ -132,7 +133,7 @@ public class EventManager : MonoBehaviour
         EventPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = ResultType;
         EventPanel.transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = ResultNum.ToString();
         EventPanel.transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = ResultSign;
-        
+
         foreach (Hero _hero in ResultTarget)
         {
             Debug.Log(ResultTarget.Count());
@@ -262,27 +263,86 @@ public class EventManager : MonoBehaviour
         Debug.Log("Merchant " + mode + " 선택지의 기능을 수행합니다");
         Destroy(EventPanel);
 
-        if (mode == 1)
+        Hero TargetHero = null;
+        
+        foreach (Hero _hero in GameManager.Hero.GetHeroList())
         {
+            if (_hero.ItemNum < 3)
+            {
+                TargetHero = _hero;
+                break;
+            }
+        }
 
-            ResultMent = "일반 장비 ???를 획득합니다";
+        if (TargetHero == null)
+        {
+            // 아이템을 저장할 수 없는 경우
+            ResultMent = "장비를 더 들 수 있는 용병이 없습니다";
             ResultType = "";
             ResultNum = "";
             ResultSign = "";
         }
-        else if (mode == 2)
+        else
         {
-            ResultMent = "특수 장비 ???를 획득합니다";
-            ResultType = " ";
-            ResultNum = " ";
-            ResultSign = " ";
+            Item EventItem = null;
+
+            if (mode == 1 && GameManager.Data.Money >= 100)
+            {
+                // 1~3성 장비를 획득함
+                while (true)
+                {
+                    uint guid = (uint)UnityEngine.Random.Range(200, 220);
+                    Item _item = (Item)GameManager.Data.LoadObject(guid, GameManager.ObjectType.Item);
+                    if (_item.Star <= 3)
+                    {
+                        EventItem = _item;
+                        break;
+                    }
+                }
+                ResultTarget.Add(TargetHero);
+                GameManager.Data.Money -= 100;
+                GameManager.Hero.AddHeroItem(TargetHero.GUID, EventItem.GUID, TargetHero.ItemNum);
+                ResultMent = "떠돌이 상인은 잠시 고민하다가,\n한 아이템을 건네줍니다.\n<" + EventItem.Name + "> 를 획득합니다";
+                ResultType = "아이템 획득";
+                ResultNum = EventItem.Star + "성";
+                ResultSign = "-1000G";
+            }
+            else if (mode == 2 && GameManager.Data.Money >= 1000)
+            {
+                // 4~5성 장비를 획득함
+                while (true)
+                {
+                    uint guid = (uint)UnityEngine.Random.Range(200, 220);
+                    Item _item = (Item)GameManager.Data.LoadObject(guid, GameManager.ObjectType.Item);
+                    if (_item.Star > 3)
+                    {
+                        EventItem = _item;
+                        break;
+                    }
+                }
+                ResultTarget.Add(TargetHero);
+                GameManager.Data.Money -= 1000;
+                GameManager.Hero.AddHeroItem(TargetHero.GUID, EventItem.GUID, TargetHero.ItemNum);
+                ResultMent = "떠돌이 상인은 잠시 고민하다가,\n한 아이템을 건네줍니다.\n<" + EventItem.Name + "> 를 획득합니다";
+                ResultType = "아이템 획득";
+                ResultNum = EventItem.Star + "성";
+                ResultSign = "-1000G";
+            }
+            else
+            {
+                // 아이템을 구매할 수 없는 경우
+                ResultMent = "돈이 부족한 것을 발견한 떠돌이 상인은\n미련없이 길을 지나가버렸다 ...";
+                ResultType = "";
+                ResultNum = "";
+                ResultSign = "";
+            }
         }
 
         // 선택에 따른 결과를 띄워준다
         Result();
-
         ChoiceMode = 0;
     }
+
     private void Villain(int mode)
     {
         // 선택지
