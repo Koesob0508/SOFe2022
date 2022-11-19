@@ -10,6 +10,7 @@ public partial class StageManager : MonoBehaviour
     private StageNode currentStageNode;
     private GameObject canvas;
     public GameObject laneObject;
+    private bool isDebugMode = false;
 
     [Header("각각의 스테이지 노드 프리팹 할당")]
     public StageNode battleNode;
@@ -25,6 +26,7 @@ public partial class StageManager : MonoBehaviour
     public List<int> townIndices;
     [SerializeField] private StageMap stageMap;
     private float screenHeight;
+    private float screenWidth;
     private float stageNodeScale;
 
     private List<StageData> stageData;
@@ -37,6 +39,7 @@ public partial class StageManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
+        #region canvas settings
         // stageNode들을 Stage 오브젝트의 자식 오브젝트로 둘 예정
         canvas = GameObject.Find("Stage Canvas");
 
@@ -50,7 +53,7 @@ public partial class StageManager : MonoBehaviour
         DontDestroyOnLoad(canvas);
 
         screenHeight = Camera.main.orthographicSize * 2;
-        float screenWidth = screenHeight * Camera.main.aspect;
+        screenWidth = screenHeight * Camera.main.aspect;
         stageNodeScale = screenHeight * 0.1f;
 
         var stageManagerPosition = this.transform.position;
@@ -59,12 +62,12 @@ public partial class StageManager : MonoBehaviour
 
         canvas.transform.position = stageManagerPosition;
         canvas.SetActive(false);
+        #endregion
 
         if (saveData != null)
         {
             Debug.Log("Save data is found, Load save data");
             LoadStageMap(saveData);
-            //InitStageMap(startCount, stepCount);
         }
         else
         {
@@ -145,7 +148,7 @@ public partial class StageManager : MonoBehaviour
                     foreach (StageCase cases in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases)
                     {
                         test += string.Format(" Case {0}", caseLevel);
-                        foreach(StageEnemy eneimies in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases[caseLevel].enemies)
+                        foreach (StageEnemy eneimies in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases[caseLevel].enemies)
                         {
                             test += string.Format(" RUID {0} Count {1}", eneimies.ruid, eneimies.count);
                         }
@@ -181,7 +184,7 @@ public partial class StageManager : MonoBehaviour
 
         int randomCase = Random.Range(0, loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
 
-        if(loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count < randomCase + 1)
+        if (loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count < randomCase + 1)
         {
             Debug.LogError("Case Count : " + loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
         }
@@ -560,6 +563,14 @@ public partial class StageManager : MonoBehaviour
     private void UpdateCurrentNode(StageNode _currentNode)
     {
         currentStageNode = _currentNode;
+
+        if (_currentNode.transform.localPosition.x > screenWidth / 2)
+        {
+            float moveX = _currentNode.transform.localPosition.x - screenWidth / 2;
+            var canvasPosition = canvas.transform.position;
+            canvasPosition.x -= moveX;
+            canvas.transform.position = canvasPosition;
+        }
     }
 
     private void UnloadStages()
@@ -640,5 +651,46 @@ public partial class StageManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnDebugMode()
+    {
+        isDebugMode = true;
+        foreach (Step step in stageMap.stages)
+        {
+            step.OnDebugMode();
+        }
+    }
+
+    public void OffDebugMode()
+    {
+        isDebugMode = false;
+        foreach (Step step in stageMap.stages)
+        {
+            step.OffDebugMode();
+        }
+    }
+
+    public void MoveCanvasLeft()
+    {
+        var resultX = canvas.transform.position.x - 2;
+
+        var resultPosition = canvas.transform.position;
+        resultPosition.x = resultX;
+        canvas.transform.position = resultPosition;
+    }
+
+    public void MoveCanvasRight()
+    {
+        var resultX = canvas.transform.position.x + 2;
+
+        var resultPosition = canvas.transform.position;
+        resultPosition.x = resultX;
+        canvas.transform.position = resultPosition;
+    }
+
+    public string GetLastStage()
+    {
+        return null;
     }
 }
