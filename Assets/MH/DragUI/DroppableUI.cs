@@ -98,9 +98,12 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
 					InventoryOrder);
 
 				// 드래그하고 있는 대상의 부모를 현재 오브젝트로 설정하고, 위치를 현재 오브젝트 위치와 동일하게 설정
+				if (eventData.pointerDrag.transform.parent.name == "ResultInventory")
+					eventData.pointerDrag.GetComponent<RectTransform>().localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
 				eventData.pointerDrag.transform.SetParent(transform);
 				eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
-
+				
 				// 소유하고 있는 ItemInfo Update
 				Contents.GetComponent<GetHeroInfo>().UpdateItems();
 			}
