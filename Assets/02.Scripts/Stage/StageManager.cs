@@ -12,7 +12,9 @@ public partial class StageManager : MonoBehaviour
     private bool isDebugMode = false;
 
     [Header("각각의 스테이지 노드 프리팹 할당")]
-    public StageNode battleNode;
+    public StageNode jungleNode;
+    public StageNode caveNode;
+    public StageNode bossNode;
     public StageNode townNode;
     public StageNode eventNode;
 
@@ -30,7 +32,10 @@ public partial class StageManager : MonoBehaviour
     private List<StageLevel> loadedStageData;
 
     private string saveData;
-    
+
+    public bool isNextStage = false;
+    private int stageLevel;
+
     #region Sub Manager
     private Viewer viewer;
     #endregion
@@ -59,7 +64,7 @@ public partial class StageManager : MonoBehaviour
             Debug.Log("Save data did not found, Init save data");
             loadedStageData = new List<StageLevel>();
             LoadStageData(stageData);
-            InitStageMap(startCount, stepCount, townIndices);
+            InitStageMap(startCount, stepCount, townIndices, stageLevel);
         }
     }
 
@@ -171,12 +176,12 @@ public partial class StageManager : MonoBehaviour
         return loadedStageData[_stage].mapTypes[_map].steps[_step].cases[randomCase].enemies;
     }
 
-    private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices)
+    private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices, int _stageLevel)
     {
         Debug.Log("Stage Node Instantiate");
 
         seeds = InitSeed(_startCount, _stepCount);
-        seeds = RandomizeSeed(seeds, _townIndices);
+        seeds = RandomizeSeed(seeds, _townIndices, _stageLevel);
         seeds = RandomizePosition(seeds);
 
         stages = viewer.GenerateNode(seeds);
@@ -222,35 +227,34 @@ public partial class StageManager : MonoBehaviour
         return resultList;
     }
 
-    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices)
+    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices, int _stageLevel)
     {
-        int stageLevel = 0;
         int stageStep = 0;
 
         foreach (List<Seed> stepList in _seeds)
         {
-            if (_townIndices.Contains(stepList[0].Step))
-            {
-                stageStep++;
-
-                foreach (Seed seed in stepList)
-                {
-                    seed.StageLevel = stageLevel;
-                    seed.StageStep = stageStep;
-                }
-            }
-            else
-            {
-                foreach (Seed seed in stepList)
-                {
-                    seed.StageLevel = stageLevel;
-                    seed.StageStep = stageStep;
-                }
-            }
-
             // 보스 스테이지가 아니라면
             if (stepList[0].Step != _seeds.Count - 1)
             {
+                if (_townIndices.Contains(stepList[0].Step))
+                {
+                    stageStep++;
+
+                    foreach (Seed seed in stepList)
+                    {
+                        seed.StageLevel = _stageLevel;
+                        seed.StageStep = stageStep;
+                    }
+                }
+                else
+                {
+                    foreach (Seed seed in stepList)
+                    {
+                        seed.StageLevel = _stageLevel;
+                        seed.StageStep = stageStep;
+                    }
+                }
+
                 int townIndex = Random.Range(0, stepList.Count - 1);
 
                 // 시작 단계가 아니라면
@@ -274,17 +278,26 @@ public partial class StageManager : MonoBehaviour
                         }
                         else
                         {
-                            seed.Type = StageType.Battle;
+                            int eventDice = Random.Range(0, 100);
 
-                            int dice = Random.Range(0, 100);
-
-                            if (dice > 30)
+                            if(eventDice > 15)
                             {
-                                seed.StageMapType = GameManager.MapType.Jungle;
+                                seed.Type = StageType.Battle;
+
+                                int dice = Random.Range(0, 100);
+
+                                if (dice > 15)
+                                {
+                                    seed.StageMapType = GameManager.MapType.Jungle;
+                                }
+                                else
+                                {
+                                    seed.StageMapType = GameManager.MapType.Dessert;
+                                }
                             }
                             else
                             {
-                                seed.StageMapType = GameManager.MapType.Dessert;
+                                seed.Type = StageType.Event;
                             }
                         }
                     }
@@ -573,16 +586,38 @@ public partial class StageManager : MonoBehaviour
 
     public void MoveCanvasLeft()
     {
-        viewer.MoveLeftCanvas(2);
+        if(isDebugMode)
+        {
+            viewer.MoveLeftCanvas(2);
+        }
     }
 
     public void MoveCanvasRight()
     {
-        viewer.MoveRightCanvas(2);
+        if(isDebugMode)
+        {
+            viewer.MoveRightCanvas(2);
+        }
     }
 
     public string GetLastStage()
     {
         return currentStageNode.Step.ToString();
+    }
+
+    public bool IsToNextStage()
+    {
+        return isNextStage;
+    }
+
+    public void ToNextStage()
+    {
+        stageLevel++;
+        viewer.Clear();
+        viewer.Init();
+
+        InitStageMap(startCount, stepCount, townIndices, stageLevel);
+
+        isNextStage = false;
     }
 }

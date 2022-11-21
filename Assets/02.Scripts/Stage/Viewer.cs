@@ -78,7 +78,21 @@ public partial class StageManager
                     switch (seed.Type)
                     {
                         case StageType.Battle:
-                            stageNode = Instantiate(stage.battleNode, position, Quaternion.identity, canvas.transform);
+                            switch(seed.StageMapType)
+                            {
+                                case GameManager.MapType.Jungle:
+                                    stageNode = Instantiate(stage.jungleNode, position, Quaternion.identity, canvas.transform);
+                                    break;
+                                case GameManager.MapType.Dessert:
+                                    stageNode = Instantiate(stage.caveNode, position, Quaternion.identity, canvas.transform);
+                                    break;
+                                case GameManager.MapType.Boss:
+                                    stageNode = Instantiate(stage.bossNode, position, Quaternion.identity, canvas.transform);
+                                    break;
+                                default:
+                                    Debug.Log("¹º°¡ Àß¸øµÊ");
+                                    break;
+                            }
                             break;
                         case StageType.Town:
                             stageNode = Instantiate(stage.townNode, position, Quaternion.identity, canvas.transform);
@@ -114,7 +128,7 @@ public partial class StageManager
                     switch (node.type)
                     {
                         case StageType.Battle:
-                            stageNode = Instantiate(stage.battleNode, position, Quaternion.identity, canvas.transform);
+                            stageNode = Instantiate(stage.jungleNode, position, Quaternion.identity, canvas.transform);
                             break;
                         case StageType.Town:
                             stageNode = Instantiate(stage.townNode, position, Quaternion.identity, canvas.transform);

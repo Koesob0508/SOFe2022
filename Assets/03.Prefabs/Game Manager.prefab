@@ -130,12 +130,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 8302938173743554298}
     m_Modifications:
     - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
+      propertyPath: bossNode
+      value: 
+      objectReference: {fileID: 4330236583831257242, guid: 538eac8d67182704dac2db68b4a08d90, type: 3}
+    - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
+      propertyPath: caveNode
+      value: 
+      objectReference: {fileID: 1989434605790559144, guid: 90bb0393f22c5df458b4a156b9ae3e1e, type: 3}
+    - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
       propertyPath: stepCount
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
       propertyPath: townCount
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
+      propertyPath: jungleNode
+      value: 
+      objectReference: {fileID: 1604953615410494909, guid: 09372969578c0514d947b1cb66d8a4da, type: 3}
+    - target: {fileID: 6118394743860912714, guid: 0b18073b84283e94ab8a791983321990, type: 3}
+      propertyPath: startCount
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6118394743860912715, guid: 0b18073b84283e94ab8a791983321990, type: 3}
       propertyPath: m_Name
