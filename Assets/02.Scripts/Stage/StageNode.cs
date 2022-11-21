@@ -158,10 +158,18 @@ public class StageNode : MonoBehaviour
         IsPassPoint = true;
         IsInteractable = false;
 
-        foreach (int stage in NextStages)
+        if(StageMapType == GameManager.MapType.Boss)
         {
-            _stages[Step + 1].GetStageNode(stage).button.interactable = true;
-            _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
+            Debug.Log("Boss");
+            GameManager.Stage.isNextStage = true;
+        }
+        else
+        {
+            foreach (int stage in NextStages)
+            {
+                _stages[Step + 1].GetStageNode(stage).button.interactable = true;
+                _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
+            }
         }
     }
 
