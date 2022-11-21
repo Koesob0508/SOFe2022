@@ -58,23 +58,23 @@ public class SignalEI : CustomSignal
 
         if (GameManager.Relation.IsI(preHero))
         {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, -1);
+            GameManager.Battle.ApplyBuff("AttackSpeed", preHero, -10, 10);
             UpdateLog(0, "아직... 어사인데...");
         }
         else // I가 아니면 E이기 때문에...
         {
-            GameManager.Relation.SetChangeRelationship(preHero, postHero, 1);
+            GameManager.Battle.ApplyBuff("AttackSpeed", preHero, 10, 10);
             UpdateLog(0, "이것도 천생연분?!");
         }
 
         if (GameManager.Relation.IsI(postHero))
         {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, -1);
+            GameManager.Battle.ApplyBuff("AttackSpeed", postHero, -10, 10);
             UpdateLog(1, "아직... 어사인데...");
         }
         else // I가 아니면 E이기 때문에...
         {
-            GameManager.Relation.SetChangeRelationship(postHero, preHero, 1);
+            GameManager.Battle.ApplyBuff("AttackSpeed", postHero, 10, 10);
             UpdateLog(1, "이것도 천생연분?!");
         }
     }
