@@ -10,6 +10,7 @@ public class Hero : Character
     public uint Cost = 1000;
     public bool isDead = false;
     public bool IsActive = false;
+    public string Skill;
 
     // public List<Item> Items = new List<Item>();
     public Item[] Items = new Item[3];
@@ -23,6 +24,7 @@ public class Hero : Character
         tmp.Cost = Cost;
         tmp.isDead = isDead;
         tmp.IsActive = IsActive;
+        tmp.Skill = Skill;
         tmp.Items = Items;
         tmp.MaxHP = MaxHP;
         tmp.CurrentHP = CurrentHP;

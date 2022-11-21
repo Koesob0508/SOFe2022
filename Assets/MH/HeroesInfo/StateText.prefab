@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 278.5508, y: 38.975}
+  m_SizeDelta: {x: 311.5851, y: 38.975}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4673585396105208314
 CanvasRenderer:
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_text: "\uCD5C\uB300 \uCCB4\uB825: "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b642b930542cab047b0c958a47ae8995, type: 2}
-  m_sharedMaterial: {fileID: 916348533952467705, guid: b642b930542cab047b0c958a47ae8995, type: 2}
+  m_sharedMaterial: {fileID: -6160616668218623608, guid: b642b930542cab047b0c958a47ae8995, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.164505, w: -0.000009536743}
+  m_margin: {x: 0, y: 0, z: 3.755539, w: -0.000009536743}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

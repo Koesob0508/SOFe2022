@@ -61,6 +61,7 @@ public class DataManager
             hero.MaxMana = float.Parse(elems[7]);
             hero.MoveSpeed = float.Parse(elems[8]);
             hero.AttackRange = float.Parse(elems[9]);
+            hero.Skill = elems[10];
             hero.Type = GameManager.ObjectType.Hero;
             hero.CurrentHP = hero.MaxHP;
             // Hard-Coding Part
