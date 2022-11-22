@@ -26,9 +26,11 @@ public class EvilWizard116 : Battle_Enemys
     {
         yield return new WaitForSeconds(animationDamageDelay / 2);
 
+        attackList = AttackRange.GetComponent<AttackRange>().attackList;
+
         for (int j = 0; j < attackList.Count; j++)
         {
-            attackList[j].GetComponent<Units>().Hit(charData, charData.AttackDamage);
+            attackList[j].GetComponent<Units>().Hit(charData, state.AttackDamage);
 
             attackList[j].GetComponent<Battle_Heros>().Buff("DefensePoint", -3f, 20f);
         }

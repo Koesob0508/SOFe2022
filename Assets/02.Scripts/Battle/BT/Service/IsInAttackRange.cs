@@ -16,7 +16,6 @@ namespace BT
 
         protected override State OnUpdate(BehaviorTreeComponent owner_comp)
         {
-            Debug.Log("Called");
             GameObject target = owner_comp.TreeObject.bBoard.GetValueAsGameObject("targetObj");
             if(target)
             {
