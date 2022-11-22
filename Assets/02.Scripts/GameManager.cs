@@ -79,6 +79,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HeroManager _hero; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
     public static HeroManager Hero { get { return Instance._hero; } }
 
+    [SerializeField] private SoundManager _sound; // HeroManager가 MonoBehaviour를 상속 받고 있기 때문에 Scene에서 직접 할당 필요
+    public static SoundManager Sound { get { return Instance._sound; } }
+
     [SerializeField] private RelationshipManager _relation;
     public static RelationshipManager Relation { get { return Instance._relation; } }
 
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
             Scene.Init();
             Hero.Init();
             Relation.Init();
-
+            Sound.Init();
             Test();
         }
         else

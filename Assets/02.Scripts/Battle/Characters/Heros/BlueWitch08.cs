@@ -48,7 +48,7 @@ public class BlueWitch08 : Battle_Heros
 
         isMeditating = false;
         charData.DefensePoint -= 50f;
-
+        GameManager.Sound.PlayIceEffect();
         StartCoroutine(SkillEffect());
 
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class CustomSceneManager
 {
     public void Init()
@@ -24,11 +24,19 @@ public class CustomSceneManager
             case "00.StartScene":
                 Debug.Log("This is Start Scene");
                 GameManager.Stage.HideStageMap();
+                foreach(var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 break;
 
             case "01.UserInputScene":
                 Debug.Log("This is User Input Scene");
                 GameManager.Stage.HideStageMap();
+                foreach (var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 break;
 
             case "02.StageSelectScene":
@@ -39,6 +47,10 @@ public class CustomSceneManager
                     GameManager.Stage.ToNextStage();
                 }
                 GameManager.Stage.ShowStageMap();
+                foreach (var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 break;
 
             case "03.BattleSelectScene":
@@ -46,7 +58,10 @@ public class CustomSceneManager
 
                 // GameManager.Stage.Test_SetBattleStage();
                 GameManager.Stage.HideStageMap();
-
+                foreach (var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 GameObject obj = new GameObject("BattleManager");
                 GameManager.Battle = obj.AddComponent<BattleSceneManager>();
                 obj.AddComponent<Path.PathManager>();
@@ -99,11 +114,19 @@ public class CustomSceneManager
                 break;
 
             case "04.TownScene":
+                foreach (var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 Debug.Log("This is Town Scene");
                 GameManager.Stage.HideStageMap();
                 break;
 
             case "05.EventScene":
+                foreach (var button in GameObject.FindObjectsOfType<Button>())
+                {
+                    button.onClick.AddListener(delegate { GameManager.Sound.PlayButtonSound(); });
+                }
                 Debug.Log("This is Event Scene");
                 GameManager.Stage.HideStageMap();
                 break;

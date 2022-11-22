@@ -11,6 +11,7 @@ public class HeroManager : MonoBehaviour
 
     public void Test()
     {
+        
         Debug.Log("Test�� ���� Hero �ӽ÷� ����մϴ�");
         EnrollHero(1);
         EnrollHero(5);

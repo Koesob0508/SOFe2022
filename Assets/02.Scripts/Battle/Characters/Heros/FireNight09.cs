@@ -12,7 +12,7 @@ public class FireNight09 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
-
+        GameManager.Sound.PlayFireEffect();
         Vector2 center = new Vector2(transform.position.x, transform.position.y);
 
         Collider2D[] hitUnits = Physics2D.OverlapCircleAll(center, 10.5f);

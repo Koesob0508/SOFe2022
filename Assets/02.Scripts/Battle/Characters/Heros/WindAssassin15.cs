@@ -15,7 +15,7 @@ public class WindAssassin15 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
-
+        GameManager.Sound.PlayWindEffect();
         StartCoroutine("SkillDamage");
     }
 

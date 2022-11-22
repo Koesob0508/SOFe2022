@@ -27,6 +27,8 @@ public class Flame05 : Battle_Heros
         CheckForFlippingInAttacking();
         PlayAttackAnimation();
 
+        GameManager.Sound.PlayFireEffect();
+
         StartCoroutine("CouroutineAttack");
     }
 

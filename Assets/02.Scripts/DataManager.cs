@@ -13,7 +13,7 @@ public class DataManager
     public List<StageData> StageData = new List<StageData>();
     public String UserName;
     public GameManager.MbtiType UserMbti;
-    public uint Money = 3000;
+    public uint Money = 927;
 
     [Serializable]
     private struct SaveFormat

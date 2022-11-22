@@ -17,6 +17,7 @@ public class GroundMonk10 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
+        GameManager.Sound.PlayEarthEffect();
         StartCoroutine("SkillDamage");
     }
 
