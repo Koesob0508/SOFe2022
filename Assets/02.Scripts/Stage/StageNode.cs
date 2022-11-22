@@ -66,6 +66,7 @@ public class StageNode : MonoBehaviour
                 {
                     Enemy enemy = (Enemy)GameManager.Data.ObjectCodex[(uint)enemyPool[number].ruid];
                     enemy.Position = new Vector2(1 + number, 0 - count * 1);
+                    enemy = enemy.DeepCopy(enemy);
                     //Debug.LogError(name + " number : " + number + " Count " + count + enemy.Position);
                     Enemies.Add(enemy);
                 }
@@ -157,10 +158,18 @@ public class StageNode : MonoBehaviour
         IsPassPoint = true;
         IsInteractable = false;
 
-        foreach (int stage in NextStages)
+        if(StageMapType == GameManager.MapType.Boss)
         {
-            _stages[Step + 1].GetStageNode(stage).button.interactable = true;
-            _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
+            Debug.Log("Boss");
+            GameManager.Stage.isNextStage = true;
+        }
+        else
+        {
+            foreach (int stage in NextStages)
+            {
+                _stages[Step + 1].GetStageNode(stage).button.interactable = true;
+                _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
+            }
         }
     }
 

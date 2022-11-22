@@ -94,6 +94,29 @@ public partial class StageManager
                 serializeNodes.Add(node);
             }
         }
+
+        public void OnDebugMode()
+        {
+            foreach(StageNode stageNode in stageNodes)
+            {
+                stageNode.button.interactable = true;
+            }
+        }
+
+        public void OffDebugMode()
+        {
+            foreach(StageNode stageNode in stageNodes)
+            {
+                if(stageNode.IsInteractable)
+                {
+                    stageNode.button.interactable = true;
+                }
+                else
+                {
+                    stageNode.button.interactable = false;
+                }
+            }
+        }
     }
 
     [System.Serializable]

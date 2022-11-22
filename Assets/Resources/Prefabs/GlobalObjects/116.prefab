@@ -1,5 +1,78 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7023661693434011650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5938703879516014408}
+  - component: {fileID: 1576715094499007368}
+  - component: {fileID: 5327009586390543244}
+  m_Layer: 3
+  m_Name: AttackRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5938703879516014408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023661693434011650}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.15284, y: 0, z: 0}
+  m_LocalScale: {x: 0.28, y: 0.79999995, z: 0.79999995}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1678128111257668748}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1576715094499007368
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023661693434011650}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -10.842727, y: -0.047742486}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 14.768393, y: 3.9997332}
+  m_EdgeRadius: 0
+--- !u!114 &5327009586390543244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023661693434011650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf196e64c38c4d48a33a254ba997bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackList: []
+  isEnemy: 0
 --- !u!1001 &8220731715988603078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9,19 +82,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 1.0324912
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.y
-      value: 0.75
+      value: 1.6690944
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: -0.018236026
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.y
-      value: -0.2
+      value: -0.48448163
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -61,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
@@ -135,12 +208,17 @@ PrefabInstance:
     - {fileID: 6439874309181431725, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
     - {fileID: 531677649290796168, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
+--- !u!4 &1678128111257668748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7303729536159812682, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
+  m_PrefabInstance: {fileID: 8220731715988603078}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7019653078246472943 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1404901776189193257, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_PrefabInstance: {fileID: 8220731715988603078}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1240988890813367341
+--- !u!114 &7282011304181455910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +227,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7019653078246472943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023b3b33c277779408b7df086c89991d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c246d806fd32d44ba8b5e48073ea3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -176,3 +254,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: dfc13f023cc2af64f8b272a0c7278f77, type: 2}
+  AttackRange: {fileID: 7023661693434011650}
+  attackList: []

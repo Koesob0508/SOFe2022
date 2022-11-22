@@ -34,6 +34,10 @@ public class CustomSceneManager
             case "02.StageSelectScene":
                 Debug.Log("This is Stage Select Scene");
                 // ���� ����ٰ� Stage Show �Լ� �־�θ� �ɵ�
+                if(GameManager.Stage.IsToNextStage())
+                {
+                    GameManager.Stage.ToNextStage();
+                }
                 GameManager.Stage.ShowStageMap();
                 break;
 
@@ -89,6 +93,7 @@ public class CustomSceneManager
                 hlist.Add(h20);
 
                 List<Enemy> elist = GameManager.Stage.GetEnemies();
+
                 GameManager.MapType mapType = GameManager.Stage.GetMapType();
                 GameManager.Battle.Init(hlist, elist, mapType);
                 break;

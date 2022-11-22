@@ -28,8 +28,8 @@ public class King19 : Battle_Heros
             if (!ourUnits[i].CompareTag("Heros"))
                 continue;
 
-            ourUnits[i].GetComponent<Battle_Heros>().Buff("Attack", 0.1f * charData.AttackDamage);
-            ourUnits[i].GetComponent<Battle_Heros>().Buff("AttackSpeed", 0.01f * charData.AttackDamage);
+            ourUnits[i].GetComponent<Battle_Heros>().Buff("Attack", 0.1f * charData.AttackDamage, 5f);
+            ourUnits[i].GetComponent<Battle_Heros>().Buff("AttackSpeed", 0.01f * charData.AttackDamage, 5f);
 
         }
     }

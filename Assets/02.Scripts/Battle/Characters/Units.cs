@@ -11,7 +11,7 @@ public class CC
     public bool hide = false;
 }
 
-public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
+public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
 
     protected bool isUpdating = false;
@@ -20,9 +20,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public Animator animator;
     public bool bHasSkill;
-    float localScaleX;
 
-    float tTimer = 1.0f;
     public float attackTimer = 0.0f;
 
     public GameObject UnitUIObject;
@@ -61,6 +59,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     ArrayList path;
 
     protected SpriteRenderer spr;
+    protected bool isSpriteReverse = false;
 
     public AnimationClip attackAnimationClip;
 
@@ -100,10 +99,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         UnitUI.GetComponent<Canvas>().sortingLayerID = SortingLayer.NameToID("Char");
         UnitUI.GetComponent<Canvas>().sortingOrder = -99;
         UnitUI.transform.parent = transform;
-        UnitUI.transform.position += uiOffset;
         hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
         spBar = UnitUI.transform.GetChild(1).GetComponent<Slider>();
-        localScaleX = transform.localScale.x;
 
         //BT,BB 초기화
         btComp = GetComponent<BehaviorTreeComponent>();
@@ -131,6 +128,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     public virtual void Attack()
     {
+        CheckForFlippingInAttacking();
         PlayAttackAnimation();
     }
     public virtual void Hit(Character Causer, float damage)
@@ -154,7 +152,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         float t = GetCurrentAnimationTime();
 
         yield return new WaitForSeconds(t + attackSpeed);
-        skillFinished();
+        if(gameObject.activeSelf)
+            skillFinished();
         isSkillPlaying = false;
     }
 
@@ -212,12 +211,20 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 
-
+    #region Event Interface ( Click, Drag )
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
+        else
+            GameManager.Battle.HeroObjectClicked(charData as Hero, eventData.position);
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (charData.Type == GameManager.ObjectType.Enemy)
             return;
+        GameManager.Battle.CloseInfoPopUp();
         UpdateUI();
         Vector2 screenPos = eventData.position;
         
@@ -228,6 +235,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
         int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
         Vector2 screenPos = eventData.position;
@@ -278,7 +287,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
         WorldPos.z = 0;
         transform.position = WorldPos;
+
+        GameManager.Battle.CloseInfoPopUp();
     }
+    #endregion
     public void SetSpeed(float Speed)
     {
         this.speed = Speed / 10;
@@ -286,7 +298,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
     private void Move()
     {
         Vector2 curPos = gameObject.transform.position;
-        float dist = Vector2.Distance(curPos, (path[path.Count - 1] as Path.Node).pos);
         if (curIdx != maxIdx - 1)
         {
             moveDir = (path[curIdx + 1] as Path.Node).pos - (path[curIdx] as Path.Node).pos;
@@ -312,7 +323,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         animator.SetBool("Run", true);
 
 
-        CheckForFlipping();
+        CheckForFlippingInMoving();
     }
     public void StopMovement()
     {
@@ -325,22 +336,39 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         maxIdx = path.Count - 1;
         bCanMove = true;
     }
-    private void CheckForFlipping()
+    private void CheckForFlippingInMoving()
     {
         bool movingLeft = moveDir.x < 0;
         bool movingRight = moveDir.x > 0;
 
-        var spr = GetComponentInChildren<SpriteRenderer>();
         if (movingLeft)
         {
-            spr.flipX = true;
-            isFilped = true;
+            spr.flipX = !isSpriteReverse;
+            isFilped = !isSpriteReverse;
+
         }
 
         if (movingRight)
         {
-            spr.flipX = false;
-            isFilped = false;
+            spr.flipX = isSpriteReverse;
+            isFilped = isSpriteReverse;
+
+        }
+    }
+
+    protected void CheckForFlippingInAttacking()
+    {
+        Vector2 curPos = gameObject.transform.position;
+        Vector2 tarPos = attackTarget.transform.position;
+        if (tarPos.x - curPos.x < 0)
+        {
+            spr.flipX = !isSpriteReverse;
+            isFilped = !isSpriteReverse;
+        }
+        else
+        {
+            spr.flipX = isSpriteReverse;
+            isFilped = isSpriteReverse;
         }
     }
 
@@ -361,6 +389,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
                 effectPosition.y = transform.position.y + 1;
 
                 GameObject burnEffect = Instantiate(faintEffectObject, effectPosition, Quaternion.identity);
+                burnEffect.transform.parent = transform;
                 Destroy(burnEffect, time);
                 break;
             case "hide":
@@ -391,13 +420,16 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
                 break;
 
             yield return new WaitForSeconds(1.0f);
-            Hit(burnCauser, 20f);
+            Hit(burnCauser, 5f);
 
             Vector3 effectPosition = transform.position;
             effectPosition.z = transform.position.z - 1;
 
             GameObject burnEffect = Instantiate(burnEffectObject, effectPosition, Quaternion.identity);
+            burnEffect.transform.parent = transform;
             Destroy(burnEffect, 1.0f);
         }
     }
+
+   
 }

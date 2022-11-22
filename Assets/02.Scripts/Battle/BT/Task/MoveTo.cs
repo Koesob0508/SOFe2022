@@ -38,12 +38,11 @@ namespace BT
                 default:
                     break;
             }
-            if (Vector2.Distance(new Vector2(owner_comp.gameObject.transform.position.x, owner_comp.gameObject.transform.position.y), movePos) <= (Path.PathManager.cellSizeX  * 0.1f))
+            if (Vector2.Distance(new Vector2(owner_comp.gameObject.transform.position.x, owner_comp.gameObject.transform.position.y), movePos) <= (Path.PathManager.cellSizeX * 0.1f))
             {
                 return State.Succeeded;
             }
             var pathManager = GameManager.Battle.PathMgr;
-
             Path.Node start = pathManager.GetClosestNode(owner_comp.gameObject.transform.position);
             Path.Node end = pathManager.GetClosestNode(movePos);
             var path = pathManager.FindPath(start, end);

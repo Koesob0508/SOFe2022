@@ -140,5 +140,35 @@ namespace Koesob
         {
             GameManager.Instance.NewGame();
         }
+
+        public void OnStageDebug()
+        {
+            GameManager.Stage.OnDebugMode();
+        }
+
+        public void OffStageDebug()
+        {
+            GameManager.Stage.OffDebugMode();
+        }
+
+        public void MoveLeft()
+        {
+            GameManager.Stage.MoveCanvasRight();
+        }
+
+        public void MoveRight()
+        {
+            GameManager.Stage.MoveCanvasLeft();
+        }
+
+        public void ActiveAllHeros()
+        {
+            foreach(uint id in GameManager.Data.ObjectCodex.Keys)
+            {
+                Hero h = GameManager.Data.ObjectCodex[id] as Hero;
+                if (h != null)
+                    h.IsActive = true;
+            }
+        }
     }
 }

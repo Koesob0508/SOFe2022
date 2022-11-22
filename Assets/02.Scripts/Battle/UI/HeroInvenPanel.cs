@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class HeroInvenPanel : MonoBehaviour
 {
-
+    public GameObject Content;
     public GameObject Item_Prefab;
     GameObject Half_UI;
 
@@ -18,7 +18,7 @@ public class HeroInvenPanel : MonoBehaviour
         {
             if(hero.IsActive)
             {
-                GameObject g = Instantiate(Item_Prefab, transform);
+                GameObject g = Instantiate(Item_Prefab, Content.transform);
                 var item = g.GetComponentInChildren<HeroInvenItem>();
                 childItems.Add(item);
                 g.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(hero.GUID);
@@ -43,11 +43,7 @@ public class HeroInvenPanel : MonoBehaviour
         img.color = StartCol;
         Half_UI.SetActive(false);
     }
-    public void UpdateInfo()
-    {
-        foreach (var item in childItems)
-            item.UpdateInfo();
-    }
+
     public void StartDragging()
     {
         Half_UI.SetActive(true);
@@ -57,15 +53,6 @@ public class HeroInvenPanel : MonoBehaviour
     {
         Half_UI.SetActive(false);
         ToInvisible();
-    }
-
-    public void CloseOtherPopUp(HeroInvenItem ignore)
-    {
-        foreach(var item in childItems)
-        {
-            if(item != ignore)
-                item.ClosePopUp();
-        }
     }
 
     void ToVisible()

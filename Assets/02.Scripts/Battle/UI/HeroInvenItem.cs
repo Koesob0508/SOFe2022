@@ -7,34 +7,24 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
 {
     Image HeroImage;
     GameObject HeroObject;
+    Hero HeroData;
 
     HeroInvenPanel parentPanel;
-    HeroInfo_PopUp infoPopUp;
 
     Vector3 HalfPos;
 
-    bool isPopUpOpened = false;
     bool isHeroInInven = true;
     bool isDead = true;
 
     /// <summary>
     /// Info Update 발생 시 호출
     /// </summary>
-    public void UpdateInfo()
-    {
-        infoPopUp.UpdateInfo();
-    }
-    /// <summary>
-    /// Initalize Function for PopupData
-    /// </summary>
-    /// <param name="hero"></param>
-    private void SetPopUpData(Hero hero)
-    {
-        infoPopUp.SetUpData(hero);
-    }
+
+
     private void SetHeroObj(GameObject HeroObj)
     {
         HeroObject = HeroObj;
+        HeroData = HeroObject.GetComponent<Units>().charData as Hero;
         //HeroObject.GetComponent<Units>().SetItemUI(this);
     }
     public bool GetIsHeroInInven()
@@ -43,23 +33,17 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     }
     public void ReturnToInven(GameObject Hero)
     {
+        SetHeroObj(Hero);
         isHeroInInven = true;
         HeroImage.gameObject.SetActive(true);
         Hero.SetActive(false);
         GameManager.Battle.DeleteHeroOnBattle(Hero);
         HeroImage.sprite = GameManager.Data.LoadSprite(Hero.GetComponent<Units>().charData.GUID);
-        HeroObject = Hero;
-        SetPopUpData((Hero)HeroObject.GetComponent<Units>().charData);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(!isDead)
         {
-            if(isPopUpOpened)
-            {
-                isPopUpOpened = !isPopUpOpened;
-                infoPopUp.gameObject.SetActive(isPopUpOpened);
-            }
             isHeroInInven = false;
             HeroImage.gameObject.SetActive(false);
             HeroObject.SetActive(true);
@@ -68,6 +52,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
             HeroObject.transform.position = WorldPos;
 
             parentPanel.StartDragging();
+            GameManager.Battle.CloseInfoPopUp();
         }
     }
 
@@ -151,30 +136,20 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
     {
         if(isHeroInInven)
         {
-            isPopUpOpened = !isPopUpOpened;
-            parentPanel.CloseOtherPopUp(this);
-            infoPopUp.gameObject.SetActive(isPopUpOpened);
+            GameManager.Battle.HeroInvenItemClicked(HeroData, eventData.position);
         }
-    }
-    public void ClosePopUp()
-    {
-        isPopUpOpened = false;
-        infoPopUp.gameObject.SetActive(isPopUpOpened);
     }
 
     public void Initalize(Hero hero)
     {
         parentPanel = GetComponentInParent<HeroInvenPanel>();
         HeroImage = GetComponentsInChildren<Image>()[1];
-        infoPopUp = parentPanel.GetComponentInChildren<HeroInfo_PopUp>();
-        infoPopUp.gameObject.SetActive(false);
 
         isDead = hero.isDead;
 
         if (isDead)
-            HeroImage.color = new Color(1, 1, 1, 0.5f);
+            HeroImage.color = new Color(0.3f, 0.3f, 0.3f, 1f);
 
-        SetPopUpData(hero);
         SetHeroObj(GameManager.Battle.CreateHero(hero));
     } 
 }

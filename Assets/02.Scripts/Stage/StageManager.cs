@@ -8,13 +8,16 @@ using System.Text;
 public partial class StageManager : MonoBehaviour
 {
     private StageNode currentStageNode;
-    private GameObject canvas;
     public GameObject laneObject;
+    private bool isDebugMode = false;
 
     [Header("각각의 스테이지 노드 프리팹 할당")]
-    public StageNode battleNode;
+    public StageNode jungleNode;
+    public StageNode caveNode;
+    public StageNode bossNode;
     public StageNode townNode;
     public StageNode eventNode;
+
     [Header("스테이지 시작 갯수와 단계 갯수 설정")]
     public int startCount;
     public int stepCount;
@@ -24,47 +27,31 @@ public partial class StageManager : MonoBehaviour
     private List<Step> stages;
     public List<int> townIndices;
     [SerializeField] private StageMap stageMap;
-    private float screenHeight;
-    private float stageNodeScale;
 
     private List<StageData> stageData;
     private List<StageLevel> loadedStageData;
 
     private string saveData;
 
+    public bool isNextStage = false;
+    private int stageLevel;
+
+    #region Sub Manager
+    private Viewer viewer;
+    #endregion
+
     // 현재는 GameManager에 StageManager가 할당되어 있어야 한다.
     public void Init()
     {
         DontDestroyOnLoad(this);
 
-        // stageNode들을 Stage 오브젝트의 자식 오브젝트로 둘 예정
-        canvas = GameObject.Find("Stage Canvas");
-
-        if (canvas == null)
-        {
-            canvas = new GameObject { name = "Stage Canvas" };
-        }
-
-        canvas.transform.position = Vector3.zero;
-
-        DontDestroyOnLoad(canvas);
-
-        screenHeight = Camera.main.orthographicSize * 2;
-        float screenWidth = screenHeight * Camera.main.aspect;
-        stageNodeScale = screenHeight * 0.1f;
-
-        var stageManagerPosition = this.transform.position;
-        stageManagerPosition.x -= screenWidth * 3 / 8;
-        stageManagerPosition.y -= screenHeight * 3 / 8;
-
-        canvas.transform.position = stageManagerPosition;
-        canvas.SetActive(false);
+        viewer = new Viewer(this);
+        viewer.Init();
 
         if (saveData != null)
         {
             Debug.Log("Save data is found, Load save data");
             LoadStageMap(saveData);
-            //InitStageMap(startCount, stepCount);
         }
         else
         {
@@ -77,7 +64,7 @@ public partial class StageManager : MonoBehaviour
             Debug.Log("Save data did not found, Init save data");
             loadedStageData = new List<StageLevel>();
             LoadStageData(stageData);
-            InitStageMap(startCount, stepCount, townIndices);
+            InitStageMap(startCount, stepCount, townIndices, stageLevel);
         }
     }
 
@@ -85,7 +72,7 @@ public partial class StageManager : MonoBehaviour
     {
         saveData = null;
 
-        Destroy(canvas);
+        viewer.Clear();
     }
 
     private void LoadStageData(List<StageData> _stageData)
@@ -145,7 +132,7 @@ public partial class StageManager : MonoBehaviour
                     foreach (StageCase cases in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases)
                     {
                         test += string.Format(" Case {0}", caseLevel);
-                        foreach(StageEnemy eneimies in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases[caseLevel].enemies)
+                        foreach (StageEnemy eneimies in loadedStageData[level].mapTypes[mapLevel].steps[stepLevel].cases[caseLevel].enemies)
                         {
                             test += string.Format(" RUID {0} Count {1}", eneimies.ruid, eneimies.count);
                         }
@@ -181,7 +168,7 @@ public partial class StageManager : MonoBehaviour
 
         int randomCase = Random.Range(0, loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
 
-        if(loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count < randomCase + 1)
+        if (loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count < randomCase + 1)
         {
             Debug.LogError("Case Count : " + loadedStageData[_stage].mapTypes[_map].steps[_step].cases.Count);
         }
@@ -189,24 +176,21 @@ public partial class StageManager : MonoBehaviour
         return loadedStageData[_stage].mapTypes[_map].steps[_step].cases[randomCase].enemies;
     }
 
-    private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices)
+    private void InitStageMap(int _startCount, int _stepCount, List<int> _townIndices, int _stageLevel)
     {
         Debug.Log("Stage Node Instantiate");
 
         seeds = InitSeed(_startCount, _stepCount);
-        seeds = RandomizeSeed(seeds, _townIndices);
-        seeds = RandomizePosition(seeds, screenHeight);
+        seeds = RandomizeSeed(seeds, _townIndices, _stageLevel);
+        seeds = RandomizePosition(seeds);
 
-        stages = GenerateNode(seeds, stageNodeScale);
+        stages = viewer.GenerateNode(seeds);
 
         stages = SetPath(stages, seeds);
 
         InitLane(laneObject, stages);
 
         stageMap = new StageMap(stages);
-
-        //string stageMapToString = SerializeStageMap();
-        //SaveStageMap(stageMapToString);
     }
 
     public void SetStageData(List<StageData> _stageData)
@@ -218,9 +202,8 @@ public partial class StageManager : MonoBehaviour
 
     private void LoadStageMap(string _saveData)
     {
-        // Debug.Log("Stage Map Loaded : " + _saveData);
         stageMap = DeserializeStageMap(_saveData);
-        ReconstructStageNodes(stageMap);
+        viewer.ReconstructStageNodes(stageMap);
         ReconstructLane(laneObject, stageMap);
     }
 
@@ -244,35 +227,34 @@ public partial class StageManager : MonoBehaviour
         return resultList;
     }
 
-    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices)
+    private List<List<Seed>> RandomizeSeed(List<List<Seed>> _seeds, List<int> _townIndices, int _stageLevel)
     {
-        int stageLevel = 0;
         int stageStep = 0;
 
         foreach (List<Seed> stepList in _seeds)
         {
-            if (_townIndices.Contains(stepList[0].Step))
-            {
-                stageStep++;
-
-                foreach (Seed seed in stepList)
-                {
-                    seed.StageLevel = stageLevel;
-                    seed.StageStep = stageStep;
-                }
-            }
-            else
-            {
-                foreach (Seed seed in stepList)
-                {
-                    seed.StageLevel = stageLevel;
-                    seed.StageStep = stageStep;
-                }
-            }
-
             // 보스 스테이지가 아니라면
             if (stepList[0].Step != _seeds.Count - 1)
             {
+                if (_townIndices.Contains(stepList[0].Step))
+                {
+                    stageStep++;
+
+                    foreach (Seed seed in stepList)
+                    {
+                        seed.StageLevel = _stageLevel;
+                        seed.StageStep = stageStep;
+                    }
+                }
+                else
+                {
+                    foreach (Seed seed in stepList)
+                    {
+                        seed.StageLevel = _stageLevel;
+                        seed.StageStep = stageStep;
+                    }
+                }
+
                 int townIndex = Random.Range(0, stepList.Count - 1);
 
                 // 시작 단계가 아니라면
@@ -296,17 +278,26 @@ public partial class StageManager : MonoBehaviour
                         }
                         else
                         {
-                            seed.Type = StageType.Battle;
+                            int eventDice = Random.Range(0, 100);
 
-                            int dice = Random.Range(0, 100);
-
-                            if (dice > 30)
+                            if(eventDice > 15)
                             {
-                                seed.StageMapType = GameManager.MapType.Jungle;
+                                seed.Type = StageType.Battle;
+
+                                int dice = Random.Range(0, 100);
+
+                                if (dice > 15)
+                                {
+                                    seed.StageMapType = GameManager.MapType.Jungle;
+                                }
+                                else
+                                {
+                                    seed.StageMapType = GameManager.MapType.Dessert;
+                                }
                             }
                             else
                             {
-                                seed.StageMapType = GameManager.MapType.Dessert;
+                                seed.Type = StageType.Event;
                             }
                         }
                     }
@@ -404,7 +395,7 @@ public partial class StageManager : MonoBehaviour
         return randomIndex;
     }
 
-    private List<List<Seed>> RandomizePosition(List<List<Seed>> _seeds, float _screenHeight)
+    private List<List<Seed>> RandomizePosition(List<List<Seed>> _seeds)
     {
         foreach (List<Seed> stepList in _seeds)
         {
@@ -414,7 +405,8 @@ public partial class StageManager : MonoBehaviour
                 // 돌아와서 하면 될 내용
                 // yPosition은 screenHeight / startCount
                 // xPosition은 그것에 1.5배? 정도
-                float yStep = _screenHeight / (startCount + 1);
+                //float yStep = _screenHeight / (startCount + 1);
+                float yStep = 1f;
                 float xStep = yStep * 1.5f;
 
                 // 범위는 딱 yPosition의 절반
@@ -431,46 +423,6 @@ public partial class StageManager : MonoBehaviour
         }
 
         return _seeds;
-    }
-
-    private List<Step> GenerateNode(List<List<Seed>> _seeds, float _nodeScale)
-    {
-        List<Step> resultList = new List<Step>();
-
-        foreach (List<Seed> steps in _seeds)
-        {
-            Step stageSteps = new Step();
-
-            foreach (Seed seed in steps)
-            {
-                Vector2 position = seed.Position + new Vector2(canvas.transform.position.x, canvas.transform.position.y);
-
-                StageNode stageNode = null;
-
-                switch (seed.Type)
-                {
-                    case StageType.Battle:
-                        stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                    case StageType.Town:
-                        stageNode = Instantiate(townNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                    case StageType.Event:
-                        stageNode = Instantiate(eventNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                }
-
-                stageNode.Init(seed, _nodeScale);
-
-                stageNode.RegistStageNode += GameManager.Stage.UpdateCurrentNode;
-
-                stageSteps.AddStageNode(stageNode);
-            }
-
-            resultList.Add(stageSteps);
-        }
-
-        return resultList;
     }
 
     private List<Step> SetPath(List<Step> _stages, List<List<Seed>> _seeds)
@@ -520,12 +472,12 @@ public partial class StageManager : MonoBehaviour
 
     public void ShowStageMap()
     {
-        canvas.SetActive(true);
+        viewer.On();
     }
 
     public void HideStageMap()
     {
-        canvas.SetActive(false);
+        viewer.Off();
     }
 
     public List<Enemy> GetEnemies()
@@ -560,6 +512,7 @@ public partial class StageManager : MonoBehaviour
     private void UpdateCurrentNode(StageNode _currentNode)
     {
         currentStageNode = _currentNode;
+        viewer.UpdateCanvas(_currentNode.transform.position.x);
     }
 
     private void UnloadStages()
@@ -587,45 +540,16 @@ public partial class StageManager : MonoBehaviour
     {
         saveData = _saveData;
     }
-
-    private void SaveStageMap(string _serializedStageMap)
+    /// <summary>
+    /// 혹시 몰라 쓰진 않았는데 Serialized StageMap을 줘야합니다.
+    /// </summary>
+    /// <param name="_serializedStageMap"></param>
+    private void GenerateSaveFile(string _serializedStageMap)
     {
         FileStream fileStream = new FileStream("Assets/Koesob/Save.json", FileMode.Create);
         byte[] data = Encoding.UTF8.GetBytes(_serializedStageMap);
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
-    }
-
-    private void ReconstructStageNodes(StageMap _stageMap)
-    {
-        Debug.Log("Stage Node Reconstruct");
-        foreach (Step step in _stageMap.stages)
-        {
-            foreach (SerializedNode node in step.serializeNodes)
-            {
-                Vector2 position = node.position;
-                StageNode stageNode = null;
-
-                switch (node.type)
-                {
-                    case StageType.Battle:
-                        stageNode = Instantiate(battleNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                    case StageType.Town:
-                        stageNode = Instantiate(townNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                    case StageType.Event:
-                        stageNode = Instantiate(eventNode, position, Quaternion.identity, canvas.transform);
-                        break;
-                }
-
-                stageNode.LoadInit(node, stageNodeScale);
-
-                stageNode.RegistStageNode += GameManager.Stage.UpdateCurrentNode;
-
-                step.AddStageNode(stageNode);
-            }
-        }
     }
 
     private void ReconstructLane(GameObject _lanePrefab, StageMap _stageMap)
@@ -640,5 +564,60 @@ public partial class StageManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnDebugMode()
+    {
+        isDebugMode = true;
+        foreach (Step step in stageMap.stages)
+        {
+            step.OnDebugMode();
+        }
+    }
+
+    public void OffDebugMode()
+    {
+        isDebugMode = false;
+        foreach (Step step in stageMap.stages)
+        {
+            step.OffDebugMode();
+        }
+    }
+
+    public void MoveCanvasLeft()
+    {
+        if(isDebugMode)
+        {
+            viewer.MoveLeftCanvas(2);
+        }
+    }
+
+    public void MoveCanvasRight()
+    {
+        if(isDebugMode)
+        {
+            viewer.MoveRightCanvas(2);
+        }
+    }
+
+    public string GetLastStage()
+    {
+        return currentStageNode.Step.ToString();
+    }
+
+    public bool IsToNextStage()
+    {
+        return isNextStage;
+    }
+
+    public void ToNextStage()
+    {
+        stageLevel++;
+        viewer.Clear();
+        viewer.Init();
+
+        InitStageMap(startCount, stepCount, townIndices, stageLevel);
+
+        isNextStage = false;
     }
 }

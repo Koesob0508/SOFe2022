@@ -29,7 +29,7 @@ public class BlueWitch08 : Battle_Heros
             {
                 animator.SetTrigger("StartBattle");
                 manaCheckTime = 0;
-                charData.CurrentMana += 30;
+                charData.CurrentMana += 10;
                 if (charData.CurrentMana >= charData.MaxMana)
                     SkillAttack();
             }
@@ -39,7 +39,7 @@ public class BlueWitch08 : Battle_Heros
 
     public override void Attack()
     {
-        
+        CheckForFlippingInAttacking();
     }
 
     void SkillAttack()

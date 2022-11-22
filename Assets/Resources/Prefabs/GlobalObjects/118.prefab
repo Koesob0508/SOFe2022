@@ -9,19 +9,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 1.9027371
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.y
-      value: 0.75
+      value: 2.7071524
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: -0.006679654
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.y
-      value: -0.2
+      value: -0.043026984
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -176,3 +176,4 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: 215507db2c411bc4ebbf7b3ee58a801c, type: 2}

@@ -18,39 +18,18 @@ public class Guard11 : Battle_Heros
     {
         base.ExecuteSkill();
 
-        BuffSkill();
-        StartCoroutine("BuffCoroutine");
-    }
+        Buff("AttackDamage", 10f, 3f);
+        Buff("DefensePoint", 10f, 3f);
+        Buff("MoveSpeed", 15f, 3f);
+        Buff("AttackSpeed", 1.5f, 3f);
 
-
-    IEnumerator BuffCoroutine()
-    {
-        yield return new WaitForSeconds(5f);
-        UnbuffSkill();
-    }
-
-    void BuffSkill()
-    {
-        charData.AttackDamage += 10f;
-        charData.DefensePoint += 10f;
-        charData.MoveSpeed += 15f;
-        charData.AttackSpeed += 1.5f;
-
-        // effect & animation Ãß°¡
         Vector3 effectPosition = transform.position;
         effectPosition.z = transform.position.z - 1;
 
         GameObject skillEffect = Instantiate(GuardSkillEffect, effectPosition, Quaternion.identity);
-        Destroy(skillEffect, 5.0f);
+        skillEffect.transform.parent = transform;
+
+        Destroy(skillEffect, 3.0f);
+        
     }
-
-    void UnbuffSkill()
-    {
-        charData.AttackDamage -= 10f;
-        charData.DefensePoint -= 10f;
-        charData.MoveSpeed -= 15f;
-        charData.AttackSpeed -= 1.5f;
-    }
-
-
 }
