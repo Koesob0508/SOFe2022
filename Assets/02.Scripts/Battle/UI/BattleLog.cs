@@ -77,6 +77,16 @@ public class BattleLog : MonoBehaviour
                 break;
             case BattleLogPanel.LogType.Buff:
                 break;
+            case BattleLogPanel.LogType.Positive:
+                by = "(과)와";
+                switch
+                break;
+            case BattleLogPanel.LogType.Negative:
+                by = "(과)와";
+                break;
+            default:
+                Debug.LogWarning("잘못된 Battle Log");
+                break;
         }
         ContentTxt.SetText(log.Causer.Name + " 가(아) " + log.Target.Name + by + LastString);
 

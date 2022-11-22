@@ -13,7 +13,9 @@ public class BattleLogPanel : MonoBehaviour
         Dead,
         Skill,
         Event,
-        Buff
+        Buff,
+        Positive,
+        Negative
     }
 
     public struct Log

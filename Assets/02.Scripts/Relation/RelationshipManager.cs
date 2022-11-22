@@ -100,12 +100,40 @@ public partial class RelationshipManager : MonoBehaviour
 
     public void Win()
     {
+        List<GameObject> battleUnit = GameManager.Battle.heroObjects;
+        foreach(GameObject unit1 in battleUnit)
+        {
+            foreach(GameObject unit2 in battleUnit)
+            {
+                if(!unit1.Equals(unit2))
+                {
+                    Hero hero1 = (Hero)unit1.GetComponent<Battle_Heros>().charData;
+                    Hero hero2 = (Hero)unit2.GetComponent<Battle_Heros>().charData;
 
+                    SetChangeRelationship(hero1, hero2, 1);
+                    SetChangeRelationship(hero2, hero1, 1);
+                }
+            }
+        }
     }
 
     public void Lose()
     {
+        List<GameObject> battleUnit = GameManager.Battle.heroObjects;
+        foreach (GameObject unit1 in battleUnit)
+        {
+            foreach (GameObject unit2 in battleUnit)
+            {
+                if (!unit1.Equals(unit2))
+                {
+                    Hero hero1 = (Hero)unit1.GetComponent<Battle_Heros>().charData;
+                    Hero hero2 = (Hero)unit2.GetComponent<Battle_Heros>().charData;
 
+                    SetChangeRelationship(hero1, hero2, -1);
+                    SetChangeRelationship(hero2, hero1, -1);
+                }
+            }
+        }
     }
 
     public bool IsI(Hero _hero)
