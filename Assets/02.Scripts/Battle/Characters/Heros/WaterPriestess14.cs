@@ -16,6 +16,7 @@ public class WaterPriestess14 : Battle_Heros
     public override void ExecuteSkill()
     {
         base.ExecuteSkill();
+        GameManager.Sound.PlayWaterEffect();
         StartCoroutine("SkillDamage");
     }
 

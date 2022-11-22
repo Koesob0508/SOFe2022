@@ -18,6 +18,5 @@ public class SignalTest2 : CustomSignal
 
     protected override void Apply()
     {
-        Debug.Log("테스트 로그22");
     }
 }

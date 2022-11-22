@@ -10,7 +10,11 @@ public class Archer01 : Battle_Heros
         isCloseAttackUnit = false;
 
     }
-
+    public override void Attack()
+    {
+        base.Attack();
+        GameManager.Sound.PlayArrowEffect();
+    }
 
     public override void ExecuteSkill()
     {

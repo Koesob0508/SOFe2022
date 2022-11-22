@@ -35,13 +35,14 @@ public class BattleWinPanel : MonoBehaviour
 
     IEnumerator MoneyIncrease(uint from, uint amount, float time)
     {
-        float step = time / amount;
-        for (uint i = from; i < from + amount; i++)
+        float stepTime = 0.05f;
+        int stepAmount = (int)(amount * stepTime);
+        for (uint i = 0; i < (int)(time/stepTime); i++)
         {
-            Debug.Log(i);
-            moneyText.text = i.ToString() + "G";
-            yield return new WaitForSeconds(step);
+            moneyText.text = (from + stepAmount).ToString() + "G";
+            yield return new WaitForSeconds(stepTime);
         }
+        moneyText.text = (from + amount).ToString() + "G";
         nextSceneBtn.gameObject.SetActive(true);
         yield break;
     }

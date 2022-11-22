@@ -148,14 +148,23 @@ public class BattleSceneManager : MonoBehaviour
         switch (mapType)
         {
             case GameManager.MapType.Jungle:
-                fadeColor = new Color(0.71f, 0.9f, 0.11f);
-                break;
+                {
+                    fadeColor = new Color(0.71f, 0.9f, 0.11f);
+                    GameManager.Sound.PlayBattleBGM();
+                    break;
+                }
             case GameManager.MapType.Dessert:
-                fadeColor = new Color(0.9f, 0.87f, 0.48f);
-                break;
+                {
+                    fadeColor = new Color(0.9f, 0.87f, 0.48f);
+                    GameManager.Sound.PlayBattleBGM();
+                    break;
+                }
             case GameManager.MapType.Boss:
-                fadeColor = new Color(0.9f, 0.25f, 0.22f);
-                break;
+                {
+                    fadeColor = new Color(0.9f, 0.25f, 0.22f);
+                    GameManager.Sound.PlayBattleBossBGM();
+                    break;
+                }
             default:
                 fadeColor = Color.white;
                 break;
@@ -333,15 +342,18 @@ public class BattleSceneManager : MonoBehaviour
         // GameManager.Data.Save();
 
         bBattleStarted = false;
-       
+
         if (bIsWin)
         {
             UpdateHeroData();
+            GameManager.Data.Money += earnedMoney;
             GameManager.Stage.CompleteStage();
+            GameManager.Relation.Win();
             GameManager.Scene.ToStageSelectScene();
         }
         else
         {
+            GameManager.Relation.Lose();
             GameManager.Scene.ToStageSelectScene();
         }
 

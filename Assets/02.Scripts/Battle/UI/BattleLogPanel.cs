@@ -35,6 +35,9 @@ public class BattleLogPanel : MonoBehaviour
     public float logRemainTime = 1.0f;
     public float spacing = 5f;
 
+    public float LogTime = 2f;
+    public float curLogTime = 0.0f;
+
     public GameObject logPrefab;
     float ancBetween = 0.0f;
 
@@ -61,6 +64,8 @@ public class BattleLogPanel : MonoBehaviour
         ancBetween = 1.0f / maxLogCount;
 
         // vector2(ancmin.y, ancmax.y)
+
+
         for(int i = 0; i < maxLogCount; i++)
         {
             float anc = 1.0f - ancBetween * i;
@@ -70,18 +75,28 @@ public class BattleLogPanel : MonoBehaviour
 
     private void Update()
     {
-        if (logQueue.Count > 0 && curLogCount < maxLogCount)
-            PublishLog();
+        if(curLogTime < LogTime)
+        {
+            curLogTime += Time.deltaTime;
+        }
+        else
+        {
+            curLogTime = 0;
+            if (logQueue.Count > 0 && curLogCount < maxLogCount)
+                PublishLog();   
+        }
     }
     void PublishLog()
     {
+        curLogCount++;
+        Debug.Log("Log Created, CurLogCount : " + curLogCount.ToString());
         BattleLog log = LogPool.Get();
         log.name = log.name + curLogCount;
         log.ConstructWithInfo(logQueue.Dequeue());
         log.SetLifeTime(logRemainTime);
         log.SetAnchorMoveOffset(ancBetween);
         log.Setnum((int)curLogCount);
-        log.AnchorMoveTo(AnchorVecList[(int)curLogCount++]);
+        log.AnchorMoveTo(AnchorVecList[(int)curLogCount-1]);
     }
     /// <summary>
     /// Add Log to Panel
@@ -108,6 +123,7 @@ public class BattleLogPanel : MonoBehaviour
     void OnRelease(BattleLog log)
     {
         curLogCount--;
+        Debug.Log("Log Deleted, CurLogCount : " + curLogCount.ToString());
         ActiveLog.Remove(log.gameObject);
         log.gameObject.SetActive(false);
         foreach(var alog in ActiveLog)
