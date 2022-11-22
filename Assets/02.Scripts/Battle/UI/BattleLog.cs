@@ -73,9 +73,53 @@ public class BattleLog : MonoBehaviour
                 by = " 에게 ";
                 LastString = " 스킬을 사용했습니다";
                 break;
-            case BattleLogPanel.LogType.Event:
-                break;
             case BattleLogPanel.LogType.Buff:
+                break;
+            case BattleLogPanel.LogType.Event:
+                Hero heroA = (Hero)log.Causer;
+                Hero heroB = (Hero)log.Target;
+                switch (GameManager.Relation.GetBetweenType(heroA, heroB))
+                {
+                    case RelationshipManager.Type.Fiance:
+                        by = " 에게 ";
+                        LastString = " 우결을 찍고 있습니다";
+                        break;
+                    case RelationshipManager.Type.Some:
+                        by = " 에게 ";
+                        LastString = " 썸을 타고 있습니다";
+                        break;
+                    case RelationshipManager.Type.Positive:
+                        by = " 에게 ";
+                        LastString = " 호감을 갖고 있습니다";
+                        break;
+                    case RelationshipManager.Type.Normal:
+                        by = " 을(를) ";
+                        LastString = " 알아보고 있습니다";
+                        break;
+                    case RelationshipManager.Type.Negative:
+                        by = " 을(를) ";
+                        LastString = " 불편해합니다";
+                        break;
+                    case RelationshipManager.Type.Disgust:
+                        by = " 을(를) ";
+                        LastString = " 싫어합니다";
+                        break;
+                    case RelationshipManager.Type.Ignore:
+                        by = " 을(를) ";
+                        LastString = " 무시합니다";
+                        break;
+                }
+                break;
+            case BattleLogPanel.LogType.Positive:
+                by = " 을(를) 향한 ";
+                LastString = " 호감도가 올랐습니다";
+                break;
+            case BattleLogPanel.LogType.Negative:
+                by = " 을(를) 향한 ";
+                LastString = " 호감도가 떨어졌습니다";
+                break;
+            default:
+                Debug.LogWarning("잘못된 Battle Log");
                 break;
         }
         ContentTxt.SetText(log.Causer.Name + " 가(아) " + log.Target.Name + by + LastString);

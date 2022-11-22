@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4736311793664007211}
-  - component: {fileID: 4736311793664007210}
+  - component: {fileID: -2268340317655841518}
   m_Layer: 0
   m_Name: SignalTeamwork
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4736311793664007210
+--- !u!114 &-2268340317655841518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,11 +43,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4736311793664007209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f53c8f0bcac72be47b87ecbb588a4e15, type: 3}
+  m_Script: {fileID: 11500000, guid: bc1e5a9b623c7244e82aa91ed5ec38db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalTitle: "\uD300\uC6CC\uD06C!"
-  signalExplain: "\uB450 \uC6A9\uBCD1\uC774 \uD568\uAED8 \uC801\uC744 \uCC98\uCE58"
+  signalTitle: 
+  signalExplain: 
   preHero:
     GUID: 0
     Name: 
@@ -67,7 +67,40 @@ MonoBehaviour:
     isDead: 0
     IsActive: 0
     Skill: 
-    Items: []
+    Items:
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
     ItemNum: 0
   postHero:
     GUID: 0
@@ -88,7 +121,40 @@ MonoBehaviour:
     isDead: 0
     IsActive: 0
     Skill: 
-    Items: []
+    Items:
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
+    - GUID: 0
+      Name: 
+      Type: 0
+      OwnHeroGUID: 0
+      InventoryOrder: 0
+      Cost: 100
+      Star: 0
+      BasicType: 0
+      BasicNum: 0
+      SpeicalNum: 0
+      Info: 
     ItemNum: 0
   preCharacter:
     GUID: 0
