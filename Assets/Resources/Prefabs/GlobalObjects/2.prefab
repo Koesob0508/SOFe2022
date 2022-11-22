@@ -204,6 +204,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6661254126621841772, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
+      propertyPath: m_TagString
+      value: Heros
+      objectReference: {fileID: 0}
     - target: {fileID: 7990248078049770958, guid: 0e8f72f0a85b5ec4c88f99da6debc10a, type: 3}
       propertyPath: m_Size.x
       value: 4.21875

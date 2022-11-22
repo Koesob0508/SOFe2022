@@ -18,33 +18,16 @@ public class IronNight13 : Battle_Heros
     {
         base.ExecuteSkill();
 
-        BuffSkill();
-        StartCoroutine("BuffCoroutine");
-    }
-
-
-    IEnumerator BuffCoroutine()
-    {
-        yield return new WaitForSeconds(5f);
-        UnbuffSkill();
-    }
-
-    void BuffSkill()
-    {
-        charData.DefensePoint += 50f;
-
-        // effect & animation Ãß°¡
+        Buff("DefensePoint", 50f, 5f);
+        
         Vector3 effectPosition = transform.position;
         effectPosition.z = transform.position.z - 1;
         effectPosition.y = transform.position.y + 0.7f;
 
         GameObject skillEffect = Instantiate(IronNightSkillEffect, effectPosition, Quaternion.identity);
-        Destroy(skillEffect, 5.0f);
-    }
+        skillEffect.transform.parent = transform;
 
-    void UnbuffSkill()
-    {
-        charData.DefensePoint -= 50f;
+        Destroy(skillEffect, 5.0f);
     }
 }
 

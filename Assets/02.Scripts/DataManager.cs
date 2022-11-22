@@ -35,7 +35,7 @@ public class DataManager
         else
         {
             LoadInitialHeroData();
-            Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero };
+            Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero, ObjectCodex[16] as Hero };
             for(int i = 0; i < startingHeros.Length; i++)
             {
                 startingHeros[i].IsActive = true;

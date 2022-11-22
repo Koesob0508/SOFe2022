@@ -77,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3770564687858348003, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
       propertyPath: m_TagString
-      value: Units
+      value: Heros
       objectReference: {fileID: 0}
     - target: {fileID: 4787473133368663936, guid: d60f5dfc22d95814f9a00d40fed1682c, type: 3}
       propertyPath: m_RootOrder

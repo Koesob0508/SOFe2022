@@ -177,7 +177,7 @@ public class BattleSceneManager : MonoBehaviour
     public void ApplyBuff(string type, Hero hero, float value, float remainTime = 0.0f)
     {
         GameObject g = heroObjects.Find((h) => { return h.GetComponent<Battle_Heros>().charData.GUID == hero.GUID; });
-        g.GetComponent<Battle_Heros>().Buff(type,value);
+        g.GetComponent<Battle_Heros>().Buff(type,value, remainTime);
     }
 
     public void HeroInvenItemClicked(Hero heroData, Vector2 pos)

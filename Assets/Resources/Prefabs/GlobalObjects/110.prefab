@@ -9,19 +9,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 1.1234622
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.y
-      value: 0.75
+      value: 0.6742522
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: -0.0029133558
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.y
-      value: -0.2
+      value: -0.1621261
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
@@ -176,3 +176,4 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: ef8e30ae126281d4e93cd66365f5e6d2, type: 2}

@@ -22,24 +22,17 @@ public class AxeMan07 : Battle_Heros
         base.ExecuteSkill();
 
         skillValue = charData.AttackSpeed * 30 / 100;
-        charData.AttackSpeed += skillValue;
 
-        StartCoroutine(SkillBuff());
-    }
+        Buff("AttackSpeed", skillValue, 5f);
 
-
-    IEnumerator SkillBuff()
-    {
         Vector3 effectPosition = transform.position;
         effectPosition.z = transform.position.z - 1;
         effectPosition.y = transform.position.y + 0.7f;
 
         GameObject skillEffect = Instantiate(axemanSkillEffect, effectPosition, Quaternion.identity);
+        skillEffect.transform.parent = transform;
+
         Destroy(skillEffect, 5.0f);
-
-        yield return new WaitForSeconds(5f);
-        charData.AttackSpeed -= skillValue;
-
     }
 }
     

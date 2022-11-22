@@ -37,9 +37,10 @@ public class Battle_Heros : Units
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
         animator.SetFloat("AttackSpeed", attackSpeed);
 
-        StartCoroutine("CouroutineAttack");
-
-        charData.CurrentMana += 20;
+        StartCoroutine(CouroutineAttack());
+        
+        if(bHasSkill)
+            charData.CurrentMana += 10;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {
@@ -123,19 +124,44 @@ public class Battle_Heros : Units
 
         }
     }
-
-    public void Buff(string type, float value)
+    public void Buff(string type, float value, float time)
     {
         switch (type)
         {
-            case "Attack":
+            case "AttackDamage":
                 charData.AttackDamage += value;
                 break;
-
             case "AttackSpeed":
                 charData.AttackSpeed += value;
                 break;
-        }    
+            case "MoveSpeed":
+                charData.MoveSpeed += value;
+                break;
+            case "DefensePoint":
+                charData.DefensePoint += value;
+                break;
+        }
+        StartCoroutine(CoroutineBuff(type, value, time));
     }
 
+    IEnumerator CoroutineBuff(string type, float value, float time)
+    {
+        yield return new WaitForSeconds(time);
+        switch (type)
+        {
+            case "AttackDamage":
+                charData.AttackDamage -= value;
+                break;
+            case "AttackSpeed":
+                charData.AttackSpeed -= value;
+                break;
+            case "MoveSpeed":
+                charData.MoveSpeed -= value;
+                break;
+            case "DefensePoint":
+                charData.DefensePoint -= value;
+                break;
+        }
+
+    }
 }
