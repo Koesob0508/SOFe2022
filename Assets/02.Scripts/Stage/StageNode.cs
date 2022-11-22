@@ -30,6 +30,7 @@ public class StageNode : MonoBehaviour
     private SpriteRenderer nodeSR;
     private SpriteRenderer nodeGroundSR;
 
+
     public void Init(StageManager.Seed _seed, float _scale)
     {
         StageLevel = _seed.StageLevel;
@@ -49,7 +50,6 @@ public class StageNode : MonoBehaviour
         nodeSR = node.GetComponent<SpriteRenderer>();
         nodeGroundSR = nodeGround.GetComponent<SpriteRenderer>();
 
-        ChangeNodeAlpha(false);
         NextStages = new List<int>();
 
         name = string.Format("Step : {0} Index : {1} StageStep : {2} MapType : {3}", Step, Index, StageStep, StageMapType);
@@ -281,6 +281,7 @@ public class StageNode : MonoBehaviour
 
     public void ChangeNodeAlpha(bool enable)
     {
+
         if (enable)
         {
             animator.enabled = true;
