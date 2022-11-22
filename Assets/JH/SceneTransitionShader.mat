@@ -34,5 +34,5 @@ Material:
     - _Progress: 1.529999
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _NoiseCol: {r: 0.9, g: 0.87, b: 0.48, a: 1}
+    - _NoiseCol: {r: 0.9, g: 0.25, b: 0.22, a: 1}
   m_BuildTextureStacks: []
