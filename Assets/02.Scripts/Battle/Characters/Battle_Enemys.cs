@@ -45,9 +45,10 @@ public class Battle_Enemys : Units
 
         base.Attack();
 
-        attackSpeed = state.AttackSpeed / attackAnimationClip.length;
+        attackSpeed = state.AttackSpeed * attackAnimationClip.length;
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
         animator.SetFloat("AttackSpeed", attackSpeed);
+
 
         StartCoroutine(CouroutineAttack());
 
@@ -127,5 +128,45 @@ public class Battle_Enemys : Units
             projectile.GetComponent<Projectile>().Initialize(charData, attackTarget.transform.position, state.AttackDamage, 500f);
 
         }
+    }
+    public void Buff(string type, float value, float time)
+    {
+        switch (type)
+        {
+            case "AttackDamage":
+                state.AttackDamage += value;
+                break;
+            case "AttackSpeed":
+                state.AttackSpeed += value;
+                break;
+            case "MoveSpeed":
+                state.MoveSpeed += value;
+                break;
+            case "DefensePoint":
+                state.DefensePoint += value;
+                break;
+        }
+        StartCoroutine(CoroutineBuff(type, value, time));
+    }
+
+    IEnumerator CoroutineBuff(string type, float value, float time)
+    {
+        yield return new WaitForSeconds(time);
+        switch (type)
+        {
+            case "AttackDamage":
+                state.AttackDamage -= value;
+                break;
+            case "AttackSpeed":
+                state.AttackSpeed -= value;
+                break;
+            case "MoveSpeed":
+                state.MoveSpeed -= value;
+                break;
+            case "DefensePoint":
+                state.DefensePoint -= value;
+                break;
+        }
+
     }
 }
