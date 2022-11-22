@@ -38,11 +38,17 @@ public class Samurai16 : Battle_Heros
 
         attackList = AttackRange.GetComponent<AttackRange>().attackList;
         yield return new WaitForSeconds(0.65f);
-
-        if(spr.flipX)
-            transform.Translate(Vector3.left * 3f);
+                
+        if (spr.flipX)
+        {
+            if(transform.position.x + (Vector3.left * 3f).x > - Path.PathManager.Width/2)
+                transform.Translate(Vector3.left * 3f);
+        }
         else
-            transform.Translate(Vector3.right * 3f);
+        {
+            if (transform.position.x + (Vector3.right * 3f).x < Path.PathManager.Width / 2)
+                transform.Translate(Vector3.right * 3f);
+        }
 
         for (int i = 0; i < attackList.Count; i++)
         {

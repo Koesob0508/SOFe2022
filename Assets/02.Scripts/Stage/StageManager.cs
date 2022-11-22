@@ -504,6 +504,7 @@ public partial class StageManager : MonoBehaviour
             {
                 node.IsInteractable = false;
                 node.button.interactable = false;
+                node.ChangeNodeAlpha(false);
             }
         }
         currentStageNode.Complete(stageMap.stages);

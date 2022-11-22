@@ -40,7 +40,7 @@ public class Battle_Heros : Units
         StartCoroutine(CouroutineAttack());
         
         if(bHasSkill)
-            charData.CurrentMana += 10;
+            charData.CurrentMana += 30;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {

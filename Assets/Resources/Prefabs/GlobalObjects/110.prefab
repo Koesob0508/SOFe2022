@@ -140,7 +140,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1404901776189193257, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_PrefabInstance: {fileID: 8220731715988603078}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1240988890813367341
+--- !u!114 &544674286217168123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7019653078246472943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023b3b33c277779408b7df086c89991d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a7b8acabd6581d4ca859c9eee1cf81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -177,3 +177,6 @@ MonoBehaviour:
   skillEffect: {fileID: 0}
   speed: 1
   attackAnimationClip: {fileID: 7400000, guid: ef8e30ae126281d4e93cd66365f5e6d2, type: 2}
+  type: 0
+  blueSlimeObject: {fileID: 7019653078246472943, guid: 17028ad91e19aee4db655797da37285a, type: 3}
+  greenSlimeObject: {fileID: 0}

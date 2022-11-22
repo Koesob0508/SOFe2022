@@ -53,7 +53,7 @@ public class Battle_Enemys : Units
         StartCoroutine(CouroutineAttack());
 
         if (bHasSkill)
-            state.CurrentMana += 40;
+            state.CurrentMana += 10;
 
         if (state.CurrentMana >= state.MaxMana && bHasSkill)
         {

@@ -24,6 +24,12 @@ public class StageNode : MonoBehaviour
     public Button button;
     public UnityAction<StageNode> RegistStageNode;
 
+    public GameObject node;
+    public GameObject nodeGround;
+    private Animator animator;
+    private SpriteRenderer nodeSR;
+    private SpriteRenderer nodeGroundSR;
+
     public void Init(StageManager.Seed _seed, float _scale)
     {
         StageLevel = _seed.StageLevel;
@@ -37,20 +43,32 @@ public class StageNode : MonoBehaviour
         IsCompleted = false;
         IsPassPoint = false;
         IsInteractable = false;
+
+        animator = node.GetComponent<Animator>();
+
+        nodeSR = node.GetComponent<SpriteRenderer>();
+        nodeGroundSR = nodeGround.GetComponent<SpriteRenderer>();
+
+        ChangeNodeAlpha(false);
         NextStages = new List<int>();
 
         name = string.Format("Step : {0} Index : {1} StageStep : {2} MapType : {3}", Step, Index, StageStep, StageMapType);
         transform.localScale = new Vector3(_scale, _scale, 1f);
 
+
         if (Step == 0)
         {
             IsInteractable = true;
             button.interactable = true;
+
+            ChangeNodeAlpha(true);
         }
         else
         {
             IsInteractable = false;
             button.interactable = false;
+
+            ChangeNodeAlpha(false);
         }
 
         if (_seed.Type == StageManager.StageType.Battle)
@@ -101,6 +119,7 @@ public class StageNode : MonoBehaviour
         IsCompleted = _saved.isCompleted;
         IsPassPoint = _saved.isPassPoint;
         IsInteractable = _saved.isInteractable;
+        ChangeNodeAlpha(IsInteractable);
         NextStages = _saved.nextStages;
         Enemies = _saved.enemies;
 
@@ -111,16 +130,23 @@ public class StageNode : MonoBehaviour
         {
             gameObject.SetActive(false);
             button.interactable = false;
+
+            ChangeNodeAlpha(false);
+
         }
         else
         {
             if (IsInteractable)
             {
                 button.interactable = true;
+
+                ChangeNodeAlpha(true);
             }
             else
             {
                 button.interactable = false;
+
+                ChangeNodeAlpha(false);
             }
 
             button.onClick.AddListener(() => RegistStageNode(this));
@@ -157,6 +183,7 @@ public class StageNode : MonoBehaviour
         IsCompleted = true;
         IsPassPoint = true;
         IsInteractable = false;
+        ChangeNodeAlpha(false);
 
         if (StageMapType == GameManager.MapType.Boss)
         {
@@ -169,6 +196,8 @@ public class StageNode : MonoBehaviour
             {
                 _stages[Step + 1].GetStageNode(stage).button.interactable = true;
                 _stages[Step + 1].GetStageNode(stage).IsInteractable = true;
+
+                _stages[Step + 1].GetStageNode(stage).ChangeNodeAlpha(true);
             }
         }
     }
@@ -248,5 +277,34 @@ public class StageNode : MonoBehaviour
     public void SetIsMerged(bool _isMerged)
     {
         IsMerged = _isMerged;
+    }
+
+    public void ChangeNodeAlpha(bool enable)
+    {
+        if (enable)
+        {
+            animator.enabled = true;
+
+            var nsr = nodeSR.color;
+            nsr.a = 1.0f;
+            nodeSR.color = nsr;
+
+            var ngsr = nodeGroundSR.color;
+            ngsr.a = 1.0f;
+            nodeGroundSR.color = ngsr;
+        }
+        else
+        {
+            var alpha = 0.65f;
+            animator.enabled = false;
+
+            var nsr = nodeSR.color;
+            nsr.a = alpha;
+            nodeSR.color = nsr;
+
+            var ngsr = nodeGroundSR.color;
+            ngsr.a = alpha;
+            nodeGroundSR.color = ngsr;
+        }
     }
 }
