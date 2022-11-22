@@ -70,6 +70,8 @@ public class BattleLog : MonoBehaviour
                 LastString = " 사망하였습니다";
                 break;
             case BattleLogPanel.LogType.Skill:
+                by = " 에게 ";
+                LastString = " 스킬을 사용했습니다";
                 break;
             case BattleLogPanel.LogType.Event:
                 break;

@@ -139,7 +139,11 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClick
     {
 
         isSkillPlaying = true;
-
+        BattleLogPanel.Log log = new BattleLogPanel.Log();
+        log.Causer = charData;
+        log.Target = attackTarget.GetComponent<Units>().charData;
+        log.Type = BattleLogPanel.LogType.Skill;
+        GameManager.Battle.LogDelegate(log);
         PlaySkillAnimation();
 
         StartCoroutine("CouroutineSkill");

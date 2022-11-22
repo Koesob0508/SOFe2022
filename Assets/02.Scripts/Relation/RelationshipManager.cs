@@ -98,6 +98,16 @@ public partial class RelationshipManager : MonoBehaviour
         // MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
     }
 
+    public void Win()
+    {
+
+    }
+
+    public void Lose()
+    {
+
+    }
+
     public bool IsI(Hero _hero)
     {
         switch (_hero.MBTI)
@@ -166,7 +176,7 @@ public partial class RelationshipManager : MonoBehaviour
         if(noticeBallon.activeSelf == false)
         {
             foreach (CustomSignal customSignal in signals)
-            {
+            {   
                 // customEvent에 log 정보를 뿌립니다. 그게 끝
                 // 그러면 customEvent는 받은 log를 바탕으로 조건을 판단하고 발동해야한다면 어련히 발동시킵니다.
                 (string, string) noticeLog = customSignal.Judge(_log);
@@ -179,6 +189,8 @@ public partial class RelationshipManager : MonoBehaviour
                     canRead = false;
                     noticeBallon.SetActive(true);
                     StartCoroutine(SetDisable(noticeBallon));
+                    signals.Remove(customSignal);
+                    signals.Add(customSignal);
 
                     break;
                 }

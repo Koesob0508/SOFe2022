@@ -53,19 +53,19 @@ public class StageNode : MonoBehaviour
             button.interactable = false;
         }
 
-        if(_seed.Type == StageManager.StageType.Battle)
+        if (_seed.Type == StageManager.StageType.Battle)
         {
             Enemies = new List<Enemy>();
             List<StageEnemy> enemyPool = new List<StageEnemy>();
 
             enemyPool = GameManager.Stage.GetStageEnemy(_seed.StageLevel, (int)_seed.StageMapType, _seed.StageStep);
 
-            for(int number = 0; number < enemyPool.Count; number++)
+            for (int number = 0; number < enemyPool.Count; number++)
             {
                 for (int count = 0; count < enemyPool[number].count; count++)
                 {
                     Enemy enemy = (Enemy)GameManager.Data.ObjectCodex[(uint)enemyPool[number].ruid];
-                    enemy.Position = new Vector2(1 + number, 0 - count * 1);
+                    enemy.Position = new Vector2(1 + number * 3, 0 - count * 2);
                     enemy = enemy.DeepCopy(enemy);
                     //Debug.LogError(name + " number : " + number + " Count " + count + enemy.Position);
                     Enemies.Add(enemy);
@@ -105,9 +105,9 @@ public class StageNode : MonoBehaviour
         Enemies = _saved.enemies;
 
         name = string.Format("Step : {0} Index : {1}", Step, Index);
-        transform.localScale = new Vector3(_scale, _scale, 1f);  
+        transform.localScale = new Vector3(_scale, _scale, 1f);
 
-        if(IsMerged)
+        if (IsMerged)
         {
             gameObject.SetActive(false);
             button.interactable = false;
@@ -158,7 +158,7 @@ public class StageNode : MonoBehaviour
         IsPassPoint = true;
         IsInteractable = false;
 
-        if(StageMapType == GameManager.MapType.Boss)
+        if (StageMapType == GameManager.MapType.Boss)
         {
             Debug.Log("Boss");
             GameManager.Stage.isNextStage = true;
