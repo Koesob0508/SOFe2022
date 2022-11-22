@@ -6,9 +6,20 @@ using System;
 
 public partial class RelationshipManager : MonoBehaviour
 {
+    public enum Type
+    {
+        Fiance,
+        Some,
+        Positive,
+        Normal,
+        Negative,
+        Disgust,
+        Ignore
+    }
     public List<Hero> HeroList = new List<Hero>();
-    public sbyte RelationScore;
+    public int RelationScore;
     [SerializeField] private List<CustomSignal> signals;
+    [SerializeField] private List<CustomRank> ranks;
     [SerializeField] private GameObject noticeBallon;
     [SerializeField] private TMP_Text noticeText;
     [SerializeField] private TMP_Text explainText;
@@ -67,6 +78,8 @@ public partial class RelationshipManager : MonoBehaviour
 
             RelationScore += Score;
         }
+
+        UpdateTeamScore();
     }
 
     // 두 용병 사이의 현재 Score를 Get
@@ -75,8 +88,40 @@ public partial class RelationshipManager : MonoBehaviour
         return MBTIScore[(int)A_Hero.MBTI, (int)B_Hero.MBTI];
     }
 
+    public Type GetBetweenType(Hero _heroA, Hero _heroB)
+    {
+        if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 5)
+        {
+            return Type.Fiance;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 3)
+        {
+            return Type.Some;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 0)
+        {
+            return Type.Positive;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] == 0)
+        {
+            return Type.Normal;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > -3)
+        {
+            return Type.Negative;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > -5)
+        {
+            return Type.Disgust;
+        }
+        else
+        {
+            return Type.Ignore;
+        }
+    }
+
     // 현재 TeamScore를 Get
-    public sbyte GetTeamScore()
+    public int GetTeamScore()
     {
         // TeamScore를 Return
         Debug.Log("현재 TeamScore은: " + RelationScore);
@@ -96,16 +141,46 @@ public partial class RelationshipManager : MonoBehaviour
     {
         MBTIScore[(int)A_Hero.GUID, (int)B_Hero.GUID] += var;
         // MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
+
+        UpdateTeamScore();
     }
 
     public void Win()
     {
+        List<GameObject> battleUnit = GameManager.Battle.heroObjects;
+        foreach(GameObject unit1 in battleUnit)
+        {
+            foreach(GameObject unit2 in battleUnit)
+            {
+                if(!unit1.Equals(unit2))
+                {
+                    Hero hero1 = (Hero)unit1.GetComponent<Battle_Heros>().charData;
+                    Hero hero2 = (Hero)unit2.GetComponent<Battle_Heros>().charData;
 
+                    SetChangeRelationship(hero1, hero2, 1);
+                    SetChangeRelationship(hero2, hero1, 1);
+                }
+            }
+        }
     }
 
     public void Lose()
     {
+        List<GameObject> battleUnit = GameManager.Battle.heroObjects;
+        foreach (GameObject unit1 in battleUnit)
+        {
+            foreach (GameObject unit2 in battleUnit)
+            {
+                if (!unit1.Equals(unit2))
+                {
+                    Hero hero1 = (Hero)unit1.GetComponent<Battle_Heros>().charData;
+                    Hero hero2 = (Hero)unit2.GetComponent<Battle_Heros>().charData;
 
+                    SetChangeRelationship(hero1, hero2, -1);
+                    SetChangeRelationship(hero2, hero1, -1);
+                }
+            }
+        }
     }
 
     public bool IsI(Hero _hero)
@@ -183,6 +258,7 @@ public partial class RelationshipManager : MonoBehaviour
 
                 if (noticeLog.Item1 != null)
                 {
+                    Debug.LogError(noticeLog.Item1);
                     noticeText.text = noticeLog.Item1;
                     explainText.text = noticeLog.Item2;
 
@@ -202,9 +278,44 @@ public partial class RelationshipManager : MonoBehaviour
 
     private IEnumerator SetDisable(GameObject _gameObject)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         canRead = true;
         _gameObject.SetActive(false);
+    }
+
+    private void UpdateTeamScore()
+    {
+        RelationScore = CalculateTeamScore();
+
+        ReadRanks();
+    }
+
+    private void ReadRanks()
+    {
+        foreach(CustomRank rank in ranks)
+        {
+            rank.Judge(RelationScore);
+        }
+
+        Debug.LogError(GetTeamScore());
+    }
+
+    private int CalculateTeamScore()
+    {
+        int teamScore = 0;
+        foreach (Hero heroA in GameManager.Hero.GetHeroList())
+        {
+            foreach (Hero heroB in GameManager.Hero.GetHeroList())
+            {
+                if (!(heroA.Name == heroB.Name))
+                {
+                    teamScore += GetBetweenScore(heroA, heroB);
+                    teamScore += GetBetweenScore(heroB, heroA);
+                }
+            }
+        }
+
+        return teamScore/2;
     }
 }

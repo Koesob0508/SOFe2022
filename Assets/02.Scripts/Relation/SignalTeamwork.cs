@@ -7,8 +7,8 @@ public class SignalTeamwork : CustomSignal
 {
     [SerializeField] private Hero preHero;
     [SerializeField] private Hero postHero;
-    [SerializeField] private Character preCharacter;
-    [SerializeField] private Character postCharacter;
+    [SerializeField] private GameObject preCharacter;
+    [SerializeField] private GameObject postCharacter;
     [SerializeField] private GameObject preChat;
     [SerializeField] private GameObject postChat;
     [SerializeField] private TMP_Text preText;
@@ -17,28 +17,28 @@ public class SignalTeamwork : CustomSignal
     public override void Init()
     {
         signalTitle = "팀워크!";
-        signalExplain = "두 용병이 함께 적을 처치";
+        signalExplain = "두 용병이 하나에 적에 대해 행동";
         preHero = new Hero();
         postHero = new Hero();
-        preCharacter = new Character();
-        postCharacter = new Character();
+        preCharacter = null;
+        postCharacter = null;
     }
     protected override bool Condition(BattleLogPanel.Log _log)
     {
         if (_log.Causer is Hero && _log.Target is Enemy)
         {
             preHero = postHero.DeepCopy();
-            preCharacter = postCharacter.DeepCopy();
+            preCharacter = postCharacter;
             postHero = (Hero)_log.Causer;
-            postCharacter = _log.Target;
+            postCharacter = _log.TargetObject;
 
             if (preHero.IsActive == false)
             {
+                Debug.LogError("preHero 아직 없음");
                 return false;
             }
 
             if (preHero.Name != postHero.Name &&
-               _log.Type == BattleLogPanel.LogType.Kill &&
                preCharacter.Equals(postCharacter))
             {
                 return true;
@@ -53,9 +53,28 @@ public class SignalTeamwork : CustomSignal
         Debug.Log("팀워크!");
 
         GameManager.Relation.SetChangeRelationship(preHero, postHero, 1);
-        UpdateLog(0, "중요한 것은");
+        BattleLogPanel.Log logA = new BattleLogPanel.Log(preHero, postHero, BattleLogPanel.LogType.Positive);
+        GameManager.Battle.LogDelegate(logA);
+        
         GameManager.Relation.SetChangeRelationship(postHero, preHero, 1);
-        UpdateLog(1, "꺾이지 않는 마음");
+        BattleLogPanel.Log logB = new BattleLogPanel.Log(postHero, preHero, BattleLogPanel.LogType.Positive);
+        GameManager.Battle.LogDelegate(logB);
+
+        if (GameManager.Battle.GetHeroGameObject(preHero).transform.position.y > GameManager.Battle.GetHeroGameObject(postHero).transform.position.y)
+        {
+            UpdateLog(0, "중요한 것은");
+            UpdateLog(1, "꺾이지 않는 마음");
+        }
+        else
+        {
+            UpdateLog(1, "중요한 것은");
+            UpdateLog(0, "꺾이지 않는 마음");
+        }
+
+        preHero = new Hero();
+        postHero = new Hero();
+        preCharacter = null;
+        postCharacter = null;
     }
 
     private void UpdateLog(int _index, string _string)
@@ -66,6 +85,7 @@ public class SignalTeamwork : CustomSignal
             preChat.transform.position = position;
             preChat.GetComponent<SpriteRenderer>().sortingOrder = -(int)(preChat.transform.position.y * 10);
             preText.gameObject.GetComponent<MeshRenderer>().sortingOrder = -(int)(preChat.transform.position.y * 10);
+            preText.text = _string;
             preChat.SetActive(true);
             StartCoroutine(SetDisable(preChat));
         }
@@ -75,6 +95,7 @@ public class SignalTeamwork : CustomSignal
             postChat.transform.position = position;
             postChat.GetComponent<SpriteRenderer>().sortingOrder = -(int)(postChat.transform.position.y * 10);
             postText.gameObject.GetComponent<MeshRenderer>().sortingOrder = -(int)(postChat.transform.position.y * 10);
+            postText.text = _string;
             postChat.SetActive(true);
             StartCoroutine(SetDisable(postChat));
         }
@@ -82,7 +103,7 @@ public class SignalTeamwork : CustomSignal
 
     private IEnumerator SetDisable(GameObject _gameObject)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         _gameObject.SetActive(false);
     }
