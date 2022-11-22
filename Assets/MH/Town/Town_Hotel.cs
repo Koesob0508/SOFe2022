@@ -7,19 +7,26 @@ using TMPro;
 
 public class Town_Hotel : MonoBehaviour
 {
-    public GameObject TargetUI;
-    public GameObject EnrollHeroUI;
-    GameObject ObjectUI;
-    
+    private enum HotelType
+    {
+        Sleep,
+        Eat
+    }
+    public GameObject EnrollHeroUI, PlaceUI;
+    public GameObject Silder, MoneyObject;
+    public Sprite Bed, Table;
 
     public List<Hero> EnrollList = new List<Hero>();
+    public List<Hero> TargetList = new List<Hero>();
     public Dictionary<uint, GameObject> ObjectUIList = new Dictionary<uint, GameObject>();
 
-    int SleepTarget = -1;
-    int Time = 0; //한 숙소에 한 명의 Hero만 쉴 수 있음 
+    private HotelType Type = HotelType.Sleep;
+    private int NeedMoney = 0;
 
     // Status
     public Gradient gradient;
+
+    private int Time = 0; // Hotel 효과는 한번 사용 가능하다
 
     public uint GetHeroUIOrder(GameObject _hero)
     {
@@ -27,35 +34,76 @@ public class Town_Hotel : MonoBehaviour
         return guid;
     }
     
-    public void SetSleep(uint guid)
+    public void SetTarget(Hero _hero)
     {
-        SleepTarget = (int)guid;
-    }
-
-    public void GetSleep()
-    {
-        if (SleepTarget >= 0 && Time == 0)
+        if (TargetList.Contains(_hero))
         {
-            Hero hero = GameManager.Hero.GetHero((uint)SleepTarget);
-
-            GameObject.Find("Bed").GetComponent<Image>().color = new Color(133/255f, 133/255f, 133/255f);
-
-            LeanTween.scale(TargetUI, new Vector3(2.2f, 2.2f, 2.2f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
-
-            LeanTween.scale(TargetUI, new Vector3(1.6f, 1.6f, 1.6f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
-
-            LeanTween.scale(TargetUI, new Vector3(2.2f, 2.2f, 2.2f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
-
-            LeanTween.scale(TargetUI, new Vector3(1.6f, 1.6f, 1.6f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
-
-            //.Find("Bed").GetComponent<Image>().color = new Color(255, 255, 255);
-
-            hero.CurrentHP = hero.MaxHP;
-            Time = 1;
+            TargetList.Remove(_hero);
         }
         else
         {
-            Debug.Log("Can't Sleep");
+            TargetList.Add(_hero);
+
+            // Hotel에 Hero 등록
+            GameObject InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImageUI");
+            InfoUI = Instantiate(InfoUI, new Vector3(0, 20, 0), Quaternion.identity);
+            InfoUI.transform.SetParent(PlaceUI.transform);
+            InfoUI.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(_hero.GUID);
+            LeanTween.moveLocal(InfoUI, new Vector3(0f, -4f, -2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(InfoUI, new Vector3(0f, 0f, 0f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+            Destroy(InfoUI, 3f);
+        }
+    }
+
+    // Button누르면 Target Hero에게 Hotel 효과 Get
+    public void GetHotel()
+    {
+        if (TargetList.Count() >= 0 && Time == 0)
+        {
+            GameObject.Find("Place").GetComponent<Image>().color = new Color(133 / 255f, 133 / 255f, 133 / 255f);
+            LeanTween.scale(PlaceUI, new Vector3(1.8f, 1.8f, 1.8f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.8f, 1.8f, 1.8f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
+            if (NeedMoney <= GameManager.Data.Money)
+            {
+                switch (Type)
+                {
+                    case HotelType.Sleep:
+                        {
+                            foreach (Hero _hero in TargetList)
+                            {
+                                _hero.CurrentHP += _hero.MaxHP / 2;
+                                if (_hero.CurrentHP > _hero.MaxHP)
+                                    _hero.CurrentHP = _hero.MaxHP;
+                            }
+
+                            GameManager.Data.Money -= (uint)NeedMoney;
+                            Time = 1;
+
+                            break;
+                        }
+                    case HotelType.Eat:
+                        {
+                            foreach (Hero _hero in TargetList)
+                            {
+                                _hero.CurHunger = 100;
+                            }
+
+                            GameManager.Data.Money -= (uint)NeedMoney;
+                            Time = 1;
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                Debug.Log("돈이 부족합니다");
+            }
+        }
+        else
+        {
+            Debug.Log("Can't Do Hotel Thing");
         }
     }
 
@@ -65,7 +113,7 @@ public class Town_Hotel : MonoBehaviour
 
         for (int i = 0; i < EnrollList.Count(); i++)
         {
-            ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
+            GameObject ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
             ObjectUI.transform.SetParent(transform);
             ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
 
@@ -144,6 +192,20 @@ public class Town_Hotel : MonoBehaviour
         }
     }
 
+    public void SleepOrEat()
+    {
+        if (Silder.transform.GetComponent<Slider>().value == 0)
+        {
+            Type = HotelType.Sleep;
+            PlaceUI.transform.GetComponent<Image>().sprite = Bed;
+        }
+        else
+        {
+            Type = HotelType.Eat;
+            PlaceUI.transform.GetComponent<Image>().sprite = Table;
+        }
+    }
+
     void Start()
     {
         SetHeroList();
@@ -152,6 +214,22 @@ public class Town_Hotel : MonoBehaviour
     void Update()
     {
         SetStatus();
+
+        switch (Type)
+        {
+            case HotelType.Sleep:
+                {
+                    NeedMoney = TargetList.Count() * 100;
+                    break;
+                }
+            case HotelType.Eat:
+                {
+                    NeedMoney = TargetList.Count() * 50;
+                    break;
+                }
+
+        }
+        MoneyObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Need " + NeedMoney + "G");
     }
 
 }

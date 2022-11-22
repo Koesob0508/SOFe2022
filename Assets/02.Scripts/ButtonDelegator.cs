@@ -11,6 +11,11 @@ namespace Koesob
             GameManager.Scene.ToInitGameScene();
         }
 
+        public void ToUserInput()
+        {
+            GameManager.Scene.ToUserInputScene();
+        }
+
         public void ToStageSelect()
         {
             GameManager.Scene.ToStageSelectScene();
@@ -23,7 +28,6 @@ namespace Koesob
 
         public void ToTown()
         {
-            Debug.Log("Assets/01.Scenes Town으로 갑니다");
             GameManager.Scene.ToTownScene();
         }
 
@@ -31,6 +35,13 @@ namespace Koesob
         {
             GameManager.Scene.ToEventScene();
         }
+
+        public void EventStageEnd()
+        {
+            GameManager.Stage.CompleteStage();
+        }
+
+
         public void ToItem()
         {
             // Stage Select Scene에서 Item 합성 가능한 창을 띄움
@@ -62,42 +73,59 @@ namespace Koesob
             }
         }
 
-        // Event scene에서 Guild창
+        // Town scene에서 Guild창
         public void ShowHeroShop()
         {
+            GameObject Swipe = GameObject.Find("MouseSwipe");
             GameObject HeroShop = GameObject.Find("GuildUI(Clone)");
 
             if (HeroShop != null)
             {
                 Destroy(HeroShop);
+                Swipe.GetComponent<Swipe>().DoSwipe = true;
             }
             else
             {
                 HeroShop = Resources.Load<GameObject>("Prefabs/UI/GuildUI");
                 Instantiate(HeroShop);
+                Swipe.GetComponent<Swipe>().DoSwipe = false;
             }
         }
 
-        // Event scene에서 Hotel창
+        // Town scene에서 Hotel창
         public void ShowHotel()
         {
             GameObject Hotel = GameObject.Find("HotelUI(Clone)");
-
+            GameObject Swipe = GameObject.Find("MouseSwipe");
             if (Hotel != null)
             {
                 Destroy(Hotel);
+                Swipe.GetComponent<Swipe>().DoSwipe = true;
             }
             else
             {
                 Hotel = Resources.Load<GameObject>("Prefabs/UI/HotelUI");
                 Instantiate(Hotel);
+                Swipe.GetComponent<Swipe>().DoSwipe = false;
             }
         }
 
-        // Event scene에서 Shop창
+        // Town scene에서 Shop창
         public void ShowItemShop()
         {
-            
+            GameObject ItemShop = GameObject.Find("ItemShopUI(Clone)");
+            GameObject Swipe = GameObject.Find("MouseSwipe");
+            if (ItemShop != null)
+            {
+                Destroy(ItemShop);
+                Swipe.GetComponent<Swipe>().DoSwipe = true;
+            }
+            else
+            {
+                ItemShop = Resources.Load<GameObject>("Prefabs/UI/ItemShopUI");
+                Instantiate(ItemShop);
+                Swipe.GetComponent<Swipe>().DoSwipe = false;
+            }
         }
 
 

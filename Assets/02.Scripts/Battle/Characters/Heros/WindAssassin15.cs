@@ -23,18 +23,21 @@ public class WindAssassin15 : Battle_Heros
     {
         Vector2 center = new Vector2(transform.position.x, transform.position.y);
 
-        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(center, 50f);
+        LayerMask ly = LayerMask.GetMask("Units");
+
+        Collider2D[] hitUnits = Physics2D.OverlapCircleAll(center, 500f, ly);
+
+        target = null;
 
         for (int i = 0; i < hitUnits.Length; i++)
         {
-            if (!hitUnits[i].CompareTag("Enemy"))
-                continue;
-
-            if (i == 0)
-                target = hitUnits[i].GetComponent<Units>();
-
-            else if (target.charData.CurrentHP > hitUnits[i].GetComponent<Units>().charData.CurrentHP)
-                target = hitUnits[i].GetComponent<Units>();
+            if (hitUnits[i].CompareTag("Enemy"))
+            {
+                if (target == null)
+                    target = hitUnits[i].GetComponent<Units>();
+                else if (target.charData.CurrentHP > hitUnits[i].GetComponent<Units>().charData.CurrentHP)
+                    target = hitUnits[i].GetComponent<Units>();
+            }
 
         }
         yield return new WaitForSeconds(0.65f);

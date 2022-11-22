@@ -24,6 +24,7 @@ public class Flame05 : Battle_Heros
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1);
         animator.SetFloat("AttackSpeed", 1);
 
+        CheckForFlippingInAttacking();
         PlayAttackAnimation();
 
         StartCoroutine("CouroutineAttack");

@@ -35,6 +35,7 @@ public class Hunter03 : Battle_Heros
         effectPosition.y = transform.position.y - 0.7f;
 
         GameObject burnEffect = Instantiate(hunterSkillEffect, effectPosition, Quaternion.identity);
+        burnEffect.transform.parent = transform;
         Destroy(burnEffect, 2.0f);
 
     }

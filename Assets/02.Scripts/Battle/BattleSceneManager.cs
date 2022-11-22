@@ -180,7 +180,7 @@ public class BattleSceneManager : MonoBehaviour
     public void ApplyBuff(string type, Hero hero, float value, float remainTime = 0.0f)
     {
         GameObject g = heroObjects.Find((h) => { return h.GetComponent<Battle_Heros>().charData.GUID == hero.GUID; });
-        g.GetComponent<Battle_Heros>().Buff(type,value);
+        g.GetComponent<Battle_Heros>().Buff(type,value, remainTime);
     }
     
     public void HeroInvenItemClicked(Hero heroData, Vector2 eventPos)
@@ -333,10 +333,7 @@ public class BattleSceneManager : MonoBehaviour
         // GameManager.Data.Save();
 
         bBattleStarted = false;
-        foreach(GameObject g in heroObjects)
-        {
-            g.GetComponent<Battle_Heros>().ReduceHunger(10);
-        }
+       
         if (bIsWin)
         {
             UpdateHeroData();
@@ -345,7 +342,7 @@ public class BattleSceneManager : MonoBehaviour
         }
         else
         {
-            GameManager.Scene.ToTownScene();
+            GameManager.Scene.ToStageSelectScene();
         }
 
         GameManager.Data.Save();
@@ -486,6 +483,11 @@ public class BattleSceneManager : MonoBehaviour
                     GameManager.Battle.PathMgr.AddObstacle(tempG.gameObject.GetComponent<Collider2D>());
                 }
             }
+
+        }
+        foreach (GameObject g in heroObjects)
+        {
+            g.GetComponent<Battle_Heros>().ReduceHunger(10);
         }
         foreach (var enemy in enemyObjects)
         {
@@ -512,7 +514,8 @@ public class BattleSceneManager : MonoBehaviour
     #region Coroutine
     IEnumerator ActivateBattleEndUI(bool bIsWin)
     {
-        Debug.Log("Started");
+
+        
         Time.timeScale = 0.3f;
         yield return new WaitForSeconds(1);
         Time.timeScale = 1f;

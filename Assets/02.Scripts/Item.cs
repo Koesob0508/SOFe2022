@@ -8,6 +8,7 @@ public class Item : GlobalObject
 {
     public uint OwnHeroGUID; // 해당 아이템을 소유한 용병, 기본값은 소유 용병 null
     public uint InventoryOrder = 0; // 해당 아이템의 인벤토리에서의 위치 0-2
+    public uint Cost = 100;
 
     public uint Star;
     public GameManager.ItemType BasicType; // 기본 효과 유형
@@ -18,5 +19,23 @@ public class Item : GlobalObject
     public object ShallowCopy()
     {
         return this.MemberwiseClone();
+    }
+
+    public Item DeepCopy()
+    {
+        Item tmp = new Item();
+
+        tmp.OwnHeroGUID = OwnHeroGUID;
+        tmp.InventoryOrder = InventoryOrder;
+        tmp.Cost = Cost;
+        tmp.Star = Star;
+        tmp.BasicType = BasicType;
+        tmp.BasicNum = BasicNum;
+        tmp.SpeicalNum = SpeicalNum;
+        tmp.Info = Info;
+        tmp.GUID = GUID;
+        tmp.Name = Name;
+        tmp.Type = Type;
+        return tmp;
     }
 }

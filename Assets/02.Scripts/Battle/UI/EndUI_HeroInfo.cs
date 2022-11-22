@@ -26,7 +26,7 @@ public class EndUI_HeroInfo : MonoBehaviour
         int step = (int)(animTime / 0.05f);
         float stepTime = 0.05f / animTime;
         float healthStep = (after.CurrentHP - before.CurrentHP) / step;
-        float hungerStep = (100 - before.CurHunger) / step;
+        float hungerStep = 10 / step;
 
         float health = before.CurrentHP;
         float hunger = before.CurHunger;
@@ -34,7 +34,7 @@ public class EndUI_HeroInfo : MonoBehaviour
         for(int i = 0; i < step; i++)
         {
             health += healthStep;
-            hunger += hungerStep;
+            hunger -= hungerStep;
 
             healthFG.fillAmount = health / before.MaxHP;
             hungerFG.fillAmount = hunger / 100;

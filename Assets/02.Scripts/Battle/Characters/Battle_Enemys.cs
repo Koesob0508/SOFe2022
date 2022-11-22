@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Battle_Enemys : Units
 {
-    struct EnemyState
+    protected struct EnemyState
     {
         public float MaxHP;
         public float CurrentHP;
@@ -16,7 +16,7 @@ public class Battle_Enemys : Units
         public float AttackSpeed;
         public float DefensePoint;
     }
-    EnemyState state;
+    protected EnemyState state;
 
 
     public override void Initalize(Character charData)
@@ -33,19 +33,27 @@ public class Battle_Enemys : Units
         state.AttackSpeed = charData.AttackSpeed;
         state.DefensePoint = charData.DefensePoint;
 
+        animationDamageDelay = this.charData.AttackSpeed;
+
         base.Initalize(charData);
     }
 
     public override void Attack()
     {
-        if (unitCC.faint)
+        if (isSkillPlaying || unitCC.faint)
             return;
 
         base.Attack();
-        if (isCloseAttackUnit)
-            StartCoroutine("CouroutineCloseAttack");
 
-        state.CurrentMana += 10;
+        attackSpeed = state.AttackSpeed / attackAnimationClip.length;
+        btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
+        animator.SetFloat("AttackSpeed", attackSpeed);
+
+        StartCoroutine(CouroutineAttack());
+
+        if (bHasSkill)
+            state.CurrentMana += 40;
+
         if (state.CurrentMana >= state.MaxMana && bHasSkill)
         {
             btComp.TreeObject.bBoard.SetValueAsBool("CanSkill", true);
@@ -54,7 +62,6 @@ public class Battle_Enemys : Units
 
     public override void Hit(Character Causer, float damage)
     {
-        // ������ ó�� = ( 100 / ���� + 100 ) * ������
         state.CurrentHP -= (100 / (state.DefensePoint + 100)) * damage;
 
         if (state.CurrentHP <= 0 && !btComp.TreeObject.bBoard.GetValueAsBool("IsDead"))
@@ -81,16 +88,44 @@ public class Battle_Enemys : Units
         spBar.value = state.CurrentMana / state.MaxMana;
     }
 
-    //���� ���ݽ� ȣ��. �ִϸ��̼��� ������ �������� ������ �Ի�.
-    IEnumerator CouroutineCloseAttack()
+    IEnumerator CouroutineAttack()
     {
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(animationDamageDelay / 2);
 
-        float t = GetCurrentAnimationTime();
+        if (isCloseAttackUnit)
+        {
+            attackTarget.GetComponent<Units>().Hit(charData, state.AttackDamage);
+        }
+        else
+        {
+            if (isFilped)
 
-        yield return new WaitForSeconds(t);
+            {
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
 
-        //������ ���
-        attackTarget.GetComponent<Units>().Hit(charData,state.AttackDamage);
+                rot = new Vector3(rot.x, 180f, rot.z);
+
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+
+            }
+
+            else
+
+            {
+
+                Vector3 rot = projectileSpawnPoint.transform.rotation.eulerAngles;
+
+                rot = new Vector3(rot.x, 0f, rot.z);
+
+                projectileSpawnPoint.transform.rotation = Quaternion.Euler(rot);
+
+            }
+
+            Vector2 dir = attackTarget.transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            GameObject projectile = Instantiate(projectileObject, projectileSpawnPoint.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+            projectile.GetComponent<Projectile>().Initialize(charData, attackTarget.transform.position, state.AttackDamage, 500f);
+
+        }
     }
 }

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7186199210819274030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8021183387737485340}
+  m_Layer: 3
+  m_Name: spawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8021183387737485340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7186199210819274030}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8, y: 0.26, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1678128111257668748}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8220731715988603078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9,19 +40,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 1.5157356
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.y
-      value: 0.75
+      value: 1.2352958
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: 0.15800324
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Offset.y
-      value: -0.2
+      value: 0.042647958
       objectReference: {fileID: 0}
     - target: {fileID: 1016416893364527626, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -61,7 +92,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2444787915433400459, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
       propertyPath: m_Size.x
@@ -135,12 +166,17 @@ PrefabInstance:
     - {fileID: 6439874309181431725, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
     - {fileID: 531677649290796168, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
+--- !u!4 &1678128111257668748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7303729536159812682, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
+  m_PrefabInstance: {fileID: 8220731715988603078}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7019653078246472943 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1404901776189193257, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_PrefabInstance: {fileID: 8220731715988603078}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1240988890813367341
+--- !u!114 &1508786076133343145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7019653078246472943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023b3b33c277779408b7df086c89991d, type: 3}
+  m_Script: {fileID: 11500000, guid: 255174e5a8e3a974684312903b96061a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -172,7 +208,8 @@ MonoBehaviour:
     AttackRange: 0
     AttackSpeed: 0
     DefensePoint: 0
-  projectileObject: {fileID: 0}
-  projectileSpawnPoint: {fileID: 0}
+  projectileObject: {fileID: 2850037069064635106, guid: 02afb59900a7e3d4cb1348fe8010f2b9, type: 3}
+  projectileSpawnPoint: {fileID: 7186199210819274030}
   skillEffect: {fileID: 0}
   speed: 1
+  attackAnimationClip: {fileID: 7400000, guid: 6630ef28f0be9394c979a3127bb393db, type: 2}

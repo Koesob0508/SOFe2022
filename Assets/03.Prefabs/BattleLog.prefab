@@ -174,8 +174,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC544"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
-  m_sharedMaterial: {fileID: 675438395307243782, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3623809c85cf6a643985ca3f4eada119, type: 2}
+  m_sharedMaterial: {fileID: -439481599552178778, guid: 3623809c85cf6a643985ca3f4eada119, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
     Character owner;
     float damage;
     bool isPenetration;
+
+    public bool isEnemy;
     
     private void Update()
     {
@@ -42,13 +44,26 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if (collision.CompareTag("Enemy"))
+        if (!isEnemy)
         {
-            collision.GetComponent<Units>().Hit(owner,damage);
-            if(!isPenetration)
-                Destroy(gameObject);
+            if (collision.CompareTag("Enemy"))
+            {
+                collision.GetComponent<Units>().Hit(owner, damage);
+                if (!isPenetration)
+                    Destroy(gameObject);
+            }
         }
+        else
+        {
+            if (collision.CompareTag("Heros"))
+            {
+                collision.GetComponent<Units>().Hit(owner, damage);
+                if (!isPenetration)
+                    Destroy(gameObject);
+            }
+        }
+
+
     }
 
     void OnBecameInvisible()

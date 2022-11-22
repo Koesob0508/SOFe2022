@@ -11,12 +11,16 @@ public class DataManager
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
+    public String UserName;
+    public GameManager.MbtiType UserMbti;
     public uint Money = 3000;
 
     [Serializable]
     private struct SaveFormat
     {
         public List<Hero> HeroData;
+        public String User;
+        public GameManager.MbtiType Mbti;
         public string MapData;
         public uint Money;
         public string Version;
@@ -35,7 +39,7 @@ public class DataManager
         else
         {
             LoadInitialHeroData();
-            Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero };
+            Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero, ObjectCodex[16] as Hero };
             for(int i = 0; i < startingHeros.Length; i++)
             {
                 startingHeros[i].IsActive = true;
@@ -66,6 +70,7 @@ public class DataManager
             hero.MaxMana = float.Parse(elems[7]);
             hero.MoveSpeed = float.Parse(elems[8]);
             hero.AttackRange = float.Parse(elems[9]);
+            hero.Skill = elems[10];
             hero.Type = GameManager.ObjectType.Hero;
             hero.CurrentHP = hero.MaxHP;
             // Hard-Coding Part
@@ -130,7 +135,7 @@ public class DataManager
             item.BasicNum = float.Parse(elems[5]);
             // item.SpecialType = (GameManager.ItemTyoe)Int32.Parse(elems[6]);
             item.SpeicalNum = float.Parse(elems[7]);
-            item.Info = elems[7];
+            item.Info = elems[8];
             item.Type = GameManager.ObjectType.Item;
             line2 = csvImp2.Readline();
 
@@ -242,7 +247,7 @@ public class DataManager
         }
     }
     
-    private bool IsExistSaveData()
+    public bool IsExistSaveData()
     {
         if (!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
         {
@@ -255,6 +260,8 @@ public class DataManager
     {
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
+        saveData.User = UserName;
+        saveData.Mbti = UserMbti;
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();
         saveData.Money = Money;
@@ -290,6 +297,8 @@ public class DataManager
         SaveFormat savedData = (SaveFormat)formatter.Deserialize(fStream);
         fStream.Close();
         Money = savedData.Money;
+        UserName = savedData.User;
+        UserMbti = savedData.Mbti;
         GameManager.Stage.LoadStageSaveData(savedData.MapData);
 
         foreach (Hero h in savedData.HeroData)

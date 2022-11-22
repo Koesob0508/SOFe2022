@@ -6,7 +6,6 @@ using TMPro;
 
 public class MouseEventUI : MonoBehaviour
 {
-
     private GameObject InfoUI;
     private bool CanBuy = true;
 
@@ -86,25 +85,14 @@ public class MouseEventUI : MonoBehaviour
 
         uint heroGUID = HeroUIContent.GetComponent<Town_Hotel>().GetHeroUIOrder(Hero);
 
-        foreach (Hero _hero in GameManager.Hero.ShopHeroList)
+        foreach (Hero _hero in GameManager.Hero.HeroList)
         {
             if (_hero.GUID == heroGUID)
             {
-                GameManager.Hero.ShopHeroList.Remove(_hero);
+                GameObject.Find("Content").GetComponent<Town_Hotel>().SetTarget(_hero);
                 break;
             }
         }
-
-        GameObject.Find("Content").GetComponent<Town_Hotel>().SetSleep(heroGUID);
-
-        GameObject Sleep = GameObject.Find("Sleep");
-        Sleep.GetComponent<Image>().color = Color.white;
-        Sleep.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(heroGUID);
-
-        // Hotel¿¡ Hero µî·Ï
-        InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImage");
-        InfoUI = Instantiate(InfoUI, new Vector3(235, -8, 0), Quaternion.identity);
-
     }
 
     public void OnMouseOver()
