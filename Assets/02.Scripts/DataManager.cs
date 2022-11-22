@@ -245,7 +245,7 @@ public class DataManager
         }
     }
     
-    private bool IsExistSaveData()
+    public bool IsExistSaveData()
     {
         if (!System.IO.Directory.Exists(Application.persistentDataPath + "/Save"))
         {

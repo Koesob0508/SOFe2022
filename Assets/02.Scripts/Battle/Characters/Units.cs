@@ -99,7 +99,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClick
         UnitUI.GetComponent<Canvas>().sortingLayerID = SortingLayer.NameToID("Char");
         UnitUI.GetComponent<Canvas>().sortingOrder = -99;
         UnitUI.transform.parent = transform;
-        UnitUI.transform.position += uiOffset;
         hpBar = UnitUI.transform.GetChild(0).GetComponent<Slider>();
         spBar = UnitUI.transform.GetChild(1).GetComponent<Slider>();
 

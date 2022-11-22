@@ -156,7 +156,7 @@ MonoBehaviour:
   bHasSkill: 0
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
-  uiOffset: {x: 0, y: 0, z: 0}
+  uiOffset: {x: 0, y: 5, z: 0}
   attackTarget: {fileID: 0}
   charData:
     GUID: 0

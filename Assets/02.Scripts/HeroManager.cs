@@ -17,9 +17,9 @@ public class HeroManager : MonoBehaviour
         EnrollHero(7);
         EnrollHero(2);
 
-        AddHeroItem(0, 200, 0);
-        AddHeroItem(0, 205, 1);
-        AddHeroItem(0, 205, 2);
+        AddHeroItem(5, 200, 0);
+        AddHeroItem(5, 205, 1);
+        AddHeroItem(5, 205, 2);
 
         GameManager.Relation.GetTeamScore();
     }
