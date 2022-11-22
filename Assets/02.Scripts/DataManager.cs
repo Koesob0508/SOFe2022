@@ -12,6 +12,7 @@ public class DataManager
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
     public String UserName;
+    public GameManager.MbtiType UserMbti;
     public uint Money = 3000;
 
     [Serializable]
@@ -19,6 +20,7 @@ public class DataManager
     {
         public List<Hero> HeroData;
         public String User;
+        public GameManager.MbtiType Mbti;
         public string MapData;
         public uint Money;
         public string Version;
@@ -253,6 +255,7 @@ public class DataManager
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
         saveData.User = UserName;
+        saveData.Mbti = UserMbti;
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();
         saveData.Money = Money;
@@ -288,6 +291,8 @@ public class DataManager
         SaveFormat savedData = (SaveFormat)formatter.Deserialize(fStream);
         fStream.Close();
         Money = savedData.Money;
+        UserName = savedData.User;
+        UserMbti = savedData.Mbti;
         GameManager.Stage.LoadStageSaveData(savedData.MapData);
 
         foreach (Hero h in savedData.HeroData)

@@ -370,6 +370,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 694423026}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 694423025}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnrollUser
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToStageSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GetInputField, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Koesob.ButtonDelegator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
 --- !u!224 &694423024 stripped
@@ -377,6 +421,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 557777361988535017, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
   m_PrefabInstance: {fileID: 694423023}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &694423025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1508109426990524682, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+  m_PrefabInstance: {fileID: 694423023}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e53f59f0a6d01e4cb7637ec96b97834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &694423026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 557777363008452706, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+  m_PrefabInstance: {fileID: 694423023}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4582ed52894b41142b3963aaa25949aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1533498009
 GameObject:
   m_ObjectHideFlags: 0

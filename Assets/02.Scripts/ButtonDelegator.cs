@@ -28,7 +28,6 @@ namespace Koesob
 
         public void ToTown()
         {
-            Debug.Log("Assets/01.Scenes Town으로 갑니다");
             GameManager.Scene.ToTownScene();
         }
 
@@ -36,6 +35,13 @@ namespace Koesob
         {
             GameManager.Scene.ToEventScene();
         }
+
+        public void EventStageEnd()
+        {
+            GameManager.Stage.CompleteStage();
+        }
+
+
         public void ToItem()
         {
             // Stage Select Scene에서 Item 합성 가능한 창을 띄움

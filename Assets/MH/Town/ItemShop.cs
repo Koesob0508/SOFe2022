@@ -72,6 +72,7 @@ public class ItemShop : MonoBehaviour
         if (buy != null && GameManager.Data.Money > buy.Cost)
         {
             GameManager.Data.Money -= buy.Cost;
+            GameManager.Hero.ShopItemList.Remove(buy);
 
             Items.SetActive(false);
             ItemInfo.SetActive(false);

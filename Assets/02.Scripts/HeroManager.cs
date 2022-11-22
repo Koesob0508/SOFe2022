@@ -19,23 +19,23 @@ public class HeroManager : MonoBehaviour
         EnrollHero(4);
         EnrollHero(5);
         EnrollHero(6);
-        EnrollHero(7);
-        EnrollHero(8);
-        EnrollHero(9);
-        EnrollHero(10);
-        EnrollHero(11);
-        EnrollHero(12);
-        EnrollHero(13);
-        EnrollHero(14);
-        EnrollHero(15);
+        //EnrollHero(7);
+        //EnrollHero(8);
+        //EnrollHero(9);
+        //EnrollHero(10);
+        //EnrollHero(11);
+        //EnrollHero(12);
+        //EnrollHero(13);
+        //EnrollHero(14);
+        //EnrollHero(15);
         //EnrollHero(16);
         //EnrollHero(17);
         //EnrollHero(18);
         //EnrollHero(19);
 
-        AddHeroItem(0, 200, 0);
-        AddHeroItem(0, 205, 1);
-        AddHeroItem(0, 205, 2);
+        AddHeroItem(1, 200, 0);
+        AddHeroItem(1, 205, 1);
+        AddHeroItem(1, 205, 2);
 
         GameManager.Relation.GetTeamScore();
     }
