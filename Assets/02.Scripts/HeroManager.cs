@@ -12,10 +12,10 @@ public class HeroManager : MonoBehaviour
     public void Test()
     {
         Debug.Log("Test�� ���� Hero �ӽ÷� ����մϴ�");
-        EnrollHero(0);
+        EnrollHero(19);
+        EnrollHero(2);
         EnrollHero(5);
         EnrollHero(7);
-        EnrollHero(2);
 
         AddHeroItem(5, 200, 0);
         AddHeroItem(5, 205, 1);
