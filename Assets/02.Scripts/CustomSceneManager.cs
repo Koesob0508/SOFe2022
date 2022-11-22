@@ -29,6 +29,10 @@ public class CustomSceneManager
             case "01.StageSelectScene":
                 Debug.Log("This is Stage Select Scene");
                 // ���� ����ٰ� Stage Show �Լ� �־�θ� �ɵ�
+                if(GameManager.Stage.IsToNextStage())
+                {
+                    GameManager.Stage.ToNextStage();
+                }
                 GameManager.Stage.ShowStageMap();
                 break;
 
