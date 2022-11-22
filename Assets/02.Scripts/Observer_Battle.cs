@@ -71,34 +71,41 @@ public class Observer_Battle : ObserverBase
     bool isEnoughHero() { return heroTotal > 2; }
     bool Check_SendMeHome()
     {
-        if (!isEnoughHero())
-            return false;
-        return ((heroTotal * ((float)2 / 3)) < ExxxCount && IxxxCount > 0) ? true : false;
+        if (isEnoughHero())
+            return ((byte)(heroTotal * ((float)2 / 3)) <= ExxxCount && IxxxCount > 0);
+        return false;
     }
     bool Check_TillPlanZ()
     {
-        if (!isEnoughHero())
-            return false;
-        return ((heroTotal * ((float)2 / 3)) < xxxJCount && xxxPCount > 0) ? true : false;
+        if (isEnoughHero())
+        {
+            return ((byte)(heroTotal * ((float)2 / 3)) <= xxxJCount && xxxPCount > 0);
+        }
+        return false;
     }
     bool Check_SilentScream()
     {
-        if (!isEnoughHero())
-            return false;
-        return ((heroTotal * ((float)2 / 3)) < IxxxCount && ExxxCount > 0) ? true : false;
+        if (isEnoughHero())
+        {
+            return ((byte)(heroTotal * ((float)2 / 3)) <= IxxxCount && ExxxCount > 0);    
+        }
+        return false;
     }
     bool Check_NoPlan()
     {
-        if (!isEnoughHero())
-            return false;
-        return ((heroTotal * ((float)2 / 3)) < xxxPCount && xxxJCount > 0) ? true : false;
+        if (isEnoughHero())
+        {
+            return ((byte)(heroTotal * ((float)2 / 3)) <= xxxPCount && xxxJCount > 0);
+        }
+        return false;
     }
     void CheckSynergy()
     {
         Dictionary<SynergyEvent, bool> updated = new Dictionary<SynergyEvent, bool>();
         foreach(SynergyEvent e in syn_Checker.Keys)
         {
-            bool result = syn_Checker[e]();
+            bool result = this.syn_Checker[e]();
+            Debug.Log(e.ToString() + " Return " + result);
             if (syn_State[e] != result)
             {
                 updated[e] = result;
@@ -162,6 +169,8 @@ public class Observer_Battle : ObserverBase
             return;
         heroCount_MBTI[(int)hData.MBTI]--;
         heroTotal--;
+
+        GameManager.Battle.RestoreHeroData(hData);
 
         switch (hData.MBTI)
         {

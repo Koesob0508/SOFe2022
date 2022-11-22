@@ -19,12 +19,9 @@ public class BattleSceneManager : MonoBehaviour
 
 
     /// <summary>
-    /// Heros in scene
+    /// Heros in Battle
     /// </summary>
     public List<GameObject> heroObjects = new List<GameObject>();
-    /// <summary>
-    /// Heros in either scene and battle
-    /// </summary>
     public List<GameObject> enemyObjects = new List<GameObject>();
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
@@ -49,7 +46,11 @@ public class BattleSceneManager : MonoBehaviour
     GameObject infoPopUp_Object;
     Hero curHeroInfoOpened;
     bool bIsInfoOpened;
+    float infoPopUp_Width;
+    float infoPopUp_Height;
 
+
+    uint earnedMoney = 0;
     #region Initalize
     /// <summary>
     /// Call When BattleSelectScene Loaded to Initalize BattleSceneManager
@@ -89,9 +90,11 @@ public class BattleSceneManager : MonoBehaviour
 
 
             RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
+            infoPopUp_Width = rt.rect.width;
+            infoPopUp_Height = rt.rect.height;
             rt.localScale = Vector2.one;
-            rt.anchorMin = new Vector2(0.1f, 0.7f);
-            rt.anchorMax = new Vector2(0.3f, 1f);
+            rt.anchorMin = new Vector2(0f, 0.7f);
+            rt.anchorMax = new Vector2(0.2f, 1f);
             rt.offsetMax = Vector2.zero;
             rt.offsetMin = Vector2.zero;
 
@@ -179,45 +182,69 @@ public class BattleSceneManager : MonoBehaviour
         GameObject g = heroObjects.Find((h) => { return h.GetComponent<Battle_Heros>().charData.GUID == hero.GUID; });
         g.GetComponent<Battle_Heros>().Buff(type,value, remainTime);
     }
-
-    public void HeroInvenItemClicked(Hero heroData, Vector2 pos)
+    
+    public void HeroInvenItemClicked(Hero heroData, Vector2 eventPos)
     {
-        if(curHeroInfoOpened != heroData)
+        Debug.Log(eventPos);
+
+        if (curHeroInfoOpened != heroData)
         {
-            curHeroInfoOpened = heroData;
-            infoPopUp_Object.SetActive(true);
-            RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
-            float offset = Screen.height - pos.y - rt.rect.width / 2;
-            if (offset < 0)
-                offset = 0;
-            rt.offsetMax = new Vector2(0, -offset);
-            rt.offsetMin = new Vector2(0, -offset);
-            infoPopUp_Object.GetComponent<HeroInfo_PopUp>().SetUpData(heroData);
-            bIsInfoOpened = true;
+            float offsetY = Screen.height - eventPos.y - infoPopUp_Height/2 ;
+            float offsetX = eventPos.x - infoPopUp_Width / 2;
+            if (offsetY < 0)
+                offsetY = 0;
+            OpenInfoPopUp(heroData, new Vector2(-offsetX, -offsetY), new Vector2(-offsetX, -offsetY));
         }
         else
         {
             if (!bIsInfoOpened)
             {
-                curHeroInfoOpened = heroData;
-                infoPopUp_Object.SetActive(true);
-                RectTransform rt = infoPopUp_Object.GetComponent<RectTransform>();
-                float offset = Screen.height - pos.y - rt.rect.width / 2;
-                rt.offsetMax = new Vector2(0, -offset);
-                rt.offsetMin = new Vector2(0, -offset);
-                infoPopUp_Object.GetComponent<HeroInfo_PopUp>().SetUpData(heroData);
-                bIsInfoOpened = true;
+                float offsetY = Screen.height - eventPos.y;
+                float offsetX = eventPos.x - infoPopUp_Width / 2;
+                if (offsetY < 0)
+                    offsetY = 0;
+                OpenInfoPopUp(heroData, new Vector2(-offsetX, -offsetY), new Vector2(-offsetX, -offsetY));
             }
             else
             {
-                ClosePopUp();
+                CloseInfoPopUp();
             }
         }
     }
-    public void ClosePopUp()
+    public void HeroObjectClicked(Hero heroData, Vector2 eventPos)
     {
-        infoPopUp_Object.SetActive(false);
-        bIsInfoOpened = false;
+        Debug.Log(eventPos);
+        if (curHeroInfoOpened != heroData)
+        {
+            float offsetY = Screen.height - eventPos.y - infoPopUp_Height / 2;
+            float offsetX = eventPos.x + infoPopUp_Width * 0.2f;
+            if (offsetY < 0)
+                offsetY = 0;
+            OpenInfoPopUp(heroData, new Vector2(offsetX, -offsetY), new Vector2(offsetX, -offsetY));
+        }
+        else
+        {
+            if (!bIsInfoOpened)
+            {
+                float offsetY = Screen.height - eventPos.y - infoPopUp_Height / 2;
+                float offsetX = eventPos.x + infoPopUp_Width * 0.2f;
+                if (offsetY < 0)
+                    offsetY = 0;
+                OpenInfoPopUp(heroData, new Vector2(offsetX, -offsetY), new Vector2(offsetX, -offsetY));
+            }
+            else
+            {
+                CloseInfoPopUp();
+            }
+        }
+    }
+    public void CloseInfoPopUp()
+    {
+        if(bIsInfoOpened)
+        {
+            infoPopUp_Object.SetActive(false);
+            bIsInfoOpened = false;
+        }
     }
     public void RestoreHeroData(Hero hero)
     {
@@ -281,6 +308,11 @@ public class BattleSceneManager : MonoBehaviour
             case GameManager.ObjectType.Enemy:
                 {
                     bLogPanel.AddLog(new BattleLogPanel.Log(causer, target.GetComponent<Units>().charData, BattleLogPanel.LogType.Dead));
+                    Enemy e = target.GetComponent<Units>().charData as Enemy;
+                    if(e != null)
+                    {
+                        earnedMoney += (uint)UnityEngine.Random.Range(e.min_Coin, e.max_Coin);
+                    }
                     eCount -= 1;
                     break;
                 }
@@ -317,6 +349,11 @@ public class BattleSceneManager : MonoBehaviour
         }
 
         GameManager.Data.Save();
+    }
+
+    public uint GetEarnedMoney()
+    {
+        return earnedMoney;
     }
     public void AddSynergyUIText(Observer_Battle.SynergyEvent type)
     {
@@ -377,6 +414,17 @@ public class BattleSceneManager : MonoBehaviour
     }
     #endregion
 
+    void OpenInfoPopUp(Hero hData, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        curHeroInfoOpened = hData;
+        infoPopUp_Object.SetActive(true);
+        infoPopUp_Object.GetComponent<HeroInfo_PopUp>().SetUpData(hData);
+        infoPopUp_Object.GetComponent<RectTransform>().offsetMax = offsetMax;
+        infoPopUp_Object.GetComponent<RectTransform>().offsetMin = offsetMin;
+
+        bIsInfoOpened = true;
+    }
+    
     void AddLog(BattleLogPanel.Log log)
     {
         bLogPanel.AddLog(log);
@@ -448,7 +496,7 @@ public class BattleSceneManager : MonoBehaviour
         hInvenPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(true);
 
-        ClosePopUp();
+        CloseInfoPopUp();
 
         bBattleStarted = true;
     }
@@ -469,7 +517,17 @@ public class BattleSceneManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         Time.timeScale = 1f;
         bEndPanel.gameObject.SetActive(true);
-        bEndPanel.Initalize(bIsWin);
+        List<Hero> BeforeBattleHeroInfo = new List<Hero>();
+        List<Hero> AfterBattleHeroInfo = new List<Hero>();
+        foreach(var h in heroObjects)
+        {
+            uint guid = h.GetComponent<Units>().charData.GUID;
+            BeforeBattleHeroInfo.Add(hDataList_Original.Find((hero) => { return hero.GUID == guid; }));
+            AfterBattleHeroInfo.Add(hDataList.Find((hero) => { return hero.GUID == guid; }));
+        }
+        bEndPanel.Initalize(bIsWin,BeforeBattleHeroInfo,AfterBattleHeroInfo);
+        bLogPanel.gameObject.SetActive(false);
+        synergyPanel.gameObject.SetActive(false);
         yield break;
     }
     IEnumerator FadeInTransition(Color col)

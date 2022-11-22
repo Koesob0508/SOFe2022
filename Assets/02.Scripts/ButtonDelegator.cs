@@ -132,5 +132,15 @@ namespace Koesob
         {
             GameManager.Stage.MoveCanvasLeft();
         }
+
+        public void ActiveAllHeros()
+        {
+            foreach(uint id in GameManager.Data.ObjectCodex.Keys)
+            {
+                Hero h = GameManager.Data.ObjectCodex[id] as Hero;
+                if (h != null)
+                    h.IsActive = true;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ public class CC
     public bool hide = false;
 }
 
-public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
+public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
 
     protected bool isUpdating = false;
@@ -212,12 +212,20 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         spBar.value = charData.CurrentMana / charData.MaxMana;
     }
 
-
+    #region Event Interface ( Click, Drag )
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
+        else
+            GameManager.Battle.HeroObjectClicked(charData as Hero, eventData.position);
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (charData.Type == GameManager.ObjectType.Enemy)
             return;
+        GameManager.Battle.CloseInfoPopUp();
         UpdateUI();
         Vector2 screenPos = eventData.position;
         
@@ -228,6 +236,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (charData.Type == GameManager.ObjectType.Enemy)
+            return;
         int layerMask = ~(1 << LayerMask.NameToLayer("Units"));  // Unit 레이어만 충돌 체크함
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero,Mathf.Infinity,layerMask);
         Vector2 screenPos = eventData.position;
@@ -278,7 +288,10 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
         Vector3 WorldPos = Camera.main.ScreenToWorldPoint(screenPos);
         WorldPos.z = 0;
         transform.position = WorldPos;
+
+        GameManager.Battle.CloseInfoPopUp();
     }
+    #endregion
     public void SetSpeed(float Speed)
     {
         this.speed = Speed / 10;
@@ -418,4 +431,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler
             Destroy(burnEffect, 1.0f);
         }
     }
+
+   
 }
