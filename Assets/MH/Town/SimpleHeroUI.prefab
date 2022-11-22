@@ -117,8 +117,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
-  m_sharedMaterial: {fileID: 675438395307243782, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -499,8 +499,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
-  m_sharedMaterial: {fileID: 675438395307243782, guid: 777886568cc5d4a4a89331ba589234ff, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -900,10 +900,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: bd3143b5f39722e4cae31bfeb940f8ca, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: bd3143b5f39722e4cae31bfeb940f8ca, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
     m_SelectedSprite: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: bd3143b5f39722e4cae31bfeb940f8ca, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted

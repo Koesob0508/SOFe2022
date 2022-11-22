@@ -26,7 +26,7 @@ public class Town_Hotel : MonoBehaviour
     // Status
     public Gradient gradient;
 
-    private int Time = 0; // Hotel 효과는 한번 사용 가능하다
+    private int Time = -1; // Hotel 효과는 한번 사용 가능하다
 
     public uint GetHeroUIOrder(GameObject _hero)
     {
@@ -39,6 +39,15 @@ public class Town_Hotel : MonoBehaviour
         if (TargetList.Contains(_hero))
         {
             TargetList.Remove(_hero);
+            GameObject InfoUI = Resources.Load<GameObject>("Prefabs/UI/HeroImageUI");
+            InfoUI = Instantiate(InfoUI, new Vector3(0, 20, 0), Quaternion.identity);
+            InfoUI.transform.SetParent(PlaceUI.transform);
+            InfoUI.transform.localPosition = new Vector3(0, 0, 0);
+            InfoUI.transform.localScale=new Vector3(0, 0, 0);
+            InfoUI.GetComponent<Image>().sprite = GameManager.Data.LoadSprite(_hero.GUID);
+            LeanTween.moveLocal(InfoUI, new Vector3(0f, +4f, +2f), 1f).setDelay(0.1f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(InfoUI, new Vector3(1f, 1f, 1f), 1f).setDelay(0.5f).setEase(LeanTweenType.easeOutCirc);
+            Destroy(InfoUI, 2f);
         }
         else
         {
@@ -58,13 +67,13 @@ public class Town_Hotel : MonoBehaviour
     // Button누르면 Target Hero에게 Hotel 효과 Get
     public void GetHotel()
     {
-        if (TargetList.Count() >= 0 && Time == 0)
+        if (TargetList.Count() >= 0 && Time < 0)
         {
             GameObject.Find("Place").GetComponent<Image>().color = new Color(133 / 255f, 133 / 255f, 133 / 255f);
-            LeanTween.scale(PlaceUI, new Vector3(1.8f, 1.8f, 1.8f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
-            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
-            LeanTween.scale(PlaceUI, new Vector3(1.8f, 1.8f, 1.8f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
-            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.3f, 1.3f, 1.3f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.0f, 1.0f, 1.0f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.3f, 1.3f, 1.3f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.0f, 1.0f, 1.0f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
             if (NeedMoney <= GameManager.Data.Money)
             {
                 switch (Type)
@@ -79,7 +88,7 @@ public class Town_Hotel : MonoBehaviour
                             }
 
                             GameManager.Data.Money -= (uint)NeedMoney;
-                            Time = 1;
+                            Time =+ 1;
 
                             break;
                         }
@@ -91,7 +100,7 @@ public class Town_Hotel : MonoBehaviour
                             }
 
                             GameManager.Data.Money -= (uint)NeedMoney;
-                            Time = 1;
+                            Time =+ 1;
                             break;
                         }
                 }
@@ -198,11 +207,13 @@ public class Town_Hotel : MonoBehaviour
         {
             Type = HotelType.Sleep;
             PlaceUI.transform.GetComponent<Image>().sprite = Bed;
+            PlaceUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Let's SLEEP!");
         }
         else
         {
             Type = HotelType.Eat;
             PlaceUI.transform.GetComponent<Image>().sprite = Table;
+            PlaceUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Let's EAT!");
         }
     }
 
