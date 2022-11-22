@@ -23,12 +23,32 @@ public class EndUI_HeroInfo : MonoBehaviour
 
     IEnumerator AnimateHealthAndHunger(Hero before, Hero after, float animTime)
     {
-        float stepTime = animTime / 0.05f;
-        int step = (int)stepTime;
+        int step = (int)(animTime / 0.05f);
+        float stepTime = 0.05f / animTime;
+        float healthStep = (after.CurrentHP - before.CurrentHP) / step;
+        float hungerStep = (100 - before.CurHunger) / step;
+
+        float health = before.CurrentHP;
+        float hunger = before.CurHunger;
+
         for(int i = 0; i < step; i++)
         {
-            
+            health += healthStep;
+            hunger += hungerStep;
+
+            healthFG.fillAmount = health / before.MaxHP;
+            hungerFG.fillAmount = hunger / 100;
+
+            healthTxt.text = ((int)health).ToString() + "(" + before.MaxHP + ")";
+            hungerTxt.text = ((int)hunger).ToString() + "(100)";
+
+            yield return new WaitForSeconds(stepTime);
         }
+        healthFG.fillAmount = after.CurrentHP / after.MaxHP;
+        hungerFG.fillAmount = after.CurHunger / 100;
+
+        healthTxt.text = ((int)after.CurrentHP).ToString() + "(" + after.MaxHP.ToString() + ")";
+        hungerTxt.text = after.CurHunger.ToString() + "(100)";
         yield break;
     }
 }

@@ -14,7 +14,7 @@ public class BattleEndUI : MonoBehaviour
 
         if (bIsWin)
         {
-            GetComponent<Image>().color = Color.green;
+            GetComponent<Image>().color = new Color(0.1f,0.1f,0.1f,0.9f);
 
             WinPanel.gameObject.SetActive(true);
             LosePanel.gameObject.SetActive(false);
@@ -23,7 +23,6 @@ public class BattleEndUI : MonoBehaviour
         }
         else
         {
-            GetComponent<Image>().color = Color.red;
 
             WinPanel.gameObject.SetActive(false);
             LosePanel.gameObject.SetActive(true);

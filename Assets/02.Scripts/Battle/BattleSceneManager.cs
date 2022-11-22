@@ -526,6 +526,8 @@ public class BattleSceneManager : MonoBehaviour
             AfterBattleHeroInfo.Add(hDataList.Find((hero) => { return hero.GUID == guid; }));
         }
         bEndPanel.Initalize(bIsWin,BeforeBattleHeroInfo,AfterBattleHeroInfo);
+        bLogPanel.gameObject.SetActive(false);
+        synergyPanel.gameObject.SetActive(false);
         yield break;
     }
     IEnumerator FadeInTransition(Color col)
