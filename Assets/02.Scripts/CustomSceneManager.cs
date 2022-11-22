@@ -26,7 +26,12 @@ public class CustomSceneManager
                 GameManager.Stage.HideStageMap();
                 break;
 
-            case "01.StageSelectScene":
+            case "01.UserInputScene":
+                Debug.Log("This is User Input Scene");
+                GameManager.Stage.HideStageMap();
+                break;
+
+            case "02.StageSelectScene":
                 Debug.Log("This is Stage Select Scene");
                 // ���� ����ٰ� Stage Show �Լ� �־�θ� �ɵ�
                 if(GameManager.Stage.IsToNextStage())
@@ -36,7 +41,7 @@ public class CustomSceneManager
                 GameManager.Stage.ShowStageMap();
                 break;
 
-            case "02.BattleSelectScene":
+            case "03.BattleSelectScene":
                 Debug.Log("This is Battle Scene");
 
                 // GameManager.Stage.Test_SetBattleStage();
@@ -93,12 +98,12 @@ public class CustomSceneManager
                 GameManager.Battle.Init(hlist, elist, mapType);
                 break;
 
-            case "03.TownScene":
+            case "04.TownScene":
                 Debug.Log("This is Town Scene");
                 GameManager.Stage.HideStageMap();
                 break;
 
-            case "04.EventScene":
+            case "05.EventScene":
                 Debug.Log("This is Event Scene");
                 GameManager.Stage.HideStageMap();
                 break;
@@ -113,26 +118,34 @@ public class CustomSceneManager
         SceneManager.LoadScene("00.StartScene");
     }
 
+    public void ToUserInputScene()
+    {
+        SceneManager.LoadScene("01.UserInputScene");
+    }
+
     public void ToStageSelectScene()
     {
-        SceneManager.LoadScene("01.StageSelectScene");
+        SceneManager.LoadScene("02.StageSelectScene");
     }
 
     public void ToBattleScene()
     {
-        SceneManager.LoadScene("02.BattleSelectScene");
+        SceneManager.LoadScene("03.BattleSelectScene");
     }
 
     public void ToTownScene()
     {
-        SceneManager.LoadScene("03.TownScene");
+        SceneManager.LoadScene("04.TownScene");
 
         // Guild의 Random으로 3명의 Hero Set
         GameManager.Hero.SetGuildHero();
+
+        // ItemShop의 오늘의 아이템 Lisr Set
+        GameManager.Hero.SetShopItem();
     }
 
     public void ToEventScene()
     {
-        SceneManager.LoadScene("04.EventScene");
+        SceneManager.LoadScene("05.EventScene");
     }
 }

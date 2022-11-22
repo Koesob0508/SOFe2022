@@ -7,7 +7,7 @@ using TMPro;
 
 public class SetRandomObject : MonoBehaviour
 {
-    public GameObject EnrollHeroUI;
+    public GameObject EnrollUI;
     GameObject ObjectUI;
     public GameManager.ObjectType Type;
 
@@ -35,7 +35,7 @@ public class SetRandomObject : MonoBehaviour
 
                     for (int i = 0; i < EnrollList.Count(); i++)
                     {
-                        ObjectUI = Instantiate(EnrollHeroUI, transform.position, Quaternion.identity);
+                        ObjectUI = Instantiate(EnrollUI, transform.position, Quaternion.identity);
                         ObjectUI.transform.SetParent(transform);
                         ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
                     }
@@ -44,7 +44,15 @@ public class SetRandomObject : MonoBehaviour
                 }
             case GameManager.ObjectType.Item:
                 {
-
+                    EnrollList = GameManager.Hero.GetShopItemList();
+                    for (int i = 0; i < EnrollList.Count(); i++)
+                    {
+                        ObjectUI = Instantiate(EnrollUI, transform.position, Quaternion.identity);
+                        transform.GetChild(i).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(EnrollList[i].GUID);
+                        ObjectUI.transform.SetParent(transform.GetChild(i));
+                        ObjectUI.transform.GetComponent<GetItemInfo>().SetInfo((Item)EnrollList[i]);
+                        ObjectUIList.Add(EnrollList[i].GUID, ObjectUI);
+                    }
                     break;
                 }
             default:
@@ -107,18 +115,18 @@ public class SetRandomObject : MonoBehaviour
 
                 // Ability 값
                 AbilityInfo = GetChildWithName(HeroUI, "AbilityInfo").transform.GetChild(0).gameObject;
-                AbilityInfo.transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().SetText("최대 체력 : " + hero.MaxHP);
-                AbilityInfo.transform.GetChild(1).transform.GetComponent<TextMeshProUGUI>().SetText("최대 마나 : " + hero.MaxMana);
-                AbilityInfo.transform.GetChild(2).transform.GetComponent<TextMeshProUGUI>().SetText("공격력 : " + hero.AttackDamage);
-                AbilityInfo.transform.GetChild(3).transform.GetComponent<TextMeshProUGUI>().SetText("방어력 : " + hero.DefensePoint);
-                AbilityInfo.transform.GetChild(4).transform.GetComponent<TextMeshProUGUI>().SetText("이동 속도 : " + hero.MoveSpeed);
-                AbilityInfo.transform.GetChild(5).transform.GetComponent<TextMeshProUGUI>().SetText("공격 속도 : " + hero.AttackSpeed);
-                AbilityInfo.transform.GetChild(6).transform.GetComponent<TextMeshProUGUI>().SetText("공격 범위 : " + hero.AttackRange);
-                // AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("스킬 : " + hero.);
-
+                AbilityInfo.transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().SetText("최대체력\n" + hero.MaxHP);
+                AbilityInfo.transform.GetChild(1).transform.GetComponent<TextMeshProUGUI>().SetText("최대마나\n" + hero.MaxMana);
+                AbilityInfo.transform.GetChild(2).transform.GetComponent<TextMeshProUGUI>().SetText("공격력\n" + hero.AttackDamage);
+                AbilityInfo.transform.GetChild(3).transform.GetComponent<TextMeshProUGUI>().SetText("방어력\n" + hero.DefensePoint);
+                AbilityInfo.transform.GetChild(4).transform.GetComponent<TextMeshProUGUI>().SetText("이동속도\n" + hero.MoveSpeed);
+                AbilityInfo.transform.GetChild(5).transform.GetComponent<TextMeshProUGUI>().SetText("공격속도\n" + hero.AttackSpeed);
+                AbilityInfo.transform.GetChild(6).transform.GetComponent<TextMeshProUGUI>().SetText("공격범위\n" + hero.AttackRange);
+                //AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("스킬:\n" + hero.Skill);
+                GetChildWithName(HeroUI, "AbilityInfo").transform.GetChild(1).transform.GetComponent<TextMeshProUGUI>().SetText("스킬\n" + hero.Skill);
                 // Cost 값
                 CostInfo = GetChildWithName(HeroUI, "Button").transform.GetChild(0).gameObject;
-                CostInfo.transform.GetComponent<TextMeshProUGUI>().SetText(hero.Cost.ToString());
+                CostInfo.transform.GetComponent<TextMeshProUGUI>().SetText(hero.Cost.ToString()+"G");
             }
         }
     }
@@ -134,7 +142,7 @@ public class SetRandomObject : MonoBehaviour
                 }
             case GameManager.ObjectType.Item:
                 {
-
+                    SetShopList();
                     break;
                 }
             default:

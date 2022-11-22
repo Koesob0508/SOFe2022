@@ -115,7 +115,7 @@ public class GetHeroInfo : MonoBehaviour
                 AbilityInfo.transform.GetChild(4).transform.GetComponent<TextMeshProUGUI>().SetText("이동 속도 : " + hero.MoveSpeed);
                 AbilityInfo.transform.GetChild(5).transform.GetComponent<TextMeshProUGUI>().SetText("공격 속도 : " + hero.AttackSpeed);
                 AbilityInfo.transform.GetChild(6).transform.GetComponent<TextMeshProUGUI>().SetText("공격 범위 : " + hero.AttackRange);
-                // AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("스킬 : " + hero.);
+                AbilityInfo.transform.GetChild(7).transform.GetComponent<TextMeshProUGUI>().SetText("스킬 : " + hero.Skill);
 
                 // Items 값
                 Items = GetChildWithName(HeroUI, "Items").transform.gameObject;

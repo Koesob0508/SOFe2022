@@ -7,6 +7,7 @@ public class HeroManager : MonoBehaviour
 {
     public List<Hero> HeroList = new List<Hero>();
     public List<GlobalObject> ShopHeroList = new List<GlobalObject>();
+    public List<GlobalObject> ShopItemList = new List<GlobalObject>();
 
     public void Test()
     {
@@ -157,7 +158,7 @@ public class HeroManager : MonoBehaviour
                             // �ش� ��ġ�� �ƴ�, ���� Item�� ���ο� ��ġ�� ������ ���̶��
                             else
                             {
-                                Item item2 = (Item)i.ShallowCopy();
+                                Item item2 = i.DeepCopy();
                                 item2.OwnHeroGUID = HeroGUID;
                                 item2.InventoryOrder = order;
                                 Items[order] = item2;
@@ -239,6 +240,8 @@ public class HeroManager : MonoBehaviour
         }
     }
 
+    
+
     public List<GlobalObject> GetShopHeroList()
     {
         return ShopHeroList;
@@ -301,6 +304,37 @@ public class HeroManager : MonoBehaviour
 
         }
     }
+    public void SetShopItem()
+    {
+        ShopItemList.Clear();
 
+        while (ShopItemList.Count < 3)
+        {
+            uint guid = (uint)Random.Range(200, 220);
+            Item item = (Item)GameManager.Data.LoadObject(guid, GameManager.ObjectType.Item);
+
+            if (ShopItemList.Contains(item))
+                continue;
+
+            // Cost�� Star�� ���� �����ȴ�
+            if (item.Star ==1)
+                item.Cost = 50;
+            else if (item.Star == 2)
+                item.Cost = 150;
+            else if (item.Star == 3)
+                item.Cost = 400;
+            else if (item.Star == 4)
+                item.Cost = 950;
+            else if (item.Star == 5)
+                item.Cost = 2000;
+
+            ShopItemList.Add(item);
+        }
+    }
+
+    public List<GlobalObject> GetShopItemList()
+    {
+        return ShopItemList;
+    }
 
 }

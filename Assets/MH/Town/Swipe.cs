@@ -5,6 +5,8 @@ using UnityEngine;
 public class Swipe : MonoBehaviour
 {
     public GameObject Target;
+    public bool DoSwipe = true;
+
 
     // Mouse&Touch pos º¯¼ö
     Vector2 firstPressPos;
@@ -12,7 +14,7 @@ public class Swipe : MonoBehaviour
     Vector2 currentSwipe;
 
     public void IsSwipe()
-    {
+    { 
         if (Input.touches.Length > 0)
         {
             Touch t = Input.GetTouch(0);
@@ -102,6 +104,9 @@ public class Swipe : MonoBehaviour
 
     private void Update()
     {
-        IsSwipe();
+        if (DoSwipe)
+        {
+            IsSwipe();
+        }
     }
 }

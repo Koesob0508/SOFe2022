@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb092b69273a784fb891c8ca2281213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnrollHeroUI: {fileID: 3534543972837446805, guid: 93f40d12bd2e03e4cad4da9b1b3377e9, type: 3}
+  EnrollUI: {fileID: 3534543972837446805, guid: 93f40d12bd2e03e4cad4da9b1b3377e9, type: 3}
   Type: 0
   EnrollList: []
 --- !u!1 &1313934265883656909

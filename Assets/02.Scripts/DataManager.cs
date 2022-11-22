@@ -11,12 +11,14 @@ public class DataManager
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
+    public String UserName;
     public uint Money = 3000;
 
     [Serializable]
     private struct SaveFormat
     {
         public List<Hero> HeroData;
+        public String User;
         public string MapData;
         public uint Money;
         public string Version;
@@ -66,6 +68,7 @@ public class DataManager
             hero.MaxMana = float.Parse(elems[7]);
             hero.MoveSpeed = float.Parse(elems[8]);
             hero.AttackRange = float.Parse(elems[9]);
+            hero.Skill = elems[10];
             hero.Type = GameManager.ObjectType.Hero;
             hero.CurrentHP = hero.MaxHP;
             // Hard-Coding Part
@@ -130,7 +133,7 @@ public class DataManager
             item.BasicNum = float.Parse(elems[5]);
             // item.SpecialType = (GameManager.ItemTyoe)Int32.Parse(elems[6]);
             item.SpeicalNum = float.Parse(elems[7]);
-            item.Info = elems[7];
+            item.Info = elems[8];
             item.Type = GameManager.ObjectType.Item;
             line2 = csvImp2.Readline();
 
@@ -255,6 +258,7 @@ public class DataManager
     {
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
+        saveData.User = UserName;
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();
         saveData.Money = Money;
