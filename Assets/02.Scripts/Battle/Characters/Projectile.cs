@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-      
-    Rigidbody2D rigid;
     Character owner;
     float damage;
     bool isPenetration;

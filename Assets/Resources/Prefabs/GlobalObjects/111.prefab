@@ -140,7 +140,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1404901776189193257, guid: b01d16ba5aeb0324bbb635aafc85a95c, type: 3}
   m_PrefabInstance: {fileID: 8220731715988603078}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1240988890813367341
+--- !u!114 &1849947099669685660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,11 +149,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7019653078246472943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023b3b33c277779408b7df086c89991d, type: 3}
+  m_Script: {fileID: 11500000, guid: 54c4bb9de6c80094fbbd3c3a78dacd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  bHasSkill: 0
+  bHasSkill: 1
   attackTimer: 0
   UnitUIObject: {fileID: 8515776470995376445, guid: fc503aa5279ef674784b55ec7d048f44, type: 3}
   uiOffset: {x: 0, y: 0, z: 0}
@@ -177,3 +177,4 @@ MonoBehaviour:
   skillEffect: {fileID: 0}
   speed: 1
   attackAnimationClip: {fileID: 7400000, guid: 78712ef7f1487d34dae6cf44f0bdb89c, type: 2}
+  redSlimeObject: {fileID: 7019653078246472943, guid: 3a0c845516b6761449657e5452481a64, type: 3}

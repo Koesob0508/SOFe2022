@@ -167,6 +167,12 @@ public class BattleSceneManager : MonoBehaviour
         LogDelegate += AddLog;
     }
 
+    public void AddEnemy(Enemy e)
+    {
+        EnemyList.Add(e);
+        eCount += 1;
+    }
+
     #endregion
     #region Publlic Methods
     
