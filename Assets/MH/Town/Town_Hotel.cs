@@ -70,9 +70,9 @@ public class Town_Hotel : MonoBehaviour
         if (TargetList.Count() >= 0 && Time < 0)
         {
             GameObject.Find("Place").GetComponent<Image>().color = new Color(133 / 255f, 133 / 255f, 133 / 255f);
-            LeanTween.scale(PlaceUI, new Vector3(1.3f, 1.3f, 1.3f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutCirc);
             LeanTween.scale(PlaceUI, new Vector3(1.0f, 1.0f, 1.0f), 0.5f).setDelay(0.9f).setEase(LeanTweenType.easeOutCirc);
-            LeanTween.scale(PlaceUI, new Vector3(1.3f, 1.3f, 1.3f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
+            LeanTween.scale(PlaceUI, new Vector3(1.2f, 1.2f, 1.2f), 0.5f).setDelay(1.6f).setEase(LeanTweenType.easeOutCirc);
             LeanTween.scale(PlaceUI, new Vector3(1.0f, 1.0f, 1.0f), 0.5f).setDelay(2.3f).setEase(LeanTweenType.easeOutCirc);
             if (NeedMoney <= GameManager.Data.Money)
             {
@@ -88,6 +88,7 @@ public class Town_Hotel : MonoBehaviour
                             }
 
                             GameManager.Data.Money -= (uint)NeedMoney;
+                            TargetList.Clear();
                             Time =+ 1;
 
                             break;
@@ -100,6 +101,7 @@ public class Town_Hotel : MonoBehaviour
                             }
 
                             GameManager.Data.Money -= (uint)NeedMoney;
+                            TargetList.Clear();
                             Time =+ 1;
                             break;
                         }

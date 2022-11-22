@@ -11,7 +11,7 @@ public class ShowHerosMbti : MonoBehaviour
     public GameObject Target, Members, Lines;
     public GameObject MemberUI, LineUI;
 
-    private float radius = 150.0f;
+    private float radius = 250.0f;
     public float lineWidth = 10.0f;
 
     private uint TargetHeroGUID;
