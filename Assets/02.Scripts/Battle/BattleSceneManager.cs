@@ -167,9 +167,10 @@ public class BattleSceneManager : MonoBehaviour
         LogDelegate += AddLog;
     }
 
-    public void AddEnemy(Enemy e)
+    public void AddEnemy(Enemy e, GameObject go)
     {
         EnemyList.Add(e);
+        enemyObjects.Add(go);
         eCount += 1;
     }
 

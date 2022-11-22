@@ -22,7 +22,7 @@ namespace Path
         public int RowCount = 40;
 
         float offsetX = 0, offsetY = 0;
-        float Width = 0, Height = 0;
+        public static float Width = 0, Height = 0;
 
         public static float cellSizeX = 0, cellSizeY = 0;
 

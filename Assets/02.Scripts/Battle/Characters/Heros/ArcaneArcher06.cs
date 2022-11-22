@@ -39,9 +39,15 @@ public class ArcaneArcher06 : Battle_Heros
         for (int i = 0; i < 10; i++)
         {
             if (spr.flipX)
-                transform.Translate(Vector3.left * 0.1f);
+            {
+                if (transform.position.x + (Vector3.left * 0.1f).x > -Path.PathManager.Width / 2)
+                    transform.Translate(Vector3.left * 0.1f);
+            }
             else
-                transform.Translate(Vector3.right * 0.1f);
+            {
+                if (transform.position.x + (Vector3.right * 0.1f).x < Path.PathManager.Width / 2)
+                    transform.Translate(Vector3.right * 0.1f);
+            }
             yield return new WaitForSeconds(0.03f);
         }
         if (spr.flipX)

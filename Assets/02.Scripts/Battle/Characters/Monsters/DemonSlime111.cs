@@ -33,7 +33,7 @@ public class DemonSlime111 : Battle_Enemys
 
         Enemy tmpEnmeyData = GameManager.Data.ObjectCodex[110] as Enemy;
 
-        GameManager.Battle.AddEnemy(tmpEnmeyData);
+        GameManager.Battle.AddEnemy(tmpEnmeyData, slime1);
 
         slime1.GetComponent<Battle_Enemys>().Initalize(tmpEnmeyData);
         slime1.GetComponent<Units>().StartBattle();
@@ -42,7 +42,7 @@ public class DemonSlime111 : Battle_Enemys
         spawnPos.y -= 4f;
         GameObject slime2 = Instantiate(redSlimeObject, spawnPos, Quaternion.identity);
 
-        GameManager.Battle.AddEnemy(tmpEnmeyData);
+        GameManager.Battle.AddEnemy(tmpEnmeyData, slime2);
 
         slime2.GetComponent<Battle_Enemys>().Initalize(tmpEnmeyData);
         slime2.GetComponent<Units>().StartBattle();

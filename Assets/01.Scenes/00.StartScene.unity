@@ -368,7 +368,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 74.6
+  m_fontSize: 91.8
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -974,7 +974,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 73.5
+  m_fontSize: 90.5
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1791,6 +1791,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1465555651, guid: a9f3a4bba91ec084496ca84ca399d5af, type: 3}
+      propertyPath: caveNode
+      value: 
+      objectReference: {fileID: 4330236583831257242, guid: 2d89bbe5074a0c9418ab2311dfc3c67b, type: 3}
     - target: {fileID: 8302938173743554296, guid: a9f3a4bba91ec084496ca84ca399d5af, type: 3}
       propertyPath: m_Name
       value: Game Manager

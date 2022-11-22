@@ -91,6 +91,7 @@ public partial class StageManager
                 node.nextStages = stage.NextStages;
                 node.enemies = stage.Enemies;
 
+
                 serializeNodes.Add(node);
             }
         }
@@ -100,6 +101,8 @@ public partial class StageManager
             foreach(StageNode stageNode in stageNodes)
             {
                 stageNode.button.interactable = true;
+
+                stageNode.ChangeNodeAlpha(true);
             }
         }
 
@@ -110,10 +113,12 @@ public partial class StageManager
                 if(stageNode.IsInteractable)
                 {
                     stageNode.button.interactable = true;
+                    stageNode.ChangeNodeAlpha(true);
                 }
                 else
                 {
                     stageNode.button.interactable = false;
+                    stageNode.ChangeNodeAlpha(false);
                 }
             }
         }
