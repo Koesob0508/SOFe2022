@@ -86,8 +86,10 @@ public class GetInputField : MonoBehaviour
 
     public void EnrollUser()
     {
-        Hero UserHero = (Hero)GameManager.Data.LoadObject(00, GameManager.ObjectType.Hero);
+        //Hero UserHero = (Hero)GameManager.Data.LoadObject(00, GameManager.ObjectType.Hero);
+        Hero UserHero = (Hero)GameManager.Data.LoadObject((uint)startHerosGUIDs[currentStartHeros], GameManager.ObjectType.Hero);
         GameManager.Data.UserName = User_Name;
+        GameManager.Data.UserGuid = (uint)startHerosGUIDs[currentStartHeros];
         GameManager.Data.UserMbti = User_Mbti;
 
         // Enroll User Hero
@@ -99,11 +101,6 @@ public class GetInputField : MonoBehaviour
         GameManager.Relation.NewHeroScore(UserHero);
 
         //GameManager.Data.Save();
-
-        Hero startingHeros = GameManager.Data.ObjectCodex[(uint)startHerosGUIDs[currentStartHeros]] as Hero;
-        startingHeros.IsActive = true;
-
-        GameManager.Hero.HeroList.Add(startingHeros);
 
     }
 
