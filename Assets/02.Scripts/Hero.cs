@@ -41,5 +41,10 @@ public class Hero : Character
         tmp.GUID = GUID;
         return tmp;
     }
+
+    public override bool Equals(object obj)
+    {
+        return this.Name == ((Hero)obj).Name;
+    }
 }
        

@@ -17,8 +17,9 @@ public partial class RelationshipManager : MonoBehaviour
         Ignore
     }
     public List<Hero> HeroList = new List<Hero>();
-    public sbyte RelationScore;
+    public int RelationScore;
     [SerializeField] private List<CustomSignal> signals;
+    [SerializeField] private List<CustomRank> ranks;
     [SerializeField] private GameObject noticeBallon;
     [SerializeField] private TMP_Text noticeText;
     [SerializeField] private TMP_Text explainText;
@@ -77,6 +78,8 @@ public partial class RelationshipManager : MonoBehaviour
 
             RelationScore += Score;
         }
+
+        UpdateTeamScore();
     }
 
     // 두 용병 사이의 현재 Score를 Get
@@ -118,7 +121,7 @@ public partial class RelationshipManager : MonoBehaviour
     }
 
     // 현재 TeamScore를 Get
-    public sbyte GetTeamScore()
+    public int GetTeamScore()
     {
         // TeamScore를 Return
         Debug.Log("현재 TeamScore은: " + RelationScore);
@@ -138,6 +141,8 @@ public partial class RelationshipManager : MonoBehaviour
     {
         MBTIScore[(int)A_Hero.GUID, (int)B_Hero.GUID] += var;
         // MBTIScore[(int)B_Hero.GUID, (int)A_Hero.GUID] += var;
+
+        UpdateTeamScore();
     }
 
     public void Win()
@@ -277,5 +282,40 @@ public partial class RelationshipManager : MonoBehaviour
 
         canRead = true;
         _gameObject.SetActive(false);
+    }
+
+    private void UpdateTeamScore()
+    {
+        RelationScore = CalculateTeamScore();
+
+        ReadRanks();
+    }
+
+    private void ReadRanks()
+    {
+        foreach(CustomRank rank in ranks)
+        {
+            rank.Judge(RelationScore);
+        }
+
+        Debug.LogError(GetTeamScore());
+    }
+
+    private int CalculateTeamScore()
+    {
+        int teamScore = 0;
+        foreach (Hero heroA in GameManager.Hero.GetHeroList())
+        {
+            foreach (Hero heroB in GameManager.Hero.GetHeroList())
+            {
+                if (!(heroA.Name == heroB.Name))
+                {
+                    teamScore += GetBetweenScore(heroA, heroB);
+                    teamScore += GetBetweenScore(heroB, heroA);
+                }
+            }
+        }
+
+        return teamScore/2;
     }
 }
