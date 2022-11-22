@@ -11,12 +11,14 @@ public class DataManager
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
+    public String UserName;
     public uint Money = 3000;
 
     [Serializable]
     private struct SaveFormat
     {
         public List<Hero> HeroData;
+        public String User;
         public string MapData;
         public uint Money;
         public string Version;
@@ -250,6 +252,7 @@ public class DataManager
     {
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
+        saveData.User = UserName;
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();
         saveData.Money = Money;

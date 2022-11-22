@@ -12,7 +12,7 @@ public class HeroManager : MonoBehaviour
     public void Test()
     {
         Debug.Log("Test를 위해 Hero 임시로 등록합니다");
-        EnrollHero(0);
+        //EnrollHero(0);
         EnrollHero(1);
         EnrollHero(2);
         EnrollHero(3);

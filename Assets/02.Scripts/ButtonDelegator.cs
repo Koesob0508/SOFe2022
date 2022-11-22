@@ -11,6 +11,11 @@ namespace Koesob
             GameManager.Scene.ToInitGameScene();
         }
 
+        public void ToUserInput()
+        {
+            GameManager.Scene.ToUserInputScene();
+        }
+
         public void ToStageSelect()
         {
             GameManager.Scene.ToStageSelectScene();

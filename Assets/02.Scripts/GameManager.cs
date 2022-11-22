@@ -131,7 +131,8 @@ public class GameManager : MonoBehaviour
         Data.Init();
         Stage.Init();
 
-        GameManager.Scene.ToStageSelectScene();
+        //GameManager.Scene.ToStageSelectScene();
+        GameManager.Scene.ToUserInputScene();
     }
 
     private void Test()
