@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     private void Test()
     {
         Debug.Log("테스트를 진행합니다.");
-        Hero.Test();
+        //Hero.Test();
         // 이 밑으로 진행할 Test 코드를 입력한 후, Start 함수에 가서 Test의 주석 처리를 해제하면 됩니다. 
     }
 

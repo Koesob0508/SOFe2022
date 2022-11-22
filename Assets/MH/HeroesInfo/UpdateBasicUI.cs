@@ -30,7 +30,7 @@ public class UpdateBasicUI : MonoBehaviour
 
         // Team Point
         TeamSlider = TeamStatus.transform.GetChild(0).GetComponent<Slider>();
-        sbyte TeamScore = GameManager.Relation.GetTeamScore();
+        int TeamScore = GameManager.Relation.GetTeamScore();
 
         TeamSlider.maxValue = 150;
         TeamSlider.minValue = -150;

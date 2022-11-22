@@ -16,7 +16,6 @@ public class HeroManager : MonoBehaviour
         EnrollHero(1);
         EnrollHero(5);
         EnrollHero(7);
-        EnrollHero(2);
 
         AddHeroItem(5, 200, 0);
         AddHeroItem(5, 205, 1);

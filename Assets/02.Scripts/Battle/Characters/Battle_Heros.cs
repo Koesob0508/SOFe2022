@@ -33,14 +33,14 @@ public class Battle_Heros : Units
 
         base.Attack();
 
-        attackSpeed = charData.AttackSpeed / attackAnimationClip.length;
+        attackSpeed = attackAnimationClip.length * charData.AttackSpeed;
         btComp.TreeObject.bBoard.SetValueAsFloat("AttackDelay", 1 / attackSpeed);
         animator.SetFloat("AttackSpeed", attackSpeed);
 
         StartCoroutine(CouroutineAttack());
         
         if(bHasSkill)
-            charData.CurrentMana += 10;
+            charData.CurrentMana += 30;
 
         if (charData.CurrentMana >= charData.MaxMana && bHasSkill)
         {

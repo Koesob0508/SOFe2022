@@ -15,9 +15,29 @@ public class GetInputField : MonoBehaviour
     private string User_Name;
     private GameManager.MbtiType User_Mbti;
 
+    public Image UserImage;
+
+    private List<int> startHerosGUIDs = new List<int>();
+    private List<Sprite> heroSprites;
+    private int currentStartHeros = 0;
+
     void Start()
     {
         StartButton.SetActive(false);
+        startHerosGUIDs.Add(9);
+        startHerosGUIDs.Add(10);
+        startHerosGUIDs.Add(14);
+        startHerosGUIDs.Add(15);
+
+        heroSprites = new List<Sprite>();
+
+        for (int i = 0; i < startHerosGUIDs.Count; i++)
+        {
+            heroSprites.Add(GameManager.Data.LoadSprite((uint)startHerosGUIDs[i]));
+        }
+
+        print($"startHeros: {startHerosGUIDs.Count}");
+        
     }
 
     public void OnValueChangeEvent_Name(string str)
@@ -79,11 +99,33 @@ public class GetInputField : MonoBehaviour
         GameManager.Relation.NewHeroScore(UserHero);
 
         //GameManager.Data.Save();
+
+        Hero startingHeros = GameManager.Data.ObjectCodex[(uint)startHerosGUIDs[currentStartHeros]] as Hero;
+        startingHeros.IsActive = true;
+
+        GameManager.Hero.HeroList.Add(startingHeros);
+
     }
 
     public void OnSelectEvent(string str)
     {
 
+    }
+
+    public void RightButton()
+    {
+        currentStartHeros = (currentStartHeros + 1) % startHerosGUIDs.Count;
+
+        UserImage.sprite = heroSprites[currentStartHeros];
+
+    }
+    public void LeftButton()
+    {
+        currentStartHeros = (currentStartHeros - 1);
+        if (currentStartHeros < 0)
+            currentStartHeros = startHerosGUIDs.Count - 1;
+
+        UserImage.sprite = heroSprites[currentStartHeros];
     }
 
 }
