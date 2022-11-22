@@ -12,6 +12,7 @@ public partial class RelationshipManager : MonoBehaviour
     [SerializeField] private GameObject noticeBallon;
     [SerializeField] private TMP_Text noticeText;
     [SerializeField] private TMP_Text explainText;
+    [SerializeField] private bool canRead;
 
     public void Init()
     {
@@ -22,6 +23,8 @@ public partial class RelationshipManager : MonoBehaviour
         {
             customSignal.Init();
         }
+
+        canRead = true;
     }
 
     // 원래 정의된 기본 관계 점수
@@ -173,8 +176,11 @@ public partial class RelationshipManager : MonoBehaviour
                     noticeText.text = noticeLog.Item1;
                     explainText.text = noticeLog.Item2;
 
+                    canRead = false;
                     noticeBallon.SetActive(true);
                     StartCoroutine(SetDisable(noticeBallon));
+
+                    break;
                 }
             }
         }
@@ -184,8 +190,9 @@ public partial class RelationshipManager : MonoBehaviour
 
     private IEnumerator SetDisable(GameObject _gameObject)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
+        canRead = true;
         _gameObject.SetActive(false);
     }
 }
