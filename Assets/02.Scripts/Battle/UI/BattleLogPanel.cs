@@ -23,11 +23,24 @@ public class BattleLogPanel : MonoBehaviour
         public Character Causer;
         public Character Target;
         public LogType Type;
+        public GameObject CauserObject;
+        public GameObject TargetObject;
         public Log(Character Causer, Character Target, LogType type)
         {
             this.Causer = Causer;
             this.Target = Target;
             Type = type;
+            this.CauserObject = null;
+            this.TargetObject = null;
+        }
+
+        public Log(Character Causer, Character Target, LogType type, GameObject _causerobject, GameObject _targetObject)
+        {
+            this.Causer = Causer;
+            this.Target = Target;
+            Type = type;
+            this.CauserObject = _causerobject;
+            this.TargetObject = _targetObject;
         }
     }
 

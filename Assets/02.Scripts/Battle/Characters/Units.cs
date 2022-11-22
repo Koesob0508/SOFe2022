@@ -142,6 +142,8 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClick
         log.Causer = charData;
         log.Target = attackTarget.GetComponent<Units>().charData;
         log.Type = BattleLogPanel.LogType.Skill;
+        log.CauserObject = this.gameObject;
+        log.TargetObject = attackTarget;
         GameManager.Battle.LogDelegate(log);
         PlaySkillAnimation();
 

@@ -6,6 +6,16 @@ using System;
 
 public partial class RelationshipManager : MonoBehaviour
 {
+    public enum Type
+    {
+        Fiance,
+        Some,
+        Positive,
+        Normal,
+        Negative,
+        Disgust,
+        Ignore
+    }
     public List<Hero> HeroList = new List<Hero>();
     public sbyte RelationScore;
     [SerializeField] private List<CustomSignal> signals;
@@ -73,6 +83,38 @@ public partial class RelationshipManager : MonoBehaviour
     public sbyte GetBetweenScore(Hero A_Hero, Hero B_Hero)
     {
         return MBTIScore[(int)A_Hero.MBTI, (int)B_Hero.MBTI];
+    }
+
+    public Type GetBetweenType(Hero _heroA, Hero _heroB)
+    {
+        if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 5)
+        {
+            return Type.Fiance;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 3)
+        {
+            return Type.Some;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > 0)
+        {
+            return Type.Positive;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] == 0)
+        {
+            return Type.Normal;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > -3)
+        {
+            return Type.Negative;
+        }
+        else if(MBTIScore[(int)_heroA.MBTI, (int)_heroB.MBTI] > -5)
+        {
+            return Type.Disgust;
+        }
+        else
+        {
+            return Type.Ignore;
+        }
     }
 
     // ÇöÀç TeamScore¸¦ Get
@@ -211,6 +253,7 @@ public partial class RelationshipManager : MonoBehaviour
 
                 if (noticeLog.Item1 != null)
                 {
+                    Debug.LogError(noticeLog.Item1);
                     noticeText.text = noticeLog.Item1;
                     explainText.text = noticeLog.Item2;
 
@@ -230,7 +273,7 @@ public partial class RelationshipManager : MonoBehaviour
 
     private IEnumerator SetDisable(GameObject _gameObject)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         canRead = true;
         _gameObject.SetActive(false);
