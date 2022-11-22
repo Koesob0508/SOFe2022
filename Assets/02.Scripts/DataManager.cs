@@ -92,15 +92,16 @@ public class DataManager
             Enemy enemy = new Enemy();
             enemy.GUID = uint.Parse(elems[0]);
             enemy.Name = elems[1];
-            enemy.Type = (GameManager.ObjectType)Int32.Parse(elems[2]);
-            enemy.MaxHP = float.Parse(elems[3]);
-            enemy.AttackDamage = float.Parse(elems[4]);
-            enemy.AttackSpeed = float.Parse(elems[5]);
-            enemy.DefensePoint = float.Parse(elems[6]);
-            enemy.MaxMana = float.Parse(elems[7]);
-            enemy.MoveSpeed = float.Parse(elems[8]);
-            enemy.AttackRange = float.Parse(elems[9]);
             enemy.Type = GameManager.ObjectType.Enemy;
+            enemy.MaxHP = float.Parse(elems[2]);
+            enemy.AttackDamage = float.Parse(elems[3]);
+            enemy.AttackSpeed = float.Parse(elems[4]);
+            enemy.DefensePoint = float.Parse(elems[5]);
+            enemy.MaxMana = float.Parse(elems[6]);
+            enemy.MoveSpeed = float.Parse(elems[7]);
+            enemy.AttackRange = float.Parse(elems[8]);
+            enemy.min_Coin = uint.Parse(elems[9]);
+            enemy.max_Coin = uint.Parse(elems[10]);
             line1 = csvImp1.Readline();
 
             ObjectCodex.Add(enemy.GUID, enemy);

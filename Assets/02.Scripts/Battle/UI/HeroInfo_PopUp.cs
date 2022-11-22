@@ -26,6 +26,7 @@ public class HeroInfo_PopUp : MonoBehaviour
         heroData = hero;
         NameTXT.text = hero.Name;
         PersonalityTXT.text = hero.MBTI.ToString();
+
         Color color = Color.black;
         switch (hero.MBTI)
         {
@@ -83,7 +84,7 @@ public class HeroInfo_PopUp : MonoBehaviour
         HealthBar.fillAmount = hero.CurrentHP / (float)hero.MaxHP;
         HungerBar.fillAmount = hero.CurHunger / 100.0f;
 
-        HpValTxt.text = hero.CurrentHP.ToString() + "(" + ((int)hero.MaxHP).ToString() + ")";
+        HpValTxt.text = ((int)hero.CurrentHP).ToString() + "(" + ((int)hero.MaxHP).ToString() + ")";
         HungerValTxt.text = ((int)hero.CurHunger).ToString() + "(100)";
 
         HpTXT.text = "HP : " + hero.MaxHP.ToString();

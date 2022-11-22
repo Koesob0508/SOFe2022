@@ -6,7 +6,8 @@ using UnityEngine;
 public class Enemy : Character
 {
     public Vector2 Position;
-
+    public uint min_Coin;
+    public uint max_Coin;
     public Enemy DeepCopy(Enemy _enemy)
     {
         Enemy result = new Enemy();
@@ -26,7 +27,8 @@ public class Enemy : Character
         result.AttackSpeed = _enemy.AttackSpeed;
         result.DefensePoint = _enemy.DefensePoint;
         result.Position = _enemy.Position;
-
+        result.min_Coin = _enemy.min_Coin;
+        result.max_Coin = _enemy.max_Coin;
         return result;
     }
 }

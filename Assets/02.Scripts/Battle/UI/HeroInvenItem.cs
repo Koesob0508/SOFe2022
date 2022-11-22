@@ -52,7 +52,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
             HeroObject.transform.position = WorldPos;
 
             parentPanel.StartDragging();
-            GameManager.Battle.ClosePopUp();
+            GameManager.Battle.CloseInfoPopUp();
         }
     }
 
@@ -148,7 +148,7 @@ public class HeroInvenItem : MonoBehaviour, IPointerClickHandler ,IBeginDragHand
         isDead = hero.isDead;
 
         if (isDead)
-            HeroImage.color = new Color(1, 1, 1, 0.5f);
+            HeroImage.color = new Color(0.3f, 0.3f, 0.3f, 1f);
 
         SetHeroObj(GameManager.Battle.CreateHero(hero));
     } 
