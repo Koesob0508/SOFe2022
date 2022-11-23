@@ -32,14 +32,13 @@ Dungeon and Signal은 점점 강해지는 적과 싸우며 강한 아군 용병�
 
 맵은 총 3스테이지로 구성되어있으며, 점점 강한 적을 상대하여야 한다.   
 <p align="center">
-<h3> 해골 도시 > 죽음의 도시 > 고대 도시   <h3>
-각 스테이지 보스   
+<h3> 해골 도시 > 죽음의 도시 > 고대 도시   </h3>
+각 스테이지 보스    
+<img src="https://user-images.githubusercontent.com/99636089/203457524-cfbdf4d9-cd0d-47fa-845d-8a3ad00b1155.png" width = "10%" height="10%">
 
-<img src="https://user-images.githubusercontent.com/99636089/203457524-cfbdf4d9-cd0d-47fa-845d-8a3ad00b1155.png" width = "50%" height="50%">
+<img src="https://user-images.githubusercontent.com/99636089/203457555-ce0d3f89-4f19-4ab7-a747-d78773b8a2d9.png" width = "10%" height="10%">
 
-<img src="https://user-images.githubusercontent.com/99636089/203457555-ce0d3f89-4f19-4ab7-a747-d78773b8a2d9.png" width = "50%" height="50%">
-
-<img src="https://user-images.githubusercontent.com/99636089/203457580-312ac5b3-3100-4f66-bfcc-0e559d643e8a.png" width = "50%" height="50%">
+<img src="https://user-images.githubusercontent.com/99636089/203457580-312ac5b3-3100-4f66-bfcc-0e559d643e8a.png" width = "10%" height="10%">
 
  </p>
 
