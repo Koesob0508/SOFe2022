@@ -63,6 +63,10 @@ Dungeon and Signal은 점점 강해지는 적과 싸우며 강한 아군 용병�
    - 여관에서는 돈을 지불하고 아군 용병의 허기를 채우거나, 체력을 회복시킬 수 있다.   
    - 길드에서는 돈을 지불하고 새로운 용병을 고요할 수 있다.   
 
+<img src="[https://user-images.githubusercontent.com/99636089/203460789-83bb1d65-22ff-4ffb-a34b-4663fb8aef98.png]" width = "30%" height="30%">   
+   
+   <b>☆전투 중 소모되는 허기와 체력은 마을에서만 회복할 수 있음☆</b>   
+
 - 보스 지역   
 ![image](https://user-images.githubusercontent.com/99636089/203456824-2a9ce976-438f-4fa0-a947-b674e0928d22.png)   
    매 스테이지 마지막에는 보스 지역이 존재하며, 해당 지역을 클리어해야만 다음 스테이지로 넘어갈 수 있다.   
@@ -72,17 +76,20 @@ Dungeon and Signal은 점점 강해지는 적과 싸우며 강한 아군 용병�
 <summary><h4>전투 관련</h4></summary>
 
 전투 지역에 들어갈 경우, 전투 준비 > 전투 > 전투 결과 순으로 진행이 된다.   
-- 전투 준비   
+1. 전투 준비 단계   
    적 유닛을 보고, 전략적으로 아군 용병을 배치해야 한다.   
    이때 배치하는 용병의 MBTI에 따라 적용되는 팀 효과가 달라진다.   
    전투에 참여하는 용병들은 10의 허기가 소모된다.   
+   ![image](https://user-images.githubusercontent.com/99636089/203458320-7fa1840b-d867-4309-8e8a-9d034af467d6.png)   
+
    
-- 전투   
+2. 전투 단계      
    전투 시작 버튼을 누를 경우, 전투가 시작된다.   
    전투는 자동으로 진행되며, 각 캐릭터 들은 마나가 가득찰 경우 고유의 스킬을 사용한다.   
    MBTI 관계에 따라 같은 적을 공격할 경우, 추가 공격이 적용되는 것과 같은 버프가 적용된다.   
+   ![image](https://user-images.githubusercontent.com/99636089/203458381-ca6ccb68-d315-46be-a78b-cb90e756c5ca.png)  
    
-- 전투 결과   
+3. 전투 결과 단계      
    모든 적을 처치하거나 아군 용병이 전멸당하면, 전투가 종료된다.    
    모든 적을 처치할 경우, 처치한 적에 따라 돈이 주어진다.   
    모든 아군이 처치당할 경우, 해당 지역을 다시 도전해야 하며, 더 이상 싸울 용병이 없을 경우 게임이 종료된다.   
@@ -122,6 +129,18 @@ MBTI는 다음과 같이 3가지 요소에 적용된다.
 </details>
 
 <details>
+<summary><h4>부가적 요소</h4> </summary>
+
+<h5> 장비 </h5>   
+   
+![image](https://user-images.githubusercontent.com/99636089/203458833-d789a8e2-cc31-45ad-814e-822f7e1d9b08.png)   
+   
+마을, 전투, 이벤트 등을 통해 장비를 구매하거나 얻을 수 있다.    
+같은 등급의 같은 장비 두 개를 합쳐 다음 등급의 장비로 강화할 수 있으며, 그에 따른 효과가 증가한다.   
+   
+</details>
+
+<details>
 <summary><h4>기술적 요소</h4></summary>
 1. [BT구현] 유니티에서 효율적인 전투 AI 구현을 위한, Behavior Tree 기능 구현.
 <p align="center">
@@ -135,8 +154,13 @@ MBTI는 다음과 같이 3가지 요소에 적용된다.
 <img src="https://user-images.githubusercontent.com/99636089/202722466-7c79d658-bb43-4a8d-a408-7b6e9a5f9314.png">
 <img src="https://user-images.githubusercontent.com/99636089/202722473-dd9c8c9c-4343-4184-ba10-50b591884dec.png">
 
-4. 데이터 세이브&로드
+이에 대해서는 기획에 따라 유동적으로 수정할 수 있게 시스템 구현.
+![image](https://user-images.githubusercontent.com/99636089/203458964-341d9514-25a4-4cc5-9aff-5a255afb0d2a.png)   
 
+4. 데이터 세이브&로드
+현재 아군에 대한 체력, 허기, 장비와 같은 정보와 현재 클리어 스테이지 현재 맵의 형태 등을 모두 데이터로 저장함.
+이어하기를 할 경우 해당 정보를 받아와 이어서 진행할 수 있음.
+   
 5. 로그 시스템   
 전투 시 발생하는 스킬이나 적 처치와 같은 기록은 전투 중 로그로 기록됨.   
 ![image](https://user-images.githubusercontent.com/99636089/203457335-c5b5237e-c71e-4fef-b2e7-3dbd2df91f48.png)   
