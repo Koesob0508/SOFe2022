@@ -63,7 +63,8 @@ Dungeon and Signal은 점점 강해지는 적과 싸우며 강한 아군 용병�
    - 여관에서는 돈을 지불하고 아군 용병의 허기를 채우거나, 체력을 회복시킬 수 있다.   
    - 길드에서는 돈을 지불하고 새로운 용병을 고요할 수 있다.   
 
-<img src="[https://user-images.githubusercontent.com/99636089/203460789-83bb1d65-22ff-4ffb-a34b-4663fb8aef98.png]" width = "30%" height="30%">   
+<p align="center">
+<img src="https://user-images.githubusercontent.com/99636089/203460789-83bb1d65-22ff-4ffb-a34b-4663fb8aef98.png" width = "30%" height="30%"></   
    
    <b>☆전투 중 소모되는 허기와 체력은 마을에서만 회복할 수 있음☆</b>   
 
