@@ -147,7 +147,7 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClick
         GameManager.Battle.LogDelegate(log);
         PlaySkillAnimation();
 
-        StartCoroutine("CouroutineSkill");
+        StartCoroutine(CouroutineSkill());
 
     }
 
@@ -156,7 +156,6 @@ public class Units : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClick
         yield return new WaitForSeconds(0.05f);
 
         float t = GetCurrentAnimationTime();
-
         yield return new WaitForSeconds(t + attackSpeed);
         if(gameObject.activeSelf)
             skillFinished();

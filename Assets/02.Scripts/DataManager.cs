@@ -11,6 +11,7 @@ public class DataManager
     public Dictionary<uint, GlobalObject> ObjectCodex = new Dictionary<uint, GlobalObject>();
     public Dictionary<uint, Sprite> UI_Img = new Dictionary<uint, Sprite>();
     public List<StageData> StageData = new List<StageData>();
+    public uint UserGuid;
     public String UserName;
     public GameManager.MbtiType UserMbti;
     public uint Money = 927;
@@ -20,6 +21,7 @@ public class DataManager
     {
         public List<Hero> HeroData;
         public String User;
+        public uint guid;
         public GameManager.MbtiType Mbti;
         public string MapData;
         public uint Money;
@@ -261,6 +263,7 @@ public class DataManager
         SaveFormat saveData;
         saveData.HeroData = new List<Hero>();
         saveData.User = UserName;
+        saveData.guid = UserGuid;
         saveData.Mbti = UserMbti;
         saveData.MapData = GameManager.Stage.SerializeStageMap();
         saveData.Version = GameManager.Instance.GetVersion();

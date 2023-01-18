@@ -6,8 +6,6 @@ using TMPro;
 
 public class UpdateBasicUI : MonoBehaviour
 {
-
-
     public Gradient gradient;
     public GameObject User, Money, TeamStatus;
 
@@ -19,7 +17,7 @@ public class UpdateBasicUI : MonoBehaviour
     {
         //  User 정보 Set
         // 임시로 Data 지정
-        User.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(0);
+        User.transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Data.LoadSprite(GameManager.Data.UserGuid);
         User.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText(GameManager.Data.UserName);
         User.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText(GameManager.Data.UserMbti.ToString());
         User.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText("Stage: 00stage..");
