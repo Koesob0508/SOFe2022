@@ -40,6 +40,7 @@ public class DataManager
         }
         else
         {
+            GameObject.Find("ContinueButton").SetActive(false);
             LoadInitialHeroData();
             //Hero[] startingHeros = { ObjectCodex[9] as Hero, ObjectCodex[10] as Hero, ObjectCodex[14] as Hero, ObjectCodex[15] as Hero, ObjectCodex[16] as Hero };
             //for(int i = 0; i < startingHeros.Length; i++)
@@ -294,7 +295,6 @@ public class DataManager
     public void Load()
     {
         string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
-
         System.IO.FileStream fStream = System.IO.File.Open(path, System.IO.FileMode.Open);
         BinaryFormatter formatter = new BinaryFormatter();
         SaveFormat savedData = (SaveFormat)formatter.Deserialize(fStream);
@@ -318,8 +318,7 @@ public class DataManager
             string path = Application.persistentDataPath + "/Save/s_" + GameManager.Instance.GetVersion();
 
             System.IO.File.Delete(path);
-
-            Debug.Log(IsExistSaveData());
+            Debug.Log("Now Save File Status: " + System.IO.File.Exists(path));
         }
 
         ObjectCodex.Clear();
