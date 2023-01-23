@@ -15,7 +15,7 @@ public class GetInputField : MonoBehaviour
     [SerializeField] private string User_Name;
     [SerializeField] private GameManager.MbtiType User_Mbti;
 
-    [SerializeField] public Image UserImage;
+    [SerializeField] private Image HeroImage;
 
     private List<int> startHerosGUIDs = new List<int>();
     private List<Sprite> heroSprites;
@@ -114,7 +114,7 @@ public class GetInputField : MonoBehaviour
     {
         currentStartHeros = (currentStartHeros + 1) % startHerosGUIDs.Count;
 
-        UserImage.sprite = heroSprites[currentStartHeros];
+        HeroImage.sprite = heroSprites[currentStartHeros];
 
     }
     public void LeftButton()
@@ -123,7 +123,7 @@ public class GetInputField : MonoBehaviour
         if (currentStartHeros < 0)
             currentStartHeros = startHerosGUIDs.Count - 1;
 
-        UserImage.sprite = heroSprites[currentStartHeros];
+        HeroImage.sprite = heroSprites[currentStartHeros];
     }
 
 }
