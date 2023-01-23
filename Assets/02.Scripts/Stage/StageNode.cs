@@ -112,6 +112,11 @@ public class StageNode : MonoBehaviour
 
     public void LoadInit(StageManager.SerializedNode _saved, float _scale)
     {
+        animator = node.GetComponent<Animator>();
+
+        nodeSR = node.GetComponent<SpriteRenderer>();
+        nodeGroundSR = nodeGround.GetComponent<SpriteRenderer>();
+
         Type = _saved.type;
         Step = _saved.step;
         Index = _saved.index;
