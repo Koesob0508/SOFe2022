@@ -163,8 +163,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: " \uC6A9\uBCD1 \uBC30\uCE58"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b642b930542cab047b0c958a47ae8995, type: 2}
-  m_sharedMaterial: {fileID: -6160616668218623608, guid: b642b930542cab047b0c958a47ae8995, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4894ad3dde6847b4eb51f2d4fdd8f36e, type: 2}
+  m_sharedMaterial: {fileID: -3008301210951016452, guid: 4894ad3dde6847b4eb51f2d4fdd8f36e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.5
+  m_fontSize: 42.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

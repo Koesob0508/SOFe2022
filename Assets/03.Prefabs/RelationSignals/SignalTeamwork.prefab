@@ -156,34 +156,8 @@ MonoBehaviour:
       SpeicalNum: 0
       Info: 
     ItemNum: 0
-  preCharacter:
-    GUID: 0
-    Name: 
-    Type: 0
-    MaxHP: 0
-    CurrentHP: 0
-    CurHunger: 0
-    MaxMana: 0
-    CurrentMana: 0
-    MoveSpeed: 0
-    AttackDamage: 0
-    AttackRange: 0
-    AttackSpeed: 0
-    DefensePoint: 0
-  postCharacter:
-    GUID: 0
-    Name: 
-    Type: 0
-    MaxHP: 0
-    CurrentHP: 0
-    CurHunger: 0
-    MaxMana: 0
-    CurrentMana: 0
-    MoveSpeed: 0
-    AttackDamage: 0
-    AttackRange: 0
-    AttackSpeed: 0
-    DefensePoint: 0
+  preCharacter: {fileID: 0}
+  postCharacter: {fileID: 0}
   preChat: {fileID: 530568752875626827}
   postChat: {fileID: 530568753426840902}
   preText: {fileID: 6873539896326057689}
@@ -262,6 +236,14 @@ PrefabInstance:
     - target: {fileID: 6873539896978605541, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
       propertyPath: m_text
       value: "\uC774\uAC83\uB3C4 \uCC9C\uC0DD\uC5F0\uBD84?!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873539896978605541, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4894ad3dde6847b4eb51f2d4fdd8f36e, type: 2}
+    - target: {fileID: 6873539896978605541, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8608573930456805994, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
       propertyPath: m_SortingLayer
@@ -368,6 +350,14 @@ PrefabInstance:
     - target: {fileID: 6458007417900532849, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
       propertyPath: m_SortingLayerID
       value: 81686601
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873539896978605541, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4894ad3dde6847b4eb51f2d4fdd8f36e, type: 2}
+    - target: {fileID: 6873539896978605541, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8608573930456805994, guid: f402c08fa974cee429ff69f5bfd93c1c, type: 3}
       propertyPath: m_SortingLayer

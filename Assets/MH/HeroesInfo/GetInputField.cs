@@ -7,15 +7,15 @@ using TMPro;
 
 public class GetInputField : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI Name, MBTI;
-    public Sprite CheckUI, UnCheckUI;
-    public GameObject Q1, Q2;
-    public GameObject StartButton;
-    private string User_Name;
-    private GameManager.MbtiType User_Mbti;
 
-    public Image UserImage;
+    [SerializeField] private TextMeshProUGUI Name, MBTI;
+    [SerializeField] private Sprite CheckUI, UnCheckUI;
+    [SerializeField] private GameObject Q1, Q2;
+    [SerializeField] private GameObject StartButton;
+    [SerializeField] private string User_Name;
+    [SerializeField] private GameManager.MbtiType User_Mbti;
+
+    [SerializeField] public Image UserImage;
 
     private List<int> startHerosGUIDs = new List<int>();
     private List<Sprite> heroSprites;
@@ -65,17 +65,18 @@ public class GetInputField : MonoBehaviour
     }
     public void OnEndEditEvent_Mbti(string str)
     {
-        if (str.Length > 0 && Enum.IsDefined(typeof(GameManager.MbtiType), str))
+        if (str.Length > 0 && Enum.IsDefined(typeof(GameManager.MbtiType), str.ToUpper()))
         {
             Q2.transform.GetChild(1).GetComponent<Image>().sprite = CheckUI;
 
             if (Name.text == "ÀÌ¸§:")
             {
                 Name.text = "ÀÌ¸§: ¸ú¸ú¸ú";
-                User_Name = "¸ú¸ú¸ú";
+                User_Name = "¸ú¸ú¸ú"; // ¾î¶»°Ô »ç¶÷ ÀÌ¸§ÀÌ ¸ú¸ú¸ú
                 Q1.transform.GetChild(1).GetComponent<Image>().sprite = CheckUI;
             }
-            User_Mbti = (GameManager.MbtiType)Enum.Parse(typeof(GameManager.MbtiType), str);
+            User_Mbti = (GameManager.MbtiType)Enum.Parse(typeof(GameManager.MbtiType), str.ToUpper());
+            MBTI.text = "MBTI: " + str.ToUpper();
             StartButton.SetActive(true);
         }
         else
