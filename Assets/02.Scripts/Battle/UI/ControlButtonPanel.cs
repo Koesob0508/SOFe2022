@@ -22,15 +22,23 @@ public class ControlButtonPanel : MonoBehaviour
     {
         isMuted = !isMuted;
         if (isMuted)
+        {
             img.sprite = MuteSprite;
+            GameManager.Sound.Mute();
+        }
         else
+        {
             img.sprite = SoundSprite;
+            GameManager.Sound.UnMute();
+        }
     }
     public void TogglePause(Image img)
     {
         isPaused = !isPaused;
         if (isPaused)
+        {
             img.sprite = PauseSprite;
+        }
         else
         {
             img.sprite = ActiveSprite;
@@ -40,12 +48,15 @@ public class ControlButtonPanel : MonoBehaviour
     {
         isFast = !isFast;
         if (isFast)
+        {
             img.color = Color.red;
+            Time.timeScale = 2.0f;
+        }
         else
         {
             img.color = Color.white;
             img.color = new Color(1, 1, 1, 0.58f);
-
+            Time.timeScale = 1.0f;
         }
     }
 }

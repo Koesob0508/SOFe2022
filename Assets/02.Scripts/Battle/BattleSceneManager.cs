@@ -31,6 +31,7 @@ public class BattleSceneManager : MonoBehaviour
     private HeroInvenPanel hInvenPanel;
     private BattleEndUI bEndPanel;
     private SynergyPanel synergyPanel;
+    private ControlButtonPanel controlBtnPanel;
     private uint hCount = 0;
     private uint eCount = 0;
 
@@ -67,20 +68,32 @@ public class BattleSceneManager : MonoBehaviour
         hInvenPanel = BattleCanvas.GetComponentInChildren<HeroInvenPanel>();
         bEndPanel = BattleCanvas.GetComponentInChildren<BattleEndUI>();
         synergyPanel = BattleCanvas.GetComponentInChildren<SynergyPanel>();
+        controlBtnPanel = BattleCanvas.GetComponentInChildren<ControlButtonPanel>();
+        infoPopUp_Prefab = Resources.Load<GameObject>("Prefabs/UI/HeroInfo_PopUp");
+
+        if(BattleCanvas == null)
+        {
+            Debug.LogError("Battle Canvas Didnt Initalized");
+        }
         if (bEndPanel != null)
         {
             bEndPanel.gameObject.SetActive(false);
         }
         else
-            Debug.Log("EndPanel Didnt Initalized");
+            Debug.LogError("EndPanel Didnt Initalized");
         if(bLogPanel != null)
         {
             bLogPanel.gameObject.SetActive(false);
         }
         else
-            Debug.Log("LogPanel Didnt Initalized");
+            Debug.LogError("LogPanel Didnt Initalized");
+        if (controlBtnPanel != null)
+        {
+            controlBtnPanel.gameObject.SetActive(false);
+        }
+        else
+            Debug.LogError("Control Button Panel Didnt Initalized");
 
-        infoPopUp_Prefab = Resources.Load<GameObject>("Prefabs/UI/HeroInfo_PopUp");
         if (infoPopUp_Prefab == null)
             Debug.Log("InfoPopUp Didnt Initalized");
         else
@@ -513,10 +526,11 @@ public class BattleSceneManager : MonoBehaviour
             spriteRenderers.Add(enemy.GetComponent<SpriteRenderer>());
             enemy.GetComponent<Units>().StartBattle();
         }
+
         startBtn.gameObject.SetActive(false);
         hInvenPanel.gameObject.SetActive(false);
         bLogPanel.gameObject.SetActive(true);
-
+        controlBtnPanel.gameObject.SetActive(true);
         CloseInfoPopUp();
 
         bBattleStarted = true;
@@ -534,7 +548,6 @@ public class BattleSceneManager : MonoBehaviour
     IEnumerator ActivateBattleEndUI(bool bIsWin)
     {
 
-        
         Time.timeScale = 0.3f;
         yield return new WaitForSeconds(1);
         Time.timeScale = 1f;
@@ -548,8 +561,11 @@ public class BattleSceneManager : MonoBehaviour
             AfterBattleHeroInfo.Add(hDataList.Find((hero) => { return hero.GUID == guid; }));
         }
         bEndPanel.Initalize(bIsWin,BeforeBattleHeroInfo,AfterBattleHeroInfo);
+
         bLogPanel.gameObject.SetActive(false);
         synergyPanel.gameObject.SetActive(false);
+        controlBtnPanel.gameObject.SetActive(false);
+
         yield break;
     }
     IEnumerator FadeInTransition(Color col)
