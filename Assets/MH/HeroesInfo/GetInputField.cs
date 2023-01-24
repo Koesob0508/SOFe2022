@@ -7,15 +7,24 @@ using TMPro;
 
 public class GetInputField : MonoBehaviour
 {
+    private string userName;
+    private GameManager.MbtiType userMBTI;
 
-    [SerializeField] private TextMeshProUGUI Name, MBTI;
-    [SerializeField] private Sprite CheckUI, UnCheckUI;
-    [SerializeField] private GameObject Q1, Q2;
-    [SerializeField] private GameObject StartButton;
-    [SerializeField] private string User_Name;
-    [SerializeField] private GameManager.MbtiType User_Mbti;
+    [Header("플레이어 관련 오브젝트")]
+    [SerializeField] private Image userImage;
+    [SerializeField] private TMP_InputField inputUserName;
+    [SerializeField] private TMP_InputField inputUserMBTI;
+    [SerializeField] private TextMeshProUGUI outputUserName, outputUserMBTI;
+    [SerializeField] private Sprite checkUI, uncheckUI;
+    [SerializeField] private GameObject q1, q2;
 
-    [SerializeField] private Image HeroImage;
+    [Header("동료 영웅 관련 오브젝트")]
+    [SerializeField] private Image heroImage;
+    [SerializeField] private TextMeshProUGUI outputHeroName, outputHeroMBTI;
+    [SerializeField] private Button leftButton, rightButton;
+
+    [Header("시작 버튼")]
+    [SerializeField] private GameObject startButton;
 
     private List<int> startHerosGUIDs = new List<int>();
     private List<Sprite> heroSprites;
@@ -23,7 +32,29 @@ public class GetInputField : MonoBehaviour
 
     void Start()
     {
-        StartButton.SetActive(false);
+        // UserImage 처리
+        userImage.sprite = GameManager.Data.LoadSprite(uint.MaxValue);
+
+        // InputField의 연결 처리
+        inputUserName.onValueChanged.AddListener((value) =>
+        {
+            OnValueChangeEvent_Name(value);
+            OnEndEditEvent_Name(value);
+        });
+
+        inputUserMBTI.onValueChanged.AddListener((value) =>
+        {
+            OnValueChangeEvent_MBTI(value);
+            OnEndEditEvent_MBTI(value);
+        });
+
+        // LeftButton과 RightButton에 대한 처리
+        leftButton.onClick.AddListener(OnClickLeft);
+        rightButton.onClick.AddListener(OnClickRight);
+
+        // 시작 버튼 처리
+        startButton.SetActive(false);
+
         startHerosGUIDs.Add(9);
         startHerosGUIDs.Add(10);
         startHerosGUIDs.Add(14);
@@ -37,51 +68,56 @@ public class GetInputField : MonoBehaviour
         }
 
         print($"startHeros: {startHerosGUIDs.Count}");
-        
+
     }
 
     public void OnValueChangeEvent_Name(string str)
     {
-        Name.text = $"이름: {str}";
-        User_Name = str;
-    }
-
-    public void OnValueChangeEvent_Mbti(string str)
-    {
-        MBTI.text = $"MBTI: {str}";
+        outputUserName.text = $"이름: {str}";
+        userName = str;
     }
 
     public void OnEndEditEvent_Name(string str)
     {
         if (str.Length > 0)
         {
-            Q1.transform.GetChild(1).GetComponent<Image>().sprite = CheckUI;
-            User_Name = str;
+            q1.transform.GetChild(1).GetComponent<Image>().sprite = checkUI;
+            userName = str;
         }
         else
         {
-            Q1.transform.GetChild(1).GetComponent<Image>().sprite = UnCheckUI;
+            q1.transform.GetChild(1).GetComponent<Image>().sprite = uncheckUI;
         }
     }
-    public void OnEndEditEvent_Mbti(string str)
+
+    public void OnValueChangeEvent_MBTI(string str)
+    {
+        outputUserMBTI.text = $"MBTI: {str}";
+    }
+
+    public void OnEndEditEvent_MBTI(string str)
     {
         if (str.Length > 0 && Enum.IsDefined(typeof(GameManager.MbtiType), str.ToUpper()))
         {
-            Q2.transform.GetChild(1).GetComponent<Image>().sprite = CheckUI;
+            q2.transform.GetChild(1).GetComponent<Image>().sprite = checkUI;
 
-            if (Name.text == "이름:")
+            if (outputUserName.text == "이름:")
             {
-                Name.text = "이름: 뫄뫄뫄";
-                User_Name = "뫄뫄뫄"; // 어떻게 사람 이름이 뫄뫄뫄
-                Q1.transform.GetChild(1).GetComponent<Image>().sprite = CheckUI;
+                outputUserName.text = "이름: 뫄뫄뫄";
+                userName = "뫄뫄뫄"; // 어떻게 사람 이름이 뫄뫄뫄
+                q1.transform.GetChild(1).GetComponent<Image>().sprite = checkUI;
             }
-            User_Mbti = (GameManager.MbtiType)Enum.Parse(typeof(GameManager.MbtiType), str.ToUpper());
-            MBTI.text = "MBTI: " + str.ToUpper();
-            StartButton.SetActive(true);
+            userMBTI = (GameManager.MbtiType)Enum.Parse(typeof(GameManager.MbtiType), str.ToUpper());
+
+            // 입력한 MBTI가 대소문자 상관없이 정상적이라면 알잘딱깔센으로 대문자로 바꿔줌
+            inputUserMBTI.text = str.ToUpper();
+            outputUserMBTI.text = "MBTI: " + str.ToUpper();
+
+            startButton.SetActive(true);
         }
         else
         {
-            Q2.transform.GetChild(1).GetComponent<Image>().sprite = UnCheckUI;
+            q2.transform.GetChild(1).GetComponent<Image>().sprite = uncheckUI;
         }
     }
 
@@ -89,13 +125,13 @@ public class GetInputField : MonoBehaviour
     {
         //Hero UserHero = (Hero)GameManager.Data.LoadObject(00, GameManager.ObjectType.Hero);
         Hero UserHero = (Hero)GameManager.Data.LoadObject((uint)startHerosGUIDs[currentStartHeros], GameManager.ObjectType.Hero);
-        GameManager.Data.UserName = User_Name;
-        GameManager.Data.UserGuid = (uint)startHerosGUIDs[currentStartHeros];
-        GameManager.Data.UserMbti = User_Mbti;
+        GameManager.Data.UserName = userName;
+        GameManager.Data.UserGuid = uint.MaxValue;
+        GameManager.Data.UserMbti = userMBTI;
 
         // Enroll User Hero
         UserHero.IsActive = true;
-        UserHero.MBTI = User_Mbti;
+        UserHero.MBTI = userMBTI;
         GameManager.Hero.HeroList.Add(UserHero);
 
         // Team Score에 해당 Hero를 Update
@@ -105,25 +141,22 @@ public class GetInputField : MonoBehaviour
 
     }
 
-    public void OnSelectEvent(string str)
-    {
-
-    }
-
-    public void RightButton()
+    public void OnClickRight()
     {
         currentStartHeros = (currentStartHeros + 1) % startHerosGUIDs.Count;
 
-        HeroImage.sprite = heroSprites[currentStartHeros];
+        heroImage.sprite = heroSprites[currentStartHeros];
 
     }
-    public void LeftButton()
+    public void OnClickLeft()
     {
         currentStartHeros = (currentStartHeros - 1);
         if (currentStartHeros < 0)
+        {
             currentStartHeros = startHerosGUIDs.Count - 1;
+        }
 
-        HeroImage.sprite = heroSprites[currentStartHeros];
+        heroImage.sprite = heroSprites[currentStartHeros];
     }
 
 }
