@@ -42,13 +42,16 @@ public class HeroRunner : MonoBehaviour
             {
                 Hero h = GameManager.Data.ObjectCodex[i] as Hero;
                 if (h.IsActive)
+                {
                     activeHero.Add(i);
+                    Debug.Log("Hero Name(" + h.Name + ") Added To Active Hero");
+                }
             }
             System.Random rand = new System.Random();
             var shuffled = activeHero.OrderBy(_ => rand.Next()).ToList();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < shuffled.Count; i++)
             {
-                GameObject g = Resources.Load<GameObject>("MainHero/" + GameManager.Data.ObjectCodex[shuffled[i]].GUID.ToString());
+                GameObject g = Instantiate(Resources.Load<GameObject>("MainHero/" + GameManager.Data.ObjectCodex[shuffled[i]].GUID.ToString()));
                 g.transform.position = new Vector3(startPos.transform.position.x + (step * i), startPos.transform.position.y, startPos.transform.position.z);
             }
         }
