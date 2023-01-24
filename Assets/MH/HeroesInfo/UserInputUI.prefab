@@ -28,15 +28,15 @@ RectTransform:
   m_GameObject: {fileID: 630461063}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 557777362556722343}
-  m_RootOrder: 6
+  m_Father: {fileID: 557777362012927419}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -380, y: -250}
+  m_AnchoredPosition: {x: -175, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &630461067
@@ -120,19 +120,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 630461066}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 557777363008452706}
-        m_TargetAssemblyTypeName: GetInputField, Assembly-CSharp
-        m_MethodName: LeftButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &266385530618481953
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +133,7 @@ GameObject:
   - component: {fileID: 777150566201676463}
   - component: {fileID: 8435640115372104360}
   m_Layer: 5
-  m_Name: CharacterMBTI
+  m_Name: HeroMBTI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1136,7 +1124,7 @@ GameObject:
   - component: {fileID: 557777361709611747}
   - component: {fileID: 557777361709611746}
   m_Layer: 5
-  m_Name: MbtiInputField (TMP)
+  m_Name: MBTIInputField (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,6 +1424,8 @@ RectTransform:
   - {fileID: 557777361193166257}
   - {fileID: 1080134610715149927}
   - {fileID: 954327751346342549}
+  - {fileID: 630461064}
+  - {fileID: 539527505611234421}
   m_Father: {fileID: 557777362556722343}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1835,8 +1825,6 @@ RectTransform:
   - {fileID: 557777362805336508}
   - {fileID: 18999277988962641}
   - {fileID: 557777362012927419}
-  - {fileID: 630461064}
-  - {fileID: 539527505611234421}
   - {fileID: 4514394165020338494}
   m_Father: {fileID: 557777361988535017}
   m_RootOrder: 3
@@ -2850,16 +2838,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4582ed52894b41142b3963aaa25949aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: {fileID: 557777361694774046}
-  MBTI: {fileID: 557777362093118164}
-  CheckUI: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
-  UnCheckUI: {fileID: 21300000, guid: 123bde73c1b368541b850109f12c1f3e, type: 3}
-  Q1: {fileID: 557777361381835443}
-  Q2: {fileID: 557777362672507839}
-  StartButton: {fileID: 4191251976932593598}
-  User_Name: 
-  User_Mbti: 0
-  HeroImage: {fileID: 557777361193166263}
+  userImage: {fileID: 4216467198322117518}
+  inputUserName: {fileID: 557777361196940924}
+  inputUserMBTI: {fileID: 557777361709611746}
+  outputUserName: {fileID: 557777361694774046}
+  outputUserMBTI: {fileID: 557777362093118164}
+  checkUI: {fileID: 21300000, guid: de7f7ff9019d7334293b1653e45ba0f7, type: 3}
+  uncheckUI: {fileID: 21300000, guid: 123bde73c1b368541b850109f12c1f3e, type: 3}
+  q1: {fileID: 557777361381835443}
+  q2: {fileID: 557777362672507839}
+  heroImage: {fileID: 557777361193166263}
+  outputHeroName: {fileID: 4131814153692734823}
+  outputHeroMBTI: {fileID: 8435640115372104360}
+  leftButton: {fileID: 630461065}
+  rightButton: {fileID: 7537458995771075351}
+  startButton: {fileID: 4191251976932593598}
 --- !u!1 &557777363022664306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3578,7 +3571,7 @@ RectTransform:
   m_Children:
   - {fileID: 2701915776005649833}
   m_Father: {fileID: 557777362556722343}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3703,7 +3696,7 @@ GameObject:
   - component: {fileID: 4635311200556178681}
   - component: {fileID: 4131814153692734823}
   m_Layer: 5
-  m_Name: CharacterName
+  m_Name: HeroName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4001,15 +3994,15 @@ RectTransform:
   m_GameObject: {fileID: 8952409136379468079}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 557777362556722343}
-  m_RootOrder: 7
+  m_Father: {fileID: 557777362012927419}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120, y: -250}
+  m_AnchoredPosition: {x: 175, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8136975626060968555
@@ -4093,16 +4086,4 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 591802953059653089}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 557777363008452706}
-        m_TargetAssemblyTypeName: GetInputField, Assembly-CSharp
-        m_MethodName: LeftButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
