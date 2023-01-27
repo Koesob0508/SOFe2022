@@ -26,14 +26,15 @@ public class GetInputField : MonoBehaviour
     [Header("시작 버튼")]
     [SerializeField] private GameObject startButton;
 
-    private List<int> startHerosGUIDs = new List<int>();
+    private List<uint> startHerosGUIDs;
     private List<Sprite> heroSprites;
+    private List<Hero> heroList;
     private int currentStartHeros = 0;
 
     void Start()
     {
         // UserImage 처리
-        userImage.sprite = GameManager.Data.LoadSprite(uint.MaxValue);
+        //userImage.sprite = GameManager.Data.LoadSprite("/Resources/PlayerImages/1");
 
         // InputField의 연결 처리
         inputUserName.onValueChanged.AddListener((value) =>
@@ -55,12 +56,15 @@ public class GetInputField : MonoBehaviour
         // 시작 버튼 처리
         startButton.SetActive(false);
 
-        startHerosGUIDs.Add(9);
-        startHerosGUIDs.Add(10);
-        startHerosGUIDs.Add(14);
-        startHerosGUIDs.Add(15);
-
+        startHerosGUIDs = new List<uint>
+        {
+            9,
+            10,
+            14,
+            15
+        };
         heroSprites = new List<Sprite>();
+        heroList = InitRandomHeroes(startHerosGUIDs);
 
         for (int i = 0; i < startHerosGUIDs.Count; i++)
         {
@@ -68,7 +72,6 @@ public class GetInputField : MonoBehaviour
         }
 
         print($"startHeros: {startHerosGUIDs.Count}");
-
     }
 
     public void OnValueChangeEvent_Name(string str)
@@ -120,27 +123,6 @@ public class GetInputField : MonoBehaviour
             q2.transform.GetChild(1).GetComponent<Image>().sprite = uncheckUI;
         }
     }
-
-    public void EnrollUser()
-    {
-        //Hero UserHero = (Hero)GameManager.Data.LoadObject(00, GameManager.ObjectType.Hero);
-        Hero UserHero = (Hero)GameManager.Data.LoadObject((uint)startHerosGUIDs[currentStartHeros], GameManager.ObjectType.Hero);
-        GameManager.Data.UserName = userName;
-        GameManager.Data.UserGuid = uint.MaxValue;
-        GameManager.Data.UserMbti = userMBTI;
-
-        // Enroll User Hero
-        UserHero.IsActive = true;
-        UserHero.MBTI = userMBTI;
-        GameManager.Hero.HeroList.Add(UserHero);
-
-        // Team Score에 해당 Hero를 Update
-        GameManager.Relation.NewHeroScore(UserHero);
-
-        //GameManager.Data.Save();
-
-    }
-
     public void OnClickRight()
     {
         currentStartHeros = (currentStartHeros + 1) % startHerosGUIDs.Count;
@@ -158,5 +140,40 @@ public class GetInputField : MonoBehaviour
 
         heroImage.sprite = heroSprites[currentStartHeros];
     }
+
+    private List<Hero> InitRandomHeroes(List<uint> _indices)
+    {
+        List<Hero> heroes = new List<Hero>();
+
+        foreach(uint index in _indices)
+        {
+            Hero initHero = (Hero)GameManager.Data.LoadObject(index, GameManager.ObjectType.Hero);
+            initHero.MBTI = (GameManager.MbtiType)UnityEngine.Random.Range(0, 16);
+
+            heroList.Add(initHero);
+        }
+
+        return heroes;
+    }
+
+    public void EnrollUser()
+    {
+        Hero UserHero = (Hero)GameManager.Data.LoadObject((uint)startHerosGUIDs[currentStartHeros], GameManager.ObjectType.Hero);
+        GameManager.Data.UserName = userName;
+        GameManager.Data.UserGuid = (uint)startHerosGUIDs[currentStartHeros];
+        GameManager.Data.UserMbti = userMBTI;
+
+        // Enroll User Hero
+        UserHero.IsActive = true;
+        UserHero.MBTI = userMBTI;
+        GameManager.Hero.HeroList.Add(UserHero);
+
+        // Team Score에 해당 Hero를 Update
+        GameManager.Relation.NewHeroScore(UserHero);
+
+        //GameManager.Data.Save();
+
+    }
+
 
 }
