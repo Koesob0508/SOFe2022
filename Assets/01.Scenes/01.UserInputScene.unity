@@ -282,21 +282,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1533498015}
     m_Modifications:
-    - target: {fileID: 557777361196940924, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
+    - target: {fileID: 24483374566866324, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 557777361196940924, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+    - target: {fileID: 24483374566866324, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1860770345}
+    - target: {fileID: 24483374566866324, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToStageSelect
       objectReference: {fileID: 0}
-    - target: {fileID: 557777361709611746, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 557777361709611746, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+    - target: {fileID: 24483374566866324, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Koesob.ButtonDelegator, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 557777361988535016, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
       propertyPath: m_Name
@@ -386,18 +386,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 557777362870845386, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: m_AnchoredPosition.x
+    - target: {fileID: 557777363008452706, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: startButton
+      value: 
+      objectReference: {fileID: 694423028}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 557777363008452706, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: inputUserMBTI
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 694423025}
-    - target: {fileID: 557777363008452706, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-      propertyPath: inputUserName
-      value: 
-      objectReference: {fileID: 694423026}
+      objectReference: {fileID: 1860770345}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToStageSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Koesob.ButtonDelegator, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
 --- !u!224 &694423024 stripped
@@ -405,26 +413,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 557777361988535017, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
   m_PrefabInstance: {fileID: 694423023}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &694423025 stripped
+--- !u!114 &694423028 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 557777361709611746, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2703511604301731620, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
   m_PrefabInstance: {fileID: 694423023}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &694423026 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 557777361196940924, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
-  m_PrefabInstance: {fileID: 694423023}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1183495578
@@ -696,3 +693,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1860770345 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1508109426990524682, guid: 7450619f47ca083468b6d52c2fddf189, type: 3}
+  m_PrefabInstance: {fileID: 694423023}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e53f59f0a6d01e4cb7637ec96b97834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

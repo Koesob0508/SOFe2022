@@ -298,7 +298,7 @@ public partial class RelationshipManager : MonoBehaviour
             rank.Judge(RelationScore);
         }
 
-        Debug.LogError(GetTeamScore());
+        //Debug.LogError(GetTeamScore());
     }
 
     private int CalculateTeamScore()
