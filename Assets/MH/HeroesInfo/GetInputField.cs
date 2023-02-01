@@ -128,7 +128,6 @@ public class GetInputField : MonoBehaviour
             // 입력한 MBTI가 대소문자 상관없이 정상적이라면 알잘딱깔센으로 대문자로 바꿔줌
             inputUserMBTI.text = str.ToUpper();
             outputUserMBTI.text = "MBTI: " + str.ToUpper();
-            outputHeroMBTI.text = "MBTI: " + str.ToUpper();
             q2Condition = true;
             UpdateStartButton();
         }
@@ -178,7 +177,7 @@ public class GetInputField : MonoBehaviour
     private void UpdateHeroInfo()
     {
         outputHeroName.text = "이름: " + heroes[currentStartHeros].Name;
-        
+        outputHeroMBTI.text = "MBTI: " + heroes[currentStartHeros].MBTI;
     }
 
     private void EnrollHero(Hero _hero)
